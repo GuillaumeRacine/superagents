@@ -5,7 +5,7 @@ const port = 3219
 const baseUrl = `http://127.0.0.1:${port}`
 const validAuth = `Basic ${Buffer.from('smoke:local-smoke-password').toString('base64')}`
 const wrongAuth = `Basic ${Buffer.from('wrong:wrong').toString('base64')}`
-const server = spawn('npm', ['run', 'start'], {
+const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start'], {
   env: { ...process.env, PORT: String(port), DOCS_USER: 'smoke', DOCS_PASSWORD: 'local-smoke-password' },
   stdio: ['ignore', 'pipe', 'pipe'],
 })
@@ -73,5 +73,8 @@ try {
 
   console.log(`Site smoke checks passed: auth, RSC, ${legacyRedirects.length} redirects, inventory, search, robots, and sitemap.`)
 } finally {
-  server.kill('SIGTERM')
+  if (server.exitCode === null) {
+    server.kill('SIGTERM')
+    await new Promise((resolve) => server.once('exit', resolve))
+  }
 }
