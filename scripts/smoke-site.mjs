@@ -3,10 +3,10 @@ import { legacyRedirects } from '../config/legacy-redirects.mjs'
 
 const port = 3219
 const baseUrl = `http://127.0.0.1:${port}`
-const validAuth = `Basic ${Buffer.from('smoke:local-smoke-password').toString('base64')}`
+const validAuth = `Basic ${Buffer.from('gui:local-smoke-password').toString('base64')}`
 const wrongAuth = `Basic ${Buffer.from('wrong:wrong').toString('base64')}`
 const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start'], {
-  env: { ...process.env, PORT: String(port), DOCS_USER: 'smoke', DOCS_PASSWORD: 'local-smoke-password' },
+  env: { ...process.env, PORT: String(port), DOCS_USER: '', DOCS_PASSWORD: 'local-smoke-password' },
   stdio: ['ignore', 'pipe', 'pipe'],
 })
 
