@@ -1,0 +1,17 @@
+# Context & Memory
+
+Context is information supplied to the current run. Memory is information a runtime retains or retrieves across runs. Neither category is automatically authoritative.
+
+## Context sources
+
+- Current prompt, conversation, or scheduled payload
+- Global and project instruction chains
+- Repository files and live working state
+- Selected agent, skill, plugin, or profile instructions
+- Curated vault material
+- Runtime memory and conversation history
+- Tool results and current external evidence
+
+The Context control plane owns fleet inventory, automation contracts, and evidence state. The knowledge vault owns curated durable context. Runtime-local memory is useful but must yield to an owning source when facts conflict.
+
+See [Context Layering](/context-memory/layering) and [Storage Model](/context-memory/storage).

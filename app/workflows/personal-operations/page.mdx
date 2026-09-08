@@ -1,0 +1,16 @@
+# Personal Operations
+
+Hermes and Context coordinate recurring personal operations.
+
+## Pattern
+
+```text
+Schedule or message → profile → bounded tools → durable destination
+                    → independent evidence → notify only if actionable
+```
+
+Collectors should default to read-only. A workflow that messages someone, changes a service, spends money, or performs an irreversible action needs a declared approval class.
+
+Curated outcomes can update the private knowledge vault through a reviewable workflow. Raw credentials and noisy transient state never belong there.
+
+Use [Scheduling](/automation/scheduling) to choose the execution surface and [Fleet Evidence](/automation/fleet-evidence) to interpret the result.

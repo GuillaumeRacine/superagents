@@ -1,0 +1,23 @@
+# Codex
+
+Codex is the primary project-delivery surface: inspect, implement, test, commit, push, deploy, verify, and record proof.
+
+## Context chain
+
+Codex combines the current prompt and thread with global and repository `AGENTS.md` instructions, workspace files, selected skills or plugins, memories, and connected tools. More specific repository instructions refine global policy.
+
+## Capabilities
+
+- Interactive desktop, CLI, and IDE work
+- Bounded subagents for independent subtasks
+- Personal skills and managed plugin skills
+- MCP services, browser, computer use, artifacts, and GitHub workflows
+- Desktop scheduled tasks for lightweight follow-up work
+
+## Operating boundary
+
+Tool availability is not blanket permission. Filesystem, network, app, connector, and approval policies still apply per task. Codex owns delivery execution; authoritative product state remains in the repository and live deployment.
+
+Current official concepts and runtime-specific details are linked from [Canonical Sources](/reference/canonical-sources).
+
+The current [system registry](/reference/system-registry) records unresolved top-level skill entries alongside the usable count. Visible filesystem entries are not considered capabilities unless their manifest resolves successfully.

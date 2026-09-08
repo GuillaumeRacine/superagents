@@ -1,5 +1,5 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Head } from 'nextra/components'
+import { Head, Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-docs/style.css'
 import type { Metadata } from 'next'
@@ -7,22 +7,28 @@ import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
-    default: 'InnerOS',
-    template: '%s - InnerOS'
+    default: 'InnerOS System Map',
+    template: '%s — InnerOS'
   },
-  description: 'A Personal Operating System for Life Management'
+  description: "A navigable, evidence-backed map of Gui's multi-agent operating system.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false, noimageindex: true },
+  },
 }
 
 const navbar = (
   <Navbar
-    logo={<span style={{ fontWeight: 800, fontSize: '1.1rem' }}>InnerOS</span>}
+    logo={<span style={{ fontWeight: 800, fontSize: '1.1rem' }}>InnerOS · System Map</span>}
     projectLink="https://github.com/GuillaumeRacine/inneros-docs"
   />
 )
 
 const footer = (
   <Footer>
-    MIT {new Date().getFullYear()} - InnerOS Documentation
+    Derived system map · Verify live behavior at the owning source
   </Footer>
 )
 
@@ -38,7 +44,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           pageMap={await getPageMap()}
           docsRepositoryBase="https://github.com/GuillaumeRacine/inneros-docs/tree/main"
           footer={footer}
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
+          sidebar={{ defaultMenuCollapseLevel: 1, toggleButton: true }}
+          search={<Search placeholder="Search systems, tools, or workflows…" />}
           toc={{ backToTop: true }}
         >
           {children}

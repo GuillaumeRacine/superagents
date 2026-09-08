@@ -1,0 +1,21 @@
+# Agents & Subagents
+
+An agent packages a role, context boundary, and tool policy. A subagent is a bounded delegation from a parent task.
+
+## Runtime models
+
+| Runtime | Delegation model |
+|---|---|
+| Codex | Spawn bounded subagents for independent research, review, or isolated implementation; the parent integrates and closes the loop. |
+| Claude Code | Select specialist agent definitions from the active catalog; commands and plugins may route work further. |
+| Hermes | Choose a persistent profile with an explicit toolset, messaging surface, and scheduler policy. |
+
+## Safe parallelism
+
+- Give each agent a concrete deliverable and clear boundary.
+- Avoid concurrent edits to the same files.
+- Avoid competing control of the same browser or authenticated session.
+- Separate implementation from independent review for consequential work.
+- Keep approval and final evidence responsibility with the orchestrating task.
+
+Catalog counts belong only in the [generated registry](/reference/system-registry).

@@ -1,68 +1,51 @@
-# InnerOS
+# InnerOS System Map
 
-**A Personal Operating System for Life Management**
+> A sanitized, evidence-backed map of the agent runtimes, tools, context, automations, and operating rules that make up InnerOS. Registry snapshot verified **September 8, 2026**.
 
-InnerOS is a production-grade personal operating system built on [Claude Code](https://claude.ai/claude-code), Obsidian, and automation scripts. It manages every domain of life through autonomous agents, deterministic skills, coaching personas, and nightly automation pipelines.
+InnerOS is not one app. It is a coordinated system with interactive runtimes, a persistent scheduler, curated context, shared services, and GitHub-backed proof. This site is the navigation layer; each owning repository or runtime remains authoritative for live state.
 
-## What's Inside
+## Find the answer you need
 
-| Component | Count | Purpose |
-|-----------|-------|---------|
-| [Agents](/agents) | 76 | Autonomous task executors across 9 domains |
-| [Commands & Skills](/skills-commands) | 88 | User-invoked deterministic procedures |
-| [Coaching Personas](/coaching) | 16 | Personal development and decision-making guides |
-| [Writing Pipeline](/writing-pipeline) | 13 stages | End-to-end content creation system |
-| [NightCrew Automation](/automation/nightcrew) | 21 stages | Nightly processing pipeline |
-| [Data Integrations](/data-sources) | 12+ | Health, finance, calendar, messaging, and more |
-| [Workflows](/workflows) | 50+ | Daily, weekly, monthly, quarterly, annual cadences |
+| Question | Go to |
+|---|---|
+| Which agent should handle this task? | [Choose a runtime](/start-here/choose-a-runtime) |
+| How does work move from intent to production? | [Operating loop](/start-here/operating-loop) |
+| Where does each kind of information belong? | [Sources of truth](/architecture/sources-of-truth) |
+| What is installed and what is actually active? | [System registry](/reference/system-registry) |
+| Which skills, plugins, agents, commands, profiles, jobs, and MCPs exist? | [Capability inventory](/reference/capability-inventory) |
+| What may run autonomously? | [Permissions](/governance/permissions) |
+| How do I recover the system? | [Recovery & Change](/recovery) |
 
-## Design Principles
+## System at a glance
 
-1. **ADHD as design constraint** - Every interaction is optimized for executive function: short prompts, clear next actions, no ambiguity
-2. **Non-deterministic reasoning + deterministic control** - AI agents handle judgment; scripts handle procedure
-3. **PARA structure** - Projects, Areas, Resources, Archives organize everything
-4. **Validation is non-optional** - Nothing is "done" until tests pass
-5. **Agents don't self-determine completion** - Objective criteria decide when work is finished
-
-## Quick Start
-
-```bash
-# Clone the template
-git clone https://github.com/GuillaumeRacine/inneros-docs
-# Read the getting started guide
+```text
+Gui / messages / schedules
+          │
+          ▼
+Codex ─ Claude Code ─ Hermes ─ Companion CLIs
+  │           │          │
+  └──── skills, tools, MCP services ────┘
+                       │
+          Context control plane + vault
+                       │
+          GitHub → deployment → live proof
 ```
 
-Then head to [Getting Started](/getting-started) to set up your own InnerOS.
+## Active surfaces
 
-## Who This Is For
+| Surface | Primary role | Authority |
+|---|---|---|
+| Codex | Project delivery and app-integrated work | Task policy, AGENTS.md, repository |
+| Claude Code | Specialist agents, commands, and plugins | CLAUDE.md, runtime settings, repository |
+| Hermes | Messaging, schedules, and unattended operations | Profiles, job definitions, approval class |
+| Context | Fleet inventory, evidence, and automation contracts | Private Context repository |
+| Knowledge vault | Curated decisions, identity, goals, and durable context | Private Git-backed vault |
 
-- People who want to **systematize life management** without losing flexibility
-- Claude Code users who want to see what's possible with agents, skills, and automation
-- Anyone with **ADHD** who needs externalized executive function
-- Builders who prefer **open, inspectable systems** over black-box apps
+## Four rules that keep it coherent
 
-## Architecture at a Glance
+1. **Ownership beats copying.** Link to an authoritative source instead of cloning volatile detail.
+2. **Installed is not active, and success is not proof.** State and evidence are recorded separately.
+3. **Least authority wins.** Read-only work is easy to delegate; external writes need an explicit policy or approval.
+4. **GitHub closes the loop.** Material work ends with tests, commit, deployment when relevant, live verification, and recorded evidence.
 
-```
-You (human)
-  │
-  ├── Claude Code CLI
-  │     ├── 76 Agents (autonomous, domain-specific)
-  │     ├── 88 Commands/Skills (deterministic procedures)
-  │     └── 16 Coaching Personas (guided reflection)
-  │
-  ├── Obsidian Vault (PARA structure)
-  │     ├── InnerOS context (identity, goals, workflows)
-  │     ├── Knowledge base (areas, resources)
-  │     └── Tracking data (metrics, logs)
-  │
-  └── NightCrew (21-stage nightly pipeline)
-        ├── File organization
-        ├── Communication triage
-        ├── Data aggregation
-        └── Morning brief preparation
-```
-
-## Open Source
-
-InnerOS is open source. Fork it, adapt it, make it yours. The [Customization](/customization) section shows you how to replace every personal detail with your own.
+Start with [the orientation guide](/start-here).

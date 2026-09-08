@@ -1,0 +1,18 @@
+# Permissions
+
+| Action | Default handling |
+|---|---|
+| Read scoped files, inspect status, run non-mutating checks | Autonomous |
+| Edit requested workspace files, run tests, create recoverable artifacts | Autonomous within task scope |
+| Commit, push, deploy, and verify a requested coherent change | Autonomous within the delivery contract |
+| Send a routine notification from a preapproved automation | Preapproved playbook required |
+| Change an external service when the requested intent clearly authorizes that class | Inspect or preview, then apply within scope |
+| Purchase, trade, publish to a new audience, disclose private data, or perform irreversible deletion | Explicit operator approval |
+
+## Guardrails
+
+- Resolve the exact target before consequential writes.
+- Prefer preview, dry run, staging, and recoverable operations.
+- Preserve unrelated working changes.
+- Keep deployment verification separate from business-data mutation.
+- Stop when completion requires a new authority or a meaningful expansion of scope.

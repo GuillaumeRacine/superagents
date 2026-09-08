@@ -1,0 +1,20 @@
+# Browser & Computer Use
+
+Use the narrowest reliable interaction surface.
+
+| Need | Preferred surface |
+|---|---|
+| Structured or bulk service operation | Service API or CLI |
+| Repeatable public-page extraction | Firecrawl or browser automation |
+| User-visible web verification | Chrome |
+| Authenticated desktop UI unavailable elsewhere | Computer use |
+| Project with a documented browser owner | Follow that project's browser protocol |
+
+Chrome is the default browser for automation when control is available. A project may reserve a browser or profile for another operator; project instructions take precedence.
+
+## Safety
+
+- Never store credentials or browser-profile contents in repositories or docs.
+- Separate observation from external mutation.
+- Resolve exact targets before clicks that publish, delete, pay, or message.
+- Verify user-visible results from the rendered surface, including navigation, search, mobile layout, and access control.

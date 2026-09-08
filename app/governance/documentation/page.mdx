@@ -1,0 +1,18 @@
+# Documentation Governance
+
+This portal is a public-source, sanitized map with a second rendered-site access gate. Basic authentication on the website does **not** make the repository content confidential. The client-side search index and machine-navigation files are also public assets because browser workers and crawlers cannot reliably reuse HTTP Basic credentials. Robots are instructed not to index the site.
+
+## Publication rule
+
+Never publish credentials, private URLs, personal records, customer data, absolute user paths, active external-disk dependencies, or copy-paste destructive recovery commands.
+
+## Change workflow
+
+1. Correct the owning runtime or repository documentation first.
+2. Update the system and capability JSON registries for changed public facts.
+3. Regenerate the registry pages; never edit them by hand.
+4. Run freshness, route, link, publication, dependency, secret, and production-build checks.
+5. Review the rendered desktop and mobile site, navigation, search, and access gate.
+6. Ship through GitHub and record deployment evidence.
+
+Volatile counts appear once in the [system registry](/reference/system-registry). Narrative pages link there instead of restating them.

@@ -1,0 +1,23 @@
+# MCP & Tools
+
+Model Context Protocol services expose structured capabilities to one or more runtimes. Tool availability and authorization are separate questions.
+
+## Shared Firecrawl broker
+
+Firecrawl is the shared local web research service for Codex, Claude, Gemini, Grok, and Hermes-compatible workflows. Clients use one broker endpoint on the local machine rather than resolving a secret independently for every runtime.
+
+Operational rule: check broker status first and start it only when stopped. Treat one 1Password authorization as a session-wide budget; batch the work and never scatter exploratory secret reads.
+
+## Other tool classes
+
+Codex currently has configured services for structured documents, terminal commerce, design, persistent code execution, computer use, presentation work, and web research. The owning configuration is authoritative; the [registry](/reference/system-registry) publishes only sanitized counts.
+
+## Tool contract
+
+For every tool, know:
+
+- what data leaves the machine;
+- which account or connector authorizes it;
+- whether it reads, writes, notifies, spends, or deletes;
+- what evidence confirms the result;
+- how to revoke or recover it.

@@ -1,0 +1,348 @@
+# Capability Inventory
+
+> Generated from `config/capability-inventory.json`. Do not edit this page directly.
+
+**Snapshot:** 2026-09-08T16:58:00-04:00
+
+**Scope:** Complete at the sanitized capability-group level. Private agent names, job names, personal schedules, and machine paths remain in their owning private inventories.
+
+This is the complete **sanitized** capability map. Exact private agent and job catalogs remain with their owning runtime because this source repository is public.
+
+| Inventory | Runtime | Count | Detail | State |
+|---|---|---|---|---|
+| [Codex personal skills](#codex-personal-skills) | Codex | 23 | item | active and resolvable |
+| [Codex managed plugin installs](#codex-managed-plugin-installs) | Codex | 22 | item | installed; capability activation is task-specific |
+| [Codex MCP services](#codex-mcp-services) | Codex | 7 | item | configured |
+| [Claude specialist agents](#claude-specialist-agents) | Claude Code | 111 | grouped-private | active private catalog |
+| [Claude slash commands](#claude-slash-commands) | Claude Code | 148 | grouped-private | active private catalog |
+| [Claude standalone skills](#claude-standalone-skills) | Claude Code | 26 | item | active |
+| [Claude plugins](#claude-plugins) | Claude Code | 13 | item | 13 registered; 12 enabled |
+| [Hermes profiles](#hermes-profiles) | Hermes | 6 | item | active |
+| [Hermes scheduled jobs](#hermes-scheduled-jobs) | Hermes | 74 | grouped-private | 53 enabled; 21 paused |
+| [Hermes active skills](#hermes-active-skills) | Hermes | 101 | grouped-private | active skill root |
+| [Companion and compatibility capabilities](#companion-and-compatibility-capabilities) | Gemini, Grok, OpenClaw, and OpenCode | 19 | grouped | companions installed; compatibility runtimes absent |
+
+## Codex personal skills
+
+**Runtime:** Codex
+
+**State:** active and resolvable
+
+**Published count:** 23
+
+**Detail level:** item
+
+**Source:** Active personal Codex skill root
+
+**Counting rule:** Direct child entries whose SKILL.md resolves to a readable file; managed system and plugin skills are excluded.
+
+| Capability or group | Purpose or state |
+|---|---|
+| adversarial-second-opinion-review | Strict second-pass review |
+| browser-fallback-artifacts | Recoverable browser fallback artifacts |
+| canary | Post-deployment monitoring |
+| check-resolvable | Routing and duplicate audit |
+| corporations-canada-annual-return | Federal annual-return operations |
+| design-shotgun | Parallel design exploration |
+| docs-audit | Documentation reconciliation |
+| ensembl3-workflows | Ensembl3 operations |
+| ensemble-studio | Shopify application studio |
+| guard | Maximum-safety execution mode |
+| ideal-state | System and project ideal-state analysis |
+| issue-sliced-implementation | Issue-to-slice implementation routing |
+| monarch-monthly-audit | Monthly finance-data audit |
+| no-ai-slop | Human writing edit pass |
+| office-hours | Adversarial product interrogation |
+| pdf | PDF reading, creation, and review |
+| plan-ceo-review | Founder-mode plan review |
+| quality-gate | Independent complex-work challenge |
+| quebec-corporate-annual-compliance | Quebec annual compliance |
+| shopify-visual-gift-enrichment | Evidence-backed commerce enrichment |
+| skillify | Workflow-to-skill conversion |
+| spec | Intent-to-executable-spec conversion |
+| video-use | Conversational video editing |
+
+## Codex managed plugin installs
+
+**Runtime:** Codex
+
+**State:** installed; capability activation is task-specific
+
+**Published count:** 22
+
+**Detail level:** item
+
+**Source:** Managed Codex plugin cache
+
+**Counting rule:** One current version directory per managed plugin across curated remote and bundled plugin roots.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Canva | Design creation and review |
+| Browser | Managed browser automation runtime |
+| Chrome | Chrome integration |
+| Codex App Tools | Desktop application operations |
+| Computer Use | Computer interaction runtime |
+| Deep Research | Long-form sourced research |
+| Figma | Design and design-to-code workflows |
+| GitHub | Repository collaboration |
+| Gmail | Connected email workflows |
+| Google Calendar | Connected calendar workflows |
+| Google Contacts | Connected contact workflows |
+| Google Drive | Drive, Docs, Sheets, and Slides |
+| Hugging Face | Model, dataset, evaluation, and job workflows |
+| Lovable | Connected product-building workflows |
+| OpenAI Templates | Managed artifact templates |
+| Plugin Management | Plugin discovery and inspection |
+| Readwise | Connected reading workflows |
+| Sites | Website building and hosting |
+| Slack | Connected messaging workflows |
+| Unified Computer Use | Cross-surface computer interaction |
+| Visualize | Interactive visualizations |
+| Vercel | Application, AI, deployment, and platform workflows |
+
+## Codex MCP services
+
+**Runtime:** Codex
+
+**State:** configured
+
+**Published count:** 7
+
+**Detail level:** item
+
+**Source:** Active Codex configuration
+
+**Counting rule:** Distinct top-level MCP server sections in the active configuration.
+
+| Capability or group | Purpose or state |
+|---|---|
+| paper | Structured document and research artifacts |
+| terminal-commerce | Bounded commerce operations |
+| claude_design | Design collaboration |
+| node_repl | Persistent JavaScript execution |
+| computer-use | Authenticated browser and desktop interaction |
+| present-agent | Presentation and product operations |
+| firecrawl | Shared web search and extraction |
+
+## Claude specialist agents
+
+**Runtime:** Claude Code
+
+**State:** active private catalog
+
+**Published count:** 111
+
+**Detail level:** grouped-private
+
+**Source:** Active Claude agent catalog
+
+**Counting rule:** Top-level Markdown agent definitions; the generated AGENTS_INDEX.md navigation file is excluded.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Research and academic | Scouting, extraction, synthesis, challenge, and orchestration |
+| Engineering and systems | Architecture, coding, QA, data validation, and runtime health |
+| Finance and risk | Treasury, tax, investment, audit, reconciliation, and risk roles |
+| Product and growth | Product management, experiments, marketing, community, and lead workflows |
+| Context and knowledge | Curation, linking, learning, indexing, and vault governance |
+| Media and publishing | Audio, visual, podcast, voice, recommendations, and release roles |
+| Personal operations | Calendar, contacts, tasks, travel, home, and communication roles |
+
+## Claude slash commands
+
+**Runtime:** Claude Code
+
+**State:** active private catalog
+
+**Published count:** 148
+
+**Detail level:** grouped-private
+
+**Source:** Active Claude command tree
+
+**Counting rule:** All Markdown command definitions recursively under the active command root.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Delivery | Plan, build, test, review, deploy, and verify |
+| Research | Search, papers, monitoring, synthesis, and debate |
+| Operations | Status, audit, cleanup, sync, and recovery |
+| Knowledge | Context, memory, notes, vault, and learning |
+| Business | Finance, commerce, suppliers, growth, and portfolio work |
+| Publishing | Writing, visual review, media, slides, and distribution |
+| Personal | Tasks, reminders, travel, home, and weekly review |
+
+## Claude standalone skills
+
+**Runtime:** Claude Code
+
+**State:** active
+
+**Published count:** 26
+
+**Detail level:** item
+
+**Source:** Active Claude standalone skill root
+
+**Counting rule:** Direct child skill packages with a SKILL.md; manifests vendored inside dependencies are excluded.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Figma | Design workflows |
+| Prompting | Prompt design |
+| annual-review | Annual synthesis |
+| call | Bounded calling workflow |
+| firecrawl | Core web research |
+| firecrawl-agent | Autonomous extraction |
+| firecrawl-build-interact | Dynamic-page integration |
+| firecrawl-build-onboarding | Credential and SDK setup |
+| firecrawl-build-scrape | Scrape integration |
+| firecrawl-build-search | Search integration |
+| firecrawl-crawl | Site crawling |
+| firecrawl-download | Website download |
+| firecrawl-interact | Live-page interaction |
+| firecrawl-map | URL discovery |
+| firecrawl-monitor | Change monitoring |
+| firecrawl-parse | Local file parsing |
+| firecrawl-research-index | Paper discovery |
+| firecrawl-scrape | Single-page extraction |
+| firecrawl-search | Web search |
+| github-projects | GitHub project operations |
+| monthly-review | Monthly synthesis |
+| morning-brief | Daily briefing |
+| no-ai-slop | Human writing edit pass |
+| quarterly-review | Quarterly synthesis |
+| video-use | Conversational video editing |
+| weekly-review | Weekly synthesis |
+
+## Claude plugins
+
+**Runtime:** Claude Code
+
+**State:** 13 registered; 12 enabled
+
+**Published count:** 13
+
+**Detail level:** item
+
+**Source:** Installed plugin registry and active Claude settings
+
+**Counting rule:** Distinct registered plugin keys; enabled state is read separately from active settings.
+
+| Capability or group | Purpose or state |
+|---|---|
+| ableton-live | Music production · enabled |
+| audio-analysis | Audio analysis · enabled |
+| compound-engineering | Engineering workflow · enabled |
+| dropbox-sync | Music asset synchronization · enabled |
+| figma | Design integration · enabled |
+| frontend-design | Frontend design · enabled |
+| lyrics | Lyric workflow · enabled |
+| ralph-loop | Iterative implementation · enabled |
+| rc600-import | Audio-device import · enabled |
+| release | Music release workflow · enabled |
+| shopify-ai-toolkit | Shopify application work · enabled |
+| swift-lsp | Swift language tooling · registered, not enabled |
+| tascam-import | Audio-device import · enabled |
+
+## Hermes profiles
+
+**Runtime:** Hermes
+
+**State:** active
+
+**Published count:** 6
+
+**Detail level:** item
+
+**Source:** Private Hermes profile root
+
+**Counting rule:** Direct profile directories in the active Hermes home.
+
+| Capability or group | Purpose or state |
+|---|---|
+| clinicfoundersassistant | Healthcare-business operations |
+| music | Music workflows |
+| ops | System and business operations |
+| personal | Personal operations |
+| research | Research workflows |
+| tao | Publishing and lead workflows |
+
+## Hermes scheduled jobs
+
+**Runtime:** Hermes
+
+**State:** 53 enabled; 21 paused
+
+**Published count:** 74
+
+**Detail level:** grouped-private
+
+**Source:** Private Hermes cron registry
+
+**Counting rule:** Every job object in the active jobs registry; enabled and paused are partitioned by the enabled Boolean.
+
+| Capability or group | Purpose or state |
+|---|---|
+| System health and telemetry | Runtime health, quota, metrics, cleanup, and watchdog work |
+| Research and intelligence | Primary-source monitoring, briefs, market scans, and synthesis |
+| Business and portfolio | Company reviews, growth loops, operations, and reporting |
+| Finance and records | Treasury, close, freshness, P&L, and compliance-oriented work |
+| Inbox and messaging | Triage, drafts, delivery, curation, and notification work |
+| Personal and media | Personal reviews, notes, voice, and media workflows |
+
+## Hermes active skills
+
+**Runtime:** Hermes
+
+**State:** active skill root
+
+**Published count:** 101
+
+**Detail level:** grouped-private
+
+**Source:** Active Hermes skill root
+
+**Counting rule:** SKILL.md files recursively under the active user skill root; runtime source, optional packs, and vendored dependencies are excluded.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Apple | 5 skills |
+| Autonomous agent runtimes | 4 skills |
+| Creative | 16 skills |
+| Data science | 1 skill |
+| DevOps | 4 skills |
+| Email | 3 skills |
+| GitHub | 6 skills |
+| Investing | 1 skill |
+| Media | 4 skills |
+| MLOps | 7 skills |
+| Note taking | 2 skills |
+| Productivity and operations | 25 skills |
+| Research | 7 skills |
+| Smart home | 1 skill |
+| Social media | 1 skill |
+| Software development | 10 skills |
+| Uncategorized top-level | 4 skills |
+
+## Companion and compatibility capabilities
+
+**Runtime:** Gemini, Grok, OpenClaw, and OpenCode
+
+**State:** companions installed; compatibility runtimes absent
+
+**Published count:** 19
+
+**Detail level:** grouped
+
+**Source:** Active companion configuration and compatibility roots
+
+**Counting rule:** Configured MCP and command entries for installed companions, plus skill manifests in the inactive OpenClaw compatibility root.
+
+| Capability or group | Purpose or state |
+|---|---|
+| Gemini CLI | One shared Firecrawl MCP; no local skill manifests |
+| Grok CLI | Two custom commands and one shared Firecrawl MCP |
+| OpenClaw compatibility | 15 skill manifests; runtime absent |
+| OpenCode compatibility | Configuration assets; runtime absent |

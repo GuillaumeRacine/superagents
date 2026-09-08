@@ -1,0 +1,21 @@
+# Scheduling
+
+## Choose the owner
+
+| Requirement | Owner |
+|---|---|
+| Continue or revisit the current Codex task | Codex scheduled task |
+| Persistent message delivery or local operational schedule | Hermes cron |
+| Repository test, release, or security gate | GitHub Actions |
+| Host daemon lifecycle | Launch service |
+| Automation contract or cross-system evidence | Context |
+
+## Before enabling a schedule
+
+1. Run the action manually with representative input.
+2. Declare its action class and approval class.
+3. Define destination, timeout, retry, duplicate-suppression, and failure behavior.
+4. Add an independent proof signal.
+5. Confirm recovery and disable paths.
+
+Stay quiet when unchanged state is expected. Notify on meaningful change, completion, failure, or required operator action.

@@ -5,17 +5,14 @@ export default {
       layout: 'full'
     }
   },
-  'getting-started': 'Getting Started',
+  'start-here': 'Start Here',
   architecture: 'Architecture',
-  environments: 'Environments',
-  agents: 'Agents',
-  'skills-commands': 'Skills & Commands',
-  plugins: 'Plugins',
-  coaching: 'Coaching',
-  'writing-pipeline': 'Writing Pipeline',
-  automation: 'Automation',
+  runtimes: 'Systems & Surfaces',
+  capabilities: 'Capabilities',
+  'context-memory': 'Context & Memory',
+  automation: 'Automation & Operations',
+  governance: 'Governance & Safety',
   workflows: 'Workflows',
-  'data-sources': 'Data Sources',
-  customization: 'Customization',
+  recovery: 'Recovery & Change',
   reference: 'Reference'
 }

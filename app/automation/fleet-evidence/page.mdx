@@ -1,0 +1,21 @@
+# Fleet Evidence
+
+System state and evidence are intentionally separate.
+
+| State | Meaning |
+|---|---|
+| Installed | Code or configuration exists |
+| Active | Part of a current operating path |
+| Healthy | A bounded operational check passed |
+| Verified | Independent evidence supports the claimed outcome |
+| Unverified | The system may have run, but proof is absent or stale |
+| Paused | Deliberately disabled |
+| Failed | Execution or outcome check failed |
+
+The private Context inventory and scoreboard are authoritative for current fleet state. This site publishes a dated, sanitized subset in the [system registry](/reference/system-registry).
+
+## Good evidence
+
+Examples include an expected artifact with fresh content, an API response from the destination, a deployed URL behaving correctly, a delivered-message identifier, or a repository check attached to a commit.
+
+A log line saying “success” is supporting telemetry, not independent proof.
