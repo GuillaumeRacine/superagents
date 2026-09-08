@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T16:58:00-04:00",
+  "asOf": "2026-09-08T18:30:00-04:00",
   "scope": "Complete at the sanitized capability-group level. Private agent names, job names, personal schedules, and machine paths remain in their owning private inventories.",
   "inventories": [
     {
@@ -232,7 +232,7 @@
       "id": "hermes-skills",
       "title": "Hermes active skills",
       "runtime": "Hermes",
-      "count": 101,
+      "count": 105,
       "detailLevel": "grouped-private",
       "state": "active skill root",
       "source": "Active Hermes skill root",
@@ -249,7 +249,7 @@
         ["Media", "4 skills"],
         ["MLOps", "7 skills"],
         ["Note taking", "2 skills"],
-        ["Productivity and operations", "25 skills"],
+        ["Productivity and operations", "29 skills"],
         ["Research", "7 skills"],
         ["Smart home", "1 skill"],
         ["Social media", "1 skill"],

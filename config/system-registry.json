@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T16:58:00-04:00",
+  "asOf": "2026-09-08T18:30:00-04:00",
   "scope": "Sanitized architecture and operating metadata only; no credentials, personal context, private URLs, or customer data.",
   "systems": [
     {
@@ -78,7 +78,7 @@
         "scheduledJobs": 74,
         "enabledJobs": 53,
         "pausedJobs": 21,
-        "activeUserSkillManifests": 101
+        "activeUserSkillManifests": 105
       }
     },
     {

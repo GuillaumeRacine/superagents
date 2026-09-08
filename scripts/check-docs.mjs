@@ -133,9 +133,86 @@ for (const inventory of capabilityInventory.inventories) {
 const capabilityAgeDays = (Date.now() - new Date(capabilityInventory.asOf).getTime()) / 86_400_000
 if (!Number.isFinite(capabilityAgeDays) || capabilityAgeDays > 45) failures.push(`Capability inventory snapshot is stale (${Math.floor(capabilityAgeDays)} days old)`)
 
+const estateCoverage = JSON.parse(readFileSync(resolve(root, 'config/estate-coverage.json'), 'utf8'))
+const repositoryFields = [
+  'total', 'ownersAndOrganizations', 'active', 'archived', 'private', 'public', 'forks', 'repositoriesAccountedFor',
+  'treesScanned', 'emptyRepositories', 'scanFailures', 'truncatedTrees', 'declarationFilesSelected', 'declarationFilesScanned', 'declarationFilesFailed',
+]
+for (const field of repositoryFields) {
+  if (!Number.isInteger(estateCoverage.repositoryEstate?.[field]) || estateCoverage.repositoryEstate[field] < 0) {
+    failures.push(`Estate coverage has invalid repository field ${field}`)
+  }
+}
+const estate = estateCoverage.repositoryEstate
+if (estate.active + estate.archived !== estate.total) failures.push('Estate active and archived counts do not equal total repositories')
+if (estate.private + estate.public !== estate.total) failures.push('Estate private and public counts do not equal total repositories')
+if (estate.repositoriesAccountedFor !== estate.total) failures.push('Estate audit did not account for every accessible repository')
+if (estate.treesScanned + estate.emptyRepositories + estate.scanFailures !== estate.total) {
+  failures.push('Estate tree, empty, and failed counts do not equal total repositories')
+}
+if (estate.declarationFilesScanned + estate.declarationFilesFailed !== estate.declarationFilesSelected) {
+  failures.push('Estate inspected and failed declaration-file counts do not equal selected files')
+}
+if (!Array.isArray(estateCoverage.devices) || estateCoverage.devices.length < 3) failures.push('Estate coverage must include all declared operating devices')
+if (!estateCoverage.devices?.some((device) => device.state === 'directly verified')) failures.push('Estate coverage has no directly verified device')
+const deviceIds = new Set(estateCoverage.devices?.map((device) => device.id))
+if (deviceIds.size !== estateCoverage.devices?.length) failures.push('Estate coverage contains duplicate device ids')
+if (estateCoverage.devicePolicy?.source !== 'STORAGE_SYSTEM.md' || !/^[a-f0-9]{16}$/.test(estateCoverage.devicePolicy?.revision ?? '')) {
+  failures.push('Estate devices are not bound to a canonical storage-policy revision')
+}
+if (!Array.isArray(estateCoverage.sourceSurfaces) || estateCoverage.sourceSurfaces.length < 8) failures.push('Estate coverage is missing canonical source surfaces')
+if (!Array.isArray(estateCoverage.integrationFingerprints) || estateCoverage.integrationFingerprints.length === 0) failures.push('Estate coverage has no integration fingerprints')
+
+const catalog = estateCoverage.repositoryCatalog
+if (!Array.isArray(catalog) || catalog.length !== estate.total) {
+  failures.push('Estate repository catalog must contain one row for every accessible repository')
+} else {
+  const catalogIds = new Set(catalog.map((entry) => entry.id))
+  if (catalogIds.size !== catalog.length) failures.push('Estate repository catalog contains duplicate ids')
+  if (catalog.filter((entry) => entry.visibility === 'private').length !== estate.private) failures.push('Estate private catalog rows do not match the private repository count')
+  if (catalog.filter((entry) => entry.visibility === 'public').length !== estate.public) failures.push('Estate public catalog rows do not match the public repository count')
+  for (const entry of catalog) {
+    if (!['tree-scanned', 'empty', 'failed'].includes(entry.scanState)) failures.push(`Repository catalog ${entry.id} has invalid scan state`)
+    if (entry.visibility === 'private' && (!/^private-\d{3}$/.test(entry.id) || entry.url !== null)) failures.push(`Private repository catalog row ${entry.id} leaks or lacks its opaque identity contract`)
+    if (entry.visibility === 'public' && (!entry.url?.startsWith('https://github.com/') || !entry.id.includes('/'))) failures.push(`Public repository catalog row ${entry.id} lacks its GitHub identity`)
+  }
+  const activeInstructionGaps = catalog.filter((entry) => entry.lifecycle === 'active' && entry.agentic && entry.instructionStatus === 'gap').length
+  const expectedInstructionGaps = estateCoverage.documentationCoverage.activeAgenticRepositories - estateCoverage.documentationCoverage.activeAgenticRepositoriesWithInstructions
+  if (activeInstructionGaps !== expectedInstructionGaps) failures.push('Repository catalog does not identify every active agent-instruction gap')
+}
+
+const vercelSurface = estateCoverage.sourceSurfaces?.find(([source]) => source === 'Vercel')
+if (!vercelSurface || vercelSurface[2] !== 'not verified for this snapshot') failures.push('Estate snapshot must not hard-code Vercel as live-verified before deployment')
+
+const componentFields = ['id', 'title', 'definition', 'allRepositories', 'allFiles', 'activeRepositories', 'activeFiles', 'publicExamples']
+const componentIds = new Set()
+if (!Array.isArray(estateCoverage.agenticComponents) || estateCoverage.agenticComponents.length < 22) {
+  failures.push('Estate coverage is missing the comprehensive agentic component taxonomy')
+} else {
+  for (const component of estateCoverage.agenticComponents) {
+    for (const field of componentFields) {
+      if (component[field] === undefined || component[field] === '') failures.push(`Agentic component ${component.id ?? 'unknown'} is missing ${field}`)
+    }
+    if (componentIds.has(component.id)) failures.push(`Duplicate agentic component id ${component.id}`)
+    componentIds.add(component.id)
+    for (const field of ['allRepositories', 'allFiles', 'activeRepositories', 'activeFiles']) {
+      if (!Number.isInteger(component[field]) || component[field] < 0) failures.push(`Agentic component ${component.id} has invalid ${field}`)
+    }
+    if (component.activeRepositories > component.allRepositories || component.activeFiles > component.allFiles) {
+      failures.push(`Agentic component ${component.id} has active counts greater than estate-wide counts`)
+    }
+    if (!Array.isArray(component.publicExamples) || component.publicExamples.some((example) => !example.includes(':'))) {
+      failures.push(`Agentic component ${component.id} has invalid public evidence samples`)
+    }
+  }
+}
+
+const estateAgeDays = (Date.now() - new Date(estateCoverage.asOf).getTime()) / 86_400_000
+if (!Number.isFinite(estateAgeDays) || estateAgeDays > 45) failures.push(`Estate coverage snapshot is stale (${Math.floor(estateAgeDays)} days old)`)
+
 if (failures.length) {
   console.error(failures.map((failure) => `- ${failure}`).join('\n'))
   process.exit(1)
 }
 
-console.log(`Docs checks passed: ${routeFiles.size} routes, ${registry.systems.length} systems, ${capabilityInventory.inventories.length} capability inventories, publication scan clean.`)
+console.log(`Docs checks passed: ${routeFiles.size} routes, ${registry.systems.length} systems, ${capabilityInventory.inventories.length} capability inventories, ${estate.total} repositories accounted for, publication scan clean.`)
