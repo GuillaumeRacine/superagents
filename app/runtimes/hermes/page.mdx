@@ -1,0 +1,19 @@
+# Hermes
+
+Hermes is the persistent agent gateway and primary scheduler. It connects profiles, memory, skills, messaging adapters, cron jobs, and local operational services.
+
+## What it owns
+
+- Six task-oriented profiles at the current snapshot
+- Slack, Telegram, and Discord delivery paths
+- The main unattended job catalog
+- Persistent memory and profile-specific toolsets
+- Scheduled entry points into Context automation
+
+## Authority model
+
+A job needs both a schedule and a permission contract. Read-only collection can run unattended. Notifications, external mutations, financial actions, and irreversible changes require an explicit preapproved playbook or operator approval.
+
+## Proof model
+
+Scheduler state proves that a job was invoked. Outcome evidence belongs in the Context fleet scoreboard or the system's own durable destination. See [Fleet Evidence](/automation/fleet-evidence).

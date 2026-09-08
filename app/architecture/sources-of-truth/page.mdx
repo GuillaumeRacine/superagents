@@ -1,0 +1,24 @@
+# Sources of Truth
+
+Authority follows the type of information, not whichever runtime saw it most recently.
+
+| Information | Canonical owner |
+|---|---|
+| Code, infrastructure, and shipped documentation | GitHub repository |
+| Live customer-facing behavior | Deployed production surface |
+| Automation definitions and fleet evidence | Context repository and owning scheduler |
+| Curated decisions, goals, identity, and durable knowledge | Private knowledge vault |
+| Files and structured working data | Google Drive where designated |
+| Apple-native personal data | iCloud |
+| Credentials | 1Password |
+| Runtime-local state, caches, and sessions | Local internal storage; recoverable or transient |
+| Cold snapshots | External backup storage when mounted |
+
+This portal links those owners together. It must not claim to replace them.
+
+## Resolve conflicts
+
+1. Prefer the source assigned to that information type.
+2. Prefer live evidence over an old narrative page.
+3. Reconcile divergent runtime and vault inventories; do not assume they are mirrored.
+4. Correct the owning source first, then refresh derived documentation and its verification date.

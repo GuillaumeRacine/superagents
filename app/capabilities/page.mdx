@@ -1,0 +1,16 @@
+# Capabilities
+
+Capabilities are reusable execution surfaces. Choose the smallest one that owns the required context and no more authority than the task needs.
+
+| Surface | Use it for | Avoid using it as |
+|---|---|---|
+| Agent or subagent | A bounded role or independent workstream | A second source of truth |
+| Skill | A repeatable workflow with instructions and assets | A catch-all personality |
+| Command | A concise, explicit entry point | Hidden policy |
+| Plugin | A managed bundle of skills, connectors, or UI | Implicit authorization |
+| MCP service | Structured access to an external or local capability | A credential store |
+| Browser or computer use | User-visible interaction and verification | Bulk structured data processing |
+
+Capability definitions should state triggers, inputs, outputs, permissions, and proof expectations.
+
+Browse the dated [Capability Inventory](/reference/capability-inventory) for the complete sanitized catalog and exact counting rules.

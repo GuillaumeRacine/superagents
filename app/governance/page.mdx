@@ -1,0 +1,14 @@
+# Governance & Safety
+
+Governance answers three questions before execution: what may happen, who authorized it, and what proves it happened correctly.
+
+## Action classes
+
+- **Read-only** — inspect local or external state without mutation.
+- **Local write** — modify scoped workspace files or recoverable local state.
+- **Notify** — send a message or alert to another person or channel.
+- **External mutation** — change a cloud service, commerce system, account, or published surface.
+- **Money** — purchase, trade, bill, refund, or change a paid commitment.
+- **Irreversible** — deletion or action that cannot be reliably undone.
+
+Tool access never upgrades an action's approval class. See [Permissions](/governance/permissions) and [Secrets](/governance/secrets).

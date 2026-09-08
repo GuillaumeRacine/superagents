@@ -1,8 +1,8 @@
 export default {
   index: 'Overview',
-  'file-paths': 'File Paths',
-  'naming-conventions': 'Naming Conventions',
-  settings: 'Settings',
-  'system-stats': 'System Stats',
-  glossary: 'Glossary'
+  'system-registry': 'System Registry',
+  'capability-inventory': 'Capability Inventory',
+  'canonical-sources': 'Canonical Sources',
+  glossary: 'Glossary',
+  history: 'History & Scope'
 }

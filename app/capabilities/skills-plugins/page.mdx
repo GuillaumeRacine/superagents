@@ -1,0 +1,22 @@
+# Skills & Plugins
+
+A **skill** is a focused, reusable workflow: instructions, references, scripts, and optional assets. A **plugin** is a managed package that may expose several skills, tools, connectors, or application integrations.
+
+## Where they live
+
+- Personal skills are Git-backed and shared deliberately across compatible runtimes.
+- Runtime-native skills and agents remain with their owning runtime.
+- Managed plugin caches are installation artifacts, not editing locations.
+- Compatibility copies are not automatically active.
+
+## Maintenance rules
+
+1. Read the selected skill completely before acting.
+2. Reuse provided scripts and assets instead of re-creating them.
+3. Keep one canonical definition and document intentional adapters.
+4. Verify the consuming runtime after an update.
+5. Record volatile version and inventory data once in the [system registry](/reference/system-registry).
+
+Duplicate-looking manifests may be different installed plugin versions or nested packs. Inventory reports must define exactly what they count.
+
+The [Capability Inventory](/reference/capability-inventory) lists resolvable personal skills, managed plugins, Claude skills and plugins, and categorized Hermes skills.

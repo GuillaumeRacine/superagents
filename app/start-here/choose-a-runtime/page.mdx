@@ -1,0 +1,21 @@
+# Choose a Runtime
+
+Choose the smallest surface that already owns the context and permissions the task needs.
+
+| Need | Default | Why |
+|---|---|---|
+| Repository change, test, review, deploy, or live verification | **Codex** | It is the primary project-delivery surface and integrates workspace, GitHub, browser, and review workflows. |
+| Existing specialist agent, slash command, or Claude plugin | **Claude Code** | It owns the large specialist catalog and Claude-specific configuration. |
+| Scheduled work, messaging gateway, or unattended follow-up | **Hermes** | It owns persistent profiles, delivery adapters, and the main job scheduler. |
+| A second model perspective | **Gemini CLI or Grok CLI** | Use explicitly and keep the same repository proof contract. |
+| Fleet evidence, automation definitions, or health state | **Context** | It owns the system inventory and evidence contracts. |
+
+## Delegate only bounded work
+
+Use a subagent when a concrete subtask can run independently: a targeted review, research slice, or isolated implementation. Keep the parent responsible for integration, safety decisions, and closeout proof.
+
+Avoid parallel agents editing the same files or controlling the same browser profile. For high-risk changes, separate implementation from independent review.
+
+## Compatibility is not adoption
+
+OpenClaw and OpenCode compatibility files exist, but their runtimes were not installed at the registry snapshot. Do not route production work to them until deliberately adopted and verified.

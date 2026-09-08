@@ -1,6 +1,6 @@
 export default {
   index: 'Overview',
-  nightcrew: 'NightCrew Pipeline',
-  launchagents: 'LaunchAgents',
-  'telegram-bridge': 'Telegram Bridge'
+  scheduling: 'Scheduling',
+  nightcrew: 'NightCrew',
+  'fleet-evidence': 'Fleet Evidence'
 }

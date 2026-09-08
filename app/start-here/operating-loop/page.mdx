@@ -1,0 +1,29 @@
+# Operating Loop
+
+Material work follows one observable loop.
+
+```text
+Intent → inspect owner → plan authority → change → targeted checks
+       → full build when needed → commit → push → deploy
+       → live verification → GitHub evidence → next action
+```
+
+## Before work
+
+1. Identify the owning repository or runtime.
+2. Read its local instruction chain.
+3. Inspect current state and preserve unrelated work.
+4. Classify the action: read-only, local write, notification, external mutation, money, or irreversible.
+
+## During work
+
+- Run focused checks after small iterations.
+- Run a full build for runtime, route, packaging, or deployment changes.
+- Prefer staging, dry runs, or plan-only proof for risky behavior.
+- Keep external writes separate from deployment verification.
+
+## Closeout
+
+Commit and push the coherent slice. Let the intended deployment run, verify the real surface, then record the commit, deploy reference, exact checks, pass/fail outcome, and residual risk in GitHub.
+
+Local files are working state, not the durable endpoint for material work.

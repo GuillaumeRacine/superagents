@@ -1,0 +1,23 @@
+# Context Layering
+
+Apply context from broad policy to specific task evidence.
+
+```text
+User intent
+  └─ global operating policy
+      └─ repository or project instructions
+          └─ runtime identity and selected capability
+              └─ memory and curated knowledge
+                  └─ live repository and external evidence
+```
+
+More specific instructions refine broader ones unless they violate a higher-priority safety or authority boundary. Live evidence corrects stale narrative context; it does not erase the need to update the owning record.
+
+## Runtime entry points
+
+- Codex uses an `AGENTS.md` chain, thread history, memories, and selected skills or plugins.
+- Claude Code uses a `CLAUDE.md` chain, agents, commands, skills, plugins, rules, hooks, and session memory.
+- Hermes combines its soul, selected profile, memory, skills, message context, and scheduler payload.
+- Companion CLIs use their own instruction and connector configuration plus the current repository.
+
+Never assume two runtime directories are synchronized merely because their content is similar.

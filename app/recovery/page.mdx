@@ -1,0 +1,15 @@
+# Recovery & Change
+
+InnerOS is recoverable when durable state stays in GitHub, managed cloud stores, the private knowledge vault, and 1Password references.
+
+## Recovery order
+
+1. Restore the host and approved package managers.
+2. Authenticate GitHub and 1Password.
+3. Clone active repositories to internal storage.
+4. Restore non-secret runtime configuration and managed secret references.
+5. Install runtimes and shared services.
+6. Restore schedulers disabled, validate manually, then enable deliberately.
+7. Regenerate the Context inventory and verify critical user-visible paths.
+
+Prefer reversible repair and exact targets. Recovery documentation should describe desired state and validation, not publish dangerous recursive deletion shortcuts.

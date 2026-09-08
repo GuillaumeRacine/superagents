@@ -1,29 +1,47 @@
 {
   "name": "inneros-docs",
   "version": "1.0.0",
-  "description": "InnerOS - A Personal Operating System for Life Management",
+  "type": "module",
+  "description": "A navigable, evidence-backed map of Gui's multi-agent operating system.",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "start": "next start",
+    "smoke": "node scripts/smoke-site.mjs",
+    "docs:generate": "node scripts/generate-system-registry.mjs",
+    "docs:verify-live": "node scripts/verify-live-registry.mjs",
+    "docs:check": "node scripts/generate-system-registry.mjs --check && node scripts/check-docs.mjs",
+    "check": "npm run docs:check && npm audit --omit=dev --audit-level=high"
   },
   "keywords": [
     "inneros",
     "personal-os",
-    "life-management",
-    "claude-code"
+    "multi-agent",
+    "codex",
+    "claude-code",
+    "hermes-agent",
+    "nextra"
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "dependencies": {
-    "next": "^15.5.12",
+    "next": "16.3.4",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@types/node": "25.3.1",
-    "@types/react": "19.2.14"
+    "@types/react": "19.2.18",
+    "pagefind": "^1.5.2"
+  },
+  "overrides": {
+    "@types/react": "19.2.18",
+    "@xmldom/xmldom": "0.9.12"
   }
 }

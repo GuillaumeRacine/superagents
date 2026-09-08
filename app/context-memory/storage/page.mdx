@@ -1,0 +1,17 @@
+# Storage Model
+
+Every durable information type has one preferred home.
+
+| Store | Purpose |
+|---|---|
+| Private knowledge vault | Curated knowledge, decisions, goals, identity, and system guidance |
+| GitHub | Code, infrastructure, documentation, review, and delivery history |
+| Google Drive | Designated files and structured working data |
+| iCloud | Apple-native personal data |
+| Internal local storage | Active repositories, runtime state, caches, and transient work |
+| External storage | Cold backup snapshots only, while mounted |
+| 1Password | Credentials and secret references |
+
+Active systems must not depend on an external disk or a compatibility symlink to one. Clone missing repositories from GitHub onto internal storage.
+
+Secrets never belong in the vault, source repository, local documentation, or ad hoc plaintext environment files. Configuration should retain only managed references.

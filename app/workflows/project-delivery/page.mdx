@@ -1,0 +1,16 @@
+# Project Delivery
+
+Use Codex by default for a coherent repository change; use Claude Code when its specialist catalog or project context is the better fit.
+
+## Delivery path
+
+1. Find the active internal-storage repository and its GitHub remote.
+2. Read global and repository instructions.
+3. Inspect working state; preserve unrelated edits.
+4. Implement the smallest coherent slice.
+5. Run targeted checks continuously and a full build when runtime or deploy behavior changed.
+6. Commit and push to GitHub.
+7. Verify deployment and live behavior.
+8. Record commit, deploy, checks, outcome, and residual risk in the tracking issue or pull request.
+
+For risky behavior, use staging and feature flags where the project provides them.
