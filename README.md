@@ -15,7 +15,8 @@ npm run check
 npm run dev
 ```
 
-The rendered site fails closed unless both `DOCS_USER` and `DOCS_PASSWORD` are configured.
+The rendered site fails closed unless `DOCS_PASSWORD` is configured. `DOCS_USER`
+is optional and defaults to `gui`, preserving the production credential contract.
 
 ## Documentation changes
 

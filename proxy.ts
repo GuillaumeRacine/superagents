@@ -21,10 +21,12 @@ function unauthorized() {
 }
 
 export function proxy(req: NextRequest) {
-  const expectedUser = process.env.DOCS_USER
+  // Preserve the established production contract: deployments may configure
+  // only DOCS_PASSWORD, in which case the username remains "gui".
+  const expectedUser = process.env.DOCS_USER || 'gui'
   const expectedPass = process.env.DOCS_PASSWORD
 
-  if (!expectedUser || !expectedPass) {
+  if (!expectedPass) {
     return new NextResponse('Site auth not configured.', {
       status: 503,
       headers: { 'Cache-Control': 'private, no-store, max-age=0' },
