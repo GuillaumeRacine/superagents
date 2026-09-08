@@ -1,0 +1,25 @@
+# Devices & Hosts
+
+> Snapshot: **September 8, 2026 at 7:17 p.m.**. Device declarations were parsed from the canonical storage policy revision `f6891ce304b19753`; verification state comes from this audit run.
+
+| Device | Role | Verification | Evidence |
+|---|---|---|---|
+| Mac mini (main) | Primary work + agents | directly verified | Canonical policy: Vault, active code/runtimes on internal storage; SSD optional. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host. |
+| Mac mini (studio) | Music recording | policy-declared · not remotely attested | Canonical policy: Audio sessions, no GDrive needed, no SSD. The same policy explicitly excepts active Ableton sessions, which may use the studio SSD as the fast working disk. This audit did not execute on that host. |
+| MacBook | Mobile work | policy-declared · not remotely attested | Canonical policy: Vault, GDrive (Stream or selective Mirror — saves disk), code repos. This audit did not execute on that host. |
+
+## Coverage rule
+
+A device is **directly verified** only when the estate and runtime checks execute on that host. Git synchronization or a policy entry does not prove installed versions, local skills, active services, browser sessions, or scheduler state.
+
+The main Mac mini currently owns the live runtime snapshot. The studio Mac mini and MacBook are documented so they cannot disappear from the architecture, but their agentic configuration is not claimed as current.
+
+## Cross-device source ownership
+
+- GitHub synchronizes code and shipped documentation.
+- The private vault synchronizes curated knowledge through Git.
+- Google Drive is the device-independent source for files and datasets.
+- iCloud owns Apple-native data.
+- 1Password owns credentials.
+- Local runtime caches, sessions, and installed versions remain device-specific and require host-level verification.
+- The external SSD is cold storage for normal agent and repository operation. The canonical policy explicitly retains one exception: active Ableton sessions on the studio Mac mini may use its SSD as a fast working disk.

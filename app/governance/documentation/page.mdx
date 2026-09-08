@@ -2,6 +2,8 @@
 
 This portal is a public-source, sanitized map with a second rendered-site access gate. Basic authentication on the website does **not** make the repository content confidential. The client-side search index and machine-navigation files are also public assets because browser workers and crawlers cannot reliably reuse HTTP Basic credentials. Robots are instructed not to index the site.
 
+The current-tree publication scan does not sanitize prior commits. Legacy history is a known hardening gap tracked in [GitHub issue #4](https://github.com/GuillaumeRacine/inneros-docs/issues/4) and must not be described as private or clean until that work is complete.
+
 ## Publication rule
 
 Never publish credentials, private URLs, personal records, customer data, absolute user paths, active external-disk dependencies, or copy-paste destructive recovery commands.

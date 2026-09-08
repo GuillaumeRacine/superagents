@@ -12,11 +12,11 @@ Canonical website and sanitized derived index for Gui's multi-agent operating sy
 
 ## Inputs
 
-Reviewed runtime inventories, private Context evidence, private vault policy, official platform documentation, and live deployment checks.
+Reviewed runtime inventories, the authenticated GitHub repository estate, private Context evidence, private vault and device policy, integration declarations, and live deployment checks.
 
 ## Outputs
 
-A Nextra website, generated system registry, CI evidence, deployment, and GitHub closeout record.
+A Nextra website, generated system and capability registries, sanitized estate coverage, CI evidence, deployment, and GitHub closeout record.
 
 ## Data classification
 

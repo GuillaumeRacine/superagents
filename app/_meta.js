@@ -7,6 +7,7 @@ export default {
   },
   'start-here': 'Start Here',
   architecture: 'Architecture',
+  estate: 'Estate & Devices',
   runtimes: 'Systems & Surfaces',
   capabilities: 'Capabilities',
   'context-memory': 'Context & Memory',

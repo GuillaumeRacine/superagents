@@ -2,7 +2,7 @@
 
 This repository is the canonical website for Gui's sanitized system map.
 
-The 2026 refresh replaced a 112-page generated site that concentrated on one Claude configuration snapshot. That structure duplicated volatile counts, mixed runtime and curated-vault state, and preserved outdated storage, scheduling, and recovery assumptions. The retired pages remain recoverable through Git history.
+The 2026 refresh replaced a 112-page generated site that concentrated on one Claude configuration snapshot. That structure duplicated volatile counts, mixed runtime and curated-vault state, and preserved outdated storage, scheduling, and recovery assumptions.
 
 Two related repositories have narrower roles:
 
@@ -11,6 +11,8 @@ Two related repositories have narrower roles:
 
 ## Publication boundary
 
-This repository is public. The deployed website has an additional access gate, but confidentiality cannot depend on it. Only sanitized architecture, workflow, and operating metadata belong here.
+This repository is public. The deployed website has an additional access gate, but confidentiality cannot depend on it. Only sanitized architecture, workflow, and operating metadata belong in the current tree.
 
 Private runbooks, machine paths, credentials, personal context, customer data, and private service URLs remain with their owning systems.
+
+Legacy commits predate the current publication controls and may contain historical machine paths or operational metadata. Treat repository history as untrusted until the tracked privacy-hardening work in [GitHub issue #4](https://github.com/GuillaumeRacine/inneros-docs/issues/4) is complete; the current-tree publication scan does not claim to sanitize prior commits.

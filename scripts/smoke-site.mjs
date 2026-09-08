@@ -1,10 +1,19 @@
 import { spawn } from 'node:child_process'
+import { readdirSync } from 'node:fs'
+import { join, resolve } from 'node:path'
 import { legacyRedirects } from '../config/legacy-redirects.mjs'
 
 const port = 3219
 const baseUrl = `http://127.0.0.1:${port}`
 const validAuth = `Basic ${Buffer.from('gui:local-smoke-password').toString('base64')}`
 const wrongAuth = `Basic ${Buffer.from('wrong:wrong').toString('base64')}`
+const countDocumentationPages = (directory) => readdirSync(directory, { withFileTypes: true })
+  .reduce((total, entry) => {
+    const path = join(directory, entry.name)
+    if (entry.isDirectory()) return total + countDocumentationPages(path)
+    return total + (entry.isFile() && entry.name === 'page.mdx' ? 1 : 0)
+  }, 0)
+const expectedPageCount = countDocumentationPages(resolve('app'))
 const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start'], {
   env: { ...process.env, PORT: String(port), DOCS_USER: '', DOCS_PASSWORD: 'local-smoke-password' },
   stdio: ['ignore', 'pipe', 'pipe'],
@@ -62,15 +71,15 @@ try {
 
   const search = await response('/_pagefind/pagefind-entry.json')
   const searchMetadata = await search.json()
-  assert(search.status === 200 && searchMetadata.languages.en.page_count === 42, 'Public search index must contain all 42 docs pages')
+  assert(search.status === 200 && searchMetadata.languages.en.page_count === expectedPageCount, `Public search index must contain all ${expectedPageCount} docs pages`)
 
   const robots = await response('/robots.txt')
   assert(robots.status === 200 && (await robots.text()).includes('Disallow: /'), 'Public robots policy must disallow indexing')
 
   const sitemap = await response('/sitemap.xml')
   const sitemapBody = await sitemap.text()
-  assert(sitemap.status === 200 && (sitemapBody.match(/<url>/g) ?? []).length === 42, 'Public sitemap must list all 42 docs pages')
 
+  assert(sitemap.status === 200 && (sitemapBody.match(/<url>/g) ?? []).length === expectedPageCount, `Public sitemap must list all ${expectedPageCount} docs pages`)
   console.log(`Site smoke checks passed: auth, RSC, ${legacyRedirects.length} redirects, inventory, search, robots, and sitemap.`)
 } finally {
   if (server.exitCode === null) {
