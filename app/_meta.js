@@ -14,6 +14,6 @@ export default {
   automation: 'Automation & Operations',
   governance: 'Governance & Safety',
   workflows: 'Workflows',
-  recovery: 'Recovery & Change',
+  recovery: 'Recovery & Rebuild',
   reference: 'Reference'
 }

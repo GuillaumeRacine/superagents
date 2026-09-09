@@ -1,8 +1,8 @@
 {
-  "name": "inneros-docs",
+  "name": "superagents",
   "version": "1.0.0",
   "type": "module",
-  "description": "A navigable, evidence-backed map of Gui's multi-agent operating system.",
+  "description": "A navigable, evidence-backed map of Gui's complete agentic operating system.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -16,8 +16,8 @@
     "check": "npm run docs:check && npm audit --omit=dev --audit-level=high"
   },
   "keywords": [
-    "inneros",
-    "personal-os",
+    "super-agents",
+    "agentic-systems",
     "multi-agent",
     "codex",
     "claude-code",

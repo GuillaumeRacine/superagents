@@ -1,0 +1,76 @@
+# Disaster Rebuild Readiness
+
+> **Current status: partially ready.** Super Agents documents the system, its owners, and the recovery order. The portal alone is not a complete backup and should not be treated as authorization to wipe every device.
+
+## What survives total device loss
+
+The system can be rebuilt only when the off-device sources named below remain accessible and independently recoverable.
+
+### GitHub repositories
+
+**Portal coverage:** Every accessible repository is enumerated in [Repository Coverage](/estate/repositories).
+
+**Before a total wipe:** Test a break-glass GitHub login and capture a dated manifest of required repositories and revisions.
+
+### Vault, Context, and Hermes
+
+**Portal coverage:** Ownership and recovery order are documented in the [System Registry](/reference/system-registry).
+
+**Before a total wipe:** Prove clean clones, unlock/setup checks, and restoration from a machine with no existing local state.
+
+### Credentials and MFA
+
+**Portal coverage:** Secrets belong in 1Password and source files retain references only.
+
+**Before a total wipe:** Test off-device 1Password recovery material, account recovery paths, and MFA backup methods without relying on a device that would be wiped.
+
+### Runtime configuration
+
+**Portal coverage:** Runtimes, versions, skills, plugins, agents, commands, profiles, MCPs, and jobs are inventoried.
+
+**Before a total wipe:** Capture machine setup as code for packages, runtime settings, launch services, app licenses, and non-secret configuration.
+
+### Schedulers and automations
+
+**Portal coverage:** Active and paused job counts and ownership are recorded.
+
+**Before a total wipe:** Restore exported definitions disabled, then enable each class only after delivery and evidence checks pass.
+
+### Cloud and application data
+
+**Portal coverage:** Google Drive, iCloud, GitHub, the vault, local state, and cold storage have declared roles.
+
+**Before a total wipe:** Maintain content-level backup inventories, retention expectations, and representative restore tests for each critical store.
+
+### Other devices and studio assets
+
+**Portal coverage:** The main, studio, and mobile machines are declared in [Devices & Hosts](/estate/devices).
+
+**Before a total wipe:** Directly attest the studio Mac and MacBook, including Ableton sessions, plugins, licenses, and the studio storage exception.
+
+### Deployed services
+
+**Portal coverage:** Delivery proof is linked from owning repositories.
+
+**Before a total wipe:** Maintain a service manifest covering projects, domains, databases, queues, webhooks, environment-variable references, and post-restore health checks.
+
+## Zero-device readiness gate
+
+Do not call the estate fully disaster-recoverable until all of these are true:
+
+1. A break-glass package exists off-device for 1Password, GitHub, primary email, Apple, Google, and deployment accounts, without storing plaintext credentials in this public repository.
+2. Active repositories and required revisions are captured in a dated machine-readable manifest.
+3. Host setup is reproducible from source-controlled package, runtime, service, scheduler, and configuration declarations.
+4. Every required secret has an owning 1Password item or reference and a documented consumer; no recovery step depends on local plaintext.
+5. Critical cloud, database, media, and studio data has a backup owner, retention target, and successful restore sample.
+6. Scheduler definitions can be restored disabled and re-enabled only after permissions, destinations, and evidence contracts are verified.
+7. A clean-host drill rebuilds one machine without borrowing hidden state from an existing device.
+8. The drill records elapsed time, failures, missing artifacts, and a GitHub closeout with the next remediation.
+
+## What “complete” means
+
+- **Documentation-complete** means the portal names every known class of component, owner, source, permission boundary, and recovery dependency at a sanitized level.
+- **Inventory-complete** means every accessible repository and every directly queried runtime surface is accounted for under the stated counting rules.
+- **Disaster-recovery complete** requires a successful clean-host restore from off-device sources. Documentation and inventory are necessary, but they are not proof of restoration.
+
+Until the clean-host gate passes, use this portal to coordinate recovery and expose gaps—not as the sole copy of operational state.

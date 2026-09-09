@@ -4,7 +4,7 @@ import type { MetadataRoute } from 'next'
 import registry from '../config/system-registry.json'
 
 const appRoot = resolve(process.cwd(), 'app')
-const siteUrl = 'https://inneros-docs.vercel.app'
+const siteUrl = 'https://superagents-docs.vercel.app'
 
 function pageRoutes(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
