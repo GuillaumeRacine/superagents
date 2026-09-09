@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T21:28:44-04:00",
+  "asOf": "2026-09-08T21:53:45-04:00",
   "scope": "Sanitized architecture and operating metadata only; no credentials, personal context, private URLs, or customer data.",
   "systems": [
     {
@@ -75,8 +75,8 @@
       "version": "0.17.0 · local fork with 39 carried commits",
       "counts": {
         "profiles": 6,
-        "scheduledJobs": 80,
-        "enabledJobs": 59,
+        "scheduledJobs": 81,
+        "enabledJobs": 60,
         "pausedJobs": 21,
         "activeUserSkillManifests": 105
       }
