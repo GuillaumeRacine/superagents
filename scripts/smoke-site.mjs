@@ -5,6 +5,7 @@ import { legacyRedirects } from '../config/legacy-redirects.mjs'
 
 const port = 3219
 const baseUrl = `http://127.0.0.1:${port}`
+const canonicalSiteUrl = 'https://superagents-docs.vercel.app'
 const validAuth = `Basic ${Buffer.from('gui:local-smoke-password').toString('base64')}`
 const wrongAuth = `Basic ${Buffer.from('wrong:wrong').toString('base64')}`
 const countDocumentationPages = (directory) => readdirSync(directory, { withFileTypes: true })
@@ -54,7 +55,7 @@ try {
 
   const home = await response('/', { headers: { Authorization: validAuth } })
   assert(home.status === 200, 'Authenticated home request must return 200')
-  assert((await home.text()).includes('InnerOS System Map'), 'Authenticated home must contain the portal title')
+  assert((await home.text()).includes('Super Agents'), 'Authenticated home must contain the portal title')
 
   const rsc = await response('/reference/system-registry', { headers: { RSC: '1' } })
   assert(rsc.status === 401, 'Anonymous RSC request must return 401')
@@ -78,8 +79,10 @@ try {
 
   const sitemap = await response('/sitemap.xml')
   const sitemapBody = await sitemap.text()
+  const sitemapLocations = [...sitemapBody.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1])
 
-  assert(sitemap.status === 200 && (sitemapBody.match(/<url>/g) ?? []).length === expectedPageCount, `Public sitemap must list all ${expectedPageCount} docs pages`)
+  assert(sitemap.status === 200 && sitemapLocations.length === expectedPageCount, `Public sitemap must list all ${expectedPageCount} docs pages`)
+  assert(sitemapLocations.every((location) => location === canonicalSiteUrl || location.startsWith(`${canonicalSiteUrl}/`)), `Every sitemap URL must use ${canonicalSiteUrl}`)
   console.log(`Site smoke checks passed: auth, RSC, ${legacyRedirects.length} redirects, inventory, search, robots, and sitemap.`)
 } finally {
   if (server.exitCode === null) {

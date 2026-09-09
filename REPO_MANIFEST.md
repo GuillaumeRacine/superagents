@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Canonical website and sanitized derived index for Gui's multi-agent operating system.
+Canonical Super Agents website and sanitized derived index for Gui's complete agentic operating system.
 
 ## Authority
 

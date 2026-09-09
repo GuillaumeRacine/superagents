@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T23:17:47.892Z",
+  "asOf": "2026-09-09T01:26:11.632Z",
   "scope": "All repositories accessible to the authenticated GitHub account through ownership, organization membership, or collaboration were scanned by tree and selected documentation/configuration surfaces. Results published here are sanitized; private names, private content, and credentials were not copied.",
   "repositoryEstate": {
     "total": 147,
@@ -15,8 +15,8 @@
     "emptyRepositories": 8,
     "scanFailures": 0,
     "truncatedTrees": 0,
-    "declarationFilesSelected": 590,
-    "declarationFilesScanned": 590,
+    "declarationFilesSelected": 591,
+    "declarationFilesScanned": 591,
     "declarationFilesFailed": 0
   },
   "documentationCoverage": {
@@ -25,7 +25,7 @@
     "repositoriesWithDocsDirectory": 50,
     "repositoriesWithAgentInstructions": 65,
     "repositoriesWithWorkflows": 21,
-    "totalDocumentationFiles": 9788,
+    "totalDocumentationFiles": 9793,
     "agenticRepositories": 79,
     "agenticRepositoriesWithInstructions": 65,
     "activeRepositoriesWithDocumentation": 109,
@@ -1571,20 +1571,6 @@
       "componentClasses": 18
     },
     {
-      "id": "GuillaumeRacine/inneros-docs",
-      "url": "https://github.com/GuillaumeRacine/inneros-docs",
-      "visibility": "public",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 4
-    },
-    {
       "id": "GuillaumeRacine/jobster",
       "url": "https://github.com/GuillaumeRacine/jobster",
       "visibility": "public",
@@ -1977,6 +1963,20 @@
       "componentClasses": 3
     },
     {
+      "id": "GuillaumeRacine/superagents",
+      "url": "https://github.com/GuillaumeRacine/superagents",
+      "visibility": "public",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 4
+    },
+    {
       "id": "GuillaumeRacine/Tao-promotion",
       "url": "https://github.com/GuillaumeRacine/Tao-promotion",
       "visibility": "public",
@@ -2157,7 +2157,7 @@
       "Hermes state",
       "Profiles, schedules, skills, and delivery state",
       "live-local",
-      "74 jobs; 53 enabled; 21 paused"
+      "80 jobs; 59 enabled; 21 paused"
     ],
     [
       "Google Drive",
@@ -2180,7 +2180,7 @@
     [
       "External SSD",
       "Cold backup and archive",
-      "unmounted · correctly non-required on this host",
+      "mounted · excluded from active scan",
       "Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception"
     ],
     [
@@ -2201,7 +2201,7 @@
     },
     {
       "name": "clerk",
-      "activeRepositoryReferences": 1
+      "activeRepositoryReferences": 2
     },
     {
       "name": "discord",
@@ -2209,7 +2209,7 @@
     },
     {
       "name": "dropbox",
-      "activeRepositoryReferences": 4
+      "activeRepositoryReferences": 5
     },
     {
       "name": "firecrawl",
@@ -2229,43 +2229,43 @@
     },
     {
       "name": "ghost",
-      "activeRepositoryReferences": 7
+      "activeRepositoryReferences": 8
     },
     {
       "name": "monarch",
-      "activeRepositoryReferences": 4
-    },
-    {
-      "name": "mongodb",
-      "activeRepositoryReferences": 3
-    },
-    {
-      "name": "notion",
-      "activeRepositoryReferences": 20
-    },
-    {
-      "name": "openai",
-      "activeRepositoryReferences": 30
-    },
-    {
-      "name": "postgres",
-      "activeRepositoryReferences": 17
-    },
-    {
-      "name": "redis-upstash",
-      "activeRepositoryReferences": 2
-    },
-    {
-      "name": "resend",
-      "activeRepositoryReferences": 10
-    },
-    {
-      "name": "sentry",
       "activeRepositoryReferences": 5
     },
     {
+      "name": "mongodb",
+      "activeRepositoryReferences": 4
+    },
+    {
+      "name": "notion",
+      "activeRepositoryReferences": 21
+    },
+    {
+      "name": "openai",
+      "activeRepositoryReferences": 31
+    },
+    {
+      "name": "postgres",
+      "activeRepositoryReferences": 18
+    },
+    {
+      "name": "redis-upstash",
+      "activeRepositoryReferences": 3
+    },
+    {
+      "name": "resend",
+      "activeRepositoryReferences": 11
+    },
+    {
+      "name": "sentry",
+      "activeRepositoryReferences": 6
+    },
+    {
       "name": "shopify",
-      "activeRepositoryReferences": 30
+      "activeRepositoryReferences": 31
     },
     {
       "name": "slack",
@@ -2273,23 +2273,23 @@
     },
     {
       "name": "spotify",
-      "activeRepositoryReferences": 6
-    },
-    {
-      "name": "sqlite",
-      "activeRepositoryReferences": 15
-    },
-    {
-      "name": "stripe",
       "activeRepositoryReferences": 7
     },
     {
+      "name": "sqlite",
+      "activeRepositoryReferences": 16
+    },
+    {
+      "name": "stripe",
+      "activeRepositoryReferences": 8
+    },
+    {
       "name": "substack",
-      "activeRepositoryReferences": 12
+      "activeRepositoryReferences": 13
     },
     {
       "name": "supabase",
-      "activeRepositoryReferences": 5
+      "activeRepositoryReferences": 6
     },
     {
       "name": "telegram",
@@ -2301,7 +2301,7 @@
     },
     {
       "name": "x-twitter",
-      "activeRepositoryReferences": 15
+      "activeRepositoryReferences": 16
     }
   ],
   "agenticComponents": [

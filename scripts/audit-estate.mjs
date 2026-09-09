@@ -301,7 +301,7 @@ const token = command('gh', ['auth', 'token'])
 const headers = {
   Accept: 'application/vnd.github+json',
   Authorization: `Bearer ${token}`,
-  'User-Agent': 'inneros-docs-estate-audit',
+  'User-Agent': 'superagents-estate-audit',
   'X-GitHub-Api-Version': '2022-11-28',
 }
 
@@ -398,7 +398,7 @@ const privateIds = new Map(
     .map((scan, index) => [scan.repository.nameWithOwner, `private-${String(index + 1).padStart(3, '0')}`]),
 )
 const gitDirectory = command('git', ['rev-parse', '--absolute-git-dir'])
-const privateResolverPath = resolve(gitDirectory, 'inneros-estate-private-map.json')
+const privateResolverPath = resolve(gitDirectory, 'superagents-estate-private-map.json')
 writeFileSync(privateResolverPath, `${JSON.stringify({
   asOf: new Date().toISOString(),
   repositories: scans
@@ -433,7 +433,8 @@ if (!existsSync(storagePolicyPath)) throw new Error('Canonical storage policy is
 const storagePolicy = readFileSync(storagePolicyPath, 'utf8')
 const storagePolicyRevision = createHash('sha256').update(storagePolicy).digest('hex').slice(0, 16)
 const detectedHost = command('hostname', ['-s']).toLowerCase()
-const detectedDeviceId = process.env.INNEROS_DEVICE_ID
+// SUPERAGENTS_DEVICE_ID is canonical; retain the former name for one migration window.
+const detectedDeviceId = process.env.SUPERAGENTS_DEVICE_ID || process.env.INNEROS_DEVICE_ID
   || (/office[- ]?mini/.test(detectedHost) ? 'main-mac-mini' : /studio/.test(detectedHost) ? 'studio-mac-mini' : /macbook/.test(detectedHost) ? 'macbook' : null)
 const policyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
 const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {

@@ -1,6 +1,6 @@
 # Data Sources & Integrations
 
-> Snapshot: **September 8, 2026 at 7:17 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
+> Snapshot: **September 8, 2026 at 9:26 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
 
 ## Canonical source surfaces
 
@@ -9,16 +9,16 @@
 | GitHub | Code and shipped documentation | live-scanned | 147 accessible repositories across 4 owners or organizations; 139 trees scanned |
 | Context control plane | Automation registry and evidence | live-local | Generated inventory, contracts, and fleet evidence |
 | Knowledge vault | Curated context and durable knowledge | live-local | Private Git-backed vault; content remains private |
-| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 74 jobs; 53 enabled; 21 paused |
+| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 80 jobs; 59 enabled; 21 paused |
 | Google Drive | Default file and data store | policy-declared · not live-listed | Connector/API or web is authoritative; Drive Desktop and rclone are unavailable on this host |
 | iCloud | Apple-native data | host-visible | 18 top-level host-visible directories; content not enumerated |
 | 1Password | Credentials | policy-declared · intentionally not enumerated | Only references and access contracts may be documented |
-| External SSD | Cold backup and archive | unmounted · correctly non-required on this host | Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception |
+| External SSD | Cold backup and archive | mounted · excluded from active scan | Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception |
 | Vercel | Documentation deployment | not verified for this snapshot | Production verification is performed after deployment and recorded in GitHub against the commit and deployment |
 
 ## Integration fingerprints across active repositories
 
-The scanner inspected 590 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
+The scanner inspected 591 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
 
 | Integration class | Active repository references |
 |---|---:|
@@ -26,30 +26,30 @@ The scanner inspected 590 selected README, package, environment-example, archite
 | github | 75 |
 | vercel | 45 |
 | google-services | 32 |
-| openai | 30 |
-| shopify | 30 |
-| notion | 20 |
+| openai | 31 |
+| shopify | 31 |
+| notion | 21 |
 | slack | 20 |
-| postgres | 17 |
+| postgres | 18 |
+| sqlite | 16 |
+| x-twitter | 16 |
 | 1password | 15 |
-| sqlite | 15 |
-| x-twitter | 15 |
-| substack | 12 |
+| substack | 13 |
+| resend | 11 |
 | telegram | 11 |
 | gemini | 10 |
-| resend | 10 |
-| ghost | 7 |
-| stripe | 7 |
-| spotify | 6 |
+| ghost | 8 |
+| stripe | 8 |
+| spotify | 7 |
+| sentry | 6 |
+| supabase | 6 |
+| dropbox | 5 |
 | firecrawl | 5 |
-| sentry | 5 |
-| supabase | 5 |
-| dropbox | 4 |
-| monarch | 4 |
+| monarch | 5 |
+| mongodb | 4 |
 | discord | 3 |
-| mongodb | 3 |
-| redis-upstash | 2 |
-| clerk | 1 |
+| redis-upstash | 3 |
+| clerk | 2 |
 
 A reference is a discovery signal, not proof that credentials exist, data is fresh, or the integration is healthy. Operational status remains with the owning repository, provider, or control-plane evidence.
 

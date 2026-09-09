@@ -7,10 +7,10 @@ import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
   title: {
-    default: 'InnerOS System Map',
-    template: '%s — InnerOS'
+    default: 'Super Agents',
+    template: '%s — Super Agents'
   },
-  description: "A navigable, evidence-backed map of Gui's multi-agent operating system.",
+  description: "A navigable, evidence-backed map of Gui's complete agentic operating system.",
   robots: {
     index: false,
     follow: false,
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 
 const navbar = (
   <Navbar
-    logo={<span style={{ fontWeight: 800, fontSize: '1.1rem' }}>InnerOS · System Map</span>}
-    projectLink="https://github.com/GuillaumeRacine/inneros-docs"
+    logo={<span style={{ fontWeight: 800, fontSize: '1.1rem' }}>Super Agents</span>}
+    projectLink="https://github.com/GuillaumeRacine/superagents"
   />
 )
 
@@ -42,7 +42,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <Layout
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/GuillaumeRacine/inneros-docs/tree/main"
+          docsRepositoryBase="https://github.com/GuillaumeRacine/superagents/tree/main"
           footer={footer}
           sidebar={{ defaultMenuCollapseLevel: 1, toggleButton: true }}
           search={<Search placeholder="Search systems, tools, or workflows…" />}

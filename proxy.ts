@@ -15,7 +15,7 @@ function unauthorized() {
     headers: {
       'Cache-Control': 'private, no-store, max-age=0',
       Vary: 'Authorization',
-      'WWW-Authenticate': 'Basic realm="InnerOS Docs", charset="UTF-8"',
+      'WWW-Authenticate': 'Basic realm="Super Agents Docs", charset="UTF-8"',
     },
   })
 }
