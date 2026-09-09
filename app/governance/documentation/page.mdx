@@ -1,6 +1,6 @@
 # Documentation Governance
 
-This portal is a public-source, sanitized map with a second rendered-site access gate. Basic authentication on the website does **not** make the repository content confidential. The client-side search index and machine-navigation files are also public assets because browser workers and crawlers cannot reliably reuse HTTP Basic credentials. Robots are instructed not to index the site.
+This portal is a public-source, sanitized map with a second rendered-site access gate. Google authentication on the website does **not** make the repository content confidential. Auth.js accepts only the exact allowlisted, Google-verified email and the route proxy rechecks that email on every protected request. The client-side search index and machine-navigation files remain public assets because they mirror the sanitized source. Robots are instructed not to index the site.
 
 The current-tree publication scan does not sanitize prior commits. Legacy history is a known hardening gap tracked in [GitHub issue #4](https://github.com/GuillaumeRacine/superagents/issues/4) and must not be described as private or clean until that work is complete.
 
