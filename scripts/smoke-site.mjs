@@ -7,7 +7,7 @@ import { isAllowedEmail } from '../lib/access-policy.mjs'
 const port = 3219
 const baseUrl = `http://127.0.0.1:${port}`
 const canonicalSiteUrl = 'https://superagents-docs.vercel.app'
-const allowedEmail = 'owner@example.com'
+const allowedEmails = 'owner@example.com,personal@example.com'
 const countDocumentationPages = (directory) => readdirSync(directory, { withFileTypes: true })
   .reduce((total, entry) => {
     const path = join(directory, entry.name)
@@ -23,7 +23,7 @@ const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'star
     AUTH_GOOGLE_SECRET: 'local-google-client-secret',
     AUTH_SECRET: 'local-smoke-secret-that-is-long-enough-for-testing',
     AUTH_TRUST_HOST: 'true',
-    AUTHORIZED_GOOGLE_EMAIL: allowedEmail,
+    AUTHORIZED_GOOGLE_EMAILS: allowedEmails,
   },
   stdio: ['ignore', 'pipe', 'pipe'],
 })
@@ -58,9 +58,10 @@ async function response(path, options = {}) {
 try {
   await waitForServer()
 
-  assert(isAllowedEmail('OWNER@example.com', allowedEmail), 'Allowlist must accept only the normalized configured email')
-  assert(!isAllowedEmail('other@example.com', allowedEmail), 'Allowlist must reject a different email')
-  assert(!isAllowedEmail(allowedEmail, ''), 'Allowlist must fail closed when it is not configured')
+  assert(isAllowedEmail('OWNER@example.com', allowedEmails), 'Allowlist must accept the normalized first configured email')
+  assert(isAllowedEmail('personal@example.com', allowedEmails), 'Allowlist must accept the second configured email')
+  assert(!isAllowedEmail('other@example.com', allowedEmails), 'Allowlist must reject an unlisted email from the same domain')
+  assert(!isAllowedEmail('owner@example.com', ''), 'Allowlist must fail closed when it is not configured')
 
   const anonymousHome = await response('/')
   assert(anonymousHome.status === 307, 'Anonymous home request must redirect to Google sign-in')

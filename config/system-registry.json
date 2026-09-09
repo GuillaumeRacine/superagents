@@ -220,12 +220,12 @@
       "source": "This GitHub repository; runtime truth remains with each owning system",
       "measurement": "Pinned package lock, generated registry checks, production build, access matrix, search index, responsive browser review, and deployment evidence.",
       "trigger": "Reviewed documentation change merged to the deploy branch",
-      "permissions": "Public source content must remain sanitized; rendered routes require a Google-verified session whose email exactly matches the server-side allowlist",
+      "permissions": "Public source content must remain sanitized; rendered routes require a Google-verified session whose email exactly matches one of the server-side allowlist entries; domain-wide access is rejected",
       "inputs": "Reviewed registry snapshot, authoritative runbooks, official product docs, and bar-raiser findings",
       "outputs": "Searchable Nextra site, source map, operating guides, and dated system snapshot",
       "proof": "CI checks, dependency audit, production deployment, anonymous redirect and OAuth-provider checks, allowlist rejection, authenticated route checks, and issue closeout",
       "lastVerified": "2026-09-09",
-      "recovery": "Clone the repository, use the pinned Node version, regenerate the registry page, run checks and build, restore the Google OAuth client and exact-email allowlist from managed secrets, then redeploy",
+      "recovery": "Clone the repository, use the pinned Node version, regenerate the registry page, run checks and build, restore the Google OAuth client and exact-address allowlist from managed secrets, then redeploy",
       "version": "Next.js 16.3.4 · Nextra 4.6.1",
       "counts": {}
     }

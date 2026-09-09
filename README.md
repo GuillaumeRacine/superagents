@@ -23,9 +23,11 @@ npm run dev
 
 The rendered site uses Google OAuth through Auth.js and fails closed unless all
 of `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `AUTH_SECRET`, and
-`AUTHORIZED_GOOGLE_EMAIL` are configured. The sign-in callback accepts only a
-Google-verified email that exactly matches `AUTHORIZED_GOOGLE_EMAIL`; the proxy
-rechecks the session email on every protected request.
+`AUTHORIZED_GOOGLE_EMAILS` are configured. The sign-in callback accepts only a
+Google-verified email that exactly matches one of the comma-separated addresses
+in `AUTHORIZED_GOOGLE_EMAILS`; the proxy rechecks the session email on every
+protected request. Store the addresses only in managed environment configuration,
+not in this public repository.
 
 ## Documentation changes
 
