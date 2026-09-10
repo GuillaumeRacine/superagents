@@ -99,7 +99,21 @@ try {
 
   assert(sitemap.status === 200 && sitemapLocations.length === expectedPageCount, `Public sitemap must list all ${expectedPageCount} docs pages`)
   assert(sitemapLocations.every((location) => location === canonicalSiteUrl || location.startsWith(`${canonicalSiteUrl}/`)), `Every sitemap URL must use ${canonicalSiteUrl}`)
-  console.log(`Site smoke checks passed: Google provider, exact-email allowlist, auth redirects, RSC, ${legacyRedirects.length} redirects, search, robots, and sitemap.`)
+
+  const markdownExport = await response('/superagents.md')
+  const markdownBody = await markdownExport.text()
+  const exportedPageCount = (markdownBody.match(/<!-- source-page:/g) ?? []).length
+  assert(markdownExport.status === 200, 'Complete Markdown export must be public')
+  assert(markdownExport.headers.get('content-type')?.startsWith('text/markdown'), 'Complete export must use the Markdown content type')
+  assert(markdownExport.headers.get('content-disposition')?.includes('superagents.md'), 'Complete export must download with the canonical filename')
+  assert(exportedPageCount === expectedPageCount, `Complete Markdown export must contain all ${expectedPageCount} docs pages`)
+
+  const llmsIndex = await response('/llms.txt')
+  const llmsBody = await llmsIndex.text()
+  assert(llmsIndex.status === 200, 'llms.txt must be public')
+  assert(llmsBody.includes(`${canonicalSiteUrl}/superagents.md`), 'llms.txt must link the complete Markdown export')
+  assert(llmsBody.includes(`${canonicalSiteUrl}/sitemap.xml`), 'llms.txt must link the XML sitemap')
+  console.log(`Site smoke checks passed: Google provider, exact-email allowlist, auth redirects, RSC, ${legacyRedirects.length} redirects, search, robots, sitemap, and ${exportedPageCount}-page agent export.`)
 } finally {
   if (server.exitCode === null) {
     server.kill('SIGTERM')

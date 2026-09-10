@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server'
 export const config = {
   // Auth.js owns /api/auth. Pagefind and machine-readable navigation remain
   // public because they mirror this already-public, sanitized repository.
-  matcher: ['/((?!api/auth|_next/static|_next/image|_pagefind|favicon.ico|robots.txt|sitemap.xml).*)'],
+  matcher: ['/((?!api/auth|_next/static|_next/image|_pagefind|favicon.ico|robots.txt|sitemap.xml|superagents.md|llms.txt).*)'],
 }
 
 function protectedResponse(response: NextResponse) {
