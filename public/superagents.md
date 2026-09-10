@@ -287,6 +287,8 @@ Private evidence retains only approved metadata with retention and access contro
 
 ## Decisions this should enable
 
+For the selected [Company Monitor program](/workflows/programs), a source-bound retrospective has independent factual-review evidence and an isolated reproduction record. Human usefulness remains unknown. Structural validation, a matching replay, successful execution and reviewer approval must stay separate from operator acceptance; repeated replays do not become consecutive new outcomes.
+
 Retain capabilities with demonstrated value, repair useful but unreliable ones, and review candidates whose observed use and outcomes are low. Recovery, security and seasonal capabilities may be valuable precisely when rarely invoked. [Lifecycle issue #15](https://github.com/GuillaumeRacine/superagents/issues/15) must account for those exceptions and observation coverage before proposing a reversible retirement.
 
 See [Fleet Evidence](/automation/fleet-evidence) for evidence states and [Programs](/workflows/programs) for the proposed attribution map.
@@ -1209,7 +1211,7 @@ Do not call the estate fully disaster-recoverable until all of these are true:
 
 ### Evidence status reviewed September 10, 2026
 
-This review did not perform a restore drill. **Unknown** means sufficient proof was not established, not that the dependency is absent. [Issue #20](https://github.com/GuillaumeRacine/superagents/issues/20) owns dated private evidence and sanitized updates for every gate.
+The initial editorial review did not perform a restore drill. Subsequent Company Monitor work established the bounded example recovery described below, not a clean-host rebuild. **Unknown** means sufficient proof was not established, not that the dependency is absent. [Issue #20](https://github.com/GuillaumeRacine/superagents/issues/20) owns dated private evidence and sanitized updates for every gate.
 
 | Gate | Status | Missing proof |
 |---|---|---|
@@ -1220,9 +1222,19 @@ This review did not perform a restore drill. **Unknown** means sufficient proof 
 | 5. Critical-data restore samples | Unknown | Backup owners, retention and successful representative restores |
 | 6. Disabled scheduler restore | Unknown | Restore-disabled execution and permission/destination checks |
 | 7. Clean-host rebuild | Unknown | Isolated rebuild without hidden existing-device state |
-| 8. Drill closeout | Unknown | Timings, failures, data-loss window and remediation evidence |
+| 8. Drill closeout | Partial | Bounded example timings, failures and remediation recorded; full recovery and data-loss window unproven |
 
 **Overall wipe-readiness gate: not passed.** Define owner-approved recovery-time and recovery-point targets, then test in an isolated environment. Do not wipe a working device to establish readiness. A downloaded Markdown export is documentation, not a backup of runtime state or application data.
+
+### Company Monitor bounded restore evidence
+
+The [first program milestone](/workflows/programs) reproduced a reviewed retrospective using a fresh GitHub checkout, a new dependency environment, off-device reproduction inputs and original primary-source downloads. Source hashes and rendered content matched. The private owning runbook records the measured elapsed time, dependency failures, tested corrections and exact replay instructions.
+
+No scheduler or publisher was installed or started by the drill; existing host jobs were untouched. Execution used an empty environment and isolated Python mode, not an operating-system security sandbox. The host operating system, Python installation, Git, network trust and existing GitHub authentication were reused. Their independent recovery remains unproven.
+
+Operational cursor and delivery-receipt history were not restored. Bounded discovery found diagnostic artifacts but no such history at the checked canonical locations; absence there does not establish absence on every device or backup. A resumed collection must require its cursor and stop if it is missing or damaged. A deliberately fresh diagnostic or a synthetic state fixture is not recovered history.
+
+Historical replay is explicitly labelled and cannot count as a fresh useful run. This evidence supports example reproducibility only—not full device recovery, credential recovery, scheduled delivery readiness or human usefulness. State backup ownership, retention and activation prerequisites remain open in the private program tracker, summarized through [#23](https://github.com/GuillaumeRacine/superagents/issues/23).
 
 ### Completion definitions
 
@@ -1817,6 +1829,12 @@ Start history/security triage, outcome measurement and attention controls. Estab
 
 The review covered all canonical portal pages and root guidance, with route/link/publication and generated-export checks. It did **not** repeat the remote repository estate scan, enumerate cloud content or secrets, attest other devices, inspect every historical commit, or demonstrate restore readiness. The dated [estate coverage](/estate) remains the limit of those claims.
 
+## Subsequent implementation evidence
+
+[Company Monitor](/workflows/programs) now has bounded source parsing, trusted publisher authorization, source-bound manual analysis and a reviewed retrospective. An [isolated example restore](/recovery/disaster-rebuild#company-monitor-bounded-restore-evidence) retrieved off-device inputs and reproduced the draft; operational history and clean-host recovery remain unproven. These are implemented slices, not closure of the operational issues above. No human acceptance or qualifying consecutive-run sequence is claimed.
+
+The workstation registry comparison also detected drift from the published dated inventory. The existing registry and capability catalog remain historical snapshots, not newly attested current inventories. [Freshness issue #22](https://github.com/GuillaumeRacine/superagents/issues/22) owns reconciliation of changed counts and catalog entries; this program-focused update does not claim an all-device rescan.
+
 ## Research behind the plan
 
 - [OpenTelemetry agent spans](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-agent-spans.md) provide a starting vocabulary for agent execution. Adoption must pin supported conventions; business acceptance is a separate application event, not a span success flag.
@@ -2360,7 +2378,7 @@ Company Monitor is the selected first program under [milestone tracker #23](http
 |---|---|
 | Code and source registry | Context owns the collector, company comparison and reviewed watchlist |
 | Execution | Deterministic Python source collection, numerical comparison and shared draft pipeline; no new agent graph |
-| Capabilities | Primary-source reads, citation/period/arithmetic checks, deduplication and bounded rendering |
+| Capabilities | Primary-source reads, source-bound manual analysis, deduplication and bounded rendering; semantic and arithmetic review remain independent human/reviewer work |
 | Jobs | Diagnostic runs are manual; Hermes owns any later separately approved schedule |
 | Permissions | Read public sources and create local drafts; optional delivery remains explicitly gated |
 | Outcome proof | Independent source review plus genuine usefulness feedback; model or ranker acceptance is insufficient |
@@ -2368,11 +2386,15 @@ Company Monitor is the selected first program under [milestone tracker #23](http
 
 ### September 10 implementation evidence
 
-A fresh GitHub clone completed a source-to-preview diagnostic with isolated state. Public-company comparisons were available, but some official news sources returned access errors, so coverage is partial. This did not enable schedules, advance the live cursor or send notifications.
+A fresh GitHub clone completed source-to-preview diagnostics with isolated state. An official RSS source repaired one news-access gap; another official news endpoint still rejects collection, so coverage remains partial. Feed parsing rejects entity declarations, foreign-host links and malformed input. These checks do not prove complete news coverage or general prompt-injection resistance.
+
+The draft pipeline now accepts a manually authored analytical companion bound to exact comparison data and bounded, hash-checked primary-source snapshots. Required analysis sections and citation references are validated structurally. An independently reviewed retrospective checked the underlying filing figures and interpretation, but the validator does not automatically establish semantic correctness. A numerical comparison alone cannot qualify as the analytical result.
 
 The owning repository now contains tested publisher hardening: destination authority comes from trusted configuration rather than the preview's recomputable hash, and rejected approval/destination checks occur before credential loading. This is a bounded code change—not a claim that all live runtimes have been updated or every injection risk is solved.
 
-**Milestone not passed.** No qualifying human-accepted run is claimed. Remaining work includes source coverage, the full useful analytical result, independent factual checks, attention controls, three natural consecutive results and actual acceptance. A same-host clean clone reused host tools/authentication; it does not prove clean-device recovery or restoration of operational deduplication state.
+An isolated dependency environment reproduced that retrospective from off-device GitHub inputs and original source bytes, with matching rendered content. No schedules or publisher were started. Recovery collection now fails closed on corrupt cursor state or a required missing cursor. See [recovery evidence and remaining boundaries](/recovery/disaster-rebuild#company-monitor-bounded-restore-evidence).
+
+**Milestone not passed.** No qualifying human-accepted run is claimed. The reviewed retrospective and its replays are not new natural events and cannot satisfy three consecutive end-to-end results. Remaining work includes source coverage, repeatable useful analysis, independent factual review for each real run, attention controls and explicit human acceptance. The owning program's existing shadow-period and rollout gates still apply; this milestone does not shorten them.
 
 Private implementation, source-access repair and recovery blockers are tracked at the owning source. [#23](https://github.com/GuillaumeRacine/superagents/issues/23) retains the sanitized progress and links to the public improvement issues.
 
