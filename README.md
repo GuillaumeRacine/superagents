@@ -8,7 +8,10 @@ The portal documents runtimes, capabilities, repositories, devices, data sources
 
 - Website: [superagents-docs.vercel.app](https://superagents-docs.vercel.app)
 - Source and issues: [GuillaumeRacine/superagents](https://github.com/GuillaumeRacine/superagents)
-- Previous GitHub links redirect to this repository. The old Vercel hostname remains a compatibility redirect.
+- Product name: **Super Agents**
+- GitHub repository slug and Vercel project name: `superagents`
+
+The retired Vercel hostname is intentionally detached rather than maintained as a compatibility alias. See [Canonical Naming](https://superagents-docs.vercel.app/governance/naming) for the naming contract.
 
 ## Local development
 
