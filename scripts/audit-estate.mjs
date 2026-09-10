@@ -433,8 +433,7 @@ if (!existsSync(storagePolicyPath)) throw new Error('Canonical storage policy is
 const storagePolicy = readFileSync(storagePolicyPath, 'utf8')
 const storagePolicyRevision = createHash('sha256').update(storagePolicy).digest('hex').slice(0, 16)
 const detectedHost = command('hostname', ['-s']).toLowerCase()
-// SUPERAGENTS_DEVICE_ID is canonical; retain the former name for one migration window.
-const detectedDeviceId = process.env.SUPERAGENTS_DEVICE_ID || process.env.INNEROS_DEVICE_ID
+const detectedDeviceId = process.env.SUPERAGENTS_DEVICE_ID
   || (/office[- ]?mini/.test(detectedHost) ? 'main-mac-mini' : /studio/.test(detectedHost) ? 'studio-mac-mini' : /macbook/.test(detectedHost) ? 'macbook' : null)
 const policyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
 const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {
