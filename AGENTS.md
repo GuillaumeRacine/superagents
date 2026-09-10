@@ -6,6 +6,15 @@
 - Do not publish personal context, private URLs, absolute home paths, customer data, or destructive recovery shortcuts.
 - Before shipping, run `npm run check` and `npm run build`, review the rendered site, then complete the GitHub/deploy/live-proof loop.
 
+## Canonical Naming
+
+- The product and system umbrella is **Super Agents**. Use that exact two-word, title-case form in prose and interface copy.
+- The canonical machine slug is `superagents`. The GitHub repository and Vercel project must both use this slug.
+- The canonical production hostname is `superagents-docs.vercel.app`.
+- Never introduce `InnerOS`, `inneros`, or `inner-os` into an active project name, domain, deployment alias, branch, environment variable, package, route, or new documentation title.
+- The former name may appear only in an explicitly historical record or while removing a legacy identifier. Do not preserve compatibility aliases unless Gui explicitly requests one.
+- Before shipping naming-related work, search the complete current tree and verify the GitHub repository, Vercel project, production aliases, and live page metadata against this contract.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

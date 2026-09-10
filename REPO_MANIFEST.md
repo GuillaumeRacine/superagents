@@ -7,6 +7,7 @@ Canonical Super Agents website and sanitized derived index for Gui's complete ag
 ## Authority
 
 - This repository owns the portal's navigation, explanatory content, publication policy, and public registry snapshot.
+- `AGENTS.md` and `/governance/naming` own the canonical Super Agents naming contract for this repository and its deployment.
 - `config/system-registry.json` owns volatile facts published by the site.
 - Each runtime, private system repository, and deployed surface remains authoritative for its live behavior.
 

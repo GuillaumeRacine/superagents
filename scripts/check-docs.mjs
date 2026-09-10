@@ -18,6 +18,7 @@ function walk(directory) {
 
 const files = walk(root).filter((file) => textExtensions.has(extname(file)))
 const publishable = files.filter((file) => !['package-lock.json', 'scripts/check-docs.mjs'].includes(relative(root, file)))
+const historicalBrandAllowlist = new Set(['AGENTS.md', 'app/reference/history/page.mdx'])
 
 const forbiddenPublicationPatterns = [
   [/\/Users\/[A-Za-z0-9._-]+\//g, 'absolute home path'],
@@ -31,9 +32,13 @@ const forbiddenPublicationPatterns = [
 
 for (const file of publishable) {
   const content = readFileSync(file, 'utf8')
+  const repositoryPath = relative(root, file)
   for (const [pattern, description] of forbiddenPublicationPatterns) {
     pattern.lastIndex = 0
-    if (pattern.test(content)) failures.push(`${relative(root, file)} contains ${description}`)
+    if (pattern.test(content)) failures.push(`${repositoryPath} contains ${description}`)
+  }
+  if (!historicalBrandAllowlist.has(repositoryPath) && /\binner[ _-]?os\b/i.test(content)) {
+    failures.push(`${repositoryPath} contains the retired product name outside the historical allowlist`)
   }
 }
 
