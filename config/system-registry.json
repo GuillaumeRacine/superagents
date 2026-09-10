@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T21:53:45-04:00",
+  "asOf": "2026-09-09T11:07:29-04:00",
   "scope": "Sanitized architecture and operating metadata only; no credentials, personal context, private URLs, or customer data.",
   "systems": [
     {
@@ -45,7 +45,7 @@
       "proof": "Repository checks plus the same GitHub/deploy closeout contract used by other coding runtimes",
       "lastVerified": "2026-09-08",
       "recovery": "Restore the private vault and runtime settings, run the guarded setup workflow, then compare runtime and vault inventories before use",
-      "version": "2.1.265",
+      "version": "2.1.266",
       "counts": {
         "agentDefinitions": 111,
         "slashCommands": 148,
@@ -75,8 +75,8 @@
       "version": "0.17.0 · local fork with 39 carried commits",
       "counts": {
         "profiles": 6,
-        "scheduledJobs": 81,
-        "enabledJobs": 60,
+        "scheduledJobs": 82,
+        "enabledJobs": 61,
         "pausedJobs": 21,
         "activeUserSkillManifests": 105
       }
@@ -220,12 +220,12 @@
       "source": "This GitHub repository; runtime truth remains with each owning system",
       "measurement": "Pinned package lock, generated registry checks, production build, access matrix, search index, responsive browser review, and deployment evidence.",
       "trigger": "Reviewed documentation change merged to the deploy branch",
-      "permissions": "Public source content must remain sanitized; rendered site also requires configured access credentials",
+      "permissions": "Public source content must remain sanitized; rendered routes require a Google-verified session whose email exactly matches one of the server-side allowlist entries; domain-wide access is rejected",
       "inputs": "Reviewed registry snapshot, authoritative runbooks, official product docs, and bar-raiser findings",
       "outputs": "Searchable Nextra site, source map, operating guides, and dated system snapshot",
-      "proof": "CI checks, dependency audit, production deployment, unauthenticated/authenticated route checks, and issue closeout",
-      "lastVerified": "2026-09-08",
-      "recovery": "Clone the repository, use the pinned Node version, regenerate the registry page, run checks and build, then redeploy with access variables",
+      "proof": "CI checks, dependency audit, production deployment, anonymous redirect and OAuth-provider checks, allowlist rejection, authenticated route checks, and issue closeout",
+      "lastVerified": "2026-09-09",
+      "recovery": "Clone the repository, use the pinned Node version, regenerate the registry page, run checks and build, restore the Google OAuth client and exact-address allowlist from managed secrets, then redeploy",
       "version": "Next.js 16.3.4 · Nextra 4.6.1",
       "counts": {}
     }

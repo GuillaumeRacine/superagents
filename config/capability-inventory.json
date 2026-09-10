@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-08T21:53:45-04:00",
+  "asOf": "2026-09-09T11:07:29-04:00",
   "scope": "Complete at the sanitized capability-group level. Private agent names, job names, personal schedules, and machine paths remain in their owning private inventories.",
   "inventories": [
     {
@@ -214,9 +214,9 @@
       "id": "hermes-jobs",
       "title": "Hermes scheduled jobs",
       "runtime": "Hermes",
-      "count": 81,
+      "count": 82,
       "detailLevel": "grouped-private",
-      "state": "60 enabled; 21 paused",
+      "state": "61 enabled; 21 paused",
       "source": "Private Hermes cron registry",
       "countingRule": "Every job object in the active jobs registry; enabled and paused are partitioned by the enabled Boolean.",
       "items": [
