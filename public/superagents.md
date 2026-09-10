@@ -2352,6 +2352,32 @@ Source page: [Programs](https://superagents-docs.vercel.app/workflows/programs)
 
 Programs explain what the agent estate is for. Workflows describe reusable methods; capabilities implement steps. A program needs an outcome and proof, not merely a collection of agents.
 
+## First load-bearing milestone: Company Monitor
+
+Company Monitor is the selected first program under [milestone tracker #23](https://github.com/GuillaumeRacine/superagents/issues/23). Its existing purpose is evidence-linked company-change research for Gui, not investment advice or authority to act. The private owning repository retains its native product acceptance and rollout requirements.
+
+| Component | Confirmed mapping |
+|---|---|
+| Code and source registry | Context owns the collector, company comparison and reviewed watchlist |
+| Execution | Deterministic Python source collection, numerical comparison and shared draft pipeline; no new agent graph |
+| Capabilities | Primary-source reads, citation/period/arithmetic checks, deduplication and bounded rendering |
+| Jobs | Diagnostic runs are manual; Hermes owns any later separately approved schedule |
+| Permissions | Read public sources and create local drafts; optional delivery remains explicitly gated |
+| Outcome proof | Independent source review plus genuine usefulness feedback; model or ranker acceptance is insufficient |
+| Recovery | Exact GitHub revision, isolated dependencies/state, off-device cursor/baseline/receipt backups and managed credentials where needed |
+
+### September 10 implementation evidence
+
+A fresh GitHub clone completed a source-to-preview diagnostic with isolated state. Public-company comparisons were available, but some official news sources returned access errors, so coverage is partial. This did not enable schedules, advance the live cursor or send notifications.
+
+The owning repository now contains tested publisher hardening: destination authority comes from trusted configuration rather than the preview's recomputable hash, and rejected approval/destination checks occur before credential loading. This is a bounded code change—not a claim that all live runtimes have been updated or every injection risk is solved.
+
+**Milestone not passed.** No qualifying human-accepted run is claimed. Remaining work includes source coverage, the full useful analytical result, independent factual checks, attention controls, three natural consecutive results and actual acceptance. A same-host clean clone reused host tools/authentication; it does not prove clean-device recovery or restoration of operational deduplication state.
+
+Private implementation, source-access repair and recovery blockers are tracked at the owning source. [#23](https://github.com/GuillaumeRacine/superagents/issues/23) retains the sanitized progress and links to the public improvement issues.
+
+## Other candidate program labels
+
 | Candidate program label | Proposed workflow connection | Evidence still needed |
 |---|---|---|
 | Alpha factory | [Research](/workflows/research) to a reviewed decision or experiment | Confirm scope, owner, canonical repositories, job IDs and accepted result |
