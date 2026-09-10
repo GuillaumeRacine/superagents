@@ -12,7 +12,7 @@ Company Monitor is the selected first program under [milestone tracker #23](http
 |---|---|
 | Code and source registry | Context owns the collector, company comparison and reviewed watchlist |
 | Execution | Deterministic Python source collection, numerical comparison and shared draft pipeline; no new agent graph |
-| Capabilities | Primary-source reads, citation/period/arithmetic checks, deduplication and bounded rendering |
+| Capabilities | Primary-source reads, source-bound manual analysis, deduplication and bounded rendering; semantic and arithmetic review remain independent human/reviewer work |
 | Jobs | Diagnostic runs are manual; Hermes owns any later separately approved schedule |
 | Permissions | Read public sources and create local drafts; optional delivery remains explicitly gated |
 | Outcome proof | Independent source review plus genuine usefulness feedback; model or ranker acceptance is insufficient |
@@ -20,11 +20,15 @@ Company Monitor is the selected first program under [milestone tracker #23](http
 
 ### September 10 implementation evidence
 
-A fresh GitHub clone completed a source-to-preview diagnostic with isolated state. Public-company comparisons were available, but some official news sources returned access errors, so coverage is partial. This did not enable schedules, advance the live cursor or send notifications.
+A fresh GitHub clone completed source-to-preview diagnostics with isolated state. An official RSS source repaired one news-access gap; another official news endpoint still rejects collection, so coverage remains partial. Feed parsing rejects entity declarations, foreign-host links and malformed input. These checks do not prove complete news coverage or general prompt-injection resistance.
+
+The draft pipeline now accepts a manually authored analytical companion bound to exact comparison data and bounded, hash-checked primary-source snapshots. Required analysis sections and citation references are validated structurally. An independently reviewed retrospective checked the underlying filing figures and interpretation, but the validator does not automatically establish semantic correctness. A numerical comparison alone cannot qualify as the analytical result.
 
 The owning repository now contains tested publisher hardening: destination authority comes from trusted configuration rather than the preview's recomputable hash, and rejected approval/destination checks occur before credential loading. This is a bounded code change—not a claim that all live runtimes have been updated or every injection risk is solved.
 
-**Milestone not passed.** No qualifying human-accepted run is claimed. Remaining work includes source coverage, the full useful analytical result, independent factual checks, attention controls, three natural consecutive results and actual acceptance. A same-host clean clone reused host tools/authentication; it does not prove clean-device recovery or restoration of operational deduplication state.
+An isolated dependency environment reproduced that retrospective from off-device GitHub inputs and original source bytes, with matching rendered content. No schedules or publisher were started. Recovery collection now fails closed on corrupt cursor state or a required missing cursor. See [recovery evidence and remaining boundaries](/recovery/disaster-rebuild#company-monitor-bounded-restore-evidence).
+
+**Milestone not passed.** No qualifying human-accepted run is claimed. The reviewed retrospective and its replays are not new natural events and cannot satisfy three consecutive end-to-end results. Remaining work includes source coverage, repeatable useful analysis, independent factual review for each real run, attention controls and explicit human acceptance. The owning program's existing shadow-period and rollout gates still apply; this milestone does not shorten them.
 
 Private implementation, source-access repair and recovery blockers are tracked at the owning source. [#23](https://github.com/GuillaumeRacine/superagents/issues/23) retains the sanitized progress and links to the public improvement issues.
 
