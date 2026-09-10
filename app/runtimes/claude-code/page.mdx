@@ -10,6 +10,8 @@ The runtime reads its prompt and session, the applicable `CLAUDE.md` chain, proj
 
 The active runtime tree and the vault's curated Claude tree are related but not identical. They are regular directories with divergent inventories, not live mirrors. Treat differences as a reconciliation task, never as proof that one silently updated the other.
 
+The target in [issue #18](https://github.com/GuillaumeRacine/superagents/issues/18) is one declared owner per configuration class and guarded one-way deployment of managed definitions into the runtime. This is planned, not enabled. Generated plugin state, caches, machine-local settings and secret references need explicit ownership/exclusions; a whole-directory mirror could overwrite valid runtime state. Dry-run, hash checks, atomic application and rollback must precede rollout.
+
 ## Delivery contract
 
 For repository work, Claude follows the same durable endpoint as Codex: relevant checks, commit, push, deployment when applicable, live verification, and a GitHub evidence record.

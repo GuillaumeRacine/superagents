@@ -69,6 +69,25 @@ Do not call the estate fully disaster-recoverable until all of these are true:
 
 ## What “complete” means
 
+### Evidence status reviewed September 10, 2026
+
+This review did not perform a restore drill. **Unknown** means sufficient proof was not established, not that the dependency is absent. [Issue #20](https://github.com/GuillaumeRacine/superagents/issues/20) owns dated private evidence and sanitized updates for every gate.
+
+| Gate | Status | Missing proof |
+|---|---|---|
+| 1. Off-device break-glass access | Unknown | Independent account and MFA recovery test |
+| 2. Required repositories and revisions | Partial | Estate inventory exists; required restore revisions not established |
+| 3. Reproducible host declarations | Unknown | Complete setup manifest and execution proof for each host |
+| 4. All secret consumers recoverable | Unknown | Item/reference coverage and recovery test; OAuth follow-up [#9](https://github.com/GuillaumeRacine/superagents/issues/9) |
+| 5. Critical-data restore samples | Unknown | Backup owners, retention and successful representative restores |
+| 6. Disabled scheduler restore | Unknown | Restore-disabled execution and permission/destination checks |
+| 7. Clean-host rebuild | Unknown | Isolated rebuild without hidden existing-device state |
+| 8. Drill closeout | Unknown | Timings, failures, data-loss window and remediation evidence |
+
+**Overall wipe-readiness gate: not passed.** Define owner-approved recovery-time and recovery-point targets, then test in an isolated environment. Do not wipe a working device to establish readiness. A downloaded Markdown export is documentation, not a backup of runtime state or application data.
+
+### Completion definitions
+
 - **Documentation-complete** means the portal names every known class of component, owner, source, permission boundary, and recovery dependency at a sanitized level.
 - **Inventory-complete** means every accessible repository and every directly queried runtime surface is accounted for under the stated counting rules.
 - **Disaster-recovery complete** requires a successful clean-host restore from off-device sources. Documentation and inventory are necessary, but they are not proof of restoration.

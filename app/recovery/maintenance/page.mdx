@@ -1,10 +1,12 @@
 # Maintenance
 
-## Weekly
+## Daily operational review
 
 - Review failed or unverified fleet evidence.
 - Resolve runtime-to-vault inventory drift that affects active work.
 - Confirm critical repositories are pushed and deployments are healthy.
+
+This is the operating policy, not a claim that a new review job has been enabled. Hermes owns scheduling. Learning loops should iterate hourly where practical and daily at most; delivery can be batched under the [operator contract](/automation/operator-interface).
 
 ## Monthly
 
@@ -21,3 +23,5 @@
 - Challenge the architecture with an independent bar-raiser review.
 
 Refresh the registry verification date only when the underlying checks were actually performed.
+
+Open lifecycle, configuration, fork and recovery work has owners and review targets in the [Improvement Roadmap](/reference/improvement-roadmap). Missing usage evidence is not grounds for automatically removing recovery or seasonal capabilities.

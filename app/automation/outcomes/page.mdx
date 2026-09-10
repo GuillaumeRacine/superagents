@@ -1,0 +1,24 @@
+# Outcomes & Utilization
+
+**Status: measurement contract proposed; complete outcome baseline not yet verified.** [Issue #14](https://github.com/GuillaumeRacine/superagents/issues/14) owns implementation in Context and the sanitized portal view.
+
+Context's existing fleet scoreboard has run, cost and evidence fields. That is useful infrastructure, but it does not establish which capability produced a result that Gui used. Do not display fabricated zeros or infer usefulness from delivery receipts.
+
+| Measure | Required evidence | Avoid counting |
+|---|---|---|
+| Capability use over a rolling observation window | Stable capability ID, run ID, timestamp, runtime and collector coverage | Catalog entries, retries as new work, missing logs as zero use |
+| Jobs with acted-on output | Explicit operator acceptance or a verified, authorized downstream action linked to the output | A sent notification, model self-rating, or successful process exit |
+| Shipped slices | Distinct delivered change with commit, relevant deploy and verified outcome | Every commit as a separate outcome; documentation work mixed invisibly with product delivery |
+| Operator burden | Dismissals, corrections, cleanup and useful actions with a defined denominator | Guessed time savings or unrecorded acceptance |
+
+## Implementation contract
+
+Use stable program/capability/run identifiers and idempotent ingestion. Preserve parent-child relationships without double counting. Show window boundaries, participating devices, collector uptime, known missing sources and stale-data warnings. A partial observation window must remain partial.
+
+Private evidence retains only approved metadata with retention and access controls. The public portal receives reviewed aggregates, never prompts, inbox content, credentials, private destinations or private repository identifiers. Start with one end-to-end program and representative scheduled job before expanding.
+
+## Decisions this should enable
+
+Retain capabilities with demonstrated value, repair useful but unreliable ones, and review candidates whose observed use and outcomes are low. Recovery, security and seasonal capabilities may be valuable precisely when rarely invoked. [Lifecycle issue #15](https://github.com/GuillaumeRacine/superagents/issues/15) must account for those exceptions and observation coverage before proposing a reversible retirement.
+
+See [Fleet Evidence](/automation/fleet-evidence) for evidence states and [Programs](/workflows/programs) for the proposed attribution map.

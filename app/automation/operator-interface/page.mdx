@@ -1,0 +1,23 @@
+# Operator Interface
+
+**Status: contract proposed; global notification budget enforcement is not verified.** [Issue #16](https://github.com/GuillaumeRacine/superagents/issues/16) owns the private preferences, implementation and pilot.
+
+An agent should reduce decision and cleanup work, not merely send more reports. Hermes owns scheduled delivery; Context owns the policy/evidence view. Existing channels must share one budget rather than each interpreting a limit independently.
+
+## Policy to configure
+
+| Setting | Required decision |
+|---|---|
+| Push budget | Operator-selected global cap, counted across channels |
+| Digest windows | Preferred delivery times and destination, stored privately |
+| Quiet hours | Timezone-aware interval, including travel and daylight-saving behavior |
+| Critical exceptions | Explicit event classes allowed to bypass quiet hours, with audited reasons |
+| Deduplication | Stable event identity, retry handling and suppression window |
+| Deferred work | Durable digest queue, expiry and next-action ownership |
+| Review | Daily operational triage; hourly learning where practical, separate from notification frequency |
+
+No numeric cap or quiet-hour time is asserted as Gui's approved preference here. Proposed settings must be evaluated in shadow mode before changing delivery. Test concurrent senders, restarts, bursts, offline delivery and timezone changes.
+
+Every actionable item should carry the decision needed, supporting evidence and the consequence of waiting. Routine unchanged state stays quiet. Budget suppression must not silently lose critical events or turn a model's urgency claim into a bypass.
+
+Use [Outcomes](/automation/outcomes) to measure whether notifications led to useful actions; the number sent is not a success metric.

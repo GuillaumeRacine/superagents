@@ -6,12 +6,14 @@ Super Agents uses several scheduling surfaces, each with a distinct job.
 |---|---|
 | Hermes cron | Primary persistent schedules and message-driven operations |
 | Context workflows | Automation definitions, collectors, evidence contracts, and fleet reporting |
-| Codex scheduled tasks | Lightweight task follow-ups and recurring work attached to Codex |
+| Codex scheduled tasks | Exception only when explicitly requested, or when Hermes is unavailable and Gui authorizes fallback |
 | GitHub Actions | Repository CI, security checks, and deployment gates |
 | Launch services | Local process availability where a host service must stay running |
 
 Do not count a scheduler entry as a verified outcome. Every material automation needs a destination and an independent evidence signal.
 
 Start with [Scheduling](/automation/scheduling), then use [Fleet Evidence](/automation/fleet-evidence) to interpret results.
+
+[Outcomes](/automation/outcomes) defines useful-result measurement; [Operator Interface](/automation/operator-interface) defines the proposed attention contract. Neither is a claim that all collectors or delivery controls are implemented.
 
 The [Capability Inventory](/reference/capability-inventory) records current profiles, job totals and states, and the sanitized schedule categories.

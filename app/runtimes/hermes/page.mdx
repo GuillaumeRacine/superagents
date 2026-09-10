@@ -4,7 +4,7 @@ Hermes is the persistent agent gateway and primary scheduler. It connects profil
 
 ## What it owns
 
-- Six task-oriented profiles at the current snapshot
+- Task-oriented profiles listed in the [capability inventory](/reference/capability-inventory)
 - Slack, Telegram, and Discord delivery paths
 - The main unattended job catalog
 - Persistent memory and profile-specific toolsets
@@ -17,3 +17,7 @@ A job needs both a schedule and a permission contract. Read-only collection can 
 ## Proof model
 
 Scheduler state proves that a job was invoked. Outcome evidence belongs in the Context fleet scoreboard or the system's own durable destination. See [Fleet Evidence](/automation/fleet-evidence).
+
+## Fork upgrade policy work
+
+[Issue #21](https://github.com/GuillaumeRacine/superagents/issues/21) tracks a carried-patch ledger, upstream/security review and tested upgrade branch. A maintenance policy has not been verified estate-wide. Each retained patch needs a reason, owner, test and review date; candidate upgrades must pass gateway/profile/tool checks and restore-disabled scheduler tests with rollback to a pinned known-good revision. Do not rebase the live fork merely because a calendar interval elapsed.
