@@ -11,6 +11,14 @@ The portal documents runtimes, capabilities, repositories, devices, data sources
 - Product name: **Super Agents**
 - GitHub repository slug and Vercel project name: `superagents`
 
+## Agent and offline exports
+
+- Complete Markdown corpus: [superagents-docs.vercel.app/superagents.md](https://superagents-docs.vercel.app/superagents.md)
+- Agent discovery index: [superagents-docs.vercel.app/llms.txt](https://superagents-docs.vercel.app/llms.txt)
+- XML sitemap: [superagents-docs.vercel.app/sitemap.xml](https://superagents-docs.vercel.app/sitemap.xml)
+
+The Markdown corpus and discovery index are generated from every canonical page and verified for drift in CI.
+
 The retired Vercel hostname is intentionally detached rather than maintained as a compatibility alias. See [Canonical Naming](https://superagents-docs.vercel.app/governance/naming) for the naming contract.
 
 ## Local development

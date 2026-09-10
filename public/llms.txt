@@ -1,0 +1,62 @@
+# Super Agents
+
+> A sanitized, evidence-backed map of Gui's complete agentic operating environment.
+
+## Complete export
+
+- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 50 canonical pages.
+- [XML sitemap](https://superagents-docs.vercel.app/sitemap.xml): Machine-readable list of canonical website routes.
+- [GitHub source](https://github.com/GuillaumeRacine/superagents): Versioned source and generation scripts.
+
+## Documentation pages
+
+- [Super Agents](https://superagents-docs.vercel.app)
+- [Architecture](https://superagents-docs.vercel.app/architecture)
+- [Design Principles](https://superagents-docs.vercel.app/architecture/design-principles)
+- [Sources of Truth](https://superagents-docs.vercel.app/architecture/sources-of-truth)
+- [Automation & Operations](https://superagents-docs.vercel.app/automation)
+- [Fleet Evidence](https://superagents-docs.vercel.app/automation/fleet-evidence)
+- [NightCrew](https://superagents-docs.vercel.app/automation/nightcrew)
+- [Scheduling](https://superagents-docs.vercel.app/automation/scheduling)
+- [Capabilities](https://superagents-docs.vercel.app/capabilities)
+- [Agents & Subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents)
+- [Browser & Computer Use](https://superagents-docs.vercel.app/capabilities/browser-computer-use)
+- [MCP & Tools](https://superagents-docs.vercel.app/capabilities/mcp-tools)
+- [Skills & Plugins](https://superagents-docs.vercel.app/capabilities/skills-plugins)
+- [Context & Memory](https://superagents-docs.vercel.app/context-memory)
+- [Context Layering](https://superagents-docs.vercel.app/context-memory/layering)
+- [Storage Model](https://superagents-docs.vercel.app/context-memory/storage)
+- [Estate Coverage](https://superagents-docs.vercel.app/estate)
+- [Agentic Components](https://superagents-docs.vercel.app/estate/components)
+- [Data Sources & Integrations](https://superagents-docs.vercel.app/estate/data-sources)
+- [Devices & Hosts](https://superagents-docs.vercel.app/estate/devices)
+- [Repository Coverage](https://superagents-docs.vercel.app/estate/repositories)
+- [Governance & Safety](https://superagents-docs.vercel.app/governance)
+- [Documentation Governance](https://superagents-docs.vercel.app/governance/documentation)
+- [Canonical Naming](https://superagents-docs.vercel.app/governance/naming)
+- [Permissions](https://superagents-docs.vercel.app/governance/permissions)
+- [Secrets](https://superagents-docs.vercel.app/governance/secrets)
+- [Recovery & Rebuild](https://superagents-docs.vercel.app/recovery)
+- [Disaster Rebuild Readiness](https://superagents-docs.vercel.app/recovery/disaster-rebuild)
+- [Maintenance](https://superagents-docs.vercel.app/recovery/maintenance)
+- [New Device](https://superagents-docs.vercel.app/recovery/new-device)
+- [Reference](https://superagents-docs.vercel.app/reference)
+- [Agent & Offline Export](https://superagents-docs.vercel.app/reference/agent-export)
+- [Canonical Sources](https://superagents-docs.vercel.app/reference/canonical-sources)
+- [Capability Inventory](https://superagents-docs.vercel.app/reference/capability-inventory)
+- [Glossary](https://superagents-docs.vercel.app/reference/glossary)
+- [History & Scope](https://superagents-docs.vercel.app/reference/history)
+- [System Registry](https://superagents-docs.vercel.app/reference/system-registry)
+- [Systems & Surfaces](https://superagents-docs.vercel.app/runtimes)
+- [Claude Code](https://superagents-docs.vercel.app/runtimes/claude-code)
+- [Codex](https://superagents-docs.vercel.app/runtimes/codex)
+- [Companions & Compatibility](https://superagents-docs.vercel.app/runtimes/companions)
+- [Hermes](https://superagents-docs.vercel.app/runtimes/hermes)
+- [Start Here](https://superagents-docs.vercel.app/start-here)
+- [Choose a Runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime)
+- [Operating Loop](https://superagents-docs.vercel.app/start-here/operating-loop)
+- [Workflows](https://superagents-docs.vercel.app/workflows)
+- [Personal Operations](https://superagents-docs.vercel.app/workflows/personal-operations)
+- [Project Delivery](https://superagents-docs.vercel.app/workflows/project-delivery)
+- [Publishing](https://superagents-docs.vercel.app/workflows/publishing)
+- [Research](https://superagents-docs.vercel.app/workflows/research)

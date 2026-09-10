@@ -1,0 +1,20 @@
+# Agent & Offline Export
+
+Use these generated, public artifacts to give an agent the complete sanitized documentation set or to save a portable copy on any device.
+
+## Download and discovery
+
+- [Download the complete Markdown corpus](/superagents.md) — every canonical documentation page in one file, with its source path and website route
+- [Open `llms.txt`](/llms.txt) — an agent-friendly discovery index linking the complete export, sitemap, repository, and every documentation page
+- [Open the XML sitemap](/sitemap.xml) — the canonical machine-readable route list
+- [Open the GitHub repository](https://github.com/GuillaumeRacine/superagents) — versioned sources and export generator
+
+The Markdown corpus and `llms.txt` are intentionally public because they contain only the same sanitized content already published in the public repository. Interactive website pages still require an approved Google account.
+
+## Agent usage
+
+Give an agent `https://superagents-docs.vercel.app/llms.txt` for discovery or `https://superagents-docs.vercel.app/superagents.md` when it needs the entire corpus in one request. On a phone or computer, open the Markdown link and use the browser's download or **Save to Files** action.
+
+## Freshness contract
+
+`npm run docs:generate` rebuilds both exports from every `app/**/page.mdx` file. CI compares the committed artifacts with the canonical pages and fails if a page is missing or either export is stale.

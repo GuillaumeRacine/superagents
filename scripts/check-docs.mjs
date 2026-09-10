@@ -18,7 +18,7 @@ function walk(directory) {
 
 const files = walk(root).filter((file) => textExtensions.has(extname(file)))
 const publishable = files.filter((file) => !['package-lock.json', 'scripts/check-docs.mjs'].includes(relative(root, file)))
-const historicalBrandAllowlist = new Set(['AGENTS.md', 'app/reference/history/page.mdx'])
+const historicalBrandAllowlist = new Set(['AGENTS.md', 'app/reference/history/page.mdx', 'public/superagents.md'])
 
 const forbiddenPublicationPatterns = [
   [/\/Users\/[A-Za-z0-9._-]+\//g, 'absolute home path'],
@@ -47,6 +47,14 @@ const routeFiles = new Set(appPages.map((file) => {
   const name = relative(resolve(root, 'app'), file).replace(/\/page\.mdx$/, '')
   return name ? `/${name}` : '/'
 }))
+const staticRoutes = new Set([
+  '/llms.txt',
+  '/robots.txt',
+  '/sitemap.xml',
+  ...files
+    .filter((file) => file.startsWith(resolve(root, 'public')))
+    .map((file) => `/${relative(resolve(root, 'public'), file)}`),
+])
 
 const requiredLegacyRoutes = [
   '/getting-started',
@@ -78,7 +86,7 @@ for (const file of appPages) {
 
   for (const match of content.matchAll(/\[[^\]]+\]\((\/[^)\s#?]*)(?:[?#][^)]*)?\)/g)) {
     const target = match[1] || '/'
-    if (!routeFiles.has(target)) failures.push(`${relative(root, file)} links to missing route ${target}`)
+    if (!routeFiles.has(target) && !staticRoutes.has(target)) failures.push(`${relative(root, file)} links to missing route ${target}`)
   }
 }
 
