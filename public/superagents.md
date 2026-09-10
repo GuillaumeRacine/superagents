@@ -287,7 +287,7 @@ Private evidence retains only approved metadata with retention and access contro
 
 ## Decisions this should enable
 
-For the selected [Company Monitor program](/workflows/programs), a source-bound retrospective has independent factual-review evidence and an isolated reproduction record. Human usefulness remains unknown. Structural validation, a matching replay, successful execution and reviewer approval must stay separate from operator acceptance; repeated replays do not become consecutive new outcomes.
+For the selected [Company Monitor program](/workflows/programs), a source-bound retrospective and a real dated announcement brief have separate factual-review evidence and bounded reproduction records. The announcement reviewer found useful analyst triage, but Gui's acceptance remains unknown. Structural validation, a matching replay, successful execution and reviewer approval must stay separate from operator acceptance; repeated replays do not become consecutive new outcomes. A displayed ranking score is not independently validated usefulness. No qualifying human-accepted sequence is established.
 
 Retain capabilities with demonstrated value, repair useful but unreliable ones, and review candidates whose observed use and outcomes are low. Recovery, security and seasonal capabilities may be valuable precisely when rarely invoked. [Lifecycle issue #15](https://github.com/GuillaumeRacine/superagents/issues/15) must account for those exceptions and observation coverage before proposing a reversible retirement.
 
@@ -1230,6 +1230,10 @@ The initial editorial review did not perform a restore drill. Subsequent Company
 
 The [first program milestone](/workflows/programs) reproduced a reviewed retrospective using a fresh GitHub checkout, a new dependency environment, off-device reproduction inputs and original primary-source downloads. Source hashes and rendered content matched. The private owning runbook records the measured elapsed time, dependency failures, tested corrections and exact replay instructions.
 
+A later dated-announcement drill used another fresh GitHub clone, candidate and analysis metadata retrieved from GitHub, and independently re-fetched official sources. Source hashes and the rendered brief matched without reading the original local inputs or snapshots. The measured source-fetch and preparation time excluded cloning and host provisioning; it is not a machine-recovery target. The private tracker retains the exact artifact, command and timing.
+
+**Historical source retention remains unresolved.** Successful re-fetching now does not guarantee the same bytes after the publisher changes or removes a page. An owned off-device snapshot retention policy and a restore test independent of mutable upstream pages are still required. Do not silently rebind changed hashes to claim a successful historical replay.
+
 No scheduler or publisher was installed or started by the drill; existing host jobs were untouched. Execution used an empty environment and isolated Python mode, not an operating-system security sandbox. The host operating system, Python installation, Git, network trust and existing GitHub authentication were reused. Their independent recovery remains unproven.
 
 Operational cursor and delivery-receipt history were not restored. Bounded discovery found diagnostic artifacts but no such history at the checked canonical locations; absence there does not establish absence on every device or backup. A resumed collection must require its cursor and stop if it is missing or damaged. A deliberately fresh diagnostic or a synthetic state fixture is not recovered history.
@@ -1833,6 +1837,8 @@ The review covered all canonical portal pages and root guidance, with route/link
 
 [Company Monitor](/workflows/programs) now has bounded source parsing, trusted publisher authorization, source-bound manual analysis and a reviewed retrospective. An [isolated example restore](/recovery/disaster-rebuild#company-monitor-bounded-restore-evidence) retrieved off-device inputs and reproduced the draft; operational history and clean-host recovery remain unproven. These are implemented slices, not closure of the operational issues above. No human acceptance or qualifying consecutive-run sequence is claimed.
 
+The same pipeline now supports reviewed dated announcements with stable event identities, explicit date precision and unknown historical comparisons. A real announcement brief passed independent factual review and a matching off-device-input replay. Repeat-event receipt tests and Hermes shadow attention-policy work also progressed. This does not establish live fleet enforcement, durable source-snapshot retention, operator acceptance or a complete restore. The [program evidence](/workflows/programs) and [recovery boundaries](/recovery/disaster-rebuild) distinguish those states.
+
 The workstation registry comparison also detected drift from the published dated inventory. The existing registry and capability catalog remain historical snapshots, not newly attested current inventories. [Freshness issue #22](https://github.com/GuillaumeRacine/superagents/issues/22) owns reconciliation of changed counts and catalog entries; this program-focused update does not claim an all-device rescan.
 
 ## Research behind the plan
@@ -2390,7 +2396,13 @@ A fresh GitHub clone completed source-to-preview diagnostics with isolated state
 
 The draft pipeline now accepts a manually authored analytical companion bound to exact comparison data and bounded, hash-checked primary-source snapshots. Required analysis sections and citation references are validated structurally. An independently reviewed retrospective checked the underlying filing figures and interpretation, but the validator does not automatically establish semantic correctness. A numerical comparison alone cannot qualify as the analytical result.
 
+Dated official announcements now use the same preparation path. A reviewed event registry supplies stable identities, exact source URLs, publication dates and correction relationships. Page fingerprints and analyst wording cannot create a new identity for the same registered event. Missing historical or financial comparisons remain explicitly unknown; date-only publication is kept separate from retrieval time. This remains manual shadow analysis, not automatic adoption or delivery.
+
+A real dated announcement brief passed a separate factual review against retained snapshots and live primary sources, including its bounded cost arithmetic and control caveats. The reviewer found useful analyst triage; **Gui's acceptance remains unknown**. Its ranking score is not a validated usefulness measure. A fresh GitHub clone and off-device input metadata reproduced the same brief from re-fetched, hash-matching sources. That replay is not another natural run, and mutable publisher URLs are not durable historical backups.
+
 The owning repository now contains tested publisher hardening: destination authority comes from trusted configuration rather than the preview's recomputable hash, and rejected approval/destination checks occur before credential loading. This is a bounded code change—not a claim that all live runtimes have been updated or every injection risk is solved.
+
+Receipt tests also block repeat notification of a registered event across different briefs and changed wording/page hashes. Hermes has a shadow attention-policy evaluator and a receipt-metadata adapter, but incomplete cross-producer history remains a hold. These tests do not establish fleet-wide enforcement or authorize live notification.
 
 An isolated dependency environment reproduced that retrospective from off-device GitHub inputs and original source bytes, with matching rendered content. No schedules or publisher were started. Recovery collection now fails closed on corrupt cursor state or a required missing cursor. See [recovery evidence and remaining boundaries](/recovery/disaster-rebuild#company-monitor-bounded-restore-evidence).
 
