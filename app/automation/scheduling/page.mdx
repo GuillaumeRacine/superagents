@@ -4,7 +4,7 @@
 
 | Requirement | Owner |
 |---|---|
-| Continue or revisit the current Codex task | Codex scheduled task |
+| Recurring, delayed, monitoring or background agent work | Hermes |
 | Persistent message delivery or local operational schedule | Hermes cron |
 | Repository test, release, or security gate | GitHub Actions |
 | Host daemon lifecycle | Launch service |
@@ -19,3 +19,7 @@
 5. Confirm recovery and disable paths.
 
 Stay quiet when unchanged state is expected. Notify on meaningful change, completion, failure, or required operator action.
+
+Hermes is the authoritative owner for scheduled agent work, including follow-ups originating in another runtime. Codex scheduling requires an explicit exception, or Hermes unavailability plus Gui's fallback authorization. Existing Codex jobs should be reviewed for migration, not silently extended.
+
+For learning loops, prefer hourly iterations where practical and daily at most unless the external process genuinely requires longer observation. This does not require hourly notifications: delivery follows the [operator attention contract](/automation/operator-interface). Numeric limits and quiet hours remain planned until configured and tested.

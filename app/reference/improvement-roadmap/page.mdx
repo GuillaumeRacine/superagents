@@ -1,0 +1,48 @@
+# Improvement Roadmap
+
+Reviewed **September 10, 2026** against Claude's challenge, the canonical portal pages, registry sources, selected Context telemetry schema, and primary implementation guidance. This is an editorial review date, not a new all-repository or all-device verification. [GitHub tracker #23](https://github.com/GuillaumeRacine/superagents/issues/23) owns current progress.
+
+## Verdict
+
+The inventory is useful, but it cannot answer how much useful work the system produces or prove a clean rebuild. Context already records run attempts, costs, evidence verdicts and a human-cleanup field; the missing layer is reliable capability/program attribution, observation coverage, accepted outcomes and shipped-work evidence. Extend that owner instead of building a competing scoreboard.
+
+## Finding disposition and work order
+
+Owner for every item: **Gui**. Dates are proposed first reviews, not promised completion dates. All operational items below remain open at this review; writing the contract does not implement it.
+
+| Finding, issue and first review | Decision and implementation boundary |
+|---|---|
+| Public history · [#4](https://github.com/GuillaumeRacine/superagents/issues/4) · September 11 | Urgent private exposure triage; rotate exposed credentials if found; approve exact remediation before rewriting history. Existing copies can survive. |
+| Utilization and outcomes · [#14](https://github.com/GuillaumeRacine/superagents/issues/14) · September 11 | Extend Context with coverage-aware attribution and accepted-result evidence; never equate unknown with zero. |
+| Deprecation lifecycle · [#15](https://github.com/GuillaumeRacine/superagents/issues/15) · September 12 | Give each gap an item-level owner, review date and disposition. Inactivity proposes review, not automatic deletion. |
+| Operator attention · [#16](https://github.com/GuillaumeRacine/superagents/issues/16) · September 11 | Central Hermes delivery arbitration, explicit budgets and private preferences; shadow test before enabling. |
+| Prompt injection · [#17](https://github.com/GuillaumeRacine/superagents/issues/17) · September 11 | Independent tool authorization, untrusted-input boundaries and adversarial no-write tests; prose alone is insufficient. |
+| Runtime/vault drift · [#18](https://github.com/GuillaumeRacine/superagents/issues/18) · September 14 | Declare ownership per file class; guarded one-way deployment of managed definitions, with exclusions and rollback. |
+| Programs missing · [#19](https://github.com/GuillaumeRacine/superagents/issues/19) · September 14 | Validate program identities and repo/workflow/job/proof mappings. Do not infer n8n retirement. |
+| Rebuild gate status · [#20](https://github.com/GuillaumeRacine/superagents/issues/20) · September 12 | Dated evidence per condition and isolated clean-host drill; no wipe of a working device. |
+| Fork maintenance · [#21](https://github.com/GuillaumeRacine/superagents/issues/21) · September 14 | Patch ledger, upstream/security review and tested upgrade branch; no blind live rebase. |
+| Repetition/navigation and freshness · [#22](https://github.com/GuillaumeRacine/superagents/issues/22) · September 14 | Canonical topic owners, task-based navigation tests and shared source-derived freshness; preserve routes and exports. |
+| Additional recovery gap · [#9](https://github.com/GuillaumeRacine/superagents/issues/9) · September 11 | OAuth credential durability and successful allowed-account callback still need explicit recovery evidence. The retired password must not be restored. |
+
+Start history/security triage, outcome measurement and attention controls. Establish program IDs early so outcome collectors share a stable vocabulary. Usage-based retirement depends on sufficient telemetry coverage. Configuration deployment and credential durability support the restore drill. Each issue specifies acceptance, tests, scope and rollback; private implementation evidence stays in owning private repositories.
+
+## What changed in this documentation pass
+
+- Added [outcome definitions](/automation/outcomes), [operator contract](/automation/operator-interface), and a deliberately provisional [program map](/workflows/programs).
+- Added the [untrusted-input threat boundary](/governance/permissions) and dated [recovery evidence states](/recovery/disaster-rebuild).
+- Corrected Codex-default scheduling guidance to the current Hermes-first policy and separated daily operational review from slower maintenance.
+- Removed the homepage's conflicting verification stamp. Snapshot timestamps remain at their actual owning sources; shared freshness presentation is still tracked in #22.
+- Kept one canonical topic location and linked related pages rather than copying full procedures. Large-scale page consolidation remains a usability-tested follow-up, not an arbitrary page-count target.
+
+The review covered all canonical portal pages and root guidance, with route/link/publication and generated-export checks. It did **not** repeat the remote repository estate scan, enumerate cloud content or secrets, attest other devices, inspect every historical commit, or demonstrate restore readiness. The dated [estate coverage](/estate) remains the limit of those claims.
+
+## Research behind the plan
+
+- [OpenTelemetry agent spans](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/gen-ai-agent-spans.md) provide a starting vocabulary for agent execution. Adoption must pin supported conventions; business acceptance is a separate application event, not a span success flag.
+- [OpenTelemetry sensitive-data guidance](https://opentelemetry.io/docs/security/handling-sensitive-data/) supports minimizing and filtering telemetry. Proposed public output is aggregate-only; raw prompts and messages are excluded.
+- [OWASP agent security guidance](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html) informs least-privilege tools, independent authorization, input/memory boundaries and adversarial tests.
+- [GitHub sensitive-history guidance](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) explains why rewriting a repository does not revoke credentials or remove all existing clones, forks and cached references.
+- [OpenGitOps principles](https://opengitops.dev/) inform the proposed versioned desired-state model. A guarded one-way deploy is the first slice, not a claim that continuous reconciliation already exists.
+- [CISA recovery guidance](https://www.cisa.gov/stopransomware/ransomware-guide) supports offline protected backups and actual restore testing rather than relying on documentation alone.
+
+These sources inform the design; none proves the current estate implements it. Sources checked September 10, 2026.

@@ -12,7 +12,7 @@
       "owner": "Gui",
       "source": "Global and repository AGENTS.md files, Git-backed personal skills, and installed plugin manifests",
       "measurement": "Live CLI version; resolvable direct skill manifests; one current directory per managed plugin; distinct MCP sections; desktop automation definitions and statuses.",
-      "trigger": "Interactive desktop, CLI, or IDE task; optional desktop scheduled task",
+      "trigger": "Interactive desktop, CLI, or IDE task; scheduled agent work routes to Hermes unless Gui explicitly authorizes a Codex exception",
       "permissions": "Per-task filesystem, network, app, and approval policy; connectors retain their own authorization",
       "inputs": "Prompt, AGENTS.md chain, repository, thread history, memories, selected skills and plugins",
       "outputs": "Workspace changes, reviews, artifacts, GitHub commits, deployments, and verification evidence",

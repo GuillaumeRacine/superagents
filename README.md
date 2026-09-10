@@ -6,6 +6,8 @@ The portal documents runtimes, capabilities, repositories, devices, data sources
 
 ## Canonical surfaces
 
+The September 10 review and implementation plan are tracked in [issue #23](https://github.com/GuillaumeRacine/superagents/issues/23) and the [Improvement Roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap). The inventory does not establish useful outcomes or full disaster-recovery readiness; operational changes remain separately tracked.
+
 - Website: [superagents-docs.vercel.app](https://superagents-docs.vercel.app)
 - Source and issues: [GuillaumeRacine/superagents](https://github.com/GuillaumeRacine/superagents)
 - Product name: **Super Agents**

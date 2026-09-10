@@ -4,7 +4,7 @@
 
 ## Complete export
 
-- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 50 canonical pages.
+- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 54 canonical pages.
 - [XML sitemap](https://superagents-docs.vercel.app/sitemap.xml): Machine-readable list of canonical website routes.
 - [GitHub source](https://github.com/GuillaumeRacine/superagents): Versioned source and generation scripts.
 
@@ -17,6 +17,8 @@
 - [Automation & Operations](https://superagents-docs.vercel.app/automation)
 - [Fleet Evidence](https://superagents-docs.vercel.app/automation/fleet-evidence)
 - [NightCrew](https://superagents-docs.vercel.app/automation/nightcrew)
+- [Operator Interface](https://superagents-docs.vercel.app/automation/operator-interface)
+- [Outcomes & Utilization](https://superagents-docs.vercel.app/automation/outcomes)
 - [Scheduling](https://superagents-docs.vercel.app/automation/scheduling)
 - [Capabilities](https://superagents-docs.vercel.app/capabilities)
 - [Agents & Subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents)
@@ -46,6 +48,7 @@
 - [Capability Inventory](https://superagents-docs.vercel.app/reference/capability-inventory)
 - [Glossary](https://superagents-docs.vercel.app/reference/glossary)
 - [History & Scope](https://superagents-docs.vercel.app/reference/history)
+- [Improvement Roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap)
 - [System Registry](https://superagents-docs.vercel.app/reference/system-registry)
 - [Systems & Surfaces](https://superagents-docs.vercel.app/runtimes)
 - [Claude Code](https://superagents-docs.vercel.app/runtimes/claude-code)
@@ -57,6 +60,7 @@
 - [Operating Loop](https://superagents-docs.vercel.app/start-here/operating-loop)
 - [Workflows](https://superagents-docs.vercel.app/workflows)
 - [Personal Operations](https://superagents-docs.vercel.app/workflows/personal-operations)
+- [Programs](https://superagents-docs.vercel.app/workflows/programs)
 - [Project Delivery](https://superagents-docs.vercel.app/workflows/project-delivery)
 - [Publishing](https://superagents-docs.vercel.app/workflows/publishing)
 - [Research](https://superagents-docs.vercel.app/workflows/research)
