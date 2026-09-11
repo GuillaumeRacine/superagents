@@ -19,7 +19,9 @@ The September 10 review and implementation plan are tracked in [issue #23](https
 - Agent discovery index: [superagents-docs.vercel.app/llms.txt](https://superagents-docs.vercel.app/llms.txt)
 - XML sitemap: [superagents-docs.vercel.app/sitemap.xml](https://superagents-docs.vercel.app/sitemap.xml)
 
-The Markdown corpus and discovery index are generated from every canonical page and verified for drift in CI.
+The Markdown corpus includes a linked table of contents, stable page anchors, a source index, and return-to-contents links. Download it from the homepage or [Agent & Offline Export](https://superagents-docs.vercel.app/reference/agent-export). It contains website documentation, not private runtime backups.
+
+The Markdown corpus and discovery index are generated from every canonical page and verified for drift in CI. `scripts/check-agent-export.mjs` additionally verifies complete page content, unique anchors, table-of-contents entries, source-index entries, and return links.
 
 The retired Vercel hostname is intentionally detached rather than maintained as a compatibility alias. See [Canonical Naming](https://superagents-docs.vercel.app/governance/naming) for the naming contract.
 

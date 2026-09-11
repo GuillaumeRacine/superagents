@@ -4,7 +4,11 @@ Use these generated, public artifacts to give an agent the complete sanitized do
 
 ## Download and discovery
 
-- [Download the complete Markdown corpus](/superagents.md) — every canonical documentation page in one file, with its source path and website route
+<a href="/superagents.md" download="superagents.md">Download all docs as one Markdown file</a>
+
+The file includes a linked **table of contents**, a **source index** mapping every page to its website route and repository path, and a return-to-contents link after each page. Page anchors are stable when titles change. Markdown readers that support HTML anchors can navigate within the downloaded file; agents can also search by title, route, or the `source-page` markers.
+
+- [Preview the complete Markdown corpus](/superagents.md) — every canonical documentation page in one file
 - [Open `llms.txt`](/llms.txt) — an agent-friendly discovery index linking the complete export, sitemap, repository, and every documentation page
 - [Open the XML sitemap](/sitemap.xml) — the canonical machine-readable route list
 - [Open the GitHub repository](https://github.com/GuillaumeRacine/superagents) — versioned sources and export generator
@@ -14,6 +18,8 @@ The Markdown corpus and `llms.txt` are intentionally public because they contain
 ## Agent usage
 
 Give an agent `https://superagents-docs.vercel.app/llms.txt` for discovery or `https://superagents-docs.vercel.app/superagents.md` when it needs the entire corpus in one request. On a phone or computer, open the Markdown link and use the browser's download or **Save to Files** action.
+
+The export includes all website documentation, not private repository contents, credentials, or runtime backups. Some agents have context limits: use the index to select relevant pages rather than assuming the entire file fits in one prompt.
 
 ## Freshness contract
 
