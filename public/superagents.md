@@ -147,7 +147,7 @@ Super Agents is the umbrella for the full agentic system—not one app or one ru
 
 ## Find the answer you need
 
-**Take the docs with you:** <a href="/superagents.md" download="superagents.md">Download all docs in one Markdown file</a> with a linked table of contents and source index. [Export options for agents](/reference/agent-export).
+**Take the docs with you:** <a href="/superagents.md" download="superagents.md" style={{ textDecoration: 'underline', fontWeight: 700 }}>Download all docs in one Markdown file</a> with a linked table of contents and source index. [Export options for agents](/reference/agent-export).
 
 | Question | Go to |
 |---|---|
@@ -1592,7 +1592,7 @@ Use these generated, public artifacts to give an agent the complete sanitized do
 
 ## Download and discovery
 
-<a href="/superagents.md" download="superagents.md">Download all docs as one Markdown file</a>
+<a href="/superagents.md" download="superagents.md" style={{ textDecoration: 'underline', fontWeight: 700 }}>Download all docs as one Markdown file</a>
 
 The file includes a linked **table of contents**, a **source index** mapping every page to its website route and repository path, and a return-to-contents link after each page. Page anchors are stable when titles change. Markdown readers that support HTML anchors can navigate within the downloaded file; agents can also search by title, route, or the `source-page` markers.
 
