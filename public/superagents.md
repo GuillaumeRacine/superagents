@@ -9,9 +9,133 @@
 
 This file is generated. Edit the owning page in `app/`, then run `npm run docs:generate`.
 
+This is the complete sanitized website corpus, not a backup of private repositories, credentials, or runtime state. Registry observation dates remain authoritative; downloading this file does not refresh those observations.
+
+<a id="table-of-contents"></a>
+
+## Table of contents
+
+1. [Super Agents](#page-2f) — `/`
+2. [Architecture](#page-2f617263686974656374757265) — `/architecture`
+3. [Design Principles](#page-2f6172636869746563747572652f64657369676e2d7072696e6369706c6573) — `/architecture/design-principles`
+4. [Sources of Truth](#page-2f6172636869746563747572652f736f75726365732d6f662d7472757468) — `/architecture/sources-of-truth`
+5. [Automation & Operations](#page-2f6175746f6d6174696f6e) — `/automation`
+6. [Fleet Evidence](#page-2f6175746f6d6174696f6e2f666c6565742d65766964656e6365) — `/automation/fleet-evidence`
+7. [NightCrew](#page-2f6175746f6d6174696f6e2f6e6967687463726577) — `/automation/nightcrew`
+8. [Operator Interface](#page-2f6175746f6d6174696f6e2f6f70657261746f722d696e74657266616365) — `/automation/operator-interface`
+9. [Outcomes & Utilization](#page-2f6175746f6d6174696f6e2f6f7574636f6d6573) — `/automation/outcomes`
+10. [Scheduling](#page-2f6175746f6d6174696f6e2f7363686564756c696e67) — `/automation/scheduling`
+11. [Capabilities](#page-2f6361706162696c6974696573) — `/capabilities`
+12. [Agents & Subagents](#page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473) — `/capabilities/agents-subagents`
+13. [Browser & Computer Use](#page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365) — `/capabilities/browser-computer-use`
+14. [MCP & Tools](#page-2f6361706162696c69746965732f6d63702d746f6f6c73) — `/capabilities/mcp-tools`
+15. [Skills & Plugins](#page-2f6361706162696c69746965732f736b696c6c732d706c7567696e73) — `/capabilities/skills-plugins`
+16. [Context & Memory](#page-2f636f6e746578742d6d656d6f7279) — `/context-memory`
+17. [Context Layering](#page-2f636f6e746578742d6d656d6f72792f6c61796572696e67) — `/context-memory/layering`
+18. [Storage Model](#page-2f636f6e746578742d6d656d6f72792f73746f72616765) — `/context-memory/storage`
+19. [Estate Coverage](#page-2f657374617465) — `/estate`
+20. [Agentic Components](#page-2f6573746174652f636f6d706f6e656e7473) — `/estate/components`
+21. [Data Sources & Integrations](#page-2f6573746174652f646174612d736f7572636573) — `/estate/data-sources`
+22. [Devices & Hosts](#page-2f6573746174652f64657669636573) — `/estate/devices`
+23. [Repository Coverage](#page-2f6573746174652f7265706f7369746f72696573) — `/estate/repositories`
+24. [Governance & Safety](#page-2f676f7665726e616e6365) — `/governance`
+25. [Documentation Governance](#page-2f676f7665726e616e63652f646f63756d656e746174696f6e) — `/governance/documentation`
+26. [Canonical Naming](#page-2f676f7665726e616e63652f6e616d696e67) — `/governance/naming`
+27. [Permissions](#page-2f676f7665726e616e63652f7065726d697373696f6e73) — `/governance/permissions`
+28. [Secrets](#page-2f676f7665726e616e63652f73656372657473) — `/governance/secrets`
+29. [Recovery & Rebuild](#page-2f7265636f76657279) — `/recovery`
+30. [Disaster Rebuild Readiness](#page-2f7265636f766572792f64697361737465722d72656275696c64) — `/recovery/disaster-rebuild`
+31. [Maintenance](#page-2f7265636f766572792f6d61696e74656e616e6365) — `/recovery/maintenance`
+32. [New Device](#page-2f7265636f766572792f6e65772d646576696365) — `/recovery/new-device`
+33. [Reference](#page-2f7265666572656e6365) — `/reference`
+34. [Agent & Offline Export](#page-2f7265666572656e63652f6167656e742d6578706f7274) — `/reference/agent-export`
+35. [Canonical Sources](#page-2f7265666572656e63652f63616e6f6e6963616c2d736f7572636573) — `/reference/canonical-sources`
+36. [Capability Inventory](#page-2f7265666572656e63652f6361706162696c6974792d696e76656e746f7279) — `/reference/capability-inventory`
+37. [Glossary](#page-2f7265666572656e63652f676c6f7373617279) — `/reference/glossary`
+38. [History & Scope](#page-2f7265666572656e63652f686973746f7279) — `/reference/history`
+39. [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) — `/reference/improvement-roadmap`
+40. [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) — `/reference/system-registry`
+41. [Systems & Surfaces](#page-2f72756e74696d6573) — `/runtimes`
+42. [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) — `/runtimes/claude-code`
+43. [Codex](#page-2f72756e74696d65732f636f646578) — `/runtimes/codex`
+44. [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) — `/runtimes/companions`
+45. [Hermes](#page-2f72756e74696d65732f6865726d6573) — `/runtimes/hermes`
+46. [Start Here](#page-2f73746172742d68657265) — `/start-here`
+47. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
+48. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
+49. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
+50. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
+51. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
+52. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
+53. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
+54. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
+
+## Source index
+
+| Page | Website | Repository source |
+|---|---|---|
+| [Super Agents](#page-2f) | [/](https://superagents-docs.vercel.app) | `app/page.mdx` |
+| [Architecture](#page-2f617263686974656374757265) | [/architecture](https://superagents-docs.vercel.app/architecture) | `app/architecture/page.mdx` |
+| [Design Principles](#page-2f6172636869746563747572652f64657369676e2d7072696e6369706c6573) | [/architecture/design-principles](https://superagents-docs.vercel.app/architecture/design-principles) | `app/architecture/design-principles/page.mdx` |
+| [Sources of Truth](#page-2f6172636869746563747572652f736f75726365732d6f662d7472757468) | [/architecture/sources-of-truth](https://superagents-docs.vercel.app/architecture/sources-of-truth) | `app/architecture/sources-of-truth/page.mdx` |
+| [Automation & Operations](#page-2f6175746f6d6174696f6e) | [/automation](https://superagents-docs.vercel.app/automation) | `app/automation/page.mdx` |
+| [Fleet Evidence](#page-2f6175746f6d6174696f6e2f666c6565742d65766964656e6365) | [/automation/fleet-evidence](https://superagents-docs.vercel.app/automation/fleet-evidence) | `app/automation/fleet-evidence/page.mdx` |
+| [NightCrew](#page-2f6175746f6d6174696f6e2f6e6967687463726577) | [/automation/nightcrew](https://superagents-docs.vercel.app/automation/nightcrew) | `app/automation/nightcrew/page.mdx` |
+| [Operator Interface](#page-2f6175746f6d6174696f6e2f6f70657261746f722d696e74657266616365) | [/automation/operator-interface](https://superagents-docs.vercel.app/automation/operator-interface) | `app/automation/operator-interface/page.mdx` |
+| [Outcomes & Utilization](#page-2f6175746f6d6174696f6e2f6f7574636f6d6573) | [/automation/outcomes](https://superagents-docs.vercel.app/automation/outcomes) | `app/automation/outcomes/page.mdx` |
+| [Scheduling](#page-2f6175746f6d6174696f6e2f7363686564756c696e67) | [/automation/scheduling](https://superagents-docs.vercel.app/automation/scheduling) | `app/automation/scheduling/page.mdx` |
+| [Capabilities](#page-2f6361706162696c6974696573) | [/capabilities](https://superagents-docs.vercel.app/capabilities) | `app/capabilities/page.mdx` |
+| [Agents & Subagents](#page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473) | [/capabilities/agents-subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents) | `app/capabilities/agents-subagents/page.mdx` |
+| [Browser & Computer Use](#page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365) | [/capabilities/browser-computer-use](https://superagents-docs.vercel.app/capabilities/browser-computer-use) | `app/capabilities/browser-computer-use/page.mdx` |
+| [MCP & Tools](#page-2f6361706162696c69746965732f6d63702d746f6f6c73) | [/capabilities/mcp-tools](https://superagents-docs.vercel.app/capabilities/mcp-tools) | `app/capabilities/mcp-tools/page.mdx` |
+| [Skills & Plugins](#page-2f6361706162696c69746965732f736b696c6c732d706c7567696e73) | [/capabilities/skills-plugins](https://superagents-docs.vercel.app/capabilities/skills-plugins) | `app/capabilities/skills-plugins/page.mdx` |
+| [Context & Memory](#page-2f636f6e746578742d6d656d6f7279) | [/context-memory](https://superagents-docs.vercel.app/context-memory) | `app/context-memory/page.mdx` |
+| [Context Layering](#page-2f636f6e746578742d6d656d6f72792f6c61796572696e67) | [/context-memory/layering](https://superagents-docs.vercel.app/context-memory/layering) | `app/context-memory/layering/page.mdx` |
+| [Storage Model](#page-2f636f6e746578742d6d656d6f72792f73746f72616765) | [/context-memory/storage](https://superagents-docs.vercel.app/context-memory/storage) | `app/context-memory/storage/page.mdx` |
+| [Estate Coverage](#page-2f657374617465) | [/estate](https://superagents-docs.vercel.app/estate) | `app/estate/page.mdx` |
+| [Agentic Components](#page-2f6573746174652f636f6d706f6e656e7473) | [/estate/components](https://superagents-docs.vercel.app/estate/components) | `app/estate/components/page.mdx` |
+| [Data Sources & Integrations](#page-2f6573746174652f646174612d736f7572636573) | [/estate/data-sources](https://superagents-docs.vercel.app/estate/data-sources) | `app/estate/data-sources/page.mdx` |
+| [Devices & Hosts](#page-2f6573746174652f64657669636573) | [/estate/devices](https://superagents-docs.vercel.app/estate/devices) | `app/estate/devices/page.mdx` |
+| [Repository Coverage](#page-2f6573746174652f7265706f7369746f72696573) | [/estate/repositories](https://superagents-docs.vercel.app/estate/repositories) | `app/estate/repositories/page.mdx` |
+| [Governance & Safety](#page-2f676f7665726e616e6365) | [/governance](https://superagents-docs.vercel.app/governance) | `app/governance/page.mdx` |
+| [Documentation Governance](#page-2f676f7665726e616e63652f646f63756d656e746174696f6e) | [/governance/documentation](https://superagents-docs.vercel.app/governance/documentation) | `app/governance/documentation/page.mdx` |
+| [Canonical Naming](#page-2f676f7665726e616e63652f6e616d696e67) | [/governance/naming](https://superagents-docs.vercel.app/governance/naming) | `app/governance/naming/page.mdx` |
+| [Permissions](#page-2f676f7665726e616e63652f7065726d697373696f6e73) | [/governance/permissions](https://superagents-docs.vercel.app/governance/permissions) | `app/governance/permissions/page.mdx` |
+| [Secrets](#page-2f676f7665726e616e63652f73656372657473) | [/governance/secrets](https://superagents-docs.vercel.app/governance/secrets) | `app/governance/secrets/page.mdx` |
+| [Recovery & Rebuild](#page-2f7265636f76657279) | [/recovery](https://superagents-docs.vercel.app/recovery) | `app/recovery/page.mdx` |
+| [Disaster Rebuild Readiness](#page-2f7265636f766572792f64697361737465722d72656275696c64) | [/recovery/disaster-rebuild](https://superagents-docs.vercel.app/recovery/disaster-rebuild) | `app/recovery/disaster-rebuild/page.mdx` |
+| [Maintenance](#page-2f7265636f766572792f6d61696e74656e616e6365) | [/recovery/maintenance](https://superagents-docs.vercel.app/recovery/maintenance) | `app/recovery/maintenance/page.mdx` |
+| [New Device](#page-2f7265636f766572792f6e65772d646576696365) | [/recovery/new-device](https://superagents-docs.vercel.app/recovery/new-device) | `app/recovery/new-device/page.mdx` |
+| [Reference](#page-2f7265666572656e6365) | [/reference](https://superagents-docs.vercel.app/reference) | `app/reference/page.mdx` |
+| [Agent & Offline Export](#page-2f7265666572656e63652f6167656e742d6578706f7274) | [/reference/agent-export](https://superagents-docs.vercel.app/reference/agent-export) | `app/reference/agent-export/page.mdx` |
+| [Canonical Sources](#page-2f7265666572656e63652f63616e6f6e6963616c2d736f7572636573) | [/reference/canonical-sources](https://superagents-docs.vercel.app/reference/canonical-sources) | `app/reference/canonical-sources/page.mdx` |
+| [Capability Inventory](#page-2f7265666572656e63652f6361706162696c6974792d696e76656e746f7279) | [/reference/capability-inventory](https://superagents-docs.vercel.app/reference/capability-inventory) | `app/reference/capability-inventory/page.mdx` |
+| [Glossary](#page-2f7265666572656e63652f676c6f7373617279) | [/reference/glossary](https://superagents-docs.vercel.app/reference/glossary) | `app/reference/glossary/page.mdx` |
+| [History & Scope](#page-2f7265666572656e63652f686973746f7279) | [/reference/history](https://superagents-docs.vercel.app/reference/history) | `app/reference/history/page.mdx` |
+| [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) | [/reference/improvement-roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap) | `app/reference/improvement-roadmap/page.mdx` |
+| [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) | [/reference/system-registry](https://superagents-docs.vercel.app/reference/system-registry) | `app/reference/system-registry/page.mdx` |
+| [Systems & Surfaces](#page-2f72756e74696d6573) | [/runtimes](https://superagents-docs.vercel.app/runtimes) | `app/runtimes/page.mdx` |
+| [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) | [/runtimes/claude-code](https://superagents-docs.vercel.app/runtimes/claude-code) | `app/runtimes/claude-code/page.mdx` |
+| [Codex](#page-2f72756e74696d65732f636f646578) | [/runtimes/codex](https://superagents-docs.vercel.app/runtimes/codex) | `app/runtimes/codex/page.mdx` |
+| [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) | [/runtimes/companions](https://superagents-docs.vercel.app/runtimes/companions) | `app/runtimes/companions/page.mdx` |
+| [Hermes](#page-2f72756e74696d65732f6865726d6573) | [/runtimes/hermes](https://superagents-docs.vercel.app/runtimes/hermes) | `app/runtimes/hermes/page.mdx` |
+| [Start Here](#page-2f73746172742d68657265) | [/start-here](https://superagents-docs.vercel.app/start-here) | `app/start-here/page.mdx` |
+| [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) | [/start-here/choose-a-runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime) | `app/start-here/choose-a-runtime/page.mdx` |
+| [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) | [/start-here/operating-loop](https://superagents-docs.vercel.app/start-here/operating-loop) | `app/start-here/operating-loop/page.mdx` |
+| [Workflows](#page-2f776f726b666c6f7773) | [/workflows](https://superagents-docs.vercel.app/workflows) | `app/workflows/page.mdx` |
+| [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) | [/workflows/personal-operations](https://superagents-docs.vercel.app/workflows/personal-operations) | `app/workflows/personal-operations/page.mdx` |
+| [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) | [/workflows/programs](https://superagents-docs.vercel.app/workflows/programs) | `app/workflows/programs/page.mdx` |
+| [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) | [/workflows/project-delivery](https://superagents-docs.vercel.app/workflows/project-delivery) | `app/workflows/project-delivery/page.mdx` |
+| [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) | [/workflows/publishing](https://superagents-docs.vercel.app/workflows/publishing) | `app/workflows/publishing/page.mdx` |
+| [Research](#page-2f776f726b666c6f77732f7265736561726368) | [/workflows/research](https://superagents-docs.vercel.app/workflows/research) | `app/workflows/research/page.mdx` |
+
+## Documentation pages
+
 ---
 
 <!-- source-page: app/page.mdx | route: https://superagents-docs.vercel.app -->
+
+<a id="page-2f"></a>
 
 Source page: [Super Agents](https://superagents-docs.vercel.app)
 
@@ -22,6 +146,8 @@ Source page: [Super Agents](https://superagents-docs.vercel.app)
 Super Agents is the umbrella for the full agentic system—not one app or one runtime. It coordinates interactive agents, persistent schedulers, skills, tools, context, shared services, repositories, devices, and GitHub-backed proof. This site is the navigation layer; each owning repository or runtime remains authoritative for live state.
 
 ## Find the answer you need
+
+**Take the docs with you:** <a href="/superagents.md" download="superagents.md" style={{ textDecoration: 'underline', fontWeight: 700 }}>Download all docs in one Markdown file</a> with a linked table of contents and source index. [Export options for agents](/reference/agent-export).
 
 | Question | Go to |
 |---|---|
@@ -73,9 +199,13 @@ Start with [the orientation guide](/start-here).
 
 The map is broader than the available proof. Cross-device recovery, accepted outcomes, security enforcement, and coverage gaps remain tracked work—not a claim that nothing important is missing.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/architecture/page.mdx | route: https://superagents-docs.vercel.app/architecture -->
+
+<a id="page-2f617263686974656374757265"></a>
 
 Source page: [Architecture](https://superagents-docs.vercel.app/architecture)
 
@@ -94,9 +224,13 @@ Super Agents separates orchestration, execution, context, services, and evidence
 
 The [system registry](/reference/system-registry) gives every major surface an owner, trigger, permission boundary, inputs, outputs, proof, and recovery path.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/architecture/design-principles/page.mdx | route: https://superagents-docs.vercel.app/architecture/design-principles -->
+
+<a id="page-2f6172636869746563747572652f64657369676e2d7072696e6369706c6573"></a>
 
 Source page: [Design Principles](https://superagents-docs.vercel.app/architecture/design-principles)
 
@@ -122,9 +256,13 @@ Use the narrowest capable surface. Keep notification, external mutation, financi
 
 Persistent system state belongs in Git, managed cloud stores, or 1Password references. Active work uses internal storage; external disks are cold backup only.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/architecture/sources-of-truth/page.mdx | route: https://superagents-docs.vercel.app/architecture/sources-of-truth -->
+
+<a id="page-2f6172636869746563747572652f736f75726365732d6f662d7472757468"></a>
 
 Source page: [Sources of Truth](https://superagents-docs.vercel.app/architecture/sources-of-truth)
 
@@ -153,9 +291,13 @@ This portal links those owners together. It must not claim to replace them.
 3. Reconcile divergent runtime and vault inventories; do not assume they are mirrored.
 4. Correct the owning source first, then refresh derived documentation and its verification date.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/page.mdx | route: https://superagents-docs.vercel.app/automation -->
+
+<a id="page-2f6175746f6d6174696f6e"></a>
 
 Source page: [Automation & Operations](https://superagents-docs.vercel.app/automation)
 
@@ -179,9 +321,13 @@ Start with [Scheduling](/automation/scheduling), then use [Fleet Evidence](/auto
 
 The [Capability Inventory](/reference/capability-inventory) records current profiles, job totals and states, and the sanitized schedule categories.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/fleet-evidence/page.mdx | route: https://superagents-docs.vercel.app/automation/fleet-evidence -->
+
+<a id="page-2f6175746f6d6174696f6e2f666c6565742d65766964656e6365"></a>
 
 Source page: [Fleet Evidence](https://superagents-docs.vercel.app/automation/fleet-evidence)
 
@@ -209,9 +355,13 @@ A log line saying “success” is supporting telemetry, not independent proof.
 
 The existing private scoreboard includes execution, cost and evidence fields. [Outcomes & Utilization](/automation/outcomes) defines the missing accepted-result and capability-attribution contract; [issue #14](https://github.com/GuillaumeRacine/superagents/issues/14) tracks implementation without creating a competing source of truth.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/nightcrew/page.mdx | route: https://superagents-docs.vercel.app/automation/nightcrew -->
+
+<a id="page-2f6175746f6d6174696f6e2f6e6967687463726577"></a>
 
 Source page: [NightCrew](https://superagents-docs.vercel.app/automation/nightcrew)
 
@@ -230,9 +380,13 @@ At the September 8 snapshot, the default scheduled run contains **19 sections** 
 
 When changing NightCrew, update the owning Context documentation first, test the relevant section directly, then refresh the [registry](/reference/system-registry) if the public snapshot changed.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/operator-interface/page.mdx | route: https://superagents-docs.vercel.app/automation/operator-interface -->
+
+<a id="page-2f6175746f6d6174696f6e2f6f70657261746f722d696e74657266616365"></a>
 
 Source page: [Operator Interface](https://superagents-docs.vercel.app/automation/operator-interface)
 
@@ -260,9 +414,13 @@ Every actionable item should carry the decision needed, supporting evidence and 
 
 Use [Outcomes](/automation/outcomes) to measure whether notifications led to useful actions; the number sent is not a success metric.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/outcomes/page.mdx | route: https://superagents-docs.vercel.app/automation/outcomes -->
+
+<a id="page-2f6175746f6d6174696f6e2f6f7574636f6d6573"></a>
 
 Source page: [Outcomes & Utilization](https://superagents-docs.vercel.app/automation/outcomes)
 
@@ -293,9 +451,13 @@ Retain capabilities with demonstrated value, repair useful but unreliable ones, 
 
 See [Fleet Evidence](/automation/fleet-evidence) for evidence states and [Programs](/workflows/programs) for the proposed attribution map.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/automation/scheduling/page.mdx | route: https://superagents-docs.vercel.app/automation/scheduling -->
+
+<a id="page-2f6175746f6d6174696f6e2f7363686564756c696e67"></a>
 
 Source page: [Scheduling](https://superagents-docs.vercel.app/automation/scheduling)
 
@@ -325,9 +487,13 @@ Hermes is the authoritative owner for scheduled agent work, including follow-ups
 
 For learning loops, prefer hourly iterations where practical and daily at most unless the external process genuinely requires longer observation. This does not require hourly notifications: delivery follows the [operator attention contract](/automation/operator-interface). Numeric limits and quiet hours remain planned until configured and tested.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/capabilities/page.mdx | route: https://superagents-docs.vercel.app/capabilities -->
+
+<a id="page-2f6361706162696c6974696573"></a>
 
 Source page: [Capabilities](https://superagents-docs.vercel.app/capabilities)
 
@@ -348,9 +514,13 @@ Capability definitions should state triggers, inputs, outputs, permissions, and 
 
 Browse the dated [Capability Inventory](/reference/capability-inventory) for the complete sanitized catalog and exact counting rules.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/capabilities/agents-subagents/page.mdx | route: https://superagents-docs.vercel.app/capabilities/agents-subagents -->
+
+<a id="page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473"></a>
 
 Source page: [Agents & Subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents)
 
@@ -376,9 +546,13 @@ An agent packages a role, context boundary, and tool policy. A subagent is a bou
 
 Catalog counts belong only in the [generated registry](/reference/system-registry).
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/capabilities/browser-computer-use/page.mdx | route: https://superagents-docs.vercel.app/capabilities/browser-computer-use -->
+
+<a id="page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365"></a>
 
 Source page: [Browser & Computer Use](https://superagents-docs.vercel.app/capabilities/browser-computer-use)
 
@@ -403,9 +577,13 @@ Chrome is the default browser for automation when control is available. A projec
 - Resolve exact targets before clicks that publish, delete, pay, or message.
 - Verify user-visible results from the rendered surface, including navigation, search, mobile layout, and access control.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/capabilities/mcp-tools/page.mdx | route: https://superagents-docs.vercel.app/capabilities/mcp-tools -->
+
+<a id="page-2f6361706162696c69746965732f6d63702d746f6f6c73"></a>
 
 Source page: [MCP & Tools](https://superagents-docs.vercel.app/capabilities/mcp-tools)
 
@@ -433,9 +611,13 @@ For every tool, know:
 - what evidence confirms the result;
 - how to revoke or recover it.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/capabilities/skills-plugins/page.mdx | route: https://superagents-docs.vercel.app/capabilities/skills-plugins -->
+
+<a id="page-2f6361706162696c69746965732f736b696c6c732d706c7567696e73"></a>
 
 Source page: [Skills & Plugins](https://superagents-docs.vercel.app/capabilities/skills-plugins)
 
@@ -464,9 +646,13 @@ Duplicate-looking manifests may be different installed plugin versions or nested
 
 The [Capability Inventory](/reference/capability-inventory) lists resolvable personal skills, managed plugins, Claude skills and plugins, and categorized Hermes skills.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/context-memory/page.mdx | route: https://superagents-docs.vercel.app/context-memory -->
+
+<a id="page-2f636f6e746578742d6d656d6f7279"></a>
 
 Source page: [Context & Memory](https://superagents-docs.vercel.app/context-memory)
 
@@ -488,9 +674,13 @@ The Context control plane owns fleet inventory, automation contracts, and eviden
 
 See [Context Layering](/context-memory/layering) and [Storage Model](/context-memory/storage).
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/context-memory/layering/page.mdx | route: https://superagents-docs.vercel.app/context-memory/layering -->
+
+<a id="page-2f636f6e746578742d6d656d6f72792f6c61796572696e67"></a>
 
 Source page: [Context Layering](https://superagents-docs.vercel.app/context-memory/layering)
 
@@ -520,9 +710,13 @@ Never assume two runtime directories are synchronized merely because their conte
 
 Retrieved content, tool responses and retained memory are evidence/data, not authorization. Apply the [untrusted-input boundary](/governance/permissions) even when hostile content is repeated by another agent or persisted across runs.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/context-memory/storage/page.mdx | route: https://superagents-docs.vercel.app/context-memory/storage -->
+
+<a id="page-2f636f6e746578742d6d656d6f72792f73746f72616765"></a>
 
 Source page: [Storage Model](https://superagents-docs.vercel.app/context-memory/storage)
 
@@ -544,9 +738,13 @@ Active systems must not depend on an external disk or a compatibility symlink to
 
 Secrets never belong in the vault, source repository, local documentation, or ad hoc plaintext environment files. Configuration should retain only managed references.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/estate/page.mdx | route: https://superagents-docs.vercel.app/estate -->
+
+<a id="page-2f657374617465"></a>
 
 Source page: [Estate Coverage](https://superagents-docs.vercel.app/estate)
 
@@ -588,9 +786,13 @@ This section answers four separate questions without conflating them: what exist
 - **Device-honest:** only the main Mac mini is directly verified. The other declared devices remain visible as coverage gaps until the same audit runs there.
 - **Evidence-aware:** a file or service reference proves discoverability, not correctness, authorization, freshness, or documentation quality.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/estate/components/page.mdx | route: https://superagents-docs.vercel.app/estate/components -->
+
+<a id="page-2f6573746174652f636f6d706f6e656e7473"></a>
 
 Source page: [Agentic Components](https://superagents-docs.vercel.app/estate/components)
 
@@ -636,9 +838,13 @@ This taxonomy lists every class of repository-discoverable agentic component the
 
 Use [Repository Coverage](/estate/repositories) for estate-wide documentation gaps and [Systems Registry](/reference/system-registry) for the currently verified operating systems.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/estate/data-sources/page.mdx | route: https://superagents-docs.vercel.app/estate/data-sources -->
+
+<a id="page-2f6573746174652f646174612d736f7572636573"></a>
 
 Source page: [Data Sources & Integrations](https://superagents-docs.vercel.app/estate/data-sources)
 
@@ -706,9 +912,13 @@ A reference is a discovery signal, not proof that credentials exist, data is fre
 - Agentic component rows are candidate path signals within high-confidence agentic repositories. Categories intentionally overlap and path matching can still produce false positives or miss unconventional layouts.
 - The current published tree is sanitized. Legacy public Git history predates these controls and remains a known privacy-hardening gap tracked in GitHub issue #4.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/estate/devices/page.mdx | route: https://superagents-docs.vercel.app/estate/devices -->
+
+<a id="page-2f6573746174652f64657669636573"></a>
 
 Source page: [Devices & Hosts](https://superagents-docs.vercel.app/estate/devices)
 
@@ -738,9 +948,13 @@ The main Mac mini currently owns the live runtime snapshot. The studio Mac mini 
 - Local runtime caches, sessions, and installed versions remain device-specific and require host-level verification.
 - The external SSD is cold storage for normal agent and repository operation. The canonical policy explicitly retains one exception: active Ableton sessions on the studio Mac mini may use its SSD as a fast working disk.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/estate/repositories/page.mdx | route: https://superagents-docs.vercel.app/estate/repositories -->
+
+<a id="page-2f6573746174652f7265706f7369746f72696573"></a>
 
 Source page: [Repository Coverage](https://superagents-docs.vercel.app/estate/repositories)
 
@@ -969,9 +1183,13 @@ Multiple checkout directories primarily represent worktrees or deliberate parall
 
 11 active repositories with high-confidence agentic signals do not expose a recognized AGENTS.md, CLAUDE.md, GEMINI.md, GROK.md, or CODEX.md instruction file. The catalog marks every affected row as **gap** without publishing private names.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/governance/page.mdx | route: https://superagents-docs.vercel.app/governance -->
+
+<a id="page-2f676f7665726e616e6365"></a>
 
 Source page: [Governance & Safety](https://superagents-docs.vercel.app/governance)
 
@@ -990,9 +1208,13 @@ Governance answers three questions before execution: what may happen, who author
 
 Tool access never upgrades an action's approval class. See [Permissions](/governance/permissions) and [Secrets](/governance/secrets).
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/governance/documentation/page.mdx | route: https://superagents-docs.vercel.app/governance/documentation -->
+
+<a id="page-2f676f7665726e616e63652f646f63756d656e746174696f6e"></a>
 
 Source page: [Documentation Governance](https://superagents-docs.vercel.app/governance/documentation)
 
@@ -1021,9 +1243,13 @@ Volatile counts appear once in the [system registry](/reference/system-registry)
 
 The [Improvement Roadmap](/reference/improvement-roadmap) records reviewed findings, implementation issues and explicit unknowns. Documentation fixes do not close runtime acceptance gates. Keep registry observation time, estate scan time and editorial deployment time distinct; do not advance an observation timestamp because prose changed.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/governance/naming/page.mdx | route: https://superagents-docs.vercel.app/governance/naming -->
+
+<a id="page-2f676f7665726e616e63652f6e616d696e67"></a>
 
 Source page: [Canonical Naming](https://superagents-docs.vercel.app/governance/naming)
 
@@ -1049,9 +1275,13 @@ New repositories, deployments, domains, aliases, packages, branches, routes, var
 
 Every naming change must verify the current repository, deployment project, production aliases, live metadata, and repository-wide text search before closeout.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/governance/permissions/page.mdx | route: https://superagents-docs.vercel.app/governance/permissions -->
+
+<a id="page-2f676f7665726e616e63652f7065726d697373696f6e73"></a>
 
 Source page: [Permissions](https://superagents-docs.vercel.app/governance/permissions)
 
@@ -1084,9 +1314,13 @@ The required default for untrusted-input workflows is read-only or draft-only. A
 
 The design is informed by [OWASP agent security guidance](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html). Approved fixed playbooks can consume validated data; a blanket ban on every read-to-write workflow is not the intended model.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/governance/secrets/page.mdx | route: https://superagents-docs.vercel.app/governance/secrets -->
+
+<a id="page-2f676f7665726e616e63652f73656372657473"></a>
 
 Source page: [Secrets](https://superagents-docs.vercel.app/governance/secrets)
 
@@ -1108,9 +1342,13 @@ Shared services such as the Firecrawl broker centralize credential resolution so
 
 Secret scanning is part of this portal's CI, but scanning is a backstop—not permission to publish sensitive configuration.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/recovery/page.mdx | route: https://superagents-docs.vercel.app/recovery -->
+
+<a id="page-2f7265636f76657279"></a>
 
 Source page: [Recovery & Rebuild](https://superagents-docs.vercel.app/recovery)
 
@@ -1132,9 +1370,13 @@ This portal is the recovery map, not the backup. Start with [Disaster Rebuild Re
 
 Prefer reversible repair and exact targets. Recovery documentation should describe desired state and validation, not publish dangerous recursive deletion shortcuts.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/recovery/disaster-rebuild/page.mdx | route: https://superagents-docs.vercel.app/recovery/disaster-rebuild -->
+
+<a id="page-2f7265636f766572792f64697361737465722d72656275696c64"></a>
 
 Source page: [Disaster Rebuild Readiness](https://superagents-docs.vercel.app/recovery/disaster-rebuild)
 
@@ -1248,9 +1490,13 @@ Historical replay is explicitly labelled and cannot count as a fresh useful run.
 
 Until the clean-host gate passes, use this portal to coordinate recovery and expose gaps—not as the sole copy of operational state.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/recovery/maintenance/page.mdx | route: https://superagents-docs.vercel.app/recovery/maintenance -->
+
+<a id="page-2f7265636f766572792f6d61696e74656e616e6365"></a>
 
 Source page: [Maintenance](https://superagents-docs.vercel.app/recovery/maintenance)
 
@@ -1282,9 +1528,13 @@ Refresh the registry verification date only when the underlying checks were actu
 
 Open lifecycle, configuration, fork and recovery work has owners and review targets in the [Improvement Roadmap](/reference/improvement-roadmap). Missing usage evidence is not grounds for automatically removing recovery or seasonal capabilities.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/recovery/new-device/page.mdx | route: https://superagents-docs.vercel.app/recovery/new-device -->
+
+<a id="page-2f7265636f766572792f6e65772d646576696365"></a>
 
 Source page: [New Device](https://superagents-docs.vercel.app/recovery/new-device)
 
@@ -1303,9 +1553,13 @@ Source page: [New Device](https://superagents-docs.vercel.app/recovery/new-devic
 
 The [system registry](/reference/system-registry) supplies per-system recovery expectations. Owning private runbooks contain machine-specific commands.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/page.mdx | route: https://superagents-docs.vercel.app/reference -->
+
+<a id="page-2f7265666572656e6365"></a>
 
 Source page: [Reference](https://superagents-docs.vercel.app/reference)
 
@@ -1322,9 +1576,13 @@ Source page: [Reference](https://superagents-docs.vercel.app/reference)
 
 Reference pages help navigation. Live configuration remains with the owning system.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/agent-export/page.mdx | route: https://superagents-docs.vercel.app/reference/agent-export -->
+
+<a id="page-2f7265666572656e63652f6167656e742d6578706f7274"></a>
 
 Source page: [Agent & Offline Export](https://superagents-docs.vercel.app/reference/agent-export)
 
@@ -1334,7 +1592,11 @@ Use these generated, public artifacts to give an agent the complete sanitized do
 
 ## Download and discovery
 
-- [Download the complete Markdown corpus](/superagents.md) — every canonical documentation page in one file, with its source path and website route
+<a href="/superagents.md" download="superagents.md" style={{ textDecoration: 'underline', fontWeight: 700 }}>Download all docs as one Markdown file</a>
+
+The file includes a linked **table of contents**, a **source index** mapping every page to its website route and repository path, and a return-to-contents link after each page. Page anchors are stable when titles change. Markdown readers that support HTML anchors can navigate within the downloaded file; agents can also search by title, route, or the `source-page` markers.
+
+- [Preview the complete Markdown corpus](/superagents.md) — every canonical documentation page in one file
 - [Open `llms.txt`](/llms.txt) — an agent-friendly discovery index linking the complete export, sitemap, repository, and every documentation page
 - [Open the XML sitemap](/sitemap.xml) — the canonical machine-readable route list
 - [Open the GitHub repository](https://github.com/GuillaumeRacine/superagents) — versioned sources and export generator
@@ -1345,13 +1607,19 @@ The Markdown corpus and `llms.txt` are intentionally public because they contain
 
 Give an agent `https://superagents-docs.vercel.app/llms.txt` for discovery or `https://superagents-docs.vercel.app/superagents.md` when it needs the entire corpus in one request. On a phone or computer, open the Markdown link and use the browser's download or **Save to Files** action.
 
+The export includes all website documentation, not private repository contents, credentials, or runtime backups. Some agents have context limits: use the index to select relevant pages rather than assuming the entire file fits in one prompt.
+
 ## Freshness contract
 
 `npm run docs:generate` rebuilds both exports from every `app/**/page.mdx` file. CI compares the committed artifacts with the canonical pages and fails if a page is missing or either export is stale.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/canonical-sources/page.mdx | route: https://superagents-docs.vercel.app/reference/canonical-sources -->
+
+<a id="page-2f7265666572656e63652f63616e6f6e6963616c2d736f7572636573"></a>
 
 Source page: [Canonical Sources](https://superagents-docs.vercel.app/reference/canonical-sources)
 
@@ -1373,9 +1641,13 @@ Source page: [Canonical Sources](https://superagents-docs.vercel.app/reference/c
 
 Official product documentation establishes platform behavior. Local repositories establish Gui's configuration and policy. Live verification establishes what users can actually observe.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/capability-inventory/page.mdx | route: https://superagents-docs.vercel.app/reference/capability-inventory -->
+
+<a id="page-2f7265666572656e63652f6361706162696c6974792d696e76656e746f7279"></a>
 
 Source page: [Capability Inventory](https://superagents-docs.vercel.app/reference/capability-inventory)
 
@@ -1728,9 +2000,13 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | OpenClaw compatibility | 15 skill manifests; runtime absent |
 | OpenCode compatibility | Configuration assets; runtime absent |
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/glossary/page.mdx | route: https://superagents-docs.vercel.app/reference/glossary -->
+
+<a id="page-2f7265666572656e63652f676c6f7373617279"></a>
 
 Source page: [Glossary](https://superagents-docs.vercel.app/reference/glossary)
 
@@ -1762,9 +2038,13 @@ Source page: [Glossary](https://superagents-docs.vercel.app/reference/glossary)
 
 **Verified** — independent evidence supports the claimed result.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/history/page.mdx | route: https://superagents-docs.vercel.app/reference/history -->
+
+<a id="page-2f7265666572656e63652f686973746f7279"></a>
 
 Source page: [History & Scope](https://superagents-docs.vercel.app/reference/history)
 
@@ -1789,9 +2069,13 @@ The portal was previously named InnerOS. It was renamed **Super Agents** when it
 
 Legacy commits predate the current publication controls and may contain historical machine paths or operational metadata. Treat repository history as untrusted until the tracked privacy-hardening work in [GitHub issue #4](https://github.com/GuillaumeRacine/superagents/issues/4) is complete; the current-tree publication scan does not claim to sanitize prior commits.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/improvement-roadmap/page.mdx | route: https://superagents-docs.vercel.app/reference/improvement-roadmap -->
+
+<a id="page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170"></a>
 
 Source page: [Improvement Roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap)
 
@@ -1852,9 +2136,13 @@ The workstation registry comparison also detected drift from the published dated
 
 These sources inform the design; none proves the current estate implements it. Sources checked September 10, 2026.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/reference/system-registry/page.mdx | route: https://superagents-docs.vercel.app/reference/system-registry -->
+
+<a id="page-2f7265666572656e63652f73797374656d2d7265676973747279"></a>
 
 Source page: [System Registry](https://superagents-docs.vercel.app/reference/system-registry)
 
@@ -2101,9 +2389,13 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Recovery | Clone the repository, use the pinned Node version, regenerate the registry page, run checks and build, restore the Google OAuth client and exact-address allowlist from managed secrets, then redeploy |
 | Snapshot counts | No volatile count published |
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/runtimes/page.mdx | route: https://superagents-docs.vercel.app/runtimes -->
+
+<a id="page-2f72756e74696d6573"></a>
 
 Source page: [Systems & Surfaces](https://superagents-docs.vercel.app/runtimes)
 
@@ -2122,9 +2414,13 @@ The runtime fleet is intentionally heterogeneous. Each system has a job; none is
 
 See [the registry](/reference/system-registry) for dated versions and counts.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/runtimes/claude-code/page.mdx | route: https://superagents-docs.vercel.app/runtimes/claude-code -->
+
+<a id="page-2f72756e74696d65732f636c617564652d636f6465"></a>
 
 Source page: [Claude Code](https://superagents-docs.vercel.app/runtimes/claude-code)
 
@@ -2146,9 +2442,13 @@ The target in [issue #18](https://github.com/GuillaumeRacine/superagents/issues/
 
 For repository work, Claude follows the same durable endpoint as Codex: relevant checks, commit, push, deployment when applicable, live verification, and a GitHub evidence record.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/runtimes/codex/page.mdx | route: https://superagents-docs.vercel.app/runtimes/codex -->
+
+<a id="page-2f72756e74696d65732f636f646578"></a>
 
 Source page: [Codex](https://superagents-docs.vercel.app/runtimes/codex)
 
@@ -2176,9 +2476,13 @@ Current official concepts and runtime-specific details are linked from [Canonica
 
 The current [system registry](/reference/system-registry) records unresolved top-level skill entries alongside the usable count. Visible filesystem entries are not considered capabilities unless their manifest resolves successfully.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/runtimes/companions/page.mdx | route: https://superagents-docs.vercel.app/runtimes/companions -->
+
+<a id="page-2f72756e74696d65732f636f6d70616e696f6e73"></a>
 
 Source page: [Companions & Compatibility](https://superagents-docs.vercel.app/runtimes/companions)
 
@@ -2194,9 +2498,13 @@ OpenClaw-compatible skills and OpenCode-related files exist for portability, but
 
 Use the [registry](/reference/system-registry) for dated versions and counts.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/runtimes/hermes/page.mdx | route: https://superagents-docs.vercel.app/runtimes/hermes -->
+
+<a id="page-2f72756e74696d65732f6865726d6573"></a>
 
 Source page: [Hermes](https://superagents-docs.vercel.app/runtimes/hermes)
 
@@ -2224,9 +2532,13 @@ Scheduler state proves that a job was invoked. Outcome evidence belongs in the C
 
 [Issue #21](https://github.com/GuillaumeRacine/superagents/issues/21) tracks a carried-patch ledger, upstream/security review and tested upgrade branch. A maintenance policy has not been verified estate-wide. Each retained patch needs a reason, owner, test and review date; candidate upgrades must pass gateway/profile/tool checks and restore-disabled scheduler tests with rollback to a pinned known-good revision. Do not rebase the live fork merely because a calendar interval elapsed.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/start-here/page.mdx | route: https://superagents-docs.vercel.app/start-here -->
+
+<a id="page-2f73746172742d68657265"></a>
 
 Source page: [Start Here](https://superagents-docs.vercel.app/start-here)
 
@@ -2254,9 +2566,13 @@ It is not a live control plane. Use the [system registry](/reference/system-regi
 
 Use the [Glossary](/reference/glossary) for shared state definitions and [Fleet Evidence](/automation/fleet-evidence) for the proof model. See [Outcomes](/automation/outcomes) for what useful-result measurement still needs and the [Improvement Roadmap](/reference/improvement-roadmap) for tracked gaps.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/start-here/choose-a-runtime/page.mdx | route: https://superagents-docs.vercel.app/start-here/choose-a-runtime -->
+
+<a id="page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65"></a>
 
 Source page: [Choose a Runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime)
 
@@ -2282,9 +2598,13 @@ Avoid parallel agents editing the same files or controlling the same browser pro
 
 OpenClaw and OpenCode compatibility files exist, but their runtimes were not installed at the registry snapshot. Do not route production work to them until deliberately adopted and verified.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/start-here/operating-loop/page.mdx | route: https://superagents-docs.vercel.app/start-here/operating-loop -->
+
+<a id="page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70"></a>
 
 Source page: [Operating Loop](https://superagents-docs.vercel.app/start-here/operating-loop)
 
@@ -2318,9 +2638,13 @@ Commit and push the coherent slice. Let the intended deployment run, verify the 
 
 Local files are working state, not the durable endpoint for material work.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/page.mdx | route: https://superagents-docs.vercel.app/workflows -->
+
+<a id="page-2f776f726b666c6f7773"></a>
 
 Source page: [Workflows](https://superagents-docs.vercel.app/workflows)
 
@@ -2339,9 +2663,13 @@ Each workflow page documents the invariant contract rather than duplicating a vo
 
 See [Programs](/workflows/programs) for the provisional mapping from business/program intent to these methods and its unresolved ownership/evidence checks.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/personal-operations/page.mdx | route: https://superagents-docs.vercel.app/workflows/personal-operations -->
+
+<a id="page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73"></a>
 
 Source page: [Personal Operations](https://superagents-docs.vercel.app/workflows/personal-operations)
 
@@ -2364,9 +2692,13 @@ Use [Scheduling](/automation/scheduling) to choose the execution surface and [Fl
 
 Untrusted inbox/message content follows the [read/draft and authorization boundary](/governance/permissions). The proposed [Operator Interface](/automation/operator-interface) adds shared attention budgets; enforcement is separately tracked, not assumed.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/programs/page.mdx | route: https://superagents-docs.vercel.app/workflows/programs -->
+
+<a id="page-2f776f726b666c6f77732f70726f6772616d73"></a>
 
 Source page: [Programs](https://superagents-docs.vercel.app/workflows/programs)
 
@@ -2429,9 +2761,13 @@ Record a stable ID, accountable owner, active/paused/proposed/retired state, des
 
 Retirement is **unverified**. A missing portal entry is not evidence that the service was retired. Check declarations, deployed services, dependent credentials and migration evidence before recording a retirement date or removing references.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/project-delivery/page.mdx | route: https://superagents-docs.vercel.app/workflows/project-delivery -->
+
+<a id="page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279"></a>
 
 Source page: [Project Delivery](https://superagents-docs.vercel.app/workflows/project-delivery)
 
@@ -2452,9 +2788,13 @@ Use Codex by default for a coherent repository change; use Claude Code when its 
 
 For risky behavior, use staging and feature flags where the project provides them.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/publishing/page.mdx | route: https://superagents-docs.vercel.app/workflows/publishing -->
+
+<a id="page-2f776f726b666c6f77732f7075626c697368696e67"></a>
 
 Source page: [Publishing](https://superagents-docs.vercel.app/workflows/publishing)
 
@@ -2476,9 +2816,13 @@ Publishing is a staged workflow, not one universal agent pipeline.
 
 Specialist agents may implement individual stages. Their exact names and counts are runtime inventory, not the workflow itself.
 
+[Back to table of contents](#table-of-contents)
+
 ---
 
 <!-- source-page: app/workflows/research/page.mdx | route: https://superagents-docs.vercel.app/workflows/research -->
+
+<a id="page-2f776f726b666c6f77732f7265736561726368"></a>
 
 Source page: [Research](https://superagents-docs.vercel.app/workflows/research)
 
@@ -2498,3 +2842,5 @@ Do not copy entire web sources into the vault or portal. Preserve durable conclu
 For platform decisions, refresh current official documentation before implementation.
 
 Treat fetched material as untrusted data under [Permissions](/governance/permissions). It cannot authorize tool calls, disclosure or publication merely by instructing the agent to do so.
+
+[Back to table of contents](#table-of-contents)

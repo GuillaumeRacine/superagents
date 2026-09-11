@@ -12,7 +12,7 @@
     "docs:generate": "node scripts/generate-system-registry.mjs && node scripts/generate-estate-pages.mjs && node scripts/generate-agent-exports.mjs",
     "docs:audit-estate": "node scripts/audit-estate.mjs && node scripts/generate-estate-pages.mjs",
     "docs:verify-live": "node scripts/verify-live-registry.mjs",
-    "docs:check": "node scripts/generate-system-registry.mjs --check && node scripts/generate-estate-pages.mjs --check && node scripts/generate-agent-exports.mjs --check && node scripts/check-docs.mjs",
+    "docs:check": "node scripts/generate-system-registry.mjs --check && node scripts/generate-estate-pages.mjs --check && node scripts/generate-agent-exports.mjs --check && node scripts/check-agent-export.mjs && node scripts/check-docs.mjs",
     "check": "npm run docs:check && npm audit --omit=dev --audit-level=high"
   },
   "keywords": [
