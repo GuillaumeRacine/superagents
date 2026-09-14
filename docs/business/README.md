@@ -36,6 +36,16 @@ Unconfigured and malformed configurations show safe non-sensitive empty states.
 No write actions or schedule are installed. Hermes owns any future collector
 cadence, which requires its own implementation and proof.
 
+## Multiple Google accounts
+
+Dashboard readers and source connectors are separate permission sets. Connecting
+an additional Gmail or Workspace data account does not add that account to the
+dashboard sign-in allowlist. Each future connector needs an explicit account,
+business mapping, minimum scopes, consent, revocation and collection coverage.
+Do not use domain wildcards. Reader additions require exact owner-specified
+addresses and a separate authorization test. No Gmail/Workspace data connector
+or expanded reader permission is included in this release.
+
 ## Rollout and rollback
 
 - #31: authorization and projected read model.

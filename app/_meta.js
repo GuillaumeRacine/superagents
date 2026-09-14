@@ -6,6 +6,7 @@ export default {
     }
   },
   'start-here': 'Start Here',
+  business: { title: 'Business Dashboard', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
   architecture: 'Architecture',
   estate: 'Estate & Devices',
   runtimes: 'Systems & Surfaces',
