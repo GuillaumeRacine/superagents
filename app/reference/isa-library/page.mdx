@@ -1,0 +1,46 @@
+# Ideal State Analysis Library
+
+An **Ideal State Analysis (ISA)** describes what good looks like for one system, product or workflow: whom it serves, the desired result, constraints, unacceptable states, evidence and ownership. It is not an implementation plan or proof that the outcome has happened.
+
+## Where to review the documents
+
+The full ISA library lives in the **private knowledge vault and owning repositories**, not in this website's public content. Open the vault's `ideal_state_program/INDEX.md` for the human-readable directory. Its `LIBRARY_GUIDE.md` explains reading, editing and review; `ISA_ACCESS.md` remains the universal agent entry point.
+
+The directory provides:
+
+- What each tracked object is for, its owner, registered version, maturity and next gate.
+- A distinction between registered authorities, discovery references and objects that inherit existing guidance.
+- Links to the exact pinned authority, current main, proposed edits, history and open changes.
+- A downloadable `library.html` with local search, record-type filters and review-date filters. Download the raw file from the private repository, then open it in a browser; GitHub does not run an HTML preview.
+
+Use GitHub's private Markdown view from any signed-in device, or the vault index in Obsidian. The downloaded browser view searches directory metadata. Full document text is searched in the owning repositories through the directory's search links. It is not a hosted cross-repository editor or full-text search service.
+
+## Editing and management
+
+1. Locate the object and read its pinned authority. Compare current main and open changes before starting an edit.
+2. Select **Propose edit** in the private library and choose a new branch and pull request. Do not edit the generated index or commit an ISA directly to main.
+3. Explain the changed intent, affected claims and supporting evidence. Preserve stable claim identifiers and follow the native version/history rules.
+4. If the registered authority changes, refresh its exact repository, commit, path and content hash through the registry's review workflow.
+5. Regenerate the private library with the changed source records; its CI drift check keeps the directory aligned with those records.
+
+Review dates are backstops, not automatic approvals or proof of overdue implementation. Missing dates remain unset. Only the accountable owner may promote maturity, confirm outcomes or retire an intended outcome.
+
+## Understand maturity
+
+| Level | Meaning |
+|---|---|
+| I0 | Object, owner or canonical authority unresolved |
+| I1 | Fragmented or draft intent |
+| I2 | Existing authority expresses the ideal sufficiently; recorded crosswalk |
+| I3 | Consumed by real work and joined to decisions, evidence, outcomes and cost |
+| I4 | Causally validated benefit from consuming the ISA |
+
+These are definitions, not claims about the current portfolio. Use the private registry and plan for each object's actual level. A generated directory or passing test never promotes a level.
+
+## Privacy and freshness
+
+This site's source, Markdown export and search index are public sanitized material even though rendered pages have a sign-in gate. Private ISA text, object metadata and private source links must not be copied into those surfaces. The private library reuses existing GitHub access and introduces no new credentials or sharing permissions.
+
+A downloaded library is a snapshot, not a live subscription. Regenerate after source changes and download again. The library's input fingerprint does not establish live runtime readiness or re-verify external source hashes.
+
+See [Sources of truth](/architecture/sources-of-truth), [Documentation governance](/governance/documentation), and [Agent & Offline Export](/reference/agent-export) for the public/private boundary.

@@ -4,6 +4,7 @@ export default {
   'system-registry': 'System Registry',
   'capability-inventory': 'Capability Inventory',
   'canonical-sources': 'Canonical Sources',
+  'isa-library': 'ISA Library',
   'agent-export': 'Agent & Offline Export',
   glossary: 'Glossary',
   history: 'History & Scope'

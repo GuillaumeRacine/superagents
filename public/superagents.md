@@ -5,7 +5,7 @@
 - Canonical site: https://superagents-docs.vercel.app
 - Source: https://github.com/GuillaumeRacine/superagents
 - Registry snapshot: 2026-09-09T11:07:29-04:00
-- Pages included: 54
+- Pages included: 55
 
 This file is generated. Edit the owning page in `app/`, then run `npm run docs:generate`.
 
@@ -54,21 +54,22 @@ This is the complete sanitized website corpus, not a backup of private repositor
 37. [Glossary](#page-2f7265666572656e63652f676c6f7373617279) — `/reference/glossary`
 38. [History & Scope](#page-2f7265666572656e63652f686973746f7279) — `/reference/history`
 39. [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) — `/reference/improvement-roadmap`
-40. [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) — `/reference/system-registry`
-41. [Systems & Surfaces](#page-2f72756e74696d6573) — `/runtimes`
-42. [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) — `/runtimes/claude-code`
-43. [Codex](#page-2f72756e74696d65732f636f646578) — `/runtimes/codex`
-44. [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) — `/runtimes/companions`
-45. [Hermes](#page-2f72756e74696d65732f6865726d6573) — `/runtimes/hermes`
-46. [Start Here](#page-2f73746172742d68657265) — `/start-here`
-47. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
-48. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
-49. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
-50. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
-51. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
-52. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
-53. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
-54. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
+40. [Ideal State Analysis Library](#page-2f7265666572656e63652f6973612d6c696272617279) — `/reference/isa-library`
+41. [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) — `/reference/system-registry`
+42. [Systems & Surfaces](#page-2f72756e74696d6573) — `/runtimes`
+43. [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) — `/runtimes/claude-code`
+44. [Codex](#page-2f72756e74696d65732f636f646578) — `/runtimes/codex`
+45. [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) — `/runtimes/companions`
+46. [Hermes](#page-2f72756e74696d65732f6865726d6573) — `/runtimes/hermes`
+47. [Start Here](#page-2f73746172742d68657265) — `/start-here`
+48. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
+49. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
+50. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
+51. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
+52. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
+53. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
+54. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
+55. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
 
 ## Source index
 
@@ -113,6 +114,7 @@ This is the complete sanitized website corpus, not a backup of private repositor
 | [Glossary](#page-2f7265666572656e63652f676c6f7373617279) | [/reference/glossary](https://superagents-docs.vercel.app/reference/glossary) | `app/reference/glossary/page.mdx` |
 | [History & Scope](#page-2f7265666572656e63652f686973746f7279) | [/reference/history](https://superagents-docs.vercel.app/reference/history) | `app/reference/history/page.mdx` |
 | [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) | [/reference/improvement-roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap) | `app/reference/improvement-roadmap/page.mdx` |
+| [Ideal State Analysis Library](#page-2f7265666572656e63652f6973612d6c696272617279) | [/reference/isa-library](https://superagents-docs.vercel.app/reference/isa-library) | `app/reference/isa-library/page.mdx` |
 | [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) | [/reference/system-registry](https://superagents-docs.vercel.app/reference/system-registry) | `app/reference/system-registry/page.mdx` |
 | [Systems & Surfaces](#page-2f72756e74696d6573) | [/runtimes](https://superagents-docs.vercel.app/runtimes) | `app/runtimes/page.mdx` |
 | [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) | [/runtimes/claude-code](https://superagents-docs.vercel.app/runtimes/claude-code) | `app/runtimes/claude-code/page.mdx` |
@@ -151,6 +153,7 @@ Super Agents is the umbrella for the full agentic system—not one app or one ru
 
 | Question | Go to |
 |---|---|
+| Where can I review and edit Ideal State Analyses? | [ISA Library](/reference/isa-library) |
 | What did the system produce, and what remains unproven? | [Outcomes](/automation/outcomes) and [Improvement Roadmap](/reference/improvement-roadmap) |
 | Which programs does it serve? | [Programs](/workflows/programs) |
 | Which agent should handle this task? | [Choose a runtime](/start-here/choose-a-runtime) |
@@ -1565,6 +1568,8 @@ Source page: [Reference](https://superagents-docs.vercel.app/reference)
 
 # Reference
 
+- [ISA Library](/reference/isa-library) — find, search, review and propose edits to private ideal-state authorities
+
 - [Improvement Roadmap](/reference/improvement-roadmap) — Claude challenge disposition, researched implementation plan, owners and GitHub issues
 
 - [System Registry](/reference/system-registry) — generated, dated operating contracts and snapshot facts
@@ -2135,6 +2140,63 @@ The workstation registry comparison also detected drift from the published dated
 - [CISA recovery guidance](https://www.cisa.gov/stopransomware/ransomware-guide) supports offline protected backups and actual restore testing rather than relying on documentation alone.
 
 These sources inform the design; none proves the current estate implements it. Sources checked September 10, 2026.
+
+[Back to table of contents](#table-of-contents)
+
+---
+
+<!-- source-page: app/reference/isa-library/page.mdx | route: https://superagents-docs.vercel.app/reference/isa-library -->
+
+<a id="page-2f7265666572656e63652f6973612d6c696272617279"></a>
+
+Source page: [Ideal State Analysis Library](https://superagents-docs.vercel.app/reference/isa-library)
+
+# Ideal State Analysis Library
+
+An **Ideal State Analysis (ISA)** describes what good looks like for one system, product or workflow: whom it serves, the desired result, constraints, unacceptable states, evidence and ownership. It is not an implementation plan or proof that the outcome has happened.
+
+## Where to review the documents
+
+The full ISA library lives in the **private knowledge vault and owning repositories**, not in this website's public content. Open the vault's `ideal_state_program/INDEX.md` for the human-readable directory. Its `LIBRARY_GUIDE.md` explains reading, editing and review; `ISA_ACCESS.md` remains the universal agent entry point.
+
+The directory provides:
+
+- What each tracked object is for, its owner, registered version, maturity and next gate.
+- A distinction between registered authorities, discovery references and objects that inherit existing guidance.
+- Links to the exact pinned authority, current main, proposed edits, history and open changes.
+- A downloadable `library.html` with local search, record-type filters and review-date filters. Download the raw file from the private repository, then open it in a browser; GitHub does not run an HTML preview.
+
+Use GitHub's private Markdown view from any signed-in device, or the vault index in Obsidian. The downloaded browser view searches directory metadata. Full document text is searched in the owning repositories through the directory's search links. It is not a hosted cross-repository editor or full-text search service.
+
+## Editing and management
+
+1. Locate the object and read its pinned authority. Compare current main and open changes before starting an edit.
+2. Select **Propose edit** in the private library and choose a new branch and pull request. Do not edit the generated index or commit an ISA directly to main.
+3. Explain the changed intent, affected claims and supporting evidence. Preserve stable claim identifiers and follow the native version/history rules.
+4. If the registered authority changes, refresh its exact repository, commit, path and content hash through the registry's review workflow.
+5. Regenerate the private library with the changed source records; its CI drift check keeps the directory aligned with those records.
+
+Review dates are backstops, not automatic approvals or proof of overdue implementation. Missing dates remain unset. Only the accountable owner may promote maturity, confirm outcomes or retire an intended outcome.
+
+## Understand maturity
+
+| Level | Meaning |
+|---|---|
+| I0 | Object, owner or canonical authority unresolved |
+| I1 | Fragmented or draft intent |
+| I2 | Existing authority expresses the ideal sufficiently; recorded crosswalk |
+| I3 | Consumed by real work and joined to decisions, evidence, outcomes and cost |
+| I4 | Causally validated benefit from consuming the ISA |
+
+These are definitions, not claims about the current portfolio. Use the private registry and plan for each object's actual level. A generated directory or passing test never promotes a level.
+
+## Privacy and freshness
+
+This site's source, Markdown export and search index are public sanitized material even though rendered pages have a sign-in gate. Private ISA text, object metadata and private source links must not be copied into those surfaces. The private library reuses existing GitHub access and introduces no new credentials or sharing permissions.
+
+A downloaded library is a snapshot, not a live subscription. Regenerate after source changes and download again. The library's input fingerprint does not establish live runtime readiness or re-verify external source hashes.
+
+See [Sources of truth](/architecture/sources-of-truth), [Documentation governance](/governance/documentation), and [Agent & Offline Export](/reference/agent-export) for the public/private boundary.
 
 [Back to table of contents](#table-of-contents)
 

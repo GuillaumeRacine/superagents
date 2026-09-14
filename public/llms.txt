@@ -4,7 +4,7 @@
 
 ## Complete export
 
-- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 54 canonical pages.
+- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 55 canonical pages.
 - [XML sitemap](https://superagents-docs.vercel.app/sitemap.xml): Machine-readable list of canonical website routes.
 - [GitHub source](https://github.com/GuillaumeRacine/superagents): Versioned source and generation scripts.
 
@@ -49,6 +49,7 @@
 - [Glossary](https://superagents-docs.vercel.app/reference/glossary)
 - [History & Scope](https://superagents-docs.vercel.app/reference/history)
 - [Improvement Roadmap](https://superagents-docs.vercel.app/reference/improvement-roadmap)
+- [Ideal State Analysis Library](https://superagents-docs.vercel.app/reference/isa-library)
 - [System Registry](https://superagents-docs.vercel.app/reference/system-registry)
 - [Systems & Surfaces](https://superagents-docs.vercel.app/runtimes)
 - [Claude Code](https://superagents-docs.vercel.app/runtimes/claude-code)
