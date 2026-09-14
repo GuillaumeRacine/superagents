@@ -108,7 +108,7 @@ for (const file of files.filter((item) => item.endsWith('_meta.js'))) {
   }
   for (const name of Object.keys(navigation)) {
     const target = name === 'index' ? join(directory, 'page.mdx') : join(directory, name, 'page.mdx')
-    if (!existsSync(target)) failures.push(`${relative(root, file)} links navigation entry ${name} to no page`)
+    if (!existsSync(target) && !existsSync(target.replace(/\.mdx$/, '.tsx'))) failures.push(`${relative(root, file)} links navigation entry ${name} to no page`)
   }
 }
 
