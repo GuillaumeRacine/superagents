@@ -23,7 +23,7 @@ export default async function BusinessDashboard() {
       <p>Your businesses. The evidence. Your next decision.</p>
       <div className={styles.tags}><span>Private · Read-only</span><span>Selected portfolio · Not the whole estate</span></div>
     </header>
-    <nav className={styles.nav} aria-label="Business sections"><a href="#attention">Attention</a><a href="#portfolio">Portfolio</a><a href="#coverage">Data coverage</a><a href="/">Documentation ↗</a></nav>
+    <nav className={styles.nav} aria-label="Business sections"><a href="/finance">Finance Dashboard ↗</a><a href="#attention">Attention</a><a href="#portfolio">Portfolio</a><a href="#coverage">Data coverage</a><a href="/">Documentation ↗</a></nav>
     {!snapshot ? <section className={styles.panel}>
       <h2>{data.state === 'invalid' ? 'Data needs attention' : 'Private data is not connected yet'}</h2>
       <p>{data.state === 'invalid' ? 'The snapshot failed validation. No partial or unvalidated records are displayed.' : 'The secure dashboard is ready. Business records will appear after the source snapshot and Google sign-in verification are complete.'}</p>

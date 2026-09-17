@@ -23,7 +23,7 @@ const navbar = (
   <Navbar
     logo={<span style={{ fontWeight: 800, fontSize: '1.1rem' }}>Super Agents</span>}
     projectLink="https://github.com/GuillaumeRacine/superagents"
-  ><a href="/business" style={{ fontWeight: 600, fontSize: '0.9rem' }}>Business Dashboard</a></Navbar>
+  ><a href="/business" style={{ fontWeight: 600, fontSize: '0.9rem' }}>Business Dashboard</a><a href="/finance" style={{ fontWeight: 600, fontSize: '0.9rem' }}>Finance</a></Navbar>
 )
 
 const footer = (
