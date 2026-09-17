@@ -21,13 +21,21 @@ coverage claims. No maturity promotion or owner acceptance is implied.
 
 Public code and tests contain generic/fictional examples only. Entity names,
 private links and records are never committed here. `/finance` and `/api/finance`
-recheck the exact-email allowlist before reading `FINANCE_SNAPSHOT_JSON` on the
+recheck the exact-email allowlist before reading the managed finance snapshot on the
 server; the existing proxy also gates HTML and RSC requests. Routes are dynamic,
 private/no-store and excluded from Pagefind and MDX exports. No data is fetched
 from imported URLs; following a link uses its original access controls.
 
-The optional managed snapshot is limited to 48 KB, projected and validated.
-It is a deployment baseline, not a database. Actual financial-record activation
+The optional managed snapshot accepts `FINANCE_SNAPSHOT_JSON` up to 48,000 bytes,
+or `FINANCE_SNAPSHOT_GZIP_BASE64`: canonical padded base64 of gzip-compressed
+UTF-8 JSON, limited to 48,000 encoded bytes and 2,000,000 decompressed bytes.
+The server bounds decompression before parsing and applies the same schema,
+reference, normalized-size and row-count validation. A present compressed value
+takes precedence; any invalid value (including an empty string) fails closed
+without falling back to JSON. Remove the compressed variable to return to the
+JSON transport. Keep both forms in private managed environment configuration;
+compression provides no encryption. This is a deployment baseline, not a database.
+Actual financial-record activation
 inherits the Business Dashboard real-OAuth and confidentiality gates.
 
 Browser imports/edits live in React memory only. They never POST to the server
@@ -65,7 +73,7 @@ for accounting handoff, not lossless workspace round trips.
   All entities sums included asset rows. Ownership percentages are descriptive;
   enter only the attributable share of gross and debt. Exclude duplicated
   intercompany/subsidiary valuations with `included: no`.
-- Gross/debt cards are explicitly *known subtotals*. Net is unknown unless every
+- Gross/debt cards are explicitly _known subtotals_. Net is unknown unless every
   included asset has both amounts. A blank is never coerced to zero. A liability
   can be an asset row with category liability, gross zero and positive debt.
 - Last dated value on/before month-end is carried forward and labeled. Historical
@@ -95,3 +103,26 @@ synthetic production sessions or install a test login bypass.
 Rollback application code through GitHub and Vercel. Remove the optional finance
 snapshot and redeploy to reset its baseline. Exported source workspaces remain
 unchanged. No bank, source document, or email records are modified by this app.
+
+## Source evidence and refresh handoff
+
+Runtime snapshots may include `sources` (name, HTTPS URL, observation cutoff,
+check date, coverage status and note) and `reportedTotals` (dated, currency-specific,
+source-reported portfolio net totals). Both tables are optional for older exports.
+Reported totals are shown separately as unreconciled workbook history, never
+substituted for the asset register's calculated net value. The chart carries the
+last source observation forward and exposes actual dates and evidence.
+
+Asset status also accepts `closed` and `unknown`. Closed alone proves neither
+an exit nor a loss; current source status must not be interpreted historically.
+Amounts on closed positions are preserved. Source percentages are not imported;
+allocation is recomputed from included gross values. Missing property debt and
+unverified ownership remain explicit gaps.
+
+The private source owner handles read-only extraction, statement control checks,
+change detection and managed snapshot publication. Bank balance positions that
+may overlap workbook cash must be excluded from totals pending reconciliation.
+New or changed documents are inventory evidence until parsed and reconciled.
+Authenticated production readback is required for the initial baseline; refresh
+jobs must retain their prior success state on failure and record deployment
+uncertainty separately. No spreadsheet, bank or email source is modified here.

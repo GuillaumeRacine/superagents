@@ -27,6 +27,8 @@ type Workspace = {
   tasks: Row[];
   documents: Row[];
   events: Row[];
+  sources: Row[];
+  reportedTotals: Row[];
 };
 const sections = [
   "Overview",
@@ -47,6 +49,8 @@ const titles = {
   tasks: "Obligations",
   documents: "Documents",
   events: "Timeline events",
+  sources: "Source checks",
+  reportedTotals: "Reported portfolio totals",
 };
 const labels = {
   cash: "Cash & deposits",
@@ -199,6 +203,7 @@ export default function FinanceDashboard({
       ...data.assets.map((a) => a.currency),
       ...data.transactions.map((t) => t.currency),
       ...data.statements.map((v) => v.currency),
+      ...data.reportedTotals.map((v) => v.currency),
     ]),
   ).sort();
   const rows = assetRows(data, month, entity, currency),
@@ -271,6 +276,16 @@ export default function FinanceDashboard({
       ...totals(assetRows(data, m, entity, currency)),
     })),
     maxHistory = Math.max(1, ...history.map((h) => Math.abs(h.net || 0)));
+  const reportedHistory: Row[] = months.map((m) => ({
+    month: m,
+    ...data.reportedTotals
+      .filter((v) => v.currency === currency && v.date <= `${m}-31`)
+      .sort((a, b) => b.date.localeCompare(a.date))[0],
+  }));
+  const reportedMax = Math.max(
+    1,
+    ...reportedHistory.map((h) => Math.abs(h.net || 0)),
+  );
   const markReviewed = (id: string) =>
     change(
       {
@@ -338,7 +353,9 @@ export default function FinanceDashboard({
           <span className={s.muted}>
             {dirty
               ? "Unsaved workspace changes"
-              : "Spreadsheet-first · Manual updates"}
+              : data.sources.length
+                ? "Source-backed snapshot"
+                : "Spreadsheet-first · Manual updates"}
           </span>
         </div>
       </header>
@@ -350,7 +367,7 @@ export default function FinanceDashboard({
             value={entity}
             onChange={(e) => setEntity(e.target.value)}
           >
-            <option value="all">All entities · consolidated</option>
+            <option value="all">All entities · included assets</option>
             {data.entities.map((e) => (
               <option key={e.id} value={e.id}>
                 {e.name}
@@ -413,9 +430,37 @@ export default function FinanceDashboard({
               : "A private view of your records."}
           </strong>{" "}
           Imports and edits stay in memory. Export before leaving; reload
-          restores the deployed snapshot. No bank or email feeds are connected.
+          restores the deployed snapshot. Source checks below describe its
+          coverage; edits here do not change your source files.
         </p>
       </div>
+      {data.sources.length > 0 && (
+        <details className={s.sourceChecks}>
+          <summary>
+            Source checks & coverage ·{" "}
+            {data.sources.filter((v) => v.status !== "current").length} items
+            need attention
+          </summary>
+          <p>
+            Checks record when evidence was inspected, not that every account is
+            complete. Source dates may differ from the selected month.
+          </p>
+          {data.sources.map((v) => (
+            <article key={v.id}>
+              <strong>{v.name}</strong>{" "}
+              <span className={s.pill}>{v.status.replaceAll("-", " ")}</span>
+              <p>
+                Checked {v.checkedAt}
+                {v.asOf
+                  ? ` · Data through ${v.asOf}`
+                  : " · Data cutoff unknown"}
+              </p>
+              <p>{v.note}</p>
+              <Link url={v.url}>Open source</Link>
+            </article>
+          ))}
+        </details>
+      )}
       {sourceState === "invalid" && (
         <p className={s.error}>
           The deployed snapshot could not be validated. No partial records were
@@ -577,6 +622,89 @@ export default function FinanceDashboard({
               </p>
             </Panel>
           </div>
+          {entity === "all" &&
+            data.reportedTotals.some((v) => v.currency === currency) && (
+              <Panel
+                title="Your workbook over time"
+                kicker="SOURCE-REPORTED HISTORY · UNRECONCILED"
+              >
+                <p className={s.footnote}>
+                  These are the workbook’s reported net totals, preserved as
+                  retrieved. They may differ from the asset register because of
+                  source formulas, scope or unresolved debts. They are not
+                  reconciled net worth or investment returns.
+                </p>
+                <div
+                  className={s.history}
+                  role="img"
+                  aria-label={
+                    "Workbook-reported net values, unreconciled. " +
+                    reportedHistory
+                      .map(
+                        (h) =>
+                          `${h.month}: ${h.net == null ? "unknown" : money(h.net, currency)}; source ${h.date || "unknown"}`,
+                      )
+                      .join(". ")
+                  }
+                >
+                  {reportedHistory.map((h) => (
+                    <div key={h.month} className={s.historyColumn}>
+                      <span className={s.historyValue}>
+                        {money(h.net ?? null, currency)}
+                      </span>
+                      <div className={s.historyTrack}>
+                        {h.net != null && (
+                          <div
+                            style={{
+                              height: `${Math.max(2, (Math.abs(h.net) / reportedMax) * 100)}%`,
+                              background: h.net < 0 ? "#a95840" : undefined,
+                            }}
+                          />
+                        )}
+                      </div>
+                      <span>{h.month.slice(2)}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className={s.footnote}>
+                  Last reported observation at each month end, carried forward
+                  until the next source mark. Open the dates below to see the
+                  actual observation dates.
+                </p>
+                <details>
+                  <summary>All source observations and evidence</summary>
+                  <div className={s.tableWrap}>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Source date</th>
+                          <th>Reported net value</th>
+                          <th>Evidence</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.reportedTotals
+                          .filter(
+                            (v) =>
+                              v.currency === currency &&
+                              v.date <= `${month}-31`,
+                          )
+                          .sort((a, b) => b.date.localeCompare(a.date))
+                          .map((v) => (
+                            <tr key={v.id}>
+                              <td>{v.date}</td>
+                              <td>{money(v.net, currency)}</td>
+                              <td>
+                                <Link url={v.source} />
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </details>
+              </Panel>
+            )}
           <Panel title="The longer view" kicker="12-MONTH HISTORY">
             <div
               className={s.history}
@@ -1018,7 +1146,7 @@ export default function FinanceDashboard({
       {section === "Investments" && (
         <>
           <div className={s.statGrid}>
-            {["active", "dead", "exited"].map((status) => (
+            {["active", "dead", "exited", "closed", "unknown"].map((status) => (
               <article className={s.stat} key={status}>
                 <span>{status.toUpperCase()} ANGEL INVESTMENTS</span>
                 <strong>
@@ -1078,9 +1206,9 @@ export default function FinanceDashboard({
                 title="Know which companies are moving forward"
                 onImport={() => gotoImport("assets")}
               >
-                Add angel investments with an active, dead or exited status.
-                Assigned values come from your sheet; updates can be imported
-                from saved email summaries.
+                Import investment statuses from your records. Closed does not
+                establish an exit or a loss. Assigned values come from your
+                sheet; updates can be imported from saved email summaries.
               </Empty>
             )}
           </Panel>
@@ -1543,7 +1671,7 @@ export default function FinanceDashboard({
                   {kind === "entities"
                     ? "kind: holding, personal, operating, other. parentId links entities; ownership is a percentage."
                     : kind === "assets"
-                      ? "category: cash, public, angel, fund, property, liability, other. status: active, dead, exited. propertyType: rental, home, or blank. included: yes/no. Use no for duplicate intercompany positions. Enter only your attributable share of gross and debt."
+                      ? "category: cash, public, angel, fund, property, liability, other. status: active, dead, exited, closed, unknown. Closed does not imply an exit or a loss. propertyType: rental, home, or blank. included: yes/no. Use no for duplicate intercompany positions. Enter only your attributable share of gross and debt."
                       : kind === "transactions"
                         ? "category: income, fee, expense, tax, transfer, principal, capital, other. reviewed: yes/no. Negative amounts are outflows. assetId is optional. transferPairId connects two sides of a transfer."
                         : kind === "statements"
@@ -1558,7 +1686,9 @@ export default function FinanceDashboard({
                                   ? "category is your own label, such as Legal, Statements or Filing guide. url is required HTTPS. Do not put passwords into notes."
                                   : kind === "events"
                                     ? "Use a dated title and note for changes affecting an asset. source is an optional HTTPS link."
-                                    : "Restoring JSON replaces the entire workspace after preview. Export the current workspace first if you need to preserve it."}
+                                    : kind === "sources"
+                                      ? "checkedAt and optional asOf are YYYY-MM-DD dates. status: current, partial, stale, needs-review. Explain coverage and unresolved items in note; url is optional HTTPS."
+                                      : "Restoring JSON replaces the entire workspace after preview. Export the current workspace first if you need to preserve it."}
                 </p>
               </details>
             </aside>

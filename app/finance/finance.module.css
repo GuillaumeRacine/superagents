@@ -1140,3 +1140,23 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+.sourceChecks {
+  margin: 0 0 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.sourceChecks summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.sourceChecks article {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.sourceChecks p {
+  margin: 8px 0;
+}
