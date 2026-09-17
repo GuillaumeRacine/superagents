@@ -1,3 +1,4 @@
+import { gzipSync } from "node:zlib";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createServer } from "node:net";
@@ -10,7 +11,16 @@ const secret = "synthetic-finance-verification-only",
 const fixture = validateFinance({
   ...emptyFinance(),
   entities: [{ id: "example", name: marker, kind: "holding" }],
+  documents: Array.from({ length: 25 }, (_, i) => ({
+    id: `doc-${i}`,
+    entityId: "example",
+    name: `Example evidence ${i}`,
+    category: "Test",
+    url: "https://example.com/evidence",
+    note: marker.repeat(70),
+  })),
 });
+assert(Buffer.byteLength(JSON.stringify(fixture)) > 48000);
 assert(
   !existsSync(".next/server/app/finance.html"),
   "Finance must not be prerendered",
@@ -44,7 +54,9 @@ const server = spawn(
       AUTH_GOOGLE_SECRET: "example",
       AUTH_TRUST_HOST: "true",
       AUTHORIZED_GOOGLE_EMAILS: "owner@example.com,second@example.com",
-      FINANCE_SNAPSHOT_JSON: JSON.stringify(fixture),
+      FINANCE_SNAPSHOT_GZIP_BASE64: gzipSync(JSON.stringify(fixture)).toString(
+        "base64",
+      ),
     },
     stdio: "ignore",
   },

@@ -15,7 +15,7 @@
     "docs:check": "node scripts/generate-system-registry.mjs --check && node scripts/generate-estate-pages.mjs --check && node scripts/generate-agent-exports.mjs --check && node scripts/check-agent-export.mjs && node scripts/check-docs.mjs",
     "test:business": "node --test scripts/test-business.mjs",
     "check": "npm run test:business && npm run test:finance && npm run docs:check && npm audit --omit=dev --audit-level=high",
-    "test:finance": "node --test scripts/test-finance.mjs"
+    "test:finance": "node --test scripts/test-finance.mjs scripts/test-finance-snapshot.mjs"
   },
   "keywords": [
     "super-agents",

@@ -290,3 +290,122 @@ test("numeric JSON rejects nested values; valid oversized server snapshots fail 
     snapshot: emptyFinance(),
   });
 });
+
+test("source coverage preserves unknown dates and closed does not imply exited", () => {
+  const d = fixture();
+  d.assets[1].status = "closed";
+  d.sources = [
+    {
+      id: "sheet",
+      name: "Example workbook",
+      checkedAt: "2026-09-17",
+      status: "needs-review",
+      note: "Totals require review",
+    },
+  ];
+  const v = validateFinance(d);
+  assert.equal(v.assets[1].status, "closed");
+  assert.equal(v.sources[0].asOf, "");
+  assert.equal(v.sources[0].status, "needs-review");
+  assert.throws(
+    () =>
+      validateFinance({
+        ...d,
+        sources: [{ ...d.sources[0], asOf: "2026-02-30" }],
+      }),
+    /real YYYY/,
+  );
+  assert.throws(
+    () =>
+      validateFinance({
+        ...d,
+        sources: [{ ...d.sources[0], status: "complete" }],
+      }),
+    /status/,
+  );
+  const legacy = fixture();
+  delete legacy.sources;
+  assert.deepEqual(validateFinance(legacy).sources, []);
+});
+
+test("reported portfolio totals remain optional for legacy snapshots and preserve unknown versus zero", () => {
+  const legacy = fixture();
+  delete legacy.reportedTotals;
+  assert.deepEqual(validateFinance(legacy).reportedTotals, []);
+  const d = fixture();
+  d.reportedTotals = [
+    { id: "unknown", date: "2026-07-31", currency: "USD" },
+    { id: "zero", date: "2026-08-31", currency: "USD", net: 0 },
+    { id: "negative", date: "2026-09-01", currency: "USD", net: -500 },
+  ];
+  const v = validateFinance(d);
+  assert.deepEqual(
+    v.reportedTotals.map((r) => r.net),
+    [null, 0, -500],
+  );
+  assert.equal(v.reportedTotals[0].source, "");
+  // These are source-reported figures, never a substitute for asset arithmetic.
+  assert.equal(totals(assetRows(v, "2026-09")).net, 315000);
+});
+
+test("reported totals require stable IDs, real dates and uppercase currency codes", () => {
+  const d = fixture();
+  const row = {
+    id: "reported-august",
+    date: "2026-08-31",
+    currency: "USD",
+    net: 123456,
+    source: "https://example.com/workbook",
+  };
+  for (const key of ["id", "date", "currency"]) {
+    const missing = { ...row };
+    delete missing[key];
+    assert.throws(
+      () => validateFinance({ ...d, reportedTotals: [missing] }),
+      new RegExp(`${key} is required`),
+    );
+  }
+  for (const date of ["2026-02-30", "2026-13-01", "August 2026"])
+    assert.throws(
+      () => validateFinance({ ...d, reportedTotals: [{ ...row, date }] }),
+      /real YYYY-MM-DD/,
+    );
+  for (const currency of ["usd", "US", "USDD", "US$"])
+    assert.throws(
+      () => validateFinance({ ...d, reportedTotals: [{ ...row, currency }] }),
+      /three-letter uppercase/,
+    );
+  assert.throws(
+    () =>
+      validateFinance({
+        ...d,
+        reportedTotals: [{ ...row, source: "javascript:alert(1)" }],
+      }),
+    /HTTPS/,
+  );
+});
+
+test("reported totals reject duplicate IDs without conflating separate dated source records", () => {
+  const d = fixture();
+  const row = {
+    id: "reported",
+    date: "2026-08-31",
+    currency: "USD",
+    net: 123456,
+  };
+  assert.throws(
+    () =>
+      validateFinance({
+        ...d,
+        reportedTotals: [row, { ...row, date: "2026-09-01" }],
+      }),
+    /Duplicate row key/,
+  );
+  assert.equal(
+    validateFinance({
+      ...d,
+      reportedTotals: [row, { ...row, id: "other-source", net: 123450 }],
+    }).reportedTotals.length,
+    2,
+  );
+});

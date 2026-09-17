@@ -110,7 +110,46 @@ const d = validateFinance({
       url: "https://example.com/statement",
     },
   ],
+  sources: [
+    {
+      id: "example-source",
+      name: "Example monthly workbook",
+      url: "https://example.com/finance/workbook",
+      asOf: "2026-08-31",
+      checkedAt: "2026-09-17",
+      status: "needs-review",
+      note: "Fictional source totals need reconciliation before use.",
+    },
+  ],
+  reportedTotals: [
+    {
+      id: "example-usd-total",
+      date: "2026-08-31",
+      currency: "USD",
+      net: 123456,
+      source: "https://example.com/finance/workbook",
+      note: "Fictional source total; no USD assets in this fixture.",
+    },
+  ],
 });
+for (const [status, gross] of [
+  ["closed", 25000],
+  ["unknown", 2000],
+]) {
+  d.assets.push({
+    ...d.assets[1],
+    id: `angel-${status}`,
+    name: `Example ${status} investment`,
+    status,
+  });
+  d.valuations.push({
+    assetId: `angel-${status}`,
+    date: "2026-09-01",
+    gross,
+    debt: 0,
+    source: "",
+  });
+}
 d.tasks.push({
   id: "corporate",
   entityId: "holding",
@@ -255,13 +294,68 @@ try {
     .getByRole("navigation", { name: "Finance sections" })
     .getByRole("button", { name: /Overview$/ })
     .click();
-  assert((await page.locator("body").innerText()).includes("CAD 400,000"));
+  assert((await page.locator("body").innerText()).includes("CAD 427,000"));
   assert(
     (
       await page
         .getByRole("img", { name: /Monthly net asset values/ })
         .getAttribute("aria-label")
-    ).includes("CAD 400,000"),
+    ).includes("CAD 427,000"),
+  );
+  const sourceChecks = page.locator("details").filter({
+    has: page.locator("summary", { hasText: "Source checks & coverage" }),
+  });
+  await sourceChecks.locator("summary").click();
+  assert((await sourceChecks.innerText()).includes("1 items need attention"));
+  assert(
+    await sourceChecks.getByText("needs review", { exact: true }).isVisible(),
+  );
+  assert(
+    (await sourceChecks.innerText()).includes(
+      "Checked 2026-09-17 · Data through 2026-08-31",
+    ),
+  );
+  assert.equal(
+    await sourceChecks
+      .getByRole("link", { name: "Open source" })
+      .getAttribute("href"),
+    "https://example.com/finance/workbook",
+  );
+  await page.getByLabel("Currency", { exact: true }).selectOption("USD");
+  const reportedHistory = page.locator("section").filter({
+    has: page.getByRole("heading", {
+      name: "Your workbook over time",
+      exact: true,
+    }),
+  });
+  assert(
+    await page
+      .getByRole("heading", { name: "Your workbook over time", exact: true })
+      .isVisible(),
+  );
+  assert((await reportedHistory.innerText()).includes("UNRECONCILED"));
+  assert((await reportedHistory.innerText()).includes("USD 123,456"));
+  assert(
+    (
+      await reportedHistory
+        .getByRole("img", { name: /Workbook-reported net values/ })
+        .getAttribute("aria-label")
+    ).includes("source 2026-08-31"),
+  );
+  await reportedHistory
+    .locator("summary", { hasText: "All source observations and evidence" })
+    .click();
+  assert((await reportedHistory.innerText()).includes("2026-08-31"));
+  assert.equal(
+    await reportedHistory.getByRole("link").getAttribute("href"),
+    "https://example.com/finance/workbook",
+  );
+  await page.getByLabel("Currency", { exact: true }).selectOption("CAD");
+  assert.equal(
+    await page
+      .getByRole("heading", { name: "Your workbook over time", exact: true })
+      .count(),
+    0,
   );
   await page.screenshot({
     path: output + "/overview-desktop.png",
@@ -300,8 +394,26 @@ try {
         .filter({ hasText: "KNOWN ASSIGNED VALUE" })
         .last()
         .innerText()
-    ).includes("CAD 100,000"),
+    ).includes("CAD 127,000"),
   );
+  for (const [status, expected] of [
+    ["CLOSED", "1"],
+    ["UNKNOWN", "1"],
+    ["EXITED", "0"],
+    ["DEAD", "0"],
+  ]) {
+    assert.equal(
+      await page
+        .locator("article")
+        .filter({
+          has: page.getByText(`${status} ANGEL INVESTMENTS`, { exact: true }),
+        })
+        .last()
+        .locator("strong")
+        .innerText(),
+      expected,
+    );
+  }
   await page.getByRole("button", { name: /Example Startup/ }).click();
   assert(await page.getByText("September company update").isVisible());
   await page
@@ -373,7 +485,7 @@ try {
     .getByRole("navigation", { name: "Finance sections" })
     .getByRole("button", { name: /Overview$/ })
     .click();
-  assert((await page.locator("body").innerText()).includes("CAD 415,000"));
+  assert((await page.locator("body").innerText()).includes("CAD 442,000"));
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export workspace" }).click();
   await (await download).saveAs(output + "/workspace.json");
@@ -382,6 +494,9 @@ try {
     { width: 768, height: 1024 },
   ]) {
     await page.setViewportSize(viewport);
+    assert(
+      await sourceChecks.getByText("needs review", { exact: true }).isVisible(),
+    );
     for (const [i, name] of [
       "Overview",
       "Transactions",
@@ -431,6 +546,23 @@ try {
       path: output + `/overview-${viewport.width}.png`,
       fullPage: true,
     });
+    await page.getByLabel("Currency", { exact: true }).selectOption("USD");
+    assert(
+      await page
+        .getByRole("heading", { name: "Your workbook over time", exact: true })
+        .isVisible(),
+    );
+    await reportedHistory
+      .locator("summary", { hasText: "All source observations and evidence" })
+      .click();
+    assert.equal(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth > innerWidth,
+      ),
+      false,
+      `Source history overflow at ${viewport.width}`,
+    );
+    await page.getByLabel("Currency", { exact: true }).selectOption("CAD");
   }
   await page.emulateMedia({ colorScheme: "dark" });
   await page.screenshot({
@@ -446,6 +578,8 @@ try {
     exported.tasks.find((t) => t.id === "maintenance").status,
     "done",
   );
+  assert.deepEqual(exported.sources, d.sources);
+  assert.deepEqual(exported.reportedTotals, d.reportedTotals);
   validateFinance(exported);
   await page
     .getByRole("navigation", { name: "Finance sections" })
@@ -485,7 +619,7 @@ try {
   assert.deepEqual(errors, []);
   assert.deepEqual(writes, []);
   console.log(
-    "PASS Chrome UI: all seven sections, import/restore/replace/error atomicity, totals, review, drilldown, P&L, tasks, document scoping, CSV/JSON downloads, mobile/tablet overflow, no errors or data uploads",
+    "PASS Chrome UI: all seven sections, import/restore/replace/error atomicity, totals, source coverage, source-only currency history, closed/unknown statuses, review, drilldown, P&L, tasks, document scoping, CSV/JSON downloads, mobile/tablet overflow, no errors or data uploads",
   );
 } finally {
   await browser?.close();
