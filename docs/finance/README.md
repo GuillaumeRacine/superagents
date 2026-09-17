@@ -47,7 +47,8 @@ with at most 10,000 rows per table. All errors leave the current workspace intac
 
 IDs identify rows, not their position in a sheet. Valuations use assetId + date.
 Reimporting matching IDs replaces the entire row, including blank fields;
-new valuation dates preserve history. The preview states add/replace counts.
+new valuation dates preserve history. The preview states add/replace counts and warns how many previously populated
+fields will be cleared, including columns omitted from the incoming CSV.
 Bank export schemas must be mapped to these documented headers; automatic
 mapping of arbitrary bank spreadsheets and direct XLSX import are not included.
 

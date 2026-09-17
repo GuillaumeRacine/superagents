@@ -160,6 +160,7 @@ export default function FinanceDashboard({
       replaced?: number;
       rows?: number;
       records?: Row[];
+      clearedFields?: number;
     } | null>(null),
     [error, setError] = useState(""),
     [txPage, setTxPage] = useState(0),
@@ -1577,6 +1578,13 @@ export default function FinanceDashboard({
                   ? "This will replace your current workspace."
                   : `${preview.rows} validated rows · ${preview.added} new · ${preview.replaced} existing rows replaced.`}
               </p>
+              {!!preview.clearedFields && (
+                <p className={s.warning} role="alert">
+                  This import will clear {preview.clearedFields} existing
+                  field(s), including any omitted columns. Check the incoming
+                  rows before applying.
+                </p>
+              )}
               <div className={s.tableWrap}>
                 <table>
                   <thead>

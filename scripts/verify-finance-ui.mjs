@@ -174,6 +174,7 @@ d.transactions.push(
     transferPairId: "pair",
   },
 );
+d.valuations[0].source = "https://example.com/valuation";
 const probe = createServer();
 await new Promise((r) => probe.listen(0, "127.0.0.1", r));
 const port = probe.address().port;
@@ -364,6 +365,9 @@ try {
       .isVisible(),
   );
   assert((await page.locator("body").innerText()).includes("510000"));
+  assert(
+    await page.getByText(/This import will clear 1 existing field/).isVisible(),
+  );
   await page.getByRole("button", { name: "Apply import" }).click();
   await page
     .getByRole("navigation", { name: "Finance sections" })

@@ -251,3 +251,42 @@ test("normalized workspace remains within its own restore limit", () => {
   assert(JSON.stringify(d).length < 2000000);
   assert.throws(() => validateFinance(d), /after normalization/);
 });
+test("replacement preview counts optional evidence cleared by missing columns", () => {
+  const d = fixture();
+  d.valuations[1].source = "https://example.com/evidence";
+  const result = importCsv(
+    d,
+    "valuations",
+    "assetId,date,gross,debt\nrental,2026-09-30,520000,190000",
+  );
+  assert.equal(result.clearedFields, 1);
+  assert.equal(result.snapshot.valuations[1].source, "");
+  assert.equal(d.valuations[1].source, "https://example.com/evidence");
+  assert.equal(
+    importCsv(
+      result.snapshot,
+      "valuations",
+      "assetId,date,gross,debt\nrental,2026-09-30,520000,190000",
+    ).clearedFields,
+    0,
+  );
+});
+test("numeric JSON rejects nested values; valid oversized server snapshots fail closed; removal resets baseline", () => {
+  const d = fixture();
+  d.valuations[0].gross = [100];
+  assert.throws(() => validateFinance(d), /plain number/);
+  const large = fixture();
+  large.events = Array.from({ length: 100 }, (_, i) => ({
+    id: `event${i}`,
+    assetId: "rental",
+    date: "2026-09-01",
+    title: "x".repeat(600),
+  }));
+  const valid = validateFinance(large);
+  assert(JSON.stringify(valid).length > 48000);
+  assert.equal(readFinance(JSON.stringify(valid)).state, "invalid");
+  assert.deepEqual(readFinance(), {
+    state: "unconfigured",
+    snapshot: emptyFinance(),
+  });
+});

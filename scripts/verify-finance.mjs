@@ -78,28 +78,34 @@ try {
       : label === "invalid"
         ? "invalid"
         : "";
-    for (const path of ["/finance", "/api/finance", "/finance?_rsc"]) {
-      const r = await fetch(base + path, {
-        redirect: "manual",
-        headers: {
-          cookie: `authjs.session-token=${token}`,
-          ...(path.includes("_rsc") ? { RSC: "1" } : {}),
-          "x-middleware-subrequest": "proxy:proxy:proxy:proxy:proxy",
-        },
-      });
-      const body = await r.text();
-      if (["owner", "second"].includes(label)) {
-        assert.equal(r.status, 200);
-        assert(body.includes(marker));
-        assert.match(r.headers.get("cache-control"), /no-store/);
-        if (path === "/api/finance")
-          assert.deepEqual(JSON.parse(body).snapshot, fixture);
-      } else {
-        assert([307, 401].includes(r.status));
-        assert(!body.includes(marker));
+    // Exercise the ordinary proxy path and the spoof attempt independently.
+    for (const spoof of [false, true])
+      for (const path of ["/finance", "/api/finance", "/finance?_rsc"]) {
+        const r = await fetch(base + path, {
+          redirect: "manual",
+          headers: {
+            cookie: `authjs.session-token=${token}`,
+            ...(path.includes("_rsc") ? { RSC: "1" } : {}),
+            ...(spoof
+              ? { "x-middleware-subrequest": "proxy:proxy:proxy:proxy:proxy" }
+              : {}),
+          },
+        });
+        const body = await r.text();
+        if (["owner", "second"].includes(label)) {
+          assert.equal(r.status, 200);
+          assert(body.includes(marker));
+          assert.match(r.headers.get("cache-control"), /no-store/);
+          if (path === "/api/finance")
+            assert.deepEqual(JSON.parse(body).snapshot, fixture);
+        } else {
+          assert([307, 401].includes(r.status));
+          assert(!body.includes(marker));
+        }
       }
-    }
-    console.log(`PASS finance ${label}: HTML/API/RSC`);
+    console.log(
+      `PASS finance ${label}: HTML/API/RSC, ordinary and spoofed headers`,
+    );
   }
   const post = await fetch(base + "/api/finance", {
     method: "POST",
