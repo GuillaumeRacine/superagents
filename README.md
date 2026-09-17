@@ -61,4 +61,8 @@ is a separate private read-only surface. It is not part of the documentation
 corpus. See [its operating contract](docs/business/README.md) for activation,
 source freshness, privacy gates and current limitations.
 
+The [Finance Dashboard](https://superagents-docs.vercel.app/finance) adds a private
+spreadsheet workspace for assets, transactions, investments, properties and
+company records. See [its import and storage contract](docs/finance/README.md).
+
 The source repository is public. Keep the current tree sanitized even though rendered routes on Vercel also require an allowlisted Google session. The client-side search index remains public so its browser worker can load reliably. CI checks catch common publication mistakes and secrets, but human review owns the final decision. Legacy history predates these controls and is explicitly tracked for remediation in [GitHub issue #4](https://github.com/GuillaumeRacine/superagents/issues/4).
