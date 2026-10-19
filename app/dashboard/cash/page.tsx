@@ -114,24 +114,56 @@ export default async function CashPage() {
   const burn = snap.burn;
   const fresh = freshness(snap, Date.now());
   const sc = snap.scorecard;
+  const guiTasks = tasks.filter((t) => t.who === "gui");
+  const todayTask = guiTasks[0] ?? null;
+  // Only what leads to an action or decision soon: due within 7 days or late, open
+  // notices, blocked funding, and a short Stoic cover.
+  const soon = [
+    ...alertRows.filter((a) => a.kind !== "data" && (a.days === null || a.days <= 7)),
+    ...funding
+      .filter((f) => f.tag === "blocked" || f.tag === "overdue")
+      .map((f) => ({ when: f.deadline, days: f.days, who: "gui", text: `${f.label}: ${f.statusNote || f.tag}`, kind: `funding ${f.tag}` })),
+    ...(cover.cover !== null && cover.cover < 0
+      ? [{ when: null, days: null, who: "gui", text: `${cover.entity ?? "Funding entity"} cover after tax and funding is short: CAD ${fmt.format(cover.cover)}`, kind: "decision" }]
+      : []),
+  ];
   return (
     <Wrapper toc={[]} metadata={pageMetadata} sourceCode="">
       <div className={s.dashboard} data-pagefind-ignore="all">
-        <header className={s.hero}>
+        <header className={s.head}>
+          <div className={s.crumb}>
+            <a href="/dashboard">Dashboard</a> / Cash · <a href="/dashboard/invest">Invest ↗</a>
+          </div>
           <div className={s.eyebrow}>SUPER AGENTS / FINANCE / CASH</div>
           <h1>Cash</h1>
-          <p>Balances per entity, what is due, and what funding leaves behind.</p>
-          <div className={s.owner}>
-            {OWNER_LINE}
-            <br />
-            Feed last posted {snap.feed.lastPostDate ?? "unknown"} · month closed{" "}
-            {snap.feed.monthlyClosed ?? "unknown"} · snapshot generated{" "}
-            {snap.generatedAt ?? "unknown"} · rendered {asOfToday}
+          <div className={s.statusbar}>
+            <span className={`${s.verdict} ${ready && !fresh.stale ? "" : s.attn}`}>
+              <span className={s.vdot} />
+              {!ready ? "No data" : fresh.stale ? "Data stale" : "Data current"}
+            </span>
+            {ready && (
+              <span className={s.sep}>
+                {soon.length} {soon.length === 1 ? "item needs" : "items need"} you in the next 7 days
+              </span>
+            )}
           </div>
+          <details className={s.asof}>
+            <summary>
+              As of {burn?.asOf ?? "unknown"} · snapshot built {snap.generatedAt ?? "unknown"}
+            </summary>
+            <div className={s.meta}>
+              <span>{OWNER_LINE}</span>
+              <span>
+                Feed last posted {snap.feed.lastPostDate ?? "unknown"} · month closed{" "}
+                {snap.feed.monthlyClosed ?? "unknown"} · rendered {asOfToday}
+              </span>
+              <span>
+                Every figure carries its own as-of date. Entities are never added together.
+                Unknown renders as unknown, never as zero.
+              </span>
+            </div>
+          </details>
         </header>
-        <div className={ready && !fresh.stale ? s.asof : s.asofStale} role="status">
-          <strong>As of {burn?.asOf ?? "unknown"}</strong> · snapshot built {snap.generatedAt ?? "unknown"} · rendered {asOfToday}
-        </div>
         {ready && fresh.stale && (
           <div className={s.staleBanner} role="alert">
             <strong>Stale data. Do not rely on these numbers.</strong>
@@ -142,16 +174,6 @@ export default async function CashPage() {
             </ul>
           </div>
         )}
-        <nav className={s.nav} aria-label="Cash sections">
-          <a href="/dashboard">← Dashboard</a>
-          <a href="#entities">Entities</a>
-          <a href="#alerts">Next 7 days</a>
-          <a href="#funding">Funding 2026</a>
-          <a href="#cover">Stoic cover</a>
-          <a href="#debt">Debt and interest</a>
-          <a href="#burn">Burn and tasks</a>
-          <a href="/dashboard/invest">Invest ↗</a>
-        </nav>
         {!ready ? (
           <section className={s.panel}>
             <h2>
@@ -168,15 +190,102 @@ export default async function CashPage() {
           </section>
         ) : (
           <>
-            <div className={s.status}>
-              Every figure shows its own as-of date. Balances are listed per entity and
-              per currency and are never added across entities. A missing number renders
-              as unknown, never as zero.
-            </div>
+            <section className={s.band} aria-label="Trailing 30-day net burn">
+              <div className={s.eyebrow}>30-DAY NET BURN</div>
+              {burn ? (
+                <div className={s.heroFig}>
+                  <div className={s.fig}>
+                    <span className={s.cur}>CAD</span>
+                    {burn.t30dNetBurnCad === null ? (
+                      <span className={s.unknown}>unknown</span>
+                    ) : (
+                      fmt.format(burn.t30dNetBurnCad)
+                    )}
+                  </div>
+                  <div className={s.note}>
+                    <div className={s.deltas}>
+                      <span>
+                        vs yesterday <Money amount={burn.vsYesterday} signed />
+                      </span>
+                      <span>
+                        vs 30 days ago <Money amount={burn.vs30dAgo} signed />
+                      </span>
+                    </div>
+                    Positive means cash going out. Down is better. Data through{" "}
+                    {burn.asOf ?? "unknown"}.
+                  </div>
+                </div>
+              ) : (
+                <p className={s.empty}>
+                  Burn: <span className={s.unknown}>unknown</span> (no trailing-30-day series in the snapshot).
+                </p>
+              )}
+            </section>
 
-            <section id="entities" className={s.panel}>
-              <div className={s.sectionLabel}>01 / ENTITIES AND BALANCES</div>
-              <h2>Where the cash sits</h2>
+            <section className={s.band} aria-label="Today's one task">
+              <div className={s.eyebrow}>TODAY&apos;S ONE TASK</div>
+              {todayTask ? (
+                <div className={s.task}>
+                  <div className={s.taskTitle}>{todayTask.title}</div>
+                  <div className={s.taskMeta}>
+                    {todayTask.deadline ? `due ${todayTask.deadline}` : "no deadline"}
+                    {todayTask.burnCadMo ? <> · saves <Money amount={todayTask.burnCadMo} />/mo</> : null}
+                    {" · "}
+                    {Math.max(guiTasks.length - 1, 0)} more queued after this
+                  </div>
+                  {todayTask.why && <p className={s.taskWhy}>{todayTask.why}</p>}
+                </div>
+              ) : (
+                <p className={s.empty}>Nothing needs you today.</p>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Burn trend">
+              <div className={s.bandHead}>
+                <h2>Trend</h2>
+                <span className={s.right}>daily T30D net burn, CAD</span>
+              </div>
+              {burn && burn.series.length > 1 ? (
+                <Chart series={burn.series} />
+              ) : (
+                <p className={s.empty}>No daily series in the snapshot yet.</p>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Needs you soon">
+              <div className={s.bandHead}>
+                <h2>Needs you soon</h2>
+                <span className={s.right}>due within 7 days, overdue, or blocked</span>
+              </div>
+              {soon.length === 0 ? (
+                <p className={s.empty}>Nothing due in the next seven days.</p>
+              ) : (
+                <ul className={s.due}>
+                  {soon.map((a, i) => (
+                    <li key={i} className={a.days !== null && a.days <= 0 ? s.now : s.soon}>
+                      <span className={s.stripe} />
+                      <span className={s.when}>
+                        {a.days === null ? a.when ?? "open" : a.days < 0 ? `${-a.days}d late` : a.days === 0 ? "today" : `in ${a.days}d`}
+                      </span>
+                      <span className={s.what}>
+                        {a.text} <small>· {a.kind}</small>
+                      </span>
+                      <span className={s.who}>
+                        <Tag tag={a.who} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            <h2 className={s.moreHead}>More detail</h2>
+
+            <details id="entities" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>01 / ENTITIES AND BALANCES</span>
+                <span className={s.foldTitle}>Where the cash sits</span>
+              </summary>
               <p className={s.muted}>
                 FX reference {snap.fx.usdcad === null ? "unknown" : `USD/CAD ${snap.fx.usdcad}`}{" "}
                 ({snap.fx.source || "no source"}) <AsOf date={snap.fx.asOf} />. Shown for
@@ -227,11 +336,13 @@ export default async function CashPage() {
                   </article>
                 ))}
               </div>
-            </section>
+            </details>
 
-            <section id="alerts" className={s.panel}>
-              <div className={s.sectionLabel}>02 / ALERTS AND NEXT 7 DAYS</div>
-              <h2>What needs a hand this week</h2>
+            <details id="alerts" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>02 / ALERTS AND NEXT 7 DAYS</span>
+                <span className={s.foldTitle}>What needs a hand this week</span>
+              </summary>
               <p className={s.muted}>
                 Open tasks and tax items due within seven days of {asOfToday}, open
                 notices, upcoming charges and data gaps. "gui" needs your login or
@@ -307,11 +418,13 @@ export default async function CashPage() {
                   </tbody>
                 </table>
               </div>
-            </section>
+            </details>
 
-            <section id="funding" className={s.panel}>
-              <div className={s.sectionLabel}>03 / FUNDING PROGRESS 2026</div>
-              <h2>Registered accounts</h2>
+            <details id="funding" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>03 / FUNDING PROGRESS 2026</span>
+                <span className={s.foldTitle}>Registered accounts</span>
+              </summary>
               <p className={s.muted}>
                 Targets from {snap.fundingPlan.source || "the funding plan"}{" "}
                 <AsOf date={snap.fundingPlan.asOf} />. Contributed-to-date stays unknown
@@ -387,11 +500,13 @@ export default async function CashPage() {
                   </tfoot>
                 </table>
               </div>
-            </section>
+            </details>
 
-            <section id="cover" className={s.panel}>
-              <div className={s.sectionLabel}>04 / STOIC COVER</div>
-              <h2>Can {cover.entity ?? "the funding entity"} fund the plan and still meet its tax claims?</h2>
+            <details id="cover" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>04 / STOIC COVER</span>
+                <span className={s.foldTitle}>Can {cover.entity ?? "the funding entity"} fund the plan and still meet its tax claims?</span>
+              </summary>
               <p className={s.muted}>
                 Cover = {cover.entity ?? "entity"} CAD cash − open tax claims − planned
                 registered funding. USD cash is excluded. Any unknown input makes the cover
@@ -436,11 +551,13 @@ export default async function CashPage() {
                   <Money amount={cover.cover} />
                 </strong>
               </div>
-            </section>
+            </details>
 
-            <section id="debt" className={s.panel}>
-              <div className={s.sectionLabel}>05 / DEBT AND INTEREST</div>
-              <h2>Facilities, balances and the monthly interest bill</h2>
+            <details id="debt" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>05 / DEBT AND INTEREST</span>
+                <span className={s.foldTitle}>Facilities, balances and the monthly interest bill</span>
+              </summary>
               <div className={s.statGrid}>
                 <div className={s.stat}>
                   <span>Known balances</span>
@@ -516,11 +633,13 @@ export default async function CashPage() {
                   </tbody>
                 </table>
               </div>
-            </section>
+            </details>
 
-            <section id="burn" className={s.panel}>
-              <div className={s.sectionLabel}>06 / TRAILING 30-DAY BURN AND TASKS</div>
-              <h2>Burn and the task list</h2>
+            <details id="burn" className={s.fold}>
+              <summary>
+                <span className={s.sectionLabel}>06 / TRAILING 30-DAY BURN AND TASKS</span>
+                <span className={s.foldTitle}>Burn and the task list</span>
+              </summary>
               {burn ? (
                 <>
                   <div className={s.statGrid}>
@@ -554,7 +673,6 @@ export default async function CashPage() {
                       </div>
                     )}
                   </div>
-                  {burn.series.length > 1 && <Chart series={burn.series} />}
                   <div className={s.statGrid}>
                     {sc && (
                       <div className={s.stat}>
@@ -685,7 +803,7 @@ export default async function CashPage() {
                   </tbody>
                 </table>
               </div>
-            </section>
+            </details>
             <p className={s.footer}>
               {OWNER_LINE}. The site derives; it does not invent. Entities are never summed.
               Snapshot schema {snap.schemaVersion}. See docs/finance/README.md for the data
