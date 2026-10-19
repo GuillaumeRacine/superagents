@@ -25,6 +25,7 @@ jobs:
       - run: npm run smoke
       - run: node scripts/verify-business.mjs
       - run: node scripts/verify-finance.mjs
+      - run: node scripts/verify-cash.mjs
       - name: Scan Git history and working tree for secrets
         uses: gitleaks/gitleaks-action@v2
         env:

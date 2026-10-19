@@ -21,10 +21,11 @@ const fixture = validateFinance({
   })),
 });
 assert(Buffer.byteLength(JSON.stringify(fixture)) > 48000);
-assert(
-  !existsSync(".next/server/app/finance.html"),
-  "Finance must not be prerendered",
-);
+for (const route of ["finance", "invest"])
+  assert(
+    !existsSync(`.next/server/app/${route}.html`),
+    `${route} must not be prerendered`,
+  );
 function scan(path) {
   for (const e of readdirSync(path, { withFileTypes: true })) {
     const file = join(path, e.name);
@@ -92,7 +93,7 @@ try {
         : "";
     // Exercise the ordinary proxy path and the spoof attempt independently.
     for (const spoof of [false, true])
-      for (const path of ["/finance", "/api/finance", "/finance?_rsc"]) {
+      for (const path of ["/invest", "/api/finance", "/invest?_rsc"]) {
         const r = await fetch(base + path, {
           redirect: "manual",
           headers: {
@@ -115,8 +116,15 @@ try {
           assert(!body.includes(marker));
         }
       }
+    // The /finance hub is gated the same way but carries no records.
+    const hub = await fetch(base + "/finance", {
+      redirect: "manual",
+      headers: { cookie: `authjs.session-token=${token}` },
+    });
+    assert.equal(hub.status, ["owner", "second"].includes(label) ? 200 : 307);
+    assert(!(await hub.text()).includes(marker));
     console.log(
-      `PASS finance ${label}: HTML/API/RSC, ordinary and spoofed headers`,
+      `PASS finance ${label}: /invest HTML/API/RSC and /finance hub, ordinary and spoofed headers`,
     );
   }
   const post = await fetch(base + "/api/finance", {

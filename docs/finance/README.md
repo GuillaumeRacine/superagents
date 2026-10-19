@@ -1,6 +1,37 @@
-# Finance Dashboard
+# Finance Dashboards
 
-Private spreadsheet-first workspace at `/finance`, alongside `/business`.
+## Cash and Invest split (2026-10-19)
+
+The single `/finance` dashboard is replaced by two agent-owned dashboards
+(issue #44). `/finance` is now a hub page linking both; it stays behind the
+same allowlist gate. Both routes are dynamic, private/no-store, excluded from
+Pagefind and MDX exports, and recheck the exact-email allowlist on the server.
+
+| Route | Owner | Data contract | Env | Cadence |
+|---|---|---|---|---|
+| `/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `Context/cfo-feed` (private) | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
+| `/invest` | to assign (interim: Claude monthly `/cfo invest` run, Context#151) | the former finance workspace, unchanged; `lib/finance-model.mjs` | `FINANCE_SNAPSHOT_JSON` / `FINANCE_SNAPSHOT_GZIP_BASE64` | monthly, month-end |
+
+Cash rules: null means unknown and renders as "unknown", never 0; a missing
+bank is never zero; balances are listed per entity and per currency and are
+never summed across entities; every number carries its own as-of date; account
+identifiers keep at most their last four digits; task logins, URLs and search
+strings are dropped by the builder. The Stoic cover line is the one derived
+figure: entity CAD cash − open tax claims of that entity − planned registered
+funding, each input dated, unknown if any input is unknown. Funding
+contributed-to-date stays null until a statement proves it. Debt totals state
+how many facilities they cover; the blended rate is balance-weighted over
+facilities with both a balance and a rate.
+
+Tests: `npm run test:cash` (model), `node scripts/verify-cash.mjs` (gate and
+render against a local build with a throwaway secret and fictional records).
+`scripts/verify-finance.mjs` and `scripts/verify-finance-ui.mjs` now exercise
+the workspace at `/invest`. Still to do: the Invest refactor (#39), a scheduled
+Cash snapshot refresh, and the Chief of Cash snapshot path (Context#172).
+
+## Finance workspace (now `/invest`)
+
+Private spreadsheet-first workspace at `/invest` (formerly `/finance`), alongside `/business`.
 Execution and acceptance proof: issue #36. Inherits the Business Dashboard lean
 ISA (draft, unregistered, 2026-09-14), especially its privacy, provenance and
 coverage claims. No maturity promotion or owner acceptance is implied.
@@ -20,7 +51,7 @@ coverage claims. No maturity promotion or owner acceptance is implied.
 ## Privacy and storage
 
 Public code and tests contain generic/fictional examples only. Entity names,
-private links and records are never committed here. `/finance` and `/api/finance`
+private links and records are never committed here. `/invest` and `/api/finance`
 recheck the exact-email allowlist before reading the managed finance snapshot on the
 server; the existing proxy also gates HTML and RSC requests. Routes are dynamic,
 private/no-store and excluded from Pagefind and MDX exports. No data is fetched
