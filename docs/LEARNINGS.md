@@ -4,12 +4,20 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 
 ## Recent Lessons
 
+- Vercel injects at most 64 KB of env into a function: store each managed snapshot once, as the gzip variant, and check the total before adding. "Sensitive" variables can never be read back.
 - Assert on server-rendered HTML with one text node per value: React SSR puts `<!-- -->` between adjacent text children, so `CAD {n}` is not `CAD 83,000` in the HTML.
 - `scripts/check-docs.mjs` forbids absolute home paths in every text file (docs, scripts, this log): use `os.homedir()` in scripts and relative paths in docs.
 - Validate a snapshot twice: build → validate → serialize → validate. The normalized shape must be accepted by its own validator.
 - Loop over shell commands from a `#!/bin/bash` script file, not from the agent's zsh (unquoted `$step` is not word-split there).
 
 ## 2026-10
+
+### [2026-10-19] INCIDENT->FIX Vercel 64 KB environment limit blocked the merge deployment
+- **Context:** `CASH_SNAPSHOT_JSON` (15.6 KB) was refused with "total size of all Environment Variables (73.98KB) exceeds 64KB"; the gzip variant (5.8 KB) was accepted, but the merge deployment for 6c528c0 then failed with `env-vars-limit` because the total was still over the 64 KB injected into a function.
+- **What we tried:** Back up `FINANCE_SNAPSHOT_JSON` before removing it. `vercel env pull` and the `/v9/projects/:id/env?decrypt=true` API both return nothing for it: the finance and business snapshot variables were created as the "sensitive" type, which is write-only forever. The API `decrypt` read of an ordinary encrypted variable returns Vercel's at-rest envelope (`{"v":"v2","c":...}`), not the value, so a 19 KB readback of a 5.8 KB upload is not corruption.
+- **Outcome:** Removed `FINANCE_SNAPSHOT_JSON` (dead config: `lib/snapshot-transport.mjs` never reads the JSON variable while the gzip variable exists, with no fallback), created the production deployment of the exact merge commit through `POST /v13/deployments` with `gitSource` (no empty commit), READY in ~50 s and aliased to superagents-docs.vercel.app.
+- **Lesson / rule:** Store each snapshot once, as the gzip variant, and budget the project's env total against 64 KB before adding one. Sensitive-type variables cannot be backed up from Vercel; keep the regeneration path (builder script + private source) documented instead. A deployment can fail at creation with no deployment object at all; the GitHub commit status then points at a docs link, not a build log.
+- **Links:** #44, PR #46, deployment dpl_G8hd28LzzxqjmMhfbiGeVF1Y7TJK.
 
 ### [2026-10-19] DECISION Finance split into /cash and /invest (issue #44)
 - **Context:** Gui's ruling: two agent-owned dashboards replace the single `/finance`; Cash first because the Chief of Cash feed already runs daily.
