@@ -1,6 +1,6 @@
 # Finance Dashboard
 
-Private spreadsheet-first workspace at `/finance`, alongside `/business`.
+Private finance area at `/finance`, alongside `/business`. `/finance` is a landing page with two cards: **Cash** (`/finance/cash`, owned by Chief of Cash) and **Invest** (`/finance/invest`, the spreadsheet-first workspace described below; owner to be decided).
 Execution and acceptance proof: issue #36. Inherits the Business Dashboard lean
 ISA (draft, unregistered, 2026-09-14), especially its privacy, provenance and
 coverage claims. No maturity promotion or owner acceptance is implied.
@@ -126,3 +126,19 @@ New or changed documents are inventory evidence until parsed and reconciled.
 Authenticated production readback is required for the initial baseline; refresh
 jobs must retain their prior success state on failure and record deployment
 uncertainty separately. No spreadsheet, bank or email source is modified here.
+
+## Cash page (`/finance/cash`)
+
+Shows trailing-30-day net burn (CAD) with change vs yesterday and vs 30 days ago, a daily chart,
+today's one action, savings banked vs plan, share of corporate payments moved to the Ensemble Wise card,
+the Gui task queue (today plus remaining count), monthly interest (not principal) and a source freshness table.
+
+Data comes from one private env var, never from the repo: `CASH_SNAPSHOT_GZIP_BASE64` (gzip, then base64,
+48,000 bytes max encoded) or `CASH_SNAPSHOT_JSON`. A present compressed value wins and never falls back to JSON.
+Contract: `docs/finance/schema/cash.schema.json` and `lib/cash-types.ts`. A missing or invalid value shows a
+"no data" state; the page never crashes. Env var changes need a redeploy; the private refresh job publishes and redeploys.
+
+Freshness is computed when the page loads: a red banner appears if the snapshot is older than 36 hours or any
+source is more than 3 days old, and the always-visible "as of" bar shows the dates. `/finance/cash`,
+`/api/finance/cash` and `/finance` use the same Google email allowlist as the rest of the site.
+Test fixtures (`scripts/fixtures/cash.example.json`) are fictional example data.

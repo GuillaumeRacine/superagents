@@ -1,0 +1,29 @@
+.page { max-width: 960px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.asof, .asofStale { padding: .5rem .75rem; border-radius: 6px; font-size: .9rem; margin: .5rem 0 1rem; background: #eef6ee; color: #1d4d1d; }
+.asofStale { background: #fdeaea; color: #8a1111; }
+.banner { background: #fdeaea; border: 1px solid #c62828; color: #8a1111; padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.banner ul { margin: .25rem 0 0 1.25rem; }
+.hero { border: 1px solid #8884; border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+.kicker { font-size: .75rem; letter-spacing: .08em; opacity: .7; margin: 0; }
+.big { font-size: 3rem; font-weight: 700; margin: .25rem 0; line-height: 1.1; }
+.deltas { display: flex; gap: 1.5rem; flex-wrap: wrap; font-weight: 600; margin: 0 0 .25rem; }
+.muted { opacity: .7; font-size: .85rem; margin: .25rem 0; }
+.chart { width: 100%; height: auto; margin-top: .75rem; }
+.axis { stroke: #8886; stroke-dasharray: 4 4; }
+.line { stroke: #d9480f; stroke-width: 2; }
+.dot { fill: #d9480f; }
+.tick { font-size: 11px; fill: currentColor; opacity: .6; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.panel { border: 1px solid #8884; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.panel h2 { margin: 0 0 .5rem; font-size: 1.05rem; }
+.action { font-size: 1.2rem; font-weight: 600; margin: 0 0 .25rem; }
+.mid { font-size: 1.1rem; font-weight: 600; margin: 0 0 .25rem; }
+.table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.table th, .table td { text-align: left; padding: .35rem .5rem; border-bottom: 1px solid #8883; vertical-align: top; }
+.ok { color: #1d7a1d; font-weight: 600; }
+.bad { color: #c62828; font-weight: 600; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.card { display: block; border: 1px solid #8884; border-radius: 10px; padding: 1.25rem; text-decoration: none; color: inherit; }
+.card:hover { border-color: #d9480f; }
+.card h2 { margin: 0 0 .25rem; }
+.card p { margin: 0; opacity: .75; }

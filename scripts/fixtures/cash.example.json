@@ -1,0 +1,33 @@
+{
+  "_note": "EXAMPLE DATA ONLY. Fictional numbers for tests and screenshots. Not real finances.",
+  "schemaVersion": 1,
+  "generatedAt": "2030-01-15T13:05:00Z",
+  "asOf": "2030-01-15",
+  "headline": {
+    "t30dNetBurnCad": 12000,
+    "vsYesterdayCad": -150,
+    "vs30dAgoCad": 900,
+    "dataThrough": "2030-01-14",
+    "definition": "Example: personal + one company, CAD. Excludes transfers, card payments and loan principal."
+  },
+  "series": [
+    { "date": "2030-01-10", "value": 11800 },
+    { "date": "2030-01-11", "value": 11900 },
+    { "date": "2030-01-12", "value": 12300 },
+    { "date": "2030-01-13", "value": 12150 },
+    { "date": "2030-01-14", "value": 12000 }
+  ],
+  "action": { "title": "Example: cancel Example Tool", "why": "Saves CA$50 a month.", "where": "example.com/billing" },
+  "savings": { "bankedCadMo": 100, "planCadMo": 400, "outsidePlan": [{ "item": "Example Coworking", "cadMo": 200, "effective": "2030-02-01" }] },
+  "corpMove": { "movedCount": 3, "totalCount": 12, "movedCadMo": 300, "totalCadMo": 1200, "note": "Example note." },
+  "tasks": [
+    { "id": "t1", "title": "Example: reconnect bank", "who": "gui", "deadline": "2030-01-15", "done": "", "burnCadMo": 0 },
+    { "id": "t2", "title": "Example: cancel tool", "who": "gui", "deadline": "2030-01-20", "done": "", "burnCadMo": 50 },
+    { "id": "t3", "title": "Example: done item", "who": "gui", "deadline": "2030-01-10", "done": "2030-01-09", "burnCadMo": 10 }
+  ],
+  "interest": [{ "name": "Example mortgage", "scope": "personal", "kind": "mortgage", "avgMonthCad": 1000, "note": "" }],
+  "sources": [
+    { "id": "stmts", "name": "Example statements", "asOf": "2030-01-14", "checkedAt": "2030-01-15T13:00:00Z", "note": "" },
+    { "id": "bank", "name": "Example bank sync", "asOf": "2030-01-14", "checkedAt": "2030-01-15T13:00:00Z", "note": "" }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "cash.schema.json",
+  "title": "Cash snapshot (cash.json)",
+  "description": "Published by the private refresh job into CASH_SNAPSHOT_GZIP_BASE64 (or CASH_SNAPSHOT_JSON). Never commit real values.",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "asOf", "headline"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "asOf": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "headline": {
+      "type": "object",
+      "required": ["t30dNetBurnCad"],
+      "properties": {
+        "t30dNetBurnCad": { "type": "number", "description": "Positive means burning cash." },
+        "vsYesterdayCad": { "type": ["number", "null"] },
+        "vs30dAgoCad": { "type": ["number", "null"] },
+        "dataThrough": { "type": "string", "description": "YYYY-MM-DD of the newest transaction behind the number." },
+        "definition": { "type": "string" }
+      }
+    },
+    "series": {
+      "type": "array", "maxItems": 800,
+      "items": { "type": "object", "required": ["date", "value"], "properties": { "date": { "type": "string" }, "value": { "type": "number" } } }
+    },
+    "action": {
+      "type": ["object", "null"],
+      "required": ["title"],
+      "properties": { "title": { "type": "string" }, "why": { "type": "string" }, "where": { "type": "string" } }
+    },
+    "savings": {
+      "type": "object",
+      "properties": {
+        "bankedCadMo": { "type": "number" },
+        "planCadMo": { "type": "number" },
+        "outsidePlan": { "type": "array", "items": { "type": "object", "properties": { "item": { "type": "string" }, "cadMo": { "type": "number" }, "effective": { "type": "string" } } } }
+      }
+    },
+    "corpMove": {
+      "type": "object",
+      "properties": { "movedCount": { "type": "number" }, "totalCount": { "type": "number" }, "movedCadMo": { "type": "number" }, "totalCadMo": { "type": "number" }, "note": { "type": "string" } }
+    },
+    "tasks": {
+      "type": "array",
+      "items": { "type": "object", "required": ["id", "title"], "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "who": { "enum": ["gui", "bot"] }, "deadline": { "type": "string" }, "done": { "type": "string" }, "burnCadMo": { "type": "number" } } }
+    },
+    "interest": {
+      "type": "array",
+      "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "scope": { "type": "string" }, "kind": { "type": "string" }, "avgMonthCad": { "type": ["number", "null"] }, "note": { "type": "string" } } }
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "object", "required": ["name"], "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "asOf": { "type": "string" }, "checkedAt": { "type": "string" }, "note": { "type": "string" } } }
+    }
+  }
+}

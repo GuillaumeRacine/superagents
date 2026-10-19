@@ -25,6 +25,8 @@ assert(
   !existsSync(".next/server/app/finance.html"),
   "Finance must not be prerendered",
 );
+assert(!existsSync(".next/server/app/finance/cash.html"), "Cash must not be prerendered");
+assert(!existsSync(".next/server/app/finance/invest.html"), "Invest must not be prerendered");
 function scan(path) {
   for (const e of readdirSync(path, { withFileTypes: true })) {
     const file = join(path, e.name);
@@ -92,7 +94,7 @@ try {
         : "";
     // Exercise the ordinary proxy path and the spoof attempt independently.
     for (const spoof of [false, true])
-      for (const path of ["/finance", "/api/finance", "/finance?_rsc"]) {
+      for (const path of ["/finance/invest", "/api/finance", "/finance/invest?_rsc"]) {
         const r = await fetch(base + path, {
           redirect: "manual",
           headers: {
@@ -119,6 +121,11 @@ try {
       `PASS finance ${label}: HTML/API/RSC, ordinary and spoofed headers`,
     );
   }
+  for (const path of ["/finance", "/finance/cash", "/api/finance/cash", "/finance/cash?_rsc"]) {
+    const r = await fetch(base + path, { redirect: "manual", headers: path.includes("_rsc") ? { RSC: "1" } : {} });
+    assert([307, 401].includes(r.status), `${path} must require sign-in`);
+  }
+  console.log("PASS finance landing and cash routes require sign-in");
   const post = await fetch(base + "/api/finance", {
     method: "POST",
     headers: {
