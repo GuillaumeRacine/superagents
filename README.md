@@ -56,13 +56,32 @@ not in this public repository.
 
 ## Publication boundary
 
-The dynamic [Business Dashboard](https://superagents-docs.vercel.app/business)
-is a separate private read-only surface. It is not part of the documentation
-corpus. See [its operating contract](docs/business/README.md) for activation,
-source freshness, privacy gates and current limitations.
+The private dashboards live under [`/dashboard`](https://superagents-docs.vercel.app/dashboard):
+a hub linking [`/dashboard/cash`](https://superagents-docs.vercel.app/dashboard/cash),
+[`/dashboard/invest`](https://superagents-docs.vercel.app/dashboard/invest) and
+[`/dashboard/business`](https://superagents-docs.vercel.app/dashboard/business).
+They are separate dynamic, read-only surfaces behind the same allowlist, never
+prerendered, and not part of the documentation corpus, search index or exports.
+The former `/finance`, `/cash`, `/invest` and `/business` routes redirect
+permanently (`config/dashboard-redirects.mjs`). See the
+[business](docs/business/README.md) and [finance](docs/finance/README.md)
+operating contracts for activation, source freshness, privacy gates and limits.
 
-The [Finance Dashboard](https://superagents-docs.vercel.app/finance) adds a private
-spreadsheet workspace for assets, transactions, investments, properties and
-company records. See [its import and storage contract](docs/finance/README.md).
+### iamgui.com hosting rule
+
+`iamgui.com` (and `www.iamgui.com`, which redirects to the apex) is served by this
+project but exposes only two things: the public one-pager and `/dashboard`.
+The one-pager keeps living in the separate `guiracine` Vercel project
+(`https://guiracine.vercel.app`); on that host only, `/`, `/index.html`,
+`/assets/*`, `/brand/*`, the OG images, favicon, `robots.txt`, `sitemap.xml`,
+`llms.txt` and `placeholder.svg` pass through unauthenticated via host-conditioned
+`beforeFiles` rewrites, with no `noindex` or `no-store` headers. `/dashboard`,
+`/api/*`, `/_next/*` and `/_pagefind/*` behave exactly as on the canonical
+hostname. Any other path on that host redirects (307) to
+`https://superagents-docs.vercel.app` with the same path and query. The rules
+live in `config/public-site.mjs`, shared by `next.config.mjs`, `proxy.ts` and
+`scripts/smoke-site.mjs`; the public one-pager must stay identical, so never add
+project content to those passthrough paths. The Google OAuth client must list
+`https://iamgui.com/api/auth/callback/google` as an authorized redirect URI.
 
 The source repository is public. Keep the current tree sanitized even though rendered routes on Vercel also require an allowlisted Google session. The client-side search index remains public so its browser worker can load reliably. CI checks catch common publication mistakes and secrets, but human review owns the final decision. Legacy history predates these controls and is explicitly tracked for remediation in [GitHub issue #4](https://github.com/GuillaumeRacine/superagents/issues/4).

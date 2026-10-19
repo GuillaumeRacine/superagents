@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getFinanceData } from "@/lib/finance-data";
 import { useMDXComponents } from "nextra-theme-docs";
-import FinanceDashboard from "../finance/workspace";
+import FinanceDashboard from "./workspace";
 const { wrapper: Wrapper } = useMDXComponents();
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -10,14 +10,14 @@ export const metadata = {
 };
 const pageMetadata = {
   title: "Invest",
-  filePath: "app/invest/page.tsx",
+  filePath: "app/dashboard/invest/page.tsx",
   searchable: false,
 };
-// The former single Finance dashboard, mounted unchanged under /invest.
+// The former single Finance dashboard, mounted unchanged under /dashboard/invest.
 // Data source stays the FINANCE_SNAPSHOT_* managed snapshot (docs/finance/README.md).
 export default async function InvestPage() {
   const data = await getFinanceData();
-  if (!data) redirect("/api/auth/signin?callbackUrl=%2Finvest");
+  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fdashboard%2Finvest");
   return (
     <Wrapper toc={[]} metadata={pageMetadata} sourceCode="">
       <FinanceDashboard

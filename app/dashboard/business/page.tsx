@@ -4,7 +4,7 @@ import styles from './business.module.css'
 import { useMDXComponents } from 'nextra-theme-docs'
 
 const { wrapper: Wrapper } = useMDXComponents()
-const pageMetadata = { title: 'Business Dashboard', filePath: 'app/business/page.tsx', searchable: false }
+const pageMetadata = { title: 'Business Dashboard', filePath: 'app/dashboard/business/page.tsx', searchable: false }
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Business Dashboard', robots: { index: false, follow: false } }
@@ -14,7 +14,7 @@ function Evidence({ url, label = 'View evidence' }: {url: string, label?: string
 }
 export default async function BusinessDashboard() {
   const data = await getBusinessData()
-  if (!data) redirect('/api/auth/signin?callbackUrl=%2Fbusiness')
+  if (!data) redirect('/api/auth/signin?callbackUrl=%2Fdashboard%2Fbusiness')
   const snapshot = data.snapshot
   return <Wrapper toc={[]} metadata={pageMetadata} sourceCode=""><div className={styles.dashboard} data-pagefind-ignore="all">
     <header className={styles.hero}>
@@ -23,7 +23,7 @@ export default async function BusinessDashboard() {
       <p>Your businesses. The evidence. Your next decision.</p>
       <div className={styles.tags}><span>Private · Read-only</span><span>Selected portfolio · Not the whole estate</span></div>
     </header>
-    <nav className={styles.nav} aria-label="Business sections"><a href="/finance">Finance Dashboard ↗</a><a href="#attention">Attention</a><a href="#portfolio">Portfolio</a><a href="#coverage">Data coverage</a><a href="/">Documentation ↗</a></nav>
+    <nav className={styles.nav} aria-label="Business sections"><a href="/dashboard">← Dashboard</a><a href="#attention">Attention</a><a href="#portfolio">Portfolio</a><a href="#coverage">Data coverage</a><a href="/">Documentation ↗</a></nav>
     {!snapshot ? <section className={styles.panel}>
       <h2>{data.state === 'invalid' ? 'Data needs attention' : 'Private data is not connected yet'}</h2>
       <p>{data.state === 'invalid' ? 'The snapshot failed validation. No partial or unvalidated records are displayed.' : 'The secure dashboard is ready. Business records will appear after the source snapshot and Google sign-in verification are complete.'}</p>

@@ -6,10 +6,7 @@ export default {
     }
   },
   'start-here': 'Start Here',
-  business: { title: 'Business Dashboard', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
-  finance: { title: 'Finance', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
-  cash: { title: 'Cash', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
-  invest: { title: 'Invest', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
+  dashboard: { title: 'Dashboard', theme: { layout: 'full', toc: false, breadcrumb: false, pagination: false, timestamp: false } },
   architecture: 'Architecture',
   estate: 'Estate & Devices',
   runtimes: 'Systems & Surfaces',

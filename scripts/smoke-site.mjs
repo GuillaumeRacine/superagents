@@ -1,7 +1,10 @@
 import { spawn } from 'node:child_process'
+import { request as httpRequest } from 'node:http'
 import { readdirSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { legacyRedirects } from '../config/legacy-redirects.mjs'
+import { dashboardRedirects } from '../config/dashboard-redirects.mjs'
+import { canonicalDocsOrigin, publicSiteApex, publicSiteOrigin, publicSiteWww } from '../config/public-site.mjs'
 import { isAllowedEmail } from '../lib/access-policy.mjs'
 
 const port = 3219
@@ -55,6 +58,21 @@ async function response(path, options = {}) {
   return fetch(`${baseUrl}${path}`, { redirect: 'manual', ...options })
 }
 
+// undici's fetch silently drops a caller-supplied Host header, so host-conditioned
+// behaviour is exercised over node:http, the way `curl -H "Host: ..."` would.
+function hostResponse(host, path) {
+  return new Promise((resolve, reject) => {
+    const req = httpRequest({ host: '127.0.0.1', port, path, method: 'GET', headers: { Host: host } }, (res) => {
+      let body = ''
+      res.setEncoding('utf8')
+      res.on('data', (chunk) => { body += chunk })
+      res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body }))
+    })
+    req.on('error', reject)
+    req.end()
+  })
+}
+
 try {
   await waitForServer()
 
@@ -86,6 +104,62 @@ try {
     assert(redirected.headers.get('location') === redirect.destination, `${oldPath} must redirect to ${redirect.destination}`)
   }
 
+  for (const redirect of dashboardRedirects) {
+    const redirected = await response(redirect.source)
+    assert(redirected.status === 308, `${redirect.source} must return a permanent redirect`)
+    assert(redirected.headers.get('location') === redirect.destination, `${redirect.source} must redirect to ${redirect.destination}`)
+  }
+  for (const route of ['/dashboard', '/dashboard/cash', '/dashboard/invest', '/dashboard/business']) {
+    const gated = await response(route)
+    const location = new URL(gated.headers.get('location') ?? '', baseUrl)
+    assert(gated.status === 307 && location.pathname === '/api/auth/signin' && location.searchParams.get('callbackUrl') === route, `${route} must redirect anonymous requests to sign-in`)
+  }
+
+  // iamgui.com (#49): public one-pager passthrough, private /dashboard, docs sent to the canonical host.
+  const publicHome = await hostResponse(publicSiteApex, '/')
+  assert(![307, 308].includes(publicHome.status), `iamgui.com / must not redirect (got ${publicHome.status})`)
+  assert(!publicHome.headers['x-robots-tag'], 'iamgui.com / must not carry the noindex header')
+  assert(!/no-store/.test(publicHome.headers['cache-control'] ?? ''), 'iamgui.com / must not be no-store')
+  assert(!publicHome.body.includes('/api/auth/signin'), 'iamgui.com / must not render the sign-in page')
+  if (publicHome.status === 200) {
+    const upstream = await fetch(`${publicSiteOrigin}/`).then((r) => r.text()).catch(() => null)
+    if (upstream !== null) assert(publicHome.body === upstream, 'iamgui.com / must serve the one-pager byte for byte')
+  } else {
+    console.warn(`iamgui.com / passthrough returned ${publicHome.status}: the one-pager origin is unreachable from here; redirect and header checks still hold.`)
+  }
+  for (const path of ['/robots.txt', '/llms.txt', '/sitemap.xml', '/favicon.ico', '/assets/x.css', '/brand/x.svg']) {
+    const passthrough = await hostResponse(publicSiteApex, path)
+    assert(![307, 308].includes(passthrough.status), `iamgui.com ${path} must pass through (got ${passthrough.status})`)
+    assert(!passthrough.headers['x-robots-tag'], `iamgui.com ${path} must not carry the noindex header`)
+    if (path === '/robots.txt' && passthrough.status === 200) assert(!passthrough.body.includes('Disallow: /\n'), 'iamgui.com robots.txt must be the public one-pager policy')
+  }
+  for (const route of ['/dashboard', '/dashboard/cash', '/dashboard/invest', '/dashboard/business']) {
+    const gated = await hostResponse(publicSiteApex, route)
+    const location = new URL(gated.headers.location ?? '', baseUrl)
+    assert(gated.status === 307 && location.pathname === '/api/auth/signin' && location.searchParams.get('callbackUrl') === route, `iamgui.com ${route} must redirect to sign-in`)
+    assert(/no-store/.test(gated.headers['cache-control'] ?? '') && /noindex/.test(gated.headers['x-robots-tag'] ?? ''), `iamgui.com ${route} must stay private and noindex`)
+  }
+  const apiOnPublic = await hostResponse(publicSiteApex, '/api/auth/providers')
+  assert(apiOnPublic.status === 200 && JSON.parse(apiOnPublic.body).google?.name === 'Google', 'iamgui.com must serve Auth.js routes')
+  for (const [path, expected] of [
+    ['/architecture', `${canonicalDocsOrigin}/architecture`],
+    ['/reference/system-registry?x=1', `${canonicalDocsOrigin}/reference/system-registry?x=1`],
+    ['/superagents.md', `${canonicalDocsOrigin}/superagents.md`],
+  ]) {
+    const docs = await hostResponse(publicSiteApex, path)
+    assert(docs.status === 307, `iamgui.com ${path} must redirect to the canonical host (got ${docs.status})`)
+    assert(docs.headers.location === expected, `iamgui.com ${path} must redirect to ${expected}, got ${docs.headers.location}`)
+  }
+  const movedOnPublic = await hostResponse(publicSiteApex, '/finance')
+  assert(movedOnPublic.status === 308 && movedOnPublic.headers.location === '/dashboard', 'iamgui.com /finance must redirect to /dashboard')
+  for (const path of ['/', '/dashboard', '/architecture?q=1']) {
+    const www = await hostResponse(publicSiteWww, path)
+    // The root redirects to `https://iamgui.com` (no trailing slash); compare normalized URLs.
+    assert(www.status === 308 && new URL(www.headers.location ?? '', baseUrl).href === new URL(path, `https://${publicSiteApex}`).href, `www.iamgui.com ${path} must redirect to the apex, got ${www.status} ${www.headers.location}`)
+  }
+  const otherHost = await hostResponse('example.com', '/')
+  assert(otherHost.status === 307 && /noindex/.test(otherHost.headers['x-robots-tag'] ?? ''), 'Other hosts keep the sign-in gate and noindex header')
+
   const search = await response('/_pagefind/pagefind-entry.json')
   const searchMetadata = await search.json()
   assert(search.status === 200 && searchMetadata.languages.en.page_count === expectedPageCount, `Public search index must contain all ${expectedPageCount} docs pages`)
@@ -113,7 +187,7 @@ try {
   assert(llmsIndex.status === 200, 'llms.txt must be public')
   assert(llmsBody.includes(`${canonicalSiteUrl}/superagents.md`), 'llms.txt must link the complete Markdown export')
   assert(llmsBody.includes(`${canonicalSiteUrl}/sitemap.xml`), 'llms.txt must link the XML sitemap')
-  console.log(`Site smoke checks passed: Google provider, exact-email allowlist, auth redirects, RSC, ${legacyRedirects.length} redirects, search, robots, sitemap, and ${exportedPageCount}-page agent export.`)
+  console.log(`Site smoke checks passed: Google provider, exact-email allowlist, auth redirects, RSC, ${legacyRedirects.length} legacy and ${dashboardRedirects.length} dashboard redirects, iamgui.com host behaviour, search, robots, sitemap, and ${exportedPageCount}-page agent export.`)
 } finally {
   if (server.exitCode === null) {
     server.kill('SIGTERM')

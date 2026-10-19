@@ -1,4 +1,4 @@
-// Gate proof for /cash, /api/cash and the /finance hub against a LOCAL built
+// Gate proof for /dashboard/cash, /api/cash and the /dashboard hub against a LOCAL built
 // server with a throwaway AUTH_SECRET and a fictional snapshot. Never run
 // against production; never create a production session.
 import assert from "node:assert/strict";
@@ -34,7 +34,7 @@ const fixture = validateCash({
   burn: { asOf: "2026-10-18", t30dNetBurnCad: 1234, topCategories: [["Travel", 500]], accountsLastDate: { "Example chequing": "2026-10-18" } },
   tasks: [{ id: "t1", who: "gui", kind: "cut", title: "Example first open task", deadline: "2026-10-20", burnCadMo: 10 }],
 });
-for (const route of ["finance", "cash", "invest"])
+for (const route of ["dashboard", "dashboard/cash", "dashboard/invest", "finance", "cash", "invest"])
   assert(!existsSync(`.next/server/app/${route}.html`), `${route} must not be prerendered`);
 function scan(path) {
   for (const e of readdirSync(path, { withFileTypes: true })) {
@@ -89,7 +89,7 @@ try {
         ...(spoof ? { "x-middleware-subrequest": "proxy:proxy:proxy:proxy:proxy" } : {}),
       },
     });
-  const paths = ["/cash", "/api/cash", "/cash?_rsc", "/finance", "/invest"];
+  const paths = ["/dashboard/cash", "/api/cash", "/dashboard/cash?_rsc", "/dashboard", "/dashboard/invest"];
   // Anonymous: 307 to sign-in with the callback preserved, nothing private in the body.
   for (const path of paths) {
     const r = await get(path, "");
@@ -101,7 +101,7 @@ try {
     }
     assert(!(await r.text()).includes(marker));
   }
-  console.log("PASS cash anonymous: 307 to sign-in on /cash, /finance, /invest; API 401");
+  console.log("PASS cash anonymous: 307 to sign-in on /dashboard/cash, /dashboard, /dashboard/invest; API 401");
   // Disallowed, expired and invalid sessions are blocked on ordinary and spoofed requests.
   for (const [label, token] of [
     ["disallowed", await session("other@example.com")],
@@ -117,7 +117,7 @@ try {
   console.log("PASS cash disallowed/expired/invalid sessions blocked, spoofed headers included");
   // Owner renders every section with the fictional records and no-store headers.
   const owner = await session("owner@example.com");
-  const page = await get("/cash", owner);
+  const page = await get("/dashboard/cash", owner);
   assert.equal(page.status, 200);
   const html = await page.text();
   assert.match(page.headers.get("cache-control"), /no-store/);
@@ -134,28 +134,42 @@ try {
     "CAD 83,000", // 100,000 − 7,000 − 10,000: cover from one entity only
     "unknown", // Opco's null balance renders as unknown, never 0
   ])
-    assert(html.includes(expected), `/cash must render ${expected}`);
+    assert(html.includes(expected), `/dashboard/cash must render ${expected}`);
   assert(!html.includes("CAD 100,500"), "Entities must never be summed");
   assert(!html.includes("CAD 0<"), "Unknown must never render as zero");
   const api = await get("/api/cash", owner);
   assert.equal(api.status, 200);
   assert.deepEqual((await api.json()).snapshot, fixture);
-  const rsc = await get("/cash?_rsc", owner);
+  const rsc = await get("/dashboard/cash?_rsc", owner);
   assert.equal(rsc.status, 200);
   assert((await rsc.text()).includes(marker));
-  const hub = await get("/finance", owner);
+  const hub = await get("/dashboard", owner);
   assert.equal(hub.status, 200);
   const hubHtml = await hub.text();
-  assert(hubHtml.includes('href="/cash"') && hubHtml.includes('href="/invest"'), "Hub must link both dashboards");
-  assert(hubHtml.includes("moved to /invest"));
-  const invest = await get("/invest", owner);
+  for (const href of ["/dashboard/cash", "/dashboard/invest", "/dashboard/business", "/"])
+    assert(hubHtml.includes(`href="${href}"`), `Hub must link ${href}`);
+  assert(hubHtml.includes("moved to /dashboard/invest"));
+  assert(hubHtml.includes('href="/dashboard"') && !hubHtml.includes('href="/finance"'), "Nav must point at /dashboard, not /finance");
+  const invest = await get("/dashboard/invest", owner);
   assert.equal(invest.status, 200);
   const investHtml = await invest.text();
   assert(investHtml.includes("Owner: to assign") && investHtml.includes("SUPER AGENTS / FINANCE / INVEST"));
   assert(!investHtml.includes(marker), "Invest must not read the cash snapshot");
   const post = await fetch(base + "/api/cash", { method: "POST", headers: { cookie: `authjs.session-token=${owner}` } });
   assert.equal(post.status, 405, "No write endpoint");
-  console.log("PASS cash owner: /cash renders six sections, cover from one entity, unknown never zero; /api/cash JSON; /finance hub; /invest; no write endpoint");
+  // The old routes redirect permanently to the /dashboard section (issue #49).
+  for (const [from, to] of [
+    ["/cash", "/dashboard/cash"],
+    ["/finance", "/dashboard"],
+    ["/invest", "/dashboard/invest"],
+    ["/finance/cash", "/dashboard/cash"],
+    ["/finance/invest", "/dashboard/invest"],
+  ]) {
+    const r = await get(from, "");
+    assert.equal(r.status, 308, `${from} must redirect permanently`);
+    assert.equal(r.headers.get("location"), to, `${from} must redirect to ${to}`);
+  }
+  console.log("PASS cash owner: /dashboard/cash renders six sections, cover from one entity, unknown never zero; /api/cash JSON; /dashboard hub; /dashboard/invest; old routes 308; no write endpoint");
 } finally {
   server.kill();
 }
