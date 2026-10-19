@@ -330,7 +330,7 @@ export default function FinanceDashboard({
   return (
     <div className={s.workspace} data-pagefind-ignore="all">
       <div className={s.topline}>
-        <a href="/finance">← Finance</a>
+        <a href="/dashboard">← Dashboard</a>
         <span>
           <i /> Private workspace
         </span>

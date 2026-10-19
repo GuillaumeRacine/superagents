@@ -5,7 +5,8 @@ Source of truth for this capability: this guide and issue #30. Intent:
 
 ## Private boundary
 
-The dynamic `/business` page and `/api/business` call a server-only data layer
+The dynamic `/dashboard/business` page (formerly `/business`, which now redirects
+permanently; issue #49) and `/api/business` call a server-only data layer
 which rechecks the existing exact-email allowlist on every request. Neither
 private data nor the mapping belongs in public MDX, static configuration, tests,
 Pagefind or the documentation export. Public tests use fictional businesses.

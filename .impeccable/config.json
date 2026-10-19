@@ -1,0 +1,6 @@
+{
+  "buildPath": "code",
+  "detector": {
+    "ignoreFiles": ["node_modules/**", ".next/**", "public/_pagefind/**", "docs/**"]
+  }
+}

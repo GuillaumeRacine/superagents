@@ -19,7 +19,7 @@ export const metadata = {
 };
 const pageMetadata = {
   title: "Cash",
-  filePath: "app/cash/page.tsx",
+  filePath: "app/dashboard/cash/page.tsx",
   searchable: false,
 };
 const OWNER_LINE =
@@ -102,7 +102,7 @@ function today() {
 
 export default async function CashPage() {
   const data = await getCashData();
-  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fcash");
+  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fdashboard%2Fcash");
   const snap = data.snapshot;
   const asOfToday = today();
   const ready = data.state === "ready";
@@ -132,7 +132,7 @@ export default async function CashPage() {
       <div className={s.dashboard} data-pagefind-ignore="all">
         <header className={s.head}>
           <div className={s.crumb}>
-            <a href="/finance">Finance</a> / Cash · <a href="/invest">Invest ↗</a>
+            <a href="/dashboard">Dashboard</a> / Cash · <a href="/dashboard/invest">Invest ↗</a>
           </div>
           <div className={s.eyebrow}>SUPER AGENTS / FINANCE / CASH</div>
           <h1>Cash</h1>

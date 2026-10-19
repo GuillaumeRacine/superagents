@@ -3,14 +3,17 @@
 ## Cash and Invest split (2026-10-19)
 
 The single `/finance` dashboard is replaced by two agent-owned dashboards
-(issue #44). `/finance` is now a hub page linking both; it stays behind the
-same allowlist gate. Both routes are dynamic, private/no-store, excluded from
-Pagefind and MDX exports, and recheck the exact-email allowlist on the server.
+(issue #44). Since issue #49 all private dashboards live under `/dashboard`:
+the hub at `/dashboard` links Cash, Invest and Business and stays behind the
+same allowlist gate; `/finance`, `/cash`, `/invest` and `/business` redirect
+permanently to their `/dashboard` paths. All routes are dynamic,
+private/no-store, excluded from Pagefind and MDX exports, and recheck the
+exact-email allowlist on the server.
 
 | Route | Owner | Data contract | Env | Cadence |
 |---|---|---|---|---|
-| `/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `Context/cfo-feed` (private) | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
-| `/invest` | to assign (interim: Claude monthly `/cfo invest` run, Context#151) | the former finance workspace, unchanged; `lib/finance-model.mjs` | `FINANCE_SNAPSHOT_JSON` / `FINANCE_SNAPSHOT_GZIP_BASE64` | monthly, month-end |
+| `/dashboard/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `Context/cfo-feed` (private) | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
+| `/dashboard/invest` | to assign (interim: Claude monthly `/cfo invest` run, Context#151) | the former finance workspace, unchanged; `lib/finance-model.mjs` | `FINANCE_SNAPSHOT_JSON` / `FINANCE_SNAPSHOT_GZIP_BASE64` | monthly, month-end |
 
 Cash rules: null means unknown and renders as "unknown", never 0; a missing
 bank is never zero; balances are listed per entity and per currency and are
@@ -29,19 +32,20 @@ Optional `cash_snapshot_v1` additions (older snapshots stay valid): `burn.series
 from `t30d.json`) and `scorecard.corpMoved*`/`corpTotal*` (payments moved to the
 Ensemble Wise card). The page shows an always-visible as-of bar and a red stale banner,
 computed at render: snapshot built more than 36 hours ago, or burn, scorecard or feed
-post more than 3 days old. `/finance/cash` and `/finance/invest` redirect to `/cash`
-and `/invest`. The added series costs about 1.8 KB of gzip-base64; check the 64 KB
+post more than 3 days old. `/finance/cash` and `/finance/invest` redirect to `/dashboard/cash`
+and `/dashboard/invest`. The added series costs about 1.8 KB of gzip-base64; check the 64 KB
 Vercel env budget before publishing.
 
 Tests: `npm run test:cash` (model), `node scripts/verify-cash.mjs` (gate and
 render against a local build with a throwaway secret and fictional records).
 `scripts/verify-finance.mjs` and `scripts/verify-finance-ui.mjs` now exercise
-the workspace at `/invest`. Still to do: the Invest refactor (#39), a scheduled
+the workspace at `/dashboard/invest`. Still to do: the Invest refactor (#39), a scheduled
 Cash snapshot refresh, and the Chief of Cash snapshot path (Context#172).
 
-## Finance workspace (now `/invest`)
+## Finance workspace (now `/dashboard/invest`)
 
-Private spreadsheet-first workspace at `/invest` (formerly `/finance`), alongside `/business`.
+Private spreadsheet-first workspace at `/dashboard/invest` (formerly `/finance`,
+then `/invest`), alongside `/dashboard/business`.
 Execution and acceptance proof: issue #36. Inherits the Business Dashboard lean
 ISA (draft, unregistered, 2026-09-14), especially its privacy, provenance and
 coverage claims. No maturity promotion or owner acceptance is implied.
@@ -61,7 +65,7 @@ coverage claims. No maturity promotion or owner acceptance is implied.
 ## Privacy and storage
 
 Public code and tests contain generic/fictional examples only. Entity names,
-private links and records are never committed here. `/invest` and `/api/finance`
+private links and records are never committed here. `/dashboard/invest` and `/api/finance`
 recheck the exact-email allowlist before reading the managed finance snapshot on the
 server; the existing proxy also gates HTML and RSC requests. Routes are dynamic,
 private/no-store and excluded from Pagefind and MDX exports. No data is fetched

@@ -8,7 +8,7 @@ const secret = 'synthetic-local-verification-only'
 const marker = 'SYNTHETIC_PRIVATE_BUSINESS_SENTINEL'
 const fixture = {schemaVersion:1,collectedAt:new Date().toISOString(),businesses:[{id:'sample',name:marker,objective:'Prove customer value',nextAction:'Review the evidence',coverage:'Synthetic only',metrics:[{label:'Orders',value:0,unit:'orders',period:'7 days',observedAt:'2026-09-01',source:'https://github.com/example/repo/issues/1'},{label:'Margin',value:null}],sources:[],execution:[],outcomes:[]}]}
 for(const content of ['public/superagents.md','public/llms.txt']) assert(!readFileSync(content,'utf8').includes(marker))
-assert(!existsSync('.next/server/app/business.html'), 'Business page must not be static')
+for (const route of ['dashboard/business', 'business']) assert(!existsSync(`.next/server/app/${route}.html`), 'Business page must not be static')
 const probe = createServer(); await new Promise(r=>probe.listen(0,'127.0.0.1',r)); const port = probe.address().port; await new Promise(r=>probe.close(r))
 const base = `http://127.0.0.1:${port}`
 const server = spawn(process.execPath,['node_modules/next/dist/bin/next','start','-p',String(port)], {env:{...process.env,AUTH_SECRET:secret,AUTH_GOOGLE_ID:'example',AUTH_GOOGLE_SECRET:'example',AUTH_TRUST_HOST:'true',AUTHORIZED_GOOGLE_EMAILS:'owner@example.com,second@example.com',BUSINESS_SNAPSHOT_JSON:JSON.stringify(fixture)},stdio:'ignore'})
@@ -17,7 +17,7 @@ try {
   for(let i=0;i<80;i++){try{await fetch(base);break}catch{} await new Promise(r=>setTimeout(r,100))}
   for(const [label,email,maxAge] of [['owner','owner@example.com',600],['second','second@example.com',600],['disallowed','other@example.com',600],['expired','owner@example.com',-100]]) {
     const token = await encode({secret,salt:'authjs.session-token',token:{email},maxAge})
-    for(const path of ['/business','/api/business','/business?_rsc']) {
+    for(const path of ['/dashboard/business','/api/business','/dashboard/business?_rsc']) {
       const response = await fetch(base+path,{redirect:'manual',headers:{cookie:`authjs.session-token=${token}`,...(path.includes('_rsc')?{RSC:'1'}:{})}})
       const body = await response.text()
       if(['owner','second'].includes(label)) {
@@ -27,11 +27,14 @@ try {
     }
     console.log(`PASS ${label}: HTML/API/RSC`)
   }
-  for(const cookie of ['', 'authjs.session-token=invalid']) for(const path of ['/business','/api/business','/business?_rsc']) {
+  for(const cookie of ['', 'authjs.session-token=invalid']) for(const path of ['/dashboard/business','/api/business','/dashboard/business?_rsc']) {
     const r = await fetch(base+path,{redirect:'manual',headers:{cookie,RSC:'1','x-middleware-subrequest':'proxy:proxy:proxy:proxy:proxy'}})
     assert([307,401].includes(r.status)); assert(!(await r.text()).includes(marker))
   }
   console.log('PASS missing/invalid sessions and middleware spoof attempt')
+  const moved = await fetch(base+'/business',{redirect:'manual'})
+  assert.equal(moved.status,308); assert.equal(moved.headers.get('location'),'/dashboard/business')
+  console.log('PASS /business redirects permanently to /dashboard/business')
   if(process.env.BUSINESS_PLAYWRIGHT_MODULE) {
     const {chromium} = await import(process.env.BUSINESS_PLAYWRIGHT_MODULE)
     browser = await chromium.launch({channel:'chrome',headless:true})
@@ -39,7 +42,7 @@ try {
     const token=await encode({secret,salt:'authjs.session-token',token:{email:'owner@example.com'},maxAge:600})
     await context.addCookies([{name:'authjs.session-token',value:token,url:base}])
     const page=await context.newPage(); const errors=[];page.on('pageerror',e=>errors.push(e.message))
-    await page.goto(base+'/business'); await page.getByRole('heading',{name:'Business Dashboard',exact:true}).waitFor()
+    await page.goto(base+'/dashboard/business'); await page.getByRole('heading',{name:'Business Dashboard',exact:true}).waitFor()
     await page.getByRole('link',{name:'Review business →'}).click()
     await page.getByText('Execution evidence',{exact:true}).click()
     assert(await page.getByText('Issue status is not deployment verification or business success.',{exact:false}).isVisible())
