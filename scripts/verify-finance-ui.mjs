@@ -271,7 +271,7 @@ try {
     if (r.method() === "POST" && !r.url().includes("/api/auth/"))
       writes.push(r.url());
   });
-  await page.goto(base + "/finance");
+  await page.goto(base + "/invest");
   await page
     .getByRole("heading", { name: "Your capital. A clearer picture." })
     .waitFor();

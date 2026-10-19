@@ -1,0 +1,620 @@
+import { redirect } from "next/navigation";
+import { getCashData } from "@/lib/cash-data";
+import {
+  alerts,
+  debtTotals,
+  fundingRows,
+  openTasks,
+  stoicCover,
+} from "@/lib/cash-model.mjs";
+import { useMDXComponents } from "nextra-theme-docs";
+import s from "./cash.module.css";
+
+const { wrapper: Wrapper } = useMDXComponents();
+export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Cash",
+  robots: { index: false, follow: false },
+};
+const pageMetadata = {
+  title: "Cash",
+  filePath: "app/cash/page.tsx",
+  searchable: false,
+};
+const OWNER_LINE =
+  "Owner: Chief of Cash (GrokBot) · feed posts weekdays 08:00 in #cash · record of truth Context/cfo-feed";
+
+type Unknown = number | null;
+const fmt0 = new Intl.NumberFormat("en-CA", { maximumFractionDigits: 0 });
+const fmt2 = new Intl.NumberFormat("en-CA", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+// Whole amounts stay whole; anything with cents shows both digits.
+const fmt = { format: (n: number) => (Number.isInteger(n) ? fmt0 : fmt2).format(n) };
+function Money({
+  amount,
+  currency = "CAD",
+  signed = false,
+}: {
+  amount: Unknown;
+  currency?: string;
+  signed?: boolean;
+}) {
+  if (amount === null || amount === undefined)
+    return <span className={s.unknown}>unknown</span>;
+  const sign = signed && amount > 0 ? "+" : "";
+  return <>{`${currency} ${sign}${fmt.format(amount)}`}</>;
+}
+function Pct({ value }: { value: Unknown }) {
+  return value === null ? (
+    <span className={s.unknown}>unknown</span>
+  ) : (
+    <>{`${fmt.format(value)}%`}</>
+  );
+}
+function AsOf({ date, prefix = "as of" }: { date: string | null; prefix?: string }) {
+  return (
+    <small>
+      {prefix} {date ?? <span className={s.unknown}>unknown date</span>}
+    </small>
+  );
+}
+function Tag({ tag }: { tag: string }) {
+  const cls =
+    tag === "overdue"
+      ? s.tagBad
+      : tag === "due soon" || tag === "unverified" || tag === "blocked"
+        ? s.tagWarn
+        : tag === "funded" || tag === "done"
+          ? s.tagOk
+          : "";
+  return <span className={`${s.tag} ${cls}`}>{tag}</span>;
+}
+function today() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
+}
+
+export default async function CashPage() {
+  const data = await getCashData();
+  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fcash");
+  const snap = data.snapshot;
+  const asOfToday = today();
+  const ready = data.state === "ready";
+  const cover = stoicCover(snap);
+  const debt = debtTotals(snap.debts);
+  const funding = fundingRows(snap, asOfToday);
+  const alertRows = alerts(snap, asOfToday);
+  const tasks = openTasks(snap);
+  const burn = snap.burn;
+  return (
+    <Wrapper toc={[]} metadata={pageMetadata} sourceCode="">
+      <div className={s.dashboard} data-pagefind-ignore="all">
+        <header className={s.hero}>
+          <div className={s.eyebrow}>SUPER AGENTS / FINANCE / CASH</div>
+          <h1>Cash</h1>
+          <p>Balances per entity, what is due, and what funding leaves behind.</p>
+          <div className={s.owner}>
+            {OWNER_LINE}
+            <br />
+            Feed last posted {snap.feed.lastPostDate ?? "unknown"} · month closed{" "}
+            {snap.feed.monthlyClosed ?? "unknown"} · snapshot generated{" "}
+            {snap.generatedAt ?? "unknown"} · rendered {asOfToday}
+          </div>
+        </header>
+        <nav className={s.nav} aria-label="Cash sections">
+          <a href="/finance">← Finance</a>
+          <a href="#entities">Entities</a>
+          <a href="#alerts">Next 7 days</a>
+          <a href="#funding">Funding 2026</a>
+          <a href="#cover">Stoic cover</a>
+          <a href="#debt">Debt and interest</a>
+          <a href="#burn">Burn and tasks</a>
+          <a href="/invest">Invest ↗</a>
+        </nav>
+        {!ready ? (
+          <section className={s.panel}>
+            <h2>
+              {data.state === "invalid"
+                ? "Cash snapshot needs attention"
+                : "Cash snapshot is not connected yet"}
+            </h2>
+            <p>
+              {data.state === "invalid"
+                ? "The CASH_SNAPSHOT value failed validation. No partial or unvalidated records are displayed."
+                : "Set CASH_SNAPSHOT_JSON (or CASH_SNAPSHOT_GZIP_BASE64) from scripts/build-cash-snapshot.mjs to render balances, alerts, funding progress, Stoic cover, debt and the task list."}
+            </p>
+            <p>No balance, due date or progress has been assumed. Unknown stays unknown.</p>
+          </section>
+        ) : (
+          <>
+            <div className={s.status}>
+              Every figure shows its own as-of date. Balances are listed per entity and
+              per currency and are never added across entities. A missing number renders
+              as unknown, never as zero.
+            </div>
+
+            <section id="entities" className={s.panel}>
+              <div className={s.sectionLabel}>01 / ENTITIES AND BALANCES</div>
+              <h2>Where the cash sits</h2>
+              <p className={s.muted}>
+                FX reference {snap.fx.usdcad === null ? "unknown" : `USD/CAD ${snap.fx.usdcad}`}{" "}
+                ({snap.fx.source || "no source"}) <AsOf date={snap.fx.asOf} />. Shown for
+                context only; USD balances are not converted.
+              </p>
+              <div className={s.entityGrid}>
+                {snap.entities.map((e) => (
+                  <article className={s.entity} key={e.id}>
+                    <h3>
+                      {e.label}
+                      <span className={s.tag}>{e.balances.length} accounts</span>
+                    </h3>
+                    {e.balances.length === 0 && (
+                      <p className={s.empty}>
+                        <span className={s.unknown}>unknown</span> · {e.note || "no balance on file"}
+                      </p>
+                    )}
+                    {e.balances.map((b, i) => (
+                      <div className={s.balance} key={i}>
+                        <span>{b.account}</span>
+                        <strong>
+                          <Money amount={b.amount} currency={b.currency} />
+                        </strong>
+                        <small>
+                          {b.source || "no source"} · as of {b.asOf ?? "unknown date"}
+                        </small>
+                      </div>
+                    ))}
+                    {e.balances.length > 0 && e.note && <small>{e.note}</small>}
+                  </article>
+                ))}
+                {snap.credit.map((c, i) => (
+                  <article className={s.entity} key={`credit-${i}`}>
+                    <h3>
+                      Credit drawn · {c.entity}
+                      <span className={s.tag}>line</span>
+                    </h3>
+                    <div className={s.balance}>
+                      <span>{c.account}</span>
+                      <strong>
+                        <Money amount={c.drawn} currency={c.currency} />
+                      </strong>
+                      <small>
+                        of limit <Money amount={c.limit} currency={c.currency} /> ·{" "}
+                        {c.source || "no source"} · as of {c.asOf ?? "unknown date"}
+                      </small>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section id="alerts" className={s.panel}>
+              <div className={s.sectionLabel}>02 / ALERTS AND NEXT 7 DAYS</div>
+              <h2>What needs a hand this week</h2>
+              <p className={s.muted}>
+                Open tasks and tax items due within seven days of {asOfToday}, open
+                notices, upcoming charges and data gaps. "gui" needs your login or
+                payment; "bot" is the Chief of Cash.
+              </p>
+              {alertRows.length === 0 ? (
+                <p className={s.empty}>Nothing due in the next seven days.</p>
+              ) : (
+                <div>
+                  {alertRows.map((a, i) => (
+                    <div className={s.alert} key={i}>
+                      <span>
+                        {a.when ?? "undated"}
+                        {a.days !== null && (
+                          <>
+                            <br />
+                            <small>
+                              {a.days < 0
+                                ? `${-a.days}d overdue`
+                                : a.days === 0
+                                  ? "today"
+                                  : `in ${a.days}d`}
+                            </small>
+                          </>
+                        )}
+                      </span>
+                      <span>
+                        <Tag tag={a.who} />
+                      </span>
+                      <span>
+                        {a.text} <small>· {a.kind}</small>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <h3 style={{ marginTop: 22 }}>Tax items on file</h3>
+              <div className={s.tableWrap}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>Entity</th>
+                      <th>Item</th>
+                      <th>Due</th>
+                      <th className={s.num}>CAD</th>
+                      <th>Source</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {snap.taxItems.map((t) => (
+                      <tr key={t.key}>
+                        <td>{t.entity}</td>
+                        <td>
+                          {t.text} {!t.open && <Tag tag="closed" />}
+                        </td>
+                        <td>{t.due ?? (t.kind === "notice" ? "open" : "unknown")}</td>
+                        <td className={s.num}>
+                          <Money amount={t.amountCad} />
+                          {t.amountBasis && t.amountBasis !== "stated" && (
+                            <>
+                              <br />
+                              <small>{t.amountBasis}</small>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          <small>
+                            {t.source || "no source"} · as of {t.asOf ?? "unknown"}
+                          </small>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="funding" className={s.panel}>
+              <div className={s.sectionLabel}>03 / FUNDING PROGRESS 2026</div>
+              <h2>Registered accounts</h2>
+              <p className={s.muted}>
+                Targets from {snap.fundingPlan.source || "the funding plan"}{" "}
+                <AsOf date={snap.fundingPlan.asOf} />. Contributed-to-date stays unknown
+                until a statement proves it; it is never assumed to be zero.
+              </p>
+              <div className={s.tableWrap}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>Target</th>
+                      <th className={s.num}>Target CAD</th>
+                      <th className={s.num}>Contributed</th>
+                      <th className={s.num}>Remaining</th>
+                      <th>Deadline</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {funding.map((f) => (
+                      <tr key={f.id}>
+                        <td>
+                          {f.label}
+                          <br />
+                          <small>
+                            {f.statusNote}
+                            {f.evidence && <> · evidence: {f.evidence}</>}
+                          </small>
+                        </td>
+                        <td className={s.num}>
+                          <Money amount={f.targetCad} />
+                        </td>
+                        <td className={s.num}>
+                          <Money amount={f.contributedCad} />
+                          <br />
+                          <small>
+                            {f.contributedAsOf ? `as of ${f.contributedAsOf}` : "no statement on file"}
+                          </small>
+                        </td>
+                        <td className={s.num}>
+                          <Money amount={f.remaining} />
+                        </td>
+                        <td>
+                          {f.deadline ?? "none (carries)"}
+                          {f.days !== null && (
+                            <>
+                              <br />
+                              <small>{f.days < 0 ? `${-f.days}d ago` : `${f.days} days`}</small>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          <Tag tag={f.tag} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Total planned</td>
+                      <td className={s.num}>
+                        <Money amount={snap.fundingPlan.totalCad} />
+                      </td>
+                      <td className={s.num}>
+                        <span className={s.unknown}>unknown</span>
+                      </td>
+                      <td className={s.num}>
+                        <span className={s.unknown}>unknown</span>
+                      </td>
+                      <td colSpan={2}>
+                        <small>per-target totals are not summed while any contribution is unknown</small>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </section>
+
+            <section id="cover" className={s.panel}>
+              <div className={s.sectionLabel}>04 / STOIC COVER</div>
+              <h2>Can {cover.entity ?? "the funding entity"} fund the plan and still meet its tax claims?</h2>
+              <p className={s.muted}>
+                Cover = {cover.entity ?? "entity"} CAD cash − open tax claims − planned
+                registered funding. USD cash is excluded. Any unknown input makes the cover
+                unknown.
+              </p>
+              <div className={s.coverRow}>
+                <span>
+                  {cover.entity ?? "Entity"} CAD cash <AsOf date={cover.cash.asOf} />
+                </span>
+                <strong>
+                  <Money amount={cover.cash.amount} />
+                </strong>
+              </div>
+              <div className={s.coverRow}>
+                <span>
+                  − open tax claims ({cover.claims.items.length} items){" "}
+                  <AsOf date={cover.claims.asOf} />
+                  {cover.claims.items.some((c) => c.amountBasis && c.amountBasis !== "stated") && (
+                    <small> · one amount parsed from notice text</small>
+                  )}
+                </span>
+                <strong>
+                  <Money amount={cover.claims.amount} />
+                </strong>
+              </div>
+              <div className={s.coverRow}>
+                <span>
+                  − planned registered funding <AsOf date={cover.plan.asOf} />
+                </span>
+                <strong>
+                  <Money amount={cover.plan.amount} />
+                </strong>
+              </div>
+              <div className={`${s.coverRow} ${s.total}`}>
+                <span>
+                  Cover after funding{" "}
+                  {cover.cover !== null && (
+                    <Tag tag={cover.cover >= 0 ? "covered" : "short"} />
+                  )}
+                </span>
+                <strong>
+                  <Money amount={cover.cover} />
+                </strong>
+              </div>
+            </section>
+
+            <section id="debt" className={s.panel}>
+              <div className={s.sectionLabel}>05 / DEBT AND INTEREST</div>
+              <h2>Facilities, balances and the monthly interest bill</h2>
+              <div className={s.statGrid}>
+                <div className={s.stat}>
+                  <span>Known balances</span>
+                  <strong>
+                    <Money amount={debt.balanceCad} />
+                  </strong>
+                  <small>
+                    {debt.balanceRows} of {debt.facilities} facilities · as of {debt.asOf ?? "unknown"}
+                  </small>
+                </div>
+                <div className={s.stat}>
+                  <span>Monthly interest run rate</span>
+                  <strong>
+                    <Money amount={debt.interestMonthCad} />
+                  </strong>
+                  <small>{debt.interestRows} of {debt.facilities} facilities have a known run rate</small>
+                </div>
+                <div className={s.stat}>
+                  <span>Blended rate</span>
+                  <strong>
+                    <Pct value={debt.blendedRatePct} />
+                  </strong>
+                  <small>balance-weighted over facilities with a known balance and rate</small>
+                </div>
+              </div>
+              <div className={s.tableWrap}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>Facility</th>
+                      <th>Kind</th>
+                      <th className={s.num}>Balance CAD</th>
+                      <th>As of</th>
+                      <th className={s.num}>Rate</th>
+                      <th className={s.num}>Interest / month</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {snap.debts.map((d) => (
+                      <tr key={d.id}>
+                        <td>
+                          {d.name}
+                          {d.rateNote && (
+                            <>
+                              <br />
+                              <small>{d.rateNote}</small>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          {d.kind}
+                          <br />
+                          <small>{d.scope}</small>
+                        </td>
+                        <td className={s.num}>
+                          <Money amount={d.balanceCad} />
+                        </td>
+                        <td className={s.nowrap}>{d.balanceAsOf ?? <span className={s.unknown}>unknown</span>}</td>
+                        <td className={s.num}>
+                          <Pct value={d.ratePct} />
+                        </td>
+                        <td className={s.num}>
+                          <Money amount={d.interestMonthCad} />
+                          {d.interestBasis && (
+                            <>
+                              <br />
+                              <small>{d.interestBasis}</small>
+                            </>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="burn" className={s.panel}>
+              <div className={s.sectionLabel}>06 / TRAILING 30-DAY BURN AND TASKS</div>
+              <h2>Burn and the task list</h2>
+              {burn ? (
+                <>
+                  <div className={s.statGrid}>
+                    <div className={s.stat}>
+                      <span>T30D net burn</span>
+                      <strong>
+                        <Money amount={burn.t30dNetBurnCad} />
+                      </strong>
+                      <small>
+                        as of {burn.asOf ?? "unknown"} · data through {burn.dataThroughPartial ?? "unknown"} (partial)
+                      </small>
+                    </div>
+                    <div className={s.stat}>
+                      <span>vs yesterday</span>
+                      <strong>
+                        <Money amount={burn.vsYesterday} signed />
+                      </strong>
+                      <small>vs 30 days ago <Money amount={burn.vs30dAgo} signed /></small>
+                    </div>
+                    {snap.scorecard && (
+                      <div className={s.stat}>
+                        <span>Last full month net ({snap.scorecard.lastFullMonth.month ?? "unknown"})</span>
+                        <strong>
+                          <Money amount={snap.scorecard.lastFullMonth.cad} />
+                        </strong>
+                        <small>
+                          trend {snap.scorecard.trend || "unknown"} · savings banked{" "}
+                          <Money amount={snap.scorecard.savingsBankedCadMo} />/mo of plan{" "}
+                          <Money amount={snap.scorecard.savingsPlanCadMo} />/mo · as of {snap.scorecard.asOf ?? "unknown"}
+                        </small>
+                      </div>
+                    )}
+                  </div>
+                  <details>
+                    <summary>Top categories and account freshness</summary>
+                    <div className={s.tableWrap}>
+                      <table className={s.table}>
+                        <thead>
+                          <tr>
+                            <th>Category (30d)</th>
+                            <th className={s.num}>CAD</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {burn.topCategories.map(([name, amount], i) => (
+                            <tr key={i}>
+                              <td>{name}</td>
+                              <td className={s.num}>
+                                <Money amount={amount} />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <table className={s.table}>
+                        <thead>
+                          <tr>
+                            <th>Account</th>
+                            <th>Last transaction</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {burn.accountsLastDate.map(([name, date], i) => (
+                            <tr key={i}>
+                              <td>{name}</td>
+                              <td>{date ?? "unknown"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {burn.definition && <p className={s.muted}>{burn.definition}</p>}
+                  </details>
+                </>
+              ) : (
+                <p className={s.empty}>
+                  Burn: <span className={s.unknown}>unknown</span> (no trailing-30-day series in the snapshot).
+                </p>
+              )}
+              <h3 style={{ marginTop: 22 }}>Open tasks ({tasks.length})</h3>
+              <p className={s.muted}>
+                Sorted by deadline; the first open task is highlighted. Burn impact is CAD a
+                month off the T30D net burn once done.
+              </p>
+              <div className={s.tableWrap}>
+                <table className={s.table}>
+                  <thead>
+                    <tr>
+                      <th>Deadline</th>
+                      <th>Who</th>
+                      <th>Task</th>
+                      <th>Kind</th>
+                      <th className={s.num}>Burn / mo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tasks.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className={s.empty}>No open tasks in the snapshot.</td>
+                      </tr>
+                    )}
+                    {tasks.map((t, i) => (
+                      <tr key={t.id} className={i === 0 ? s.first : ""}>
+                        <td className={s.nowrap}>{t.deadline ?? "none"}</td>
+                        <td>
+                          <Tag tag={t.who} />
+                        </td>
+                        <td>
+                          {t.title}
+                          {t.why && (
+                            <>
+                              <br />
+                              <small>{t.why}</small>
+                            </>
+                          )}
+                        </td>
+                        <td>{t.kind}</td>
+                        <td className={s.num}>
+                          <Money amount={t.burnCadMo} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <p className={s.footer}>
+              {OWNER_LINE}. The site derives; it does not invent. Entities are never summed.
+              Snapshot schema {snap.schemaVersion}. See docs/finance/README.md for the data
+              contract.
+            </p>
+          </>
+        )}
+      </div>
+    </Wrapper>
+  );
+}

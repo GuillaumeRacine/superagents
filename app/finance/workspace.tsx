@@ -141,9 +141,13 @@ function download(name: string, text: string, type = "text/csv") {
 export default function FinanceDashboard({
   initial,
   sourceState,
+  eyebrow = "SUPER AGENTS / FINANCE",
+  ownerLine = "",
 }: {
   initial: Workspace;
   sourceState: string;
+  eyebrow?: string;
+  ownerLine?: string;
 }) {
   const [data, setData] = useState<Workspace>(initial),
     [section, setSection] = useState("Overview"),
@@ -326,14 +330,14 @@ export default function FinanceDashboard({
   return (
     <div className={s.workspace} data-pagefind-ignore="all">
       <div className={s.topline}>
-        <a href="/business">← Business Dashboard</a>
+        <a href="/finance">← Finance</a>
         <span>
           <i /> Private workspace
         </span>
       </div>
       <header className={s.header}>
         <div>
-          <p className={s.eyebrow}>SUPER AGENTS / FINANCE</p>
+          <p className={s.eyebrow}>{eyebrow}</p>
           <h1>
             Your capital.
             <br />
@@ -341,6 +345,12 @@ export default function FinanceDashboard({
           </h1>
           <p className={s.intro}>
             Assets, activity and the details that matter. Together.
+            {ownerLine && (
+              <>
+                <br />
+                {ownerLine}
+              </>
+            )}
           </p>
         </div>
         <div className={s.headerActions}>
