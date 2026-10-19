@@ -10,7 +10,10 @@ export const { handlers, auth } = NextAuth({
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 12 * 60 * 60,
+    // Rolling 90-day session: an active browser stays signed in; the allowlist
+    // is still rechecked on every request, so revocation is immediate.
+    maxAge: 90 * 24 * 60 * 60,
+    updateAge: 24 * 60 * 60,
   },
   callbacks: {
     async signIn({ account, profile }) {
