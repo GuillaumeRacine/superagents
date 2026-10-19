@@ -1,5 +1,11 @@
 import { auth } from '@/auth'
 import { isAllowedEmail } from '@/lib/access-policy.mjs'
+import {
+  canonicalDocsUrl,
+  isPrivateOnPublicSite,
+  isPublicPassthroughPath,
+  isPublicSiteHost,
+} from '@/config/public-site.mjs'
 import { NextResponse } from 'next/server'
 
 // This is a secondary gate for the rendered site, not a confidentiality boundary
@@ -18,6 +24,17 @@ function protectedResponse(response: NextResponse) {
 }
 
 export const proxy = auth((req) => {
+  // iamgui.com (#49): the proxy runs before next.config rewrites, so the public
+  // one-pager paths must pass here untouched; everything that is not a
+  // /dashboard surface goes to the canonical documentation host.
+  if (isPublicSiteHost(req.headers.get('host'))) {
+    const { pathname, search } = req.nextUrl
+    if (isPublicPassthroughPath(pathname)) return NextResponse.next()
+    if (!isPrivateOnPublicSite(pathname)) {
+      return protectedResponse(NextResponse.redirect(canonicalDocsUrl(pathname, search), 307))
+    }
+  }
+
   if (isAllowedEmail(req.auth?.user?.email)) {
     return protectedResponse(NextResponse.next())
   }

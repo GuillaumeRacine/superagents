@@ -2,6 +2,8 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { dirname, extname, join, relative, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { legacyRedirects } from '../config/legacy-redirects.mjs'
+import { dashboardRedirects } from '../config/dashboard-redirects.mjs'
+import { isPrivateOnPublicSite, isPublicPassthroughPath, publicPassthroughPaths, publicSiteRewrites } from '../config/public-site.mjs'
 
 const root = process.cwd()
 const ignored = new Set(['.git', '.next', '.next-docs', '_pagefind', 'node_modules'])
@@ -44,7 +46,7 @@ for (const file of publishable) {
 
 const appPages = files.filter((file) => file.startsWith(resolve(root, 'app')) && file.endsWith('page.mdx'))
 const routeFiles = new Set(appPages.map((file) => {
-  const name = relative(resolve(root, 'app'), file).replace(/\/page\.mdx$/, '')
+  const name = relative(resolve(root, 'app'), file).replace(/\/?page\.mdx$/, '')
   return name ? `/${name}` : '/'
 }))
 const staticRoutes = new Set([
@@ -78,6 +80,50 @@ for (const route of requiredLegacyRoutes) {
 }
 
 if (routeFiles.size < 20) failures.push(`Expected at least 20 documentation routes; found ${routeFiles.size}`)
+
+// Private dashboards (issue #49): old routes redirect permanently to dynamic page.tsx routes under /dashboard.
+const dynamicRoutes = new Set(
+  files
+    .filter((file) => file.startsWith(resolve(root, 'app')) && file.endsWith('page.tsx'))
+    .map((file) => `/${relative(resolve(root, 'app'), file).replace(/\/?page\.tsx$/, '')}`),
+)
+for (const redirect of dashboardRedirects) {
+  if (redirectSources.has(redirect.source)) failures.push(`Dashboard redirect ${redirect.source} duplicates a legacy redirect`)
+  redirectSources.add(redirect.source)
+  if (!redirect.permanent) failures.push(`Dashboard redirect ${redirect.source} must be permanent`)
+  if (!redirect.destination.startsWith('/dashboard')) failures.push(`Dashboard redirect ${redirect.source} must land under /dashboard`)
+  if (!dynamicRoutes.has(redirect.destination)) failures.push(`Dashboard redirect ${redirect.source} targets missing dynamic route ${redirect.destination}`)
+  if (routeFiles.has(redirect.source) || dynamicRoutes.has(redirect.source)) failures.push(`Dashboard redirect ${redirect.source} shadows a real route`)
+}
+for (const route of ['/dashboard', '/dashboard/cash', '/dashboard/invest', '/dashboard/business']) {
+  if (!dynamicRoutes.has(route)) failures.push(`Missing private dashboard route ${route}`)
+  if (!isPrivateOnPublicSite(route)) failures.push(`${route} must stay private on the public domain`)
+}
+for (const file of files.filter((item) => item.startsWith(resolve(root, 'app/dashboard')) && item.endsWith('page.tsx'))) {
+  const content = readFileSync(file, 'utf8')
+  if (!/export const dynamic = ["']force-dynamic["']/.test(content)) failures.push(`${relative(root, file)} must be force-dynamic`)
+  if (!/isAllowedEmail|getCashData|getFinanceData|getBusinessData/.test(content)) failures.push(`${relative(root, file)} must recheck the allowlist on the server`)
+  for (const match of content.matchAll(/href="(\/[^"#?]*)"/g)) {
+    const target = match[1]
+    if (!routeFiles.has(target) && !dynamicRoutes.has(target) && !staticRoutes.has(target) && !target.startsWith('/api/')) {
+      failures.push(`${relative(root, file)} links to missing route ${target}`)
+    }
+  }
+}
+
+// iamgui.com (issue #49): the public passthrough and the private surfaces must never overlap,
+// and every passthrough path must have its rewrite.
+for (const path of publicPassthroughPaths) {
+  if (isPrivateOnPublicSite(path)) failures.push(`Public passthrough path ${path} is also private`)
+  if (!publicSiteRewrites.some((rewrite) => rewrite.source === path)) failures.push(`Public passthrough path ${path} has no rewrite`)
+}
+for (const path of ['/dashboard', '/dashboard/cash', '/api/cash', '/api/auth/signin', '/_next/static/x.js', '/_pagefind/pagefind-entry.json']) {
+  if (isPublicPassthroughPath(path)) failures.push(`Private path ${path} must not pass through to the public site`)
+}
+for (const rewrite of publicSiteRewrites) {
+  if (!rewrite.has?.some((condition) => condition.type === 'host')) failures.push(`Public site rewrite ${rewrite.source} is not host-conditioned`)
+  if (!rewrite.destination.startsWith('https://guiracine.vercel.app/')) failures.push(`Public site rewrite ${rewrite.source} must target the one-pager project`)
+}
 
 for (const file of appPages) {
   const content = readFileSync(file, 'utf8')

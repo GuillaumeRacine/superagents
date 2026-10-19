@@ -1,5 +1,7 @@
 import nextra from 'nextra'
 import { legacyRedirects } from './config/legacy-redirects.mjs'
+import { dashboardRedirects } from './config/dashboard-redirects.mjs'
+import { publicSiteHeaderRules, publicSiteHostPattern, publicSiteRedirects, publicSiteRewrites } from './config/public-site.mjs'
 
 const withNextra = nextra({})
 
@@ -14,24 +16,35 @@ export default withNextra({
   },
   async redirects() {
     return [
+      // iamgui.com (#49): www → apex before anything else on that host.
+      ...publicSiteRedirects,
       ...legacyRedirects,
-      // Finance split (#44): old sub-paths land on the top-level dashboards.
-      { source: '/finance/cash', destination: '/cash', permanent: true },
-      { source: '/finance/invest', destination: '/invest', permanent: true },
+      // Private dashboards live under /dashboard (#49); the finance split (#44) sub-paths follow.
+      ...dashboardRedirects,
     ]
+  },
+  async rewrites() {
+    return {
+      // iamgui.com (#49): the public one-pager is served from the guiracine
+      // project on that host only. beforeFiles beats robots.ts, sitemap.ts,
+      // public/llms.txt and the documentation home page.
+      beforeFiles: publicSiteRewrites,
+      afterFiles: [],
+      fallback: [],
+    }
   },
   async headers() {
     return [
       {
         source: '/:path*',
         headers: [
-          { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
           { key: 'Referrer-Policy', value: 'no-referrer' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
         ],
       },
+      // noindex + no-store everywhere except the public passthrough paths on iamgui.com.
+      ...publicSiteHeaderRules,
       {
         source: '/superagents.md',
         headers: [
@@ -42,6 +55,8 @@ export default withNextra({
       },
       {
         source: '/llms.txt',
+        // Not on iamgui.com: there the file is the one-pager's own llms.txt.
+        missing: [{ type: 'host', value: publicSiteHostPattern }],
         headers: [
           { key: 'Cache-Control', value: 'public, max-age=300, must-revalidate' },
           { key: 'Content-Type', value: 'text/plain; charset=utf-8' },

@@ -21,7 +21,7 @@ const fixture = validateFinance({
   })),
 });
 assert(Buffer.byteLength(JSON.stringify(fixture)) > 48000);
-for (const route of ["finance", "invest"])
+for (const route of ["dashboard", "dashboard/invest", "finance", "invest"])
   assert(
     !existsSync(`.next/server/app/${route}.html`),
     `${route} must not be prerendered`,
@@ -93,7 +93,7 @@ try {
         : "";
     // Exercise the ordinary proxy path and the spoof attempt independently.
     for (const spoof of [false, true])
-      for (const path of ["/invest", "/api/finance", "/invest?_rsc"]) {
+      for (const path of ["/dashboard/invest", "/api/finance", "/dashboard/invest?_rsc"]) {
         const r = await fetch(base + path, {
           redirect: "manual",
           headers: {
@@ -116,15 +116,15 @@ try {
           assert(!body.includes(marker));
         }
       }
-    // The /finance hub is gated the same way but carries no records.
-    const hub = await fetch(base + "/finance", {
+    // The /dashboard hub is gated the same way but carries no records.
+    const hub = await fetch(base + "/dashboard", {
       redirect: "manual",
       headers: { cookie: `authjs.session-token=${token}` },
     });
     assert.equal(hub.status, ["owner", "second"].includes(label) ? 200 : 307);
     assert(!(await hub.text()).includes(marker));
     console.log(
-      `PASS finance ${label}: /invest HTML/API/RSC and /finance hub, ordinary and spoofed headers`,
+      `PASS finance ${label}: /dashboard/invest HTML/API/RSC and /dashboard hub, ordinary and spoofed headers`,
     );
   }
   const post = await fetch(base + "/api/finance", {
@@ -134,6 +134,11 @@ try {
     },
   });
   assert.equal(post.status, 405, "No unapproved write endpoint");
+  for (const [from, to] of [["/invest", "/dashboard/invest"], ["/finance", "/dashboard"]]) {
+    const r = await fetch(base + from, { redirect: "manual" });
+    assert.equal(r.status, 308, `${from} must redirect permanently`);
+    assert.equal(r.headers.get("location"), to);
+  }
   console.log(
     "PASS finance public asset exclusion, no-store and no write endpoint",
   );

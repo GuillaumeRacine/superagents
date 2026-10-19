@@ -4,6 +4,8 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 
 ## Recent Lessons
 
+- Host-conditioned routing has three layers that run in a fixed order: `next.config` redirects → `proxy.ts` → `beforeFiles` rewrites → filesystem. A rewrite can beat `robots.ts`/`public/` only from `beforeFiles`, and the proxy must explicitly pass those paths through or it redirects them to sign-in first.
+- Node's `fetch` (undici) silently drops a caller-supplied `Host` header; exercise host rules with `node:http` (or `curl -H Host:`), never with `fetch`.
 - Vercel injects at most 64 KB of env into a function: store each managed snapshot once, as the gzip variant, and check the total before adding. "Sensitive" variables can never be read back.
 - Assert on server-rendered HTML with one text node per value: React SSR puts `<!-- -->` between adjacent text children, so `CAD {n}` is not `CAD 83,000` in the HTML.
 - `scripts/check-docs.mjs` forbids absolute home paths in every text file (docs, scripts, this log): use `os.homedir()` in scripts and relative paths in docs.
@@ -11,6 +13,13 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 - Loop over shell commands from a `#!/bin/bash` script file, not from the agent's zsh (unquoted `$step` is not word-split there).
 
 ## 2026-10
+
+### [2026-10-19] DECISION /dashboard section and iamgui.com hosting (issue #49)
+- **Context:** The three private surfaces (`/finance` hub, `/cash`, `/invest`, `/business`) move under `/dashboard`, and this project will serve `iamgui.com` while the public one-pager stays byte-identical in the separate `guiracine` Vercel project.
+- **What we tried:** `git mv` of the four page trees into `app/dashboard/*`, six permanent redirects in `config/dashboard-redirects.mjs`, and one shared module `config/public-site.mjs` that feeds `next.config.mjs` (host-conditioned `beforeFiles` rewrites to `https://guiracine.vercel.app/<path>`, `www` → apex 308, header rules with `has`/`missing` host conditions), `proxy.ts` (passthrough, private, or 307 to the canonical docs host) and the scripts. The host rules are proven in `scripts/smoke-site.mjs` against the local built server.
+- **Outcome:** All gates green (test:cash, test:finance, test:business, docs:check, tsc, build, smoke, verify-cash, verify-finance, verify-business). On `Host: iamgui.com`, `/` returns the one-pager byte for byte with no `X-Robots-Tag` and no `no-store`; `/dashboard` → sign-in with both private headers; `/architecture` → 307 `https://superagents-docs.vercel.app/architecture`; `www.iamgui.com/*` → 308 apex. Other hosts are unchanged.
+- **Lesson / rule:** (1) Order matters and is fixed: `next.config` redirects run first (so `/finance` → `/dashboard` works for anonymous users), the proxy runs second, `beforeFiles` rewrites third, filesystem last. A `beforeFiles` rewrite is the only way to beat `app/robots.ts`, `app/sitemap.ts` and `public/llms.txt`, and the proxy must `NextResponse.next()` those paths on the public host or it redirects them to sign-in before the rewrite is ever consulted. (2) Next's `has: { type: 'host' }` strips the port and anchors the regex (`^...$`), so `(www\.)?iamgui\.com` is safe and `127.0.0.1:3391` never matches. (3) `destination: 'https://iamgui.com/:path*'` renders the root as `https://iamgui.com` without a trailing slash; compare redirects with `new URL(...).href`, not string equality. (4) Node `fetch` drops a caller-set `Host` header (forbidden header name), so host assertions use `node:http`. (5) `scripts/check-docs.mjs` never had `/` in its route set (`relative()` of `app/page.mdx` is `page.mdx`, which the `\/page\.mdx$` strip did not match); fixed with an optional slash so `href="/"` validates.
+- **Links:** #49, #44 (finance split), #43 (npm audit red on main).
 
 ### [2026-10-19] INCIDENT->FIX Vercel 64 KB environment limit blocked the merge deployment
 - **Context:** `CASH_SNAPSHOT_JSON` (15.6 KB) was refused with "total size of all Environment Variables (73.98KB) exceeds 64KB"; the gzip variant (5.8 KB) was accepted, but the merge deployment for 6c528c0 then failed with `env-vars-limit` because the total was still over the 64 KB injected into a function.

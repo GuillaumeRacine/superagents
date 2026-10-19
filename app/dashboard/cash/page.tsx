@@ -19,7 +19,7 @@ export const metadata = {
 };
 const pageMetadata = {
   title: "Cash",
-  filePath: "app/cash/page.tsx",
+  filePath: "app/dashboard/cash/page.tsx",
   searchable: false,
 };
 const OWNER_LINE =
@@ -102,7 +102,7 @@ function today() {
 
 export default async function CashPage() {
   const data = await getCashData();
-  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fcash");
+  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fdashboard%2Fcash");
   const snap = data.snapshot;
   const asOfToday = today();
   const ready = data.state === "ready";
@@ -143,14 +143,14 @@ export default async function CashPage() {
           </div>
         )}
         <nav className={s.nav} aria-label="Cash sections">
-          <a href="/finance">← Finance</a>
+          <a href="/dashboard">← Dashboard</a>
           <a href="#entities">Entities</a>
           <a href="#alerts">Next 7 days</a>
           <a href="#funding">Funding 2026</a>
           <a href="#cover">Stoic cover</a>
           <a href="#debt">Debt and interest</a>
           <a href="#burn">Burn and tasks</a>
-          <a href="/invest">Invest ↗</a>
+          <a href="/dashboard/invest">Invest ↗</a>
         </nav>
         {!ready ? (
           <section className={s.panel}>
