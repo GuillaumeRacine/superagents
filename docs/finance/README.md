@@ -23,6 +23,16 @@ contributed-to-date stays null until a statement proves it. Debt totals state
 how many facilities they cover; the blended rate is balance-weighted over
 facilities with both a balance and a rate.
 
+Optional `cash_snapshot_v1` additions (older snapshots stay valid): `burn.series`
+(up to 400 `[date, CAD]` points; the builder sends the last 180 complete days of
+`cfo-feed/data/t30d-net-burn.csv`), `burn.debtService` (30-day interest vs principal
+from `t30d.json`) and `scorecard.corpMoved*`/`corpTotal*` (payments moved to the
+Ensemble Wise card). The page shows an always-visible as-of bar and a red stale banner,
+computed at render: snapshot built more than 36 hours ago, or burn, scorecard or feed
+post more than 3 days old. `/finance/cash` and `/finance/invest` redirect to `/cash`
+and `/invest`. The added series costs about 1.8 KB of gzip-base64; check the 64 KB
+Vercel env budget before publishing.
+
 Tests: `npm run test:cash` (model), `node scripts/verify-cash.mjs` (gate and
 render against a local build with a throwaway secret and fictional records).
 `scripts/verify-finance.mjs` and `scripts/verify-finance-ui.mjs` now exercise

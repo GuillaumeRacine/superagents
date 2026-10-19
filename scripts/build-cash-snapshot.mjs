@@ -53,6 +53,21 @@ const state = json("state.json", true);
 const debtsCsv = read("data/debts.csv", true);
 const targetsMd = read("TARGETS.md", true);
 const updated = facts.updated ?? null;
+const seriesCsv = read("data/t30d-net-burn.csv", true);
+
+// Last 180 complete daily points of the T30D series, whole CAD, to keep the env value small.
+const SERIES_DAYS = 180;
+function seriesRows() {
+  if (!seriesCsv) return [];
+  const { rows } = parseCsv(seriesCsv);
+  return rows
+    // Partial (still-syncing) days would show a false drop; keep complete days only.
+    .filter((r) => !r.status || r.status === "complete")
+    .map((r) => [r.date, num(r.t30d_net_burn_cad)])
+    .filter(([d, v]) => /^\d{4}-\d{2}-\d{2}$/.test(d || "") && v !== null)
+    .slice(-SERIES_DAYS)
+    .map(([d, v]) => [d, Math.round(v)]);
+}
 
 // --- funding targets from TARGETS.md section 1 (a markdown table) ---
 function fundingFromTargets(md) {
@@ -221,6 +236,18 @@ const snapshot = {
           Object.entries(t30d.accounts_last_date ?? {}).map(([k, v]) => [mask(k), v]),
         ),
         definition: t30d.definition ?? "",
+        series: seriesRows(),
+        debtService: t30d.debt_service_30d
+          ? {
+              start: t30d.debt_service_30d.start ?? null,
+              end: t30d.debt_service_30d.end ?? null,
+              interestCad: num(t30d.debt_service_30d.interest_cash),
+              principalCad: num(t30d.debt_service_30d.principal_cash),
+              feesCad: num(t30d.debt_service_30d.fees),
+              totalCad: num(t30d.debt_service_30d.total_debt_service),
+              note: t30d.debt_service_30d.note ?? "",
+            }
+          : null,
       }
     : null,
   scorecard: scorecard
@@ -234,6 +261,10 @@ const snapshot = {
         trend: scorecard.trend ?? "",
         savingsPlanCadMo: num(scorecard.savings_plan_cad_mo),
         savingsBankedCadMo: num(scorecard.savings_banked_cad_mo),
+        corpMovedCount: num(scorecard.corp_moved_count),
+        corpTotalCount: num(scorecard.corp_total_count),
+        corpMovedCadMo: num(scorecard.corp_moved_cad_mo),
+        corpTotalCadMo: num(scorecard.corp_total_cad_mo),
       }
     : null,
   // Login names, URLs, card digits and search strings are dropped on purpose.

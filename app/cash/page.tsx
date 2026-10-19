@@ -3,6 +3,7 @@ import { getCashData } from "@/lib/cash-data";
 import {
   alerts,
   debtTotals,
+  freshness,
   fundingRows,
   openTasks,
   stoicCover,
@@ -71,6 +72,30 @@ function Tag({ tag }: { tag: string }) {
           : "";
   return <span className={`${s.tag} ${cls}`}>{tag}</span>;
 }
+function Chart({ series }: { series: [string, number][] }) {
+  if (series.length < 2) return null;
+  const W = 720, H = 180, P = 24;
+  const vals = series.map((p) => p[1]);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const x = (i: number) => P + (i * (W - 2 * P)) / (series.length - 1);
+  const y = (v: number) => H - P - ((v - lo) * (H - 2 * P)) / (hi - lo || 1);
+  const d = series.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p[1]).toFixed(1)}`).join(" ");
+  const [first, last] = [series[0], series[series.length - 1]];
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className={s.chart} role="img"
+      aria-label={`Daily T30D net burn from ${first[0]} to ${last[0]}; latest CAD ${fmt.format(last[1])}`}>
+      <line x1={P} x2={W - P} y1={y(0)} y2={y(0)} className={s.axis} />
+      <path d={d} fill="none" className={s.line} />
+      <circle cx={x(series.length - 1)} cy={y(last[1])} r="4" className={s.dot} />
+      <text x={P} y={H - 6} className={s.tick}>{first[0]}</text>
+      <text x={W - P} y={H - 6} textAnchor="end" className={s.tick}>{last[0]}</text>
+      <text x={P} y={12} className={s.tick}>{`CAD ${fmt.format(hi)}`}</text>
+    </svg>
+  );
+}
+function pct(n: Unknown, d: Unknown): Unknown {
+  return n === null || d === null || !d ? null : Math.round((n / d) * 100);
+}
 function today() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
 }
@@ -87,6 +112,8 @@ export default async function CashPage() {
   const alertRows = alerts(snap, asOfToday);
   const tasks = openTasks(snap);
   const burn = snap.burn;
+  const fresh = freshness(snap, Date.now());
+  const sc = snap.scorecard;
   return (
     <Wrapper toc={[]} metadata={pageMetadata} sourceCode="">
       <div className={s.dashboard} data-pagefind-ignore="all">
@@ -102,6 +129,19 @@ export default async function CashPage() {
             {snap.generatedAt ?? "unknown"} · rendered {asOfToday}
           </div>
         </header>
+        <div className={ready && !fresh.stale ? s.asof : s.asofStale} role="status">
+          <strong>As of {burn?.asOf ?? "unknown"}</strong> · snapshot built {snap.generatedAt ?? "unknown"} · rendered {asOfToday}
+        </div>
+        {ready && fresh.stale && (
+          <div className={s.staleBanner} role="alert">
+            <strong>Stale data. Do not rely on these numbers.</strong>
+            <ul>
+              {fresh.reasons.map((r) => (
+                <li key={r}>{r}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         <nav className={s.nav} aria-label="Cash sections">
           <a href="/finance">← Finance</a>
           <a href="#entities">Entities</a>
@@ -510,6 +550,45 @@ export default async function CashPage() {
                           trend {snap.scorecard.trend || "unknown"} · savings banked{" "}
                           <Money amount={snap.scorecard.savingsBankedCadMo} />/mo of plan{" "}
                           <Money amount={snap.scorecard.savingsPlanCadMo} />/mo · as of {snap.scorecard.asOf ?? "unknown"}
+                        </small>
+                      </div>
+                    )}
+                  </div>
+                  {burn.series.length > 1 && <Chart series={burn.series} />}
+                  <div className={s.statGrid}>
+                    {sc && (
+                      <div className={s.stat}>
+                        <span>Savings banked vs plan</span>
+                        <strong>
+                          <Pct value={pct(sc.savingsBankedCadMo, sc.savingsPlanCadMo)} />
+                        </strong>
+                        <small>
+                          <Money amount={sc.savingsBankedCadMo} />/mo of <Money amount={sc.savingsPlanCadMo} />/mo
+                        </small>
+                      </div>
+                    )}
+                    {sc && (
+                      <div className={s.stat}>
+                        <span>Corporate payments moved to Ensemble Wise</span>
+                        <strong>
+                          <Pct value={pct(sc.corpMovedCount, sc.corpTotalCount)} />
+                        </strong>
+                        <small>
+                          {sc.corpMovedCount ?? "unknown"} of {sc.corpTotalCount ?? "unknown"} payments ·{" "}
+                          <Money amount={sc.corpMovedCadMo} />/mo of <Money amount={sc.corpTotalCadMo} />/mo
+                        </small>
+                      </div>
+                    )}
+                    {burn.debtService && (
+                      <div className={s.stat}>
+                        <span>Debt service, 30 days ({burn.debtService.start ?? "?"} to {burn.debtService.end ?? "?"})</span>
+                        <strong>
+                          <Money amount={burn.debtService.totalCad} />
+                        </strong>
+                        <small>
+                          interest <Money amount={burn.debtService.interestCad} /> (in burn) · principal{" "}
+                          <Money amount={burn.debtService.principalCad} /> (not in burn) · fees{" "}
+                          <Money amount={burn.debtService.feesCad} />
                         </small>
                       </div>
                     )}
