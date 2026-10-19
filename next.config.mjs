@@ -13,7 +13,12 @@ export default withNextra({
     },
   },
   async redirects() {
-    return legacyRedirects
+    return [
+      ...legacyRedirects,
+      // Finance split (#44): old sub-paths land on the top-level dashboards.
+      { source: '/finance/cash', destination: '/cash', permanent: true },
+      { source: '/finance/invest', destination: '/invest', permanent: true },
+    ]
   },
   async headers() {
     return [

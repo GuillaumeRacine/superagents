@@ -243,3 +243,38 @@ test("alerts cover seven days, open notices, charges and data gaps; tasks sort o
   const open = openTasks(v).map((t) => t.id);
   assert.deepEqual(open, ["t-late", "t-soon", "t-far", "t-undated"]);
 });
+
+test("optional series, debt service and corporate-move fields validate and stay backward compatible", () => {
+  const old = validateCash(fixture());
+  assert.deepEqual(old.burn.series, []);
+  assert.equal(old.burn.debtService, null);
+  assert.equal(old.scorecard.corpMovedCount, null);
+  const r = fixture();
+  r.burn.series = [["2026-10-02", 20], ["2026-10-01", 10]];
+  r.burn.debtService = { start: "2026-09-01", end: "2026-09-30", interestCad: 50, principalCad: 40, feesCad: 0, totalCad: 90, note: "example" };
+  Object.assign(r.scorecard, { corpMovedCount: 3, corpTotalCount: 12, corpMovedCadMo: 30, corpTotalCadMo: 120 });
+  const v = validateCash(r);
+  assert.deepEqual(v.burn.series, [["2026-10-01", 10], ["2026-10-02", 20]]);
+  assert.equal(v.burn.debtService.principalCad, 40);
+  assert.equal(v.scorecard.corpTotalCount, 12);
+  assert.equal(readCash(JSON.stringify(v)).state, "ready");
+  for (const bad of ["x", [["2026-13-01", 1]], [["2026-10-01"]], Array(401).fill(["2026-10-01", 1])]) {
+    const b = fixture();
+    b.burn.series = bad;
+    assert.throws(() => validateCash(b), /series/);
+  }
+});
+
+test("freshness flags a snapshot older than 36h and any input older than 3 days", () => {
+  const now = (iso) => Date.parse(iso);
+  const r = fixture();
+  r.burn.asOf = "2026-10-18";
+  const v = validateCash(r);
+  assert.equal(model.freshness(v, now("2026-10-19T20:00:00Z")).stale, false);
+  const late = model.freshness(v, now("2026-10-21T01:00:00Z"));
+  assert.ok(late.reasons.some((x) => /hours ago/.test(x)));
+  const stale = model.freshness(validateCash(fixture()), now("2026-10-19T13:00:00Z"));
+  assert.ok(stale.stale);
+  assert.ok(stale.reasons.some((x) => /Burn data: as of 2026-09-21, 28 days old/.test(x)));
+  assert.ok(model.freshness(emptyCash()).stale);
+});
