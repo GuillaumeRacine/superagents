@@ -1,5 +1,16 @@
 # Finance Dashboards
 
+## Record of truth (2026-11-02)
+
+The record for every money data type is `main` of the private MoneyOS repository
+(contract `SOURCE_OF_TRUTH.md` + `sources.json`, acknowledged in `ACK.md`, enforced
+by `scripts/check_sot.py`; plan of record is that repository's issue #1, rulings
+R1–R3; history Context#176). `Context/cfo-feed` is a frozen mirror and pointer. The
+snapshot builder reads a local fast-forward-only clone of the record (`MONEYOS_DIR`);
+the refresh job on the owning workstation pulls it before each build (issue #54,
+tracks 2 and 3). The public page is `/workflows/finance-moneyos`; the registry entry
+is `finance-moneyos`.
+
 ## Cash and Invest split (2026-10-19)
 
 The single `/finance` dashboard is replaced by two agent-owned dashboards
@@ -12,7 +23,7 @@ exact-email allowlist on the server.
 
 | Route | Owner | Data contract | Env | Cadence |
 |---|---|---|---|---|
-| `/dashboard/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `Context/cfo-feed` (private) | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
+| `/dashboard/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `main` of the private MoneyOS repository (`SOURCE_OF_TRUTH.md`, `sources.json`; see `/workflows/finance-moneyos`), with `Context/cfo-feed` as a frozen mirror until the jobs are repointed | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
 | `/dashboard/invest` | to assign (interim: Claude monthly `/cfo invest` run, Context#151) | the former finance workspace, unchanged; `lib/finance-model.mjs` | `FINANCE_SNAPSHOT_JSON` / `FINANCE_SNAPSHOT_GZIP_BASE64` | monthly, month-end |
 
 Cash rules: null means unknown and renders as "unknown", never 0; a missing

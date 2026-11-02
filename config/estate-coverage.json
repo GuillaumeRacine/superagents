@@ -1,46 +1,46 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-09T01:26:11.632Z",
+  "asOf": "2026-11-02T23:08:25.165Z",
   "scope": "All repositories accessible to the authenticated GitHub account through ownership, organization membership, or collaboration were scanned by tree and selected documentation/configuration surfaces. Results published here are sanitized; private names, private content, and credentials were not copied.",
   "repositoryEstate": {
-    "total": 147,
+    "total": 168,
     "ownersAndOrganizations": 4,
-    "active": 119,
-    "archived": 28,
-    "private": 81,
+    "active": 136,
+    "archived": 32,
+    "private": 102,
     "public": 66,
     "forks": 1,
-    "repositoriesAccountedFor": 147,
-    "treesScanned": 139,
+    "repositoriesAccountedFor": 168,
+    "treesScanned": 160,
     "emptyRepositories": 8,
     "scanFailures": 0,
     "truncatedTrees": 0,
-    "declarationFilesSelected": 591,
-    "declarationFilesScanned": 591,
+    "declarationFilesSelected": 738,
+    "declarationFilesScanned": 738,
     "declarationFilesFailed": 0
   },
   "documentationCoverage": {
-    "repositoriesWithDocumentation": 132,
-    "repositoriesWithRootReadme": 123,
-    "repositoriesWithDocsDirectory": 50,
-    "repositoriesWithAgentInstructions": 65,
-    "repositoriesWithWorkflows": 21,
-    "totalDocumentationFiles": 9793,
-    "agenticRepositories": 79,
-    "agenticRepositoriesWithInstructions": 65,
-    "activeRepositoriesWithDocumentation": 109,
-    "activeRepositoriesWithRootReadme": 101,
-    "activeRepositoriesWithAgentInstructions": 58,
-    "activeAgenticRepositories": 69,
-    "activeAgenticRepositoriesWithInstructions": 58
+    "repositoriesWithDocumentation": 153,
+    "repositoriesWithRootReadme": 142,
+    "repositoriesWithDocsDirectory": 63,
+    "repositoriesWithAgentInstructions": 78,
+    "repositoriesWithWorkflows": 30,
+    "totalDocumentationFiles": 12670,
+    "agenticRepositories": 95,
+    "agenticRepositoriesWithInstructions": 78,
+    "activeRepositoriesWithDocumentation": 126,
+    "activeRepositoriesWithRootReadme": 116,
+    "activeRepositoriesWithAgentInstructions": 69,
+    "activeAgenticRepositories": 82,
+    "activeAgenticRepositoriesWithInstructions": 69
   },
   "localCoverage": {
-    "checkoutDirectories": 62,
-    "uniqueGithubRemotes": 22,
-    "ownedGithubRemotes": 16,
-    "estateGithubRemotes": 16,
-    "externalGithubRemotes": 6,
-    "duplicateCheckoutDirectories": 40,
+    "checkoutDirectories": 86,
+    "uniqueGithubRemotes": 55,
+    "ownedGithubRemotes": 47,
+    "estateGithubRemotes": 47,
+    "externalGithubRemotes": 8,
+    "duplicateCheckoutDirectories": 31,
     "ownedCheckoutsOutsideCodeRoot": 2
   },
   "repositoryCatalog": [
@@ -207,13 +207,55 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-013",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
       "componentClasses": 2
     },
     {
-      "id": "private-013",
+      "id": "private-014",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": false,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-015",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-016",
       "url": null,
       "visibility": "private",
       "lifecycle": "archived",
@@ -227,7 +269,7 @@
       "componentClasses": 0
     },
     {
-      "id": "private-014",
+      "id": "private-017",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -241,7 +283,49 @@
       "componentClasses": 2
     },
     {
-      "id": "private-015",
+      "id": "private-018",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-019",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": false,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 7
+    },
+    {
+      "id": "private-020",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 7
+    },
+    {
+      "id": "private-021",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -255,7 +339,7 @@
       "componentClasses": 0
     },
     {
-      "id": "private-016",
+      "id": "private-022",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -269,7 +353,7 @@
       "componentClasses": 10
     },
     {
-      "id": "private-017",
+      "id": "private-023",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -283,7 +367,7 @@
       "componentClasses": 0
     },
     {
-      "id": "private-018",
+      "id": "private-024",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -297,7 +381,7 @@
       "componentClasses": 6
     },
     {
-      "id": "private-019",
+      "id": "private-025",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -311,7 +395,7 @@
       "componentClasses": 0
     },
     {
-      "id": "private-020",
+      "id": "private-026",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -323,90 +407,6 @@
       "agentInstructions": false,
       "instructionStatus": "not-applicable",
       "componentClasses": 0
-    },
-    {
-      "id": "private-021",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 7
-    },
-    {
-      "id": "private-022",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": false,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 5
-    },
-    {
-      "id": "private-023",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 6
-    },
-    {
-      "id": "private-024",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 2
-    },
-    {
-      "id": "private-025",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": false,
-      "instructionStatus": "gap",
-      "componentClasses": 1
-    },
-    {
-      "id": "private-026",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 3
     },
     {
       "id": "private-027",
@@ -420,7 +420,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 8
+      "componentClasses": 7
     },
     {
       "id": "private-028",
@@ -430,11 +430,11 @@
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
-      "rootReadme": true,
+      "rootReadme": false,
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 14
+      "componentClasses": 5
     },
     {
       "id": "private-029",
@@ -448,7 +448,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 1
+      "componentClasses": 6
     },
     {
       "id": "private-030",
@@ -459,10 +459,10 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 6
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 2
     },
     {
       "id": "private-031",
@@ -476,7 +476,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 4
+      "componentClasses": 10
     },
     {
       "id": "private-032",
@@ -488,15 +488,15 @@
       "documentation": true,
       "rootReadme": true,
       "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 2
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 1
     },
     {
       "id": "private-033",
       "url": null,
       "visibility": "private",
-      "lifecycle": "active",
+      "lifecycle": "archived",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
@@ -504,7 +504,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 1
+      "componentClasses": 3
     },
     {
       "id": "private-034",
@@ -518,7 +518,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 14
+      "componentClasses": 8
     },
     {
       "id": "private-035",
@@ -529,10 +529,10 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 1
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 14
     },
     {
       "id": "private-036",
@@ -544,9 +544,9 @@
       "documentation": true,
       "rootReadme": true,
       "agentic": true,
-      "agentInstructions": false,
-      "instructionStatus": "gap",
-      "componentClasses": 1
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 4
     },
     {
       "id": "private-037",
@@ -560,7 +560,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 3
+      "componentClasses": 4
     },
     {
       "id": "private-038",
@@ -574,52 +574,10 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 3
+      "componentClasses": 6
     },
     {
       "id": "private-039",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": false,
-      "agentic": true,
-      "agentInstructions": false,
-      "instructionStatus": "gap",
-      "componentClasses": 2
-    },
-    {
-      "id": "private-040",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 2
-    },
-    {
-      "id": "private-041",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
-    },
-    {
-      "id": "private-042",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -633,35 +591,7 @@
       "componentClasses": 7
     },
     {
-      "id": "private-043",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "empty",
-      "documentation": false,
-      "rootReadme": false,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
-    },
-    {
-      "id": "private-044",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
-    },
-    {
-      "id": "private-045",
+      "id": "private-040",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -675,7 +605,49 @@
       "componentClasses": 8
     },
     {
-      "id": "private-046",
+      "id": "private-041",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-042",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-043",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 14
+    },
+    {
+      "id": "private-044",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -686,6 +658,34 @@
       "agentic": false,
       "agentInstructions": false,
       "instructionStatus": "not-applicable",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-045",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-046",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
       "componentClasses": 3
     },
     {
@@ -700,21 +700,21 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 2
+      "componentClasses": 3
     },
     {
       "id": "private-048",
       "url": null,
       "visibility": "private",
-      "lifecycle": "archived",
+      "lifecycle": "active",
       "fork": false,
-      "scanState": "empty",
-      "documentation": false,
-      "rootReadme": false,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 3
     },
     {
       "id": "private-049",
@@ -726,9 +726,9 @@
       "documentation": true,
       "rootReadme": false,
       "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 14
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 2
     },
     {
       "id": "private-050",
@@ -739,10 +739,10 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
     },
     {
       "id": "private-051",
@@ -767,55 +767,13 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
-    },
-    {
-      "id": "private-053",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "archived",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": false,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 9
-    },
-    {
-      "id": "private-054",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "archived",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 2
-    },
-    {
-      "id": "private-055",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "archived",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
       "componentClasses": 1
     },
     {
-      "id": "private-056",
+      "id": "private-053",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -826,38 +784,10 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 9
+      "componentClasses": 7
     },
     {
-      "id": "private-057",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 14
-    },
-    {
-      "id": "private-058",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 18
-    },
-    {
-      "id": "private-059",
+      "id": "private-054",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -871,13 +801,83 @@
       "componentClasses": 0
     },
     {
-      "id": "private-060",
+      "id": "private-055",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-056",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-057",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 8
+    },
+    {
+      "id": "private-058",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 6
+    },
+    {
+      "id": "private-059",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-060",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "archived",
+      "fork": false,
+      "scanState": "empty",
+      "documentation": false,
       "rootReadme": false,
       "agentic": false,
       "agentInstructions": false,
@@ -892,11 +892,11 @@
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
-      "rootReadme": true,
+      "rootReadme": false,
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 1
+      "componentClasses": 15
     },
     {
       "id": "private-062",
@@ -907,9 +907,9 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": true,
+      "agentic": false,
       "agentInstructions": false,
-      "instructionStatus": "gap",
+      "instructionStatus": "not-applicable",
       "componentClasses": 0
     },
     {
@@ -920,31 +920,45 @@
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
-      "rootReadme": false,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 1
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
     },
     {
       "id": "private-064",
       "url": null,
       "visibility": "private",
-      "lifecycle": "archived",
+      "lifecycle": "active",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": true,
+      "agentic": false,
       "agentInstructions": false,
-      "instructionStatus": "gap",
+      "instructionStatus": "not-applicable",
       "componentClasses": 0
     },
     {
       "id": "private-065",
       "url": null,
       "visibility": "private",
-      "lifecycle": "active",
+      "lifecycle": "archived",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": false,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 9
+    },
+    {
+      "id": "private-066",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "archived",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
@@ -955,24 +969,10 @@
       "componentClasses": 2
     },
     {
-      "id": "private-066",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": false,
-      "rootReadme": false,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 0
-    },
-    {
       "id": "private-067",
       "url": null,
       "visibility": "private",
-      "lifecycle": "active",
+      "lifecycle": "archived",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
@@ -980,7 +980,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 8
+      "componentClasses": 1
     },
     {
       "id": "private-068",
@@ -991,10 +991,10 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 5
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
     },
     {
       "id": "private-069",
@@ -1008,7 +1008,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 1
+      "componentClasses": 10
     },
     {
       "id": "private-070",
@@ -1022,7 +1022,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 4
+      "componentClasses": 17
     },
     {
       "id": "private-071",
@@ -1036,7 +1036,7 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 3
+      "componentClasses": 4
     },
     {
       "id": "private-072",
@@ -1048,9 +1048,9 @@
       "documentation": true,
       "rootReadme": true,
       "agentic": true,
-      "agentInstructions": false,
-      "instructionStatus": "gap",
-      "componentClasses": 3
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 8
     },
     {
       "id": "private-073",
@@ -1061,10 +1061,10 @@
       "scanState": "tree-scanned",
       "documentation": true,
       "rootReadme": true,
-      "agentic": false,
-      "agentInstructions": false,
-      "instructionStatus": "not-applicable",
-      "componentClasses": 1
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 18
     },
     {
       "id": "private-074",
@@ -1072,13 +1072,13 @@
       "visibility": "private",
       "lifecycle": "active",
       "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 4
+      "scanState": "empty",
+      "documentation": false,
+      "rootReadme": false,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
     },
     {
       "id": "private-075",
@@ -1088,42 +1088,14 @@
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
-      "rootReadme": true,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 2
-    },
-    {
-      "id": "private-076",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
       "rootReadme": false,
-      "agentic": true,
-      "agentInstructions": true,
-      "instructionStatus": "present",
-      "componentClasses": 3
-    },
-    {
-      "id": "private-077",
-      "url": null,
-      "visibility": "private",
-      "lifecycle": "active",
-      "fork": false,
-      "scanState": "tree-scanned",
-      "documentation": true,
-      "rootReadme": true,
       "agentic": false,
       "agentInstructions": false,
       "instructionStatus": "not-applicable",
-      "componentClasses": 1
+      "componentClasses": 0
     },
     {
-      "id": "private-078",
+      "id": "private-076",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -1137,7 +1109,21 @@
       "componentClasses": 0
     },
     {
-      "id": "private-079",
+      "id": "private-077",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-078",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -1148,10 +1134,206 @@
       "agentic": true,
       "agentInstructions": true,
       "instructionStatus": "present",
-      "componentClasses": 10
+      "componentClasses": 1
+    },
+    {
+      "id": "private-079",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 0
     },
     {
       "id": "private-080",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": false,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-081",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "archived",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-082",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "archived",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-083",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": false,
+      "rootReadme": false,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-084",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 8
+    },
+    {
+      "id": "private-085",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 5
+    },
+    {
+      "id": "private-086",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 4
+    },
+    {
+      "id": "private-087",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-088",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-089",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 3
+    },
+    {
+      "id": "private-090",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 4
+    },
+    {
+      "id": "private-091",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 3
+    },
+    {
+      "id": "private-092",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": false,
+      "instructionStatus": "gap",
+      "componentClasses": 3
+    },
+    {
+      "id": "private-093",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -1165,7 +1347,119 @@
       "componentClasses": 1
     },
     {
-      "id": "private-081",
+      "id": "private-094",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 4
+    },
+    {
+      "id": "private-095",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-096",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": false,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 3
+    },
+    {
+      "id": "private-097",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-098",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 0
+    },
+    {
+      "id": "private-099",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 10
+    },
+    {
+      "id": "private-100",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": false,
+      "agentInstructions": false,
+      "instructionStatus": "not-applicable",
+      "componentClasses": 1
+    },
+    {
+      "id": "private-101",
+      "url": null,
+      "visibility": "private",
+      "lifecycle": "active",
+      "fork": false,
+      "scanState": "tree-scanned",
+      "documentation": true,
+      "rootReadme": true,
+      "agentic": true,
+      "agentInstructions": true,
+      "instructionStatus": "present",
+      "componentClasses": 2
+    },
+    {
+      "id": "private-102",
       "url": null,
       "visibility": "private",
       "lifecycle": "active",
@@ -1434,7 +1728,7 @@
       "id": "GuillaumeRacine/documentation",
       "url": "https://github.com/GuillaumeRacine/documentation",
       "visibility": "public",
-      "lifecycle": "active",
+      "lifecycle": "archived",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
@@ -1770,7 +2064,7 @@
       "id": "GuillaumeRacine/present-agent-mcp",
       "url": "https://github.com/GuillaumeRacine/present-agent-mcp",
       "visibility": "public",
-      "lifecycle": "active",
+      "lifecycle": "archived",
       "fork": false,
       "scanState": "tree-scanned",
       "documentation": true,
@@ -2104,34 +2398,35 @@
     }
   ],
   "devicePolicy": {
-    "source": "STORAGE_SYSTEM.md",
-    "revision": "f6891ce304b19753",
+    "source": "STANDARD.md",
+    "revision": "054d441c0ccc4142",
+    "abletonException": false,
     "deviceRowsParsed": 3
   },
   "devices": [
     {
       "id": "main-mac-mini",
       "title": "Mac mini (main)",
-      "role": "Primary work + agents",
-      "localState": "Vault, active code/runtimes on internal storage; SSD optional",
+      "role": "Mac mini in the office; runs the agents",
+      "localState": null,
       "state": "directly verified",
-      "evidence": "Canonical policy: Vault, active code/runtimes on internal storage; SSD optional. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host."
+      "evidence": "Canonical policy declares the role (Mac mini in the office; runs the agents); no per-device local-storage state is declared by this policy. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host."
     },
     {
       "id": "studio-mac-mini",
       "title": "Mac mini (studio)",
-      "role": "Music recording",
-      "localState": "Audio sessions, no GDrive needed, no SSD",
+      "role": "Mac mini in the studio; music recording; runs the Drive backup",
+      "localState": null,
       "state": "policy-declared · not remotely attested",
-      "evidence": "Canonical policy: Audio sessions, no GDrive needed, no SSD. The same policy explicitly excepts active Ableton sessions, which may use the studio SSD as the fast working disk. This audit did not execute on that host."
+      "evidence": "Canonical policy declares the role (Mac mini in the studio; music recording; runs the Drive backup); no per-device local-storage state is declared by this policy. This audit did not execute on that host."
     },
     {
       "id": "macbook",
       "title": "MacBook",
-      "role": "Mobile work",
-      "localState": "Vault, GDrive (Stream or selective Mirror — saves disk), code repos",
+      "role": "Laptop for mobile work",
+      "localState": null,
       "state": "policy-declared · not remotely attested",
-      "evidence": "Canonical policy: Vault, GDrive (Stream or selective Mirror — saves disk), code repos. This audit did not execute on that host."
+      "evidence": "Canonical policy declares the role (Laptop for mobile work); no per-device local-storage state is declared by this policy. This audit did not execute on that host."
     }
   ],
   "sourceSurfaces": [
@@ -2139,7 +2434,7 @@
       "GitHub",
       "Code and shipped documentation",
       "live-scanned",
-      "147 accessible repositories across 4 owners or organizations; 139 trees scanned"
+      "168 accessible repositories across 4 owners or organizations; 160 trees scanned"
     ],
     [
       "Context control plane",
@@ -2157,7 +2452,7 @@
       "Hermes state",
       "Profiles, schedules, skills, and delivery state",
       "live-local",
-      "82 jobs; 61 enabled; 21 paused"
+      "93 jobs; 38 enabled; 55 paused"
     ],
     [
       "Google Drive",
@@ -2169,7 +2464,7 @@
       "iCloud",
       "Apple-native data",
       "host-visible",
-      "18 top-level host-visible directories; content not enumerated"
+      "20 top-level host-visible directories; content not enumerated"
     ],
     [
       "1Password",
@@ -2181,7 +2476,7 @@
       "External SSD",
       "Cold backup and archive",
       "mounted · excluded from active scan",
-      "Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception"
+      "Not an agent-runtime or repository dependency; cold copies only under the File and Folder Standard"
     ],
     [
       "Vercel",
@@ -2193,15 +2488,15 @@
   "integrationFingerprints": [
     {
       "name": "1password",
-      "activeRepositoryReferences": 15
+      "activeRepositoryReferences": 21
     },
     {
       "name": "anthropic",
-      "activeRepositoryReferences": 75
+      "activeRepositoryReferences": 86
     },
     {
       "name": "clerk",
-      "activeRepositoryReferences": 2
+      "activeRepositoryReferences": 4
     },
     {
       "name": "discord",
@@ -2209,31 +2504,31 @@
     },
     {
       "name": "dropbox",
-      "activeRepositoryReferences": 5
-    },
-    {
-      "name": "firecrawl",
-      "activeRepositoryReferences": 5
-    },
-    {
-      "name": "gemini",
-      "activeRepositoryReferences": 10
-    },
-    {
-      "name": "github",
-      "activeRepositoryReferences": 75
-    },
-    {
-      "name": "google-services",
-      "activeRepositoryReferences": 32
-    },
-    {
-      "name": "ghost",
       "activeRepositoryReferences": 8
     },
     {
+      "name": "firecrawl",
+      "activeRepositoryReferences": 9
+    },
+    {
+      "name": "gemini",
+      "activeRepositoryReferences": 9
+    },
+    {
+      "name": "github",
+      "activeRepositoryReferences": 85
+    },
+    {
+      "name": "google-services",
+      "activeRepositoryReferences": 37
+    },
+    {
+      "name": "ghost",
+      "activeRepositoryReferences": 9
+    },
+    {
       "name": "monarch",
-      "activeRepositoryReferences": 5
+      "activeRepositoryReferences": 6
     },
     {
       "name": "mongodb",
@@ -2241,15 +2536,15 @@
     },
     {
       "name": "notion",
-      "activeRepositoryReferences": 21
+      "activeRepositoryReferences": 20
     },
     {
       "name": "openai",
-      "activeRepositoryReferences": 31
+      "activeRepositoryReferences": 36
     },
     {
       "name": "postgres",
-      "activeRepositoryReferences": 18
+      "activeRepositoryReferences": 20
     },
     {
       "name": "redis-upstash",
@@ -2257,7 +2552,7 @@
     },
     {
       "name": "resend",
-      "activeRepositoryReferences": 11
+      "activeRepositoryReferences": 12
     },
     {
       "name": "sentry",
@@ -2265,11 +2560,11 @@
     },
     {
       "name": "shopify",
-      "activeRepositoryReferences": 31
+      "activeRepositoryReferences": 35
     },
     {
       "name": "slack",
-      "activeRepositoryReferences": 20
+      "activeRepositoryReferences": 23
     },
     {
       "name": "spotify",
@@ -2277,23 +2572,23 @@
     },
     {
       "name": "sqlite",
-      "activeRepositoryReferences": 16
+      "activeRepositoryReferences": 20
     },
     {
       "name": "stripe",
-      "activeRepositoryReferences": 8
+      "activeRepositoryReferences": 10
     },
     {
       "name": "substack",
-      "activeRepositoryReferences": 13
+      "activeRepositoryReferences": 14
     },
     {
       "name": "supabase",
-      "activeRepositoryReferences": 6
+      "activeRepositoryReferences": 7
     },
     {
       "name": "telegram",
-      "activeRepositoryReferences": 11
+      "activeRepositoryReferences": 10
     },
     {
       "name": "vercel",
@@ -2309,10 +2604,10 @@
       "id": "instruction-layers",
       "title": "Agent instruction layers",
       "definition": "Repository or directory policy files consumed by agent runtimes.",
-      "allRepositories": 65,
-      "allFiles": 109,
-      "activeRepositories": 58,
-      "activeFiles": 94,
+      "allRepositories": 78,
+      "allFiles": 131,
+      "activeRepositories": 69,
+      "activeFiles": 113,
       "publicExamples": [
         "GuillaumeRacine/limitless_MVP:CLAUDE.md",
         "GuillaumeRacine/ensemble_prototypes:CLAUDE.md",
@@ -2323,10 +2618,10 @@
       "id": "agent-definitions",
       "title": "Agent and subagent definitions",
       "definition": "Named agent, subagent, coach, or specialist definition files.",
-      "allRepositories": 19,
-      "allFiles": 291,
-      "activeRepositories": 17,
-      "activeFiles": 248,
+      "allRepositories": 27,
+      "allFiles": 328,
+      "activeRepositories": 25,
+      "activeFiles": 285,
       "publicExamples": [
         "GuillaumeRacine/ensemble_prototypes:.claude/agents/idea.md",
         "GuillaumeRacine/ensemble_prototypes:.claude/agents/launch.md",
@@ -2337,10 +2632,10 @@
       "id": "skill-manifests",
       "title": "Skill manifests",
       "definition": "SKILL.md packages and repository-owned skill definitions.",
-      "allRepositories": 13,
-      "allFiles": 795,
-      "activeRepositories": 13,
-      "activeFiles": 795,
+      "allRepositories": 20,
+      "allFiles": 801,
+      "activeRepositories": 19,
+      "activeFiles": 800,
       "publicExamples": [
         "GuillaumeRacine/KAI_Ensembl3:skills/Agents/SKILL.md",
         "GuillaumeRacine/KAI_Ensembl3:skills/Browser/SKILL.md",
@@ -2351,10 +2646,10 @@
       "id": "commands",
       "title": "Commands and slash actions",
       "definition": "Reusable command definitions exposed to an agent runtime.",
-      "allRepositories": 12,
-      "allFiles": 222,
-      "activeRepositories": 11,
-      "activeFiles": 213,
+      "allRepositories": 13,
+      "allFiles": 224,
+      "activeRepositories": 12,
+      "activeFiles": 215,
       "publicExamples": [
         "GuillaumeRacine/present-agent2:.claude/commands/README.md",
         "GuillaumeRacine/present-agent2:.claude/commands/build.md",
@@ -2365,10 +2660,10 @@
       "id": "prompts",
       "title": "Prompt definitions",
       "definition": "Repository-owned prompt templates, system prompts, and prompt packs.",
-      "allRepositories": 6,
-      "allFiles": 15,
-      "activeRepositories": 6,
-      "activeFiles": 15,
+      "allRepositories": 10,
+      "allFiles": 56,
+      "activeRepositories": 10,
+      "activeFiles": 56,
       "publicExamples": [
         "GuillaumeRacine/hermes-agent:optional-skills/creative/baoyu-article-illustrator/prompts/system.md"
       ]
@@ -2377,10 +2672,10 @@
       "id": "mcp-definitions",
       "title": "MCP definitions",
       "definition": "MCP server, client, tool, and configuration definitions.",
-      "allRepositories": 11,
-      "allFiles": 86,
-      "activeRepositories": 11,
-      "activeFiles": 86,
+      "allRepositories": 13,
+      "allFiles": 102,
+      "activeRepositories": 13,
+      "activeFiles": 102,
       "publicExamples": [
         "GuillaumeRacine/Tao-promotion:mcp-server/README.md",
         "GuillaumeRacine/Tao-promotion:mcp-server/package-lock.json",
@@ -2392,9 +2687,9 @@
       "title": "Plugin manifests",
       "definition": "Agent-runtime plugin descriptors and repository-owned plugin packages.",
       "allRepositories": 8,
-      "allFiles": 105,
+      "allFiles": 107,
       "activeRepositories": 8,
-      "activeFiles": 105,
+      "activeFiles": 107,
       "publicExamples": [
         "GuillaumeRacine/ralph-claud-code:.claude-plugin/plugin.json",
         "GuillaumeRacine/hermes-agent:plugins/browser/browser_use/plugin.yaml",
@@ -2406,9 +2701,9 @@
       "title": "Hooks and policy rules",
       "definition": "Lifecycle hooks, guards, routing rules, and runtime policy modules.",
       "allRepositories": 4,
-      "allFiles": 9,
+      "allFiles": 11,
       "activeRepositories": 2,
-      "activeFiles": 7,
+      "activeFiles": 9,
       "publicExamples": [
         "GuillaumeRacine/present-agent2:.claude/hooks/user-prompt-submit.sh"
       ]
@@ -2417,10 +2712,10 @@
       "id": "automations-and-schedules",
       "title": "Automations and schedules",
       "definition": "GitHub workflows, cron definitions, automations, and scheduled job declarations.",
-      "allRepositories": 22,
-      "allFiles": 143,
-      "activeRepositories": 21,
-      "activeFiles": 141,
+      "allRepositories": 31,
+      "allFiles": 178,
+      "activeRepositories": 30,
+      "activeFiles": 176,
       "publicExamples": [
         "GuillaumeRacine/DN_Model:.github/workflows/ci.yml",
         "GuillaumeRacine/defi-pool-dashboard:jobs/README.md",
@@ -2432,9 +2727,9 @@
       "title": "Profiles and personas",
       "definition": "Runtime profiles, personas, souls, and role definitions.",
       "allRepositories": 8,
-      "allFiles": 2235,
+      "allFiles": 2236,
       "activeRepositories": 7,
-      "activeFiles": 2234,
+      "activeFiles": 2235,
       "publicExamples": [
         "GuillaumeRacine/present-agent2:src/test/personas/test-personas.ts",
         "GuillaumeRacine/hermes-agent:apps/desktop/src/app/profiles/create-profile-dialog.tsx",
@@ -2445,10 +2740,10 @@
       "id": "context-and-memory",
       "title": "Context and memory assets",
       "definition": "Curated context, memory, knowledge, and retrieval declarations used by agents.",
-      "allRepositories": 13,
-      "allFiles": 85,
-      "activeRepositories": 10,
-      "activeFiles": 82,
+      "allRepositories": 17,
+      "allFiles": 1325,
+      "activeRepositories": 14,
+      "activeFiles": 1322,
       "publicExamples": [
         "GuillaumeRacine/emailLLM2:app/api/ai/context/route.ts",
         "GuillaumeRacine/crypto-web-monitor:Present-Agent/src/web/components/memory/MemoryDrawer.tsx",
@@ -2459,10 +2754,10 @@
       "id": "orchestration-graphs",
       "title": "Orchestration graphs and pipelines",
       "definition": "Multi-step agent graphs, pipelines, and workflow orchestration definitions.",
-      "allRepositories": 25,
-      "allFiles": 474,
-      "activeRepositories": 23,
-      "activeFiles": 469,
+      "allRepositories": 33,
+      "allFiles": 492,
+      "activeRepositories": 31,
+      "activeFiles": 487,
       "publicExamples": [
         "GuillaumeRacine/DN_Model:.github/workflows/ci.yml",
         "GuillaumeRacine/Transcripts_Automated:.github/workflows/backfill.yml",
@@ -2473,10 +2768,10 @@
       "id": "evaluation-and-proof",
       "title": "Evaluation, observability, and proof",
       "definition": "Evals, evidence contracts, proof bundles, audits, and agent observability assets.",
-      "allRepositories": 15,
-      "allFiles": 346,
-      "activeRepositories": 15,
-      "activeFiles": 346,
+      "allRepositories": 19,
+      "allFiles": 869,
+      "activeRepositories": 19,
+      "activeFiles": 869,
       "publicExamples": [
         "GuillaumeRacine/hermes-agent:docs/observability/README.md",
         "GuillaumeRacine/hermes-agent:plugins/observability/langfuse/README.md",
@@ -2487,10 +2782,10 @@
       "id": "tools-and-connectors",
       "title": "Tools and connectors",
       "definition": "Repository-owned tools, connectors, integrations, and callable capability definitions.",
-      "allRepositories": 10,
-      "allFiles": 655,
-      "activeRepositories": 10,
-      "activeFiles": 655,
+      "allRepositories": 11,
+      "allFiles": 660,
+      "activeRepositories": 11,
+      "activeFiles": 660,
       "publicExamples": [
         "GuillaumeRacine/defi-analytics-dashboard:src/integration/data_sources.py",
         "GuillaumeRacine/KAI_Ensembl3:skills/Agents/Tools/AgentFactory.ts",
@@ -2501,10 +2796,10 @@
       "id": "models-providers-and-routing",
       "title": "Models, providers, and routing",
       "definition": "Model catalogs, provider adapters, routing policies, and fallback declarations.",
-      "allRepositories": 5,
-      "allFiles": 91,
-      "activeRepositories": 5,
-      "activeFiles": 91,
+      "allRepositories": 6,
+      "allFiles": 89,
+      "activeRepositories": 6,
+      "activeFiles": 89,
       "publicExamples": [
         "GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/detect.test.ts",
         "GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/index.ts",
@@ -2515,10 +2810,10 @@
       "id": "retrieval-and-indexes",
       "title": "Retrieval and indexes",
       "definition": "Retrieval pipelines, vector/index definitions, embeddings, and search assets.",
-      "allRepositories": 5,
-      "allFiles": 31,
-      "activeRepositories": 4,
-      "activeFiles": 30,
+      "allRepositories": 6,
+      "allFiles": 33,
+      "activeRepositories": 5,
+      "activeFiles": 32,
       "publicExamples": [
         "GuillaumeRacine/tao-substack-daily-notes:src/retrieval/vector_db.py",
         "GuillaumeRacine/MILA-Social-Graph:scripts/search/chat_agent.py",
@@ -2529,10 +2824,10 @@
       "id": "state-and-persistence",
       "title": "State and persistence",
       "definition": "Agent state, checkpoints, session stores, and persistence declarations.",
-      "allRepositories": 10,
-      "allFiles": 489,
-      "activeRepositories": 9,
-      "activeFiles": 487,
+      "allRepositories": 11,
+      "allFiles": 492,
+      "activeRepositories": 10,
+      "activeFiles": 490,
       "publicExamples": [
         "GuillaumeRacine/present-agent2:docs/archive/sessions/DOCUMENTATION_CLEANUP_SUMMARY.md",
         "GuillaumeRacine/present-agent2:docs/archive/sessions/IMPROVEMENTS_SUMMARY.md",
@@ -2543,10 +2838,10 @@
       "id": "interfaces-and-channels",
       "title": "Interfaces and delivery channels",
       "definition": "Agent-facing applications, channel adapters, transports, and delivery surfaces.",
-      "allRepositories": 6,
-      "allFiles": 57,
-      "activeRepositories": 5,
-      "activeFiles": 52,
+      "allRepositories": 7,
+      "allFiles": 62,
+      "activeRepositories": 6,
+      "activeFiles": 57,
       "publicExamples": [
         "GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/catalog.postgres.ts",
         "GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/events.redpanda.ts",
@@ -2557,10 +2852,10 @@
       "id": "permissions-and-security",
       "title": "Permissions and security contracts",
       "definition": "Authentication, authorization, permission, secret-reference, and safety contracts.",
-      "allRepositories": 20,
-      "allFiles": 104,
-      "activeRepositories": 15,
-      "activeFiles": 87,
+      "allRepositories": 21,
+      "allFiles": 116,
+      "activeRepositories": 16,
+      "activeFiles": 99,
       "publicExamples": [
         "GuillaumeRacine/roadie-music-collab:src/app/api/auth/logout/route.ts",
         "GuillaumeRacine/roadie-music-collab:src/app/api/dropbox/auth/route.ts",
@@ -2571,10 +2866,10 @@
       "id": "runtime-and-deployment",
       "title": "Runtime and deployment definitions",
       "definition": "Containers, hosting, service, worker, and runtime deployment declarations.",
-      "allRepositories": 30,
-      "allFiles": 133,
-      "activeRepositories": 25,
-      "activeFiles": 79,
+      "allRepositories": 34,
+      "allFiles": 181,
+      "activeRepositories": 28,
+      "activeFiles": 126,
       "publicExamples": [
         "GuillaumeRacine/defi-analytics-dashboard:eth-chart/vercel.json",
         "GuillaumeRacine/roadie-music-collab:vercel.json",
@@ -2585,10 +2880,10 @@
       "id": "schemas-and-contracts",
       "title": "Schemas and contracts",
       "definition": "Typed schemas, protocols, event contracts, and structured input/output definitions.",
-      "allRepositories": 14,
-      "allFiles": 51,
-      "activeRepositories": 14,
-      "activeFiles": 51,
+      "allRepositories": 18,
+      "allFiles": 142,
+      "activeRepositories": 18,
+      "activeFiles": 142,
       "publicExamples": [
         "GuillaumeRacine/defi-pool-dashboard:src/app/protocols/page.tsx",
         "GuillaumeRacine/Mila_Agent021:schemas/artifact.schema.json",
@@ -2599,10 +2894,10 @@
       "id": "templates-and-artifacts",
       "title": "Templates and artifacts",
       "definition": "Reusable agent templates, artifact specifications, and output-format definitions.",
-      "allRepositories": 19,
-      "allFiles": 960,
-      "activeRepositories": 19,
-      "activeFiles": 960,
+      "allRepositories": 26,
+      "allFiles": 961,
+      "activeRepositories": 24,
+      "activeFiles": 932,
       "publicExamples": [
         "GuillaumeRacine/KAI_Ensembl3:skills/Prompting/Templates/README.md",
         "GuillaumeRacine/Mila_Agent021:templates/decision_checkpoint.md",

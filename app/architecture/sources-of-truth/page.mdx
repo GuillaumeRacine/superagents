@@ -7,6 +7,7 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Code, infrastructure, and shipped documentation | GitHub repository |
 | Live customer-facing behavior | Deployed production surface |
 | Automation definitions and fleet evidence | Context repository and owning scheduler |
+| Money data: transactions, balances, debts, payables, rulings, scorecard | `main` of the private MoneyOS repository, one record per data type named in its `SOURCE_OF_TRUTH.md` and `sources.json`; see [Finance (MoneyOS)](/workflows/finance-moneyos) |
 | Curated decisions, goals, identity, and durable knowledge | Private knowledge vault |
 | Files and structured working data | Google Drive where designated |
 | Apple-native personal data | iCloud |
@@ -15,6 +16,8 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Cold snapshots | External backup storage when mounted |
 
 This portal links those owners together. It must not claim to replace them.
+
+**Finance (since 2026-11-02).** The record for every money data type is `main` of the private MoneyOS repository; the Cash Flows sheet is Gui's edit surface and view, and `Context/cfo-feed` is now a frozen mirror and pointer, read by the remaining jobs until they are repointed and never edited. Disputes go to the repository's `ISSUES.md`. Details, roles and gates: [Finance (MoneyOS)](/workflows/finance-moneyos).
 
 ## Resolve conflicts
 

@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { chmodSync, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { chmodSync, existsSync, readdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { basename, join, resolve } from 'node:path'
 
@@ -12,7 +12,6 @@ const contextRoot = join(userHome, 'Context')
 const vaultRoot = join(userHome, 'Obs_Vault')
 const hermesRoot = join(userHome, '.hermes')
 const externalSsdPath = join('/', 'Volumes', 'SSD')
-const storagePolicyPath = join(userHome, 'Documents', 'Shared Vault', '0_InnerContext', 'STORAGE_SYSTEM.md')
 const extraCheckoutRoots = [contextRoot, vaultRoot]
 const outputPath = resolve(root, 'config/estate-coverage.json')
 const apiBase = 'https://api.github.com'
@@ -429,14 +428,44 @@ const repositoryCatalog = scans
   }))
   .sort((a, b) => a.visibility.localeCompare(b.visibility) || a.id.localeCompare(b.id))
 
-if (!existsSync(storagePolicyPath)) throw new Error('Canonical storage policy is unavailable')
-const storagePolicy = readFileSync(storagePolicyPath, 'utf8')
+// The canonical storage policy is the File and Folder Standard (2026-09-29; `~/FILE_STANDARD.md` is a
+// symlink to it) with the legacy vault pointer kept last. The path is resolved through realpath so the
+// alias and the canonical file record the same source.
+const storagePolicyCandidates = [
+  join(userHome, 'Workspace', 'STANDARD.md'),
+  join(userHome, 'FILE_STANDARD.md'),
+  join(userHome, 'Obs_Vault', '0_InnerContext', 'STORAGE_SYSTEM.md'),
+]
+const foundStoragePolicyPath = storagePolicyCandidates.find((path) => existsSync(path))
+if (!foundStoragePolicyPath) throw new Error('Canonical storage policy is unavailable')
+const resolvedStoragePolicyPath = realpathSync(foundStoragePolicyPath)
+const storagePolicy = readFileSync(resolvedStoragePolicyPath, 'utf8')
+const storagePolicyLines = storagePolicy.split('\n')
 const storagePolicyRevision = createHash('sha256').update(storagePolicy).digest('hex').slice(0, 16)
+const storagePolicySource = basename(resolvedStoragePolicyPath)
+// The legacy policy excepted active Ableton sessions from the "SSD is cold storage" rule. Claim it only
+// when one policy line states that exception (Ableton, the SSD, and an exception/stays verb together).
+const policyExceptsAbleton = storagePolicyLines.some((line) => /ableton/i.test(line) && /\bSSD\b/.test(line) && /\b(?:exception|excepts?|stays?)\b/i.test(line))
 const detectedHost = command('hostname', ['-s']).toLowerCase()
 const detectedDeviceId = process.env.SUPERAGENTS_DEVICE_ID
   || (/office[- ]?mini/.test(detectedHost) ? 'main-mac-mini' : /studio/.test(detectedHost) ? 'studio-mac-mini' : /macbook/.test(detectedHost) ? 'macbook' : null)
-const policyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
-const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {
+// Legacy STORAGE_SYSTEM.md table: title | role | local state. The File and Folder Standard declares the
+// same three devices as `| **office-mini** | <role> | … |` rows directly under its `**Device role**` row;
+// only that contiguous block is read, so the alias table later in the file (hostnames) is never parsed.
+const legacyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
+  .map(([, policyTitle, role, localState]) => ({ policyTitle, role: role.trim(), localState: localState.trim() }))
+const standardTitles = { 'office-mini': 'Mac mini (main, here)', 'studio-mini': 'Mac mini (studio)', MacBook: 'MacBook (laptop, on-the-go)' }
+const standardDeviceRows = []
+const deviceRoleHeading = storagePolicyLines.findIndex((line) => /^\| \*\*Device role\*\* \|/.test(line))
+for (let index = deviceRoleHeading + 1; deviceRoleHeading >= 0 && index < storagePolicyLines.length; index += 1) {
+  const match = storagePolicyLines[index].match(/^\| \*\*(office-mini|studio-mini|MacBook)\*\* \| ([^|]+) \|/)
+  if (!match) break
+  if (!standardDeviceRows.some((row) => row.policyTitle === standardTitles[match[1]])) {
+    standardDeviceRows.push({ policyTitle: standardTitles[match[1]], role: match[2].trim(), localState: null })
+  }
+}
+const policyDeviceRows = legacyDeviceRows.length ? legacyDeviceRows : standardDeviceRows
+const devices = policyDeviceRows.map(({ policyTitle, role, localState }) => {
   const id = policyTitle.startsWith('Mac mini (main')
     ? 'main-mac-mini'
     : policyTitle.startsWith('Mac mini (studio')
@@ -444,18 +473,19 @@ const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {
       : 'macbook'
   const title = id === 'main-mac-mini' ? 'Mac mini (main)' : id === 'studio-mac-mini' ? 'Mac mini (studio)' : 'MacBook'
   const directlyVerified = id === detectedDeviceId
-  const studioException = id === 'studio-mac-mini'
+  const studioException = id === 'studio-mac-mini' && policyExceptsAbleton
     ? ' The same policy explicitly excepts active Ableton sessions, which may use the studio SSD as the fast working disk.'
     : ''
+  const declared = localState ? `Canonical policy: ${localState}.` : `Canonical policy declares the role (${role}); no per-device local-storage state is declared by this policy.`
   return {
     id,
     title,
-    role: role.trim(),
-    localState: localState.trim(),
+    role,
+    localState,
     state: directlyVerified ? 'directly verified' : 'policy-declared · not remotely attested',
     evidence: directlyVerified
-      ? `Canonical policy: ${localState.trim()}. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host.`
-      : `Canonical policy: ${localState.trim()}.${studioException} This audit did not execute on that host.`,
+      ? `${declared} Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host.`
+      : `${declared}${studioException} This audit did not execute on that host.`,
   }
 })
 if (devices.length !== 3) throw new Error(`Expected 3 devices in canonical storage policy; found ${devices.length}`)
@@ -523,8 +553,9 @@ const report = {
   },
   repositoryCatalog,
   devicePolicy: {
-    source: 'STORAGE_SYSTEM.md',
+    source: storagePolicySource,
     revision: storagePolicyRevision,
+    abletonException: policyExceptsAbleton,
     deviceRowsParsed: devices.length,
   },
   devices,
@@ -536,7 +567,7 @@ const report = {
     ['Google Drive', 'Default file and data store', 'policy-declared · not live-listed', 'Connector/API or web is authoritative; Drive Desktop and rclone are unavailable on this host'],
     ['iCloud', 'Apple-native data', existsSync(icloudPath) ? 'host-visible' : 'unavailable', `${icloudTopLevelDirectories} top-level host-visible directories; content not enumerated`],
     ['1Password', 'Credentials', 'policy-declared · intentionally not enumerated', 'Only references and access contracts may be documented'],
-    ['External SSD', 'Cold backup and archive', existsSync(externalSsdPath) ? 'mounted · excluded from active scan' : 'unmounted · correctly non-required on this host', 'Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception'],
+    ['External SSD', 'Cold backup and archive', existsSync(externalSsdPath) ? 'mounted · excluded from active scan' : 'unmounted · correctly non-required on this host', `Not an agent-runtime or repository dependency${policyExceptsAbleton ? '; canonical policy retains a studio-mini active-Ableton exception' : '; cold copies only under the File and Folder Standard'}`],
     ['Vercel', 'Documentation deployment', 'not verified for this snapshot', 'Production verification is performed after deployment and recorded in GitHub against the commit and deployment'],
   ],
   integrationFingerprints: [...providerCounts.entries()]

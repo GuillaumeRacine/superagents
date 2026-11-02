@@ -1,55 +1,55 @@
 # Data Sources & Integrations
 
-> Snapshot: **September 8, 2026 at 9:26 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
+> Snapshot: **November 2, 2026 at 6:08 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
 
 ## Canonical source surfaces
 
 | Source | Role | Audit state | Evidence boundary |
 |---|---|---|---|
-| GitHub | Code and shipped documentation | live-scanned | 147 accessible repositories across 4 owners or organizations; 139 trees scanned |
+| GitHub | Code and shipped documentation | live-scanned | 168 accessible repositories across 4 owners or organizations; 160 trees scanned |
 | Context control plane | Automation registry and evidence | live-local | Generated inventory, contracts, and fleet evidence |
 | Knowledge vault | Curated context and durable knowledge | live-local | Private Git-backed vault; content remains private |
-| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 82 jobs; 61 enabled; 21 paused |
+| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 93 jobs; 38 enabled; 55 paused |
 | Google Drive | Default file and data store | policy-declared · not live-listed | Connector/API or web is authoritative; Drive Desktop and rclone are unavailable on this host |
-| iCloud | Apple-native data | host-visible | 18 top-level host-visible directories; content not enumerated |
+| iCloud | Apple-native data | host-visible | 20 top-level host-visible directories; content not enumerated |
 | 1Password | Credentials | policy-declared · intentionally not enumerated | Only references and access contracts may be documented |
-| External SSD | Cold backup and archive | mounted · excluded from active scan | Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception |
+| External SSD | Cold backup and archive | mounted · excluded from active scan | Not an agent-runtime or repository dependency; cold copies only under the File and Folder Standard |
 | Vercel | Documentation deployment | not verified for this snapshot | Production verification is performed after deployment and recorded in GitHub against the commit and deployment |
 
 ## Integration fingerprints across active repositories
 
-The scanner inspected 591 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
+The scanner inspected 738 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
 
 | Integration class | Active repository references |
 |---|---:|
-| anthropic | 75 |
-| github | 75 |
+| anthropic | 86 |
+| github | 85 |
 | vercel | 45 |
-| google-services | 32 |
-| openai | 31 |
-| shopify | 31 |
-| notion | 21 |
-| slack | 20 |
-| postgres | 18 |
-| sqlite | 16 |
+| google-services | 37 |
+| openai | 36 |
+| shopify | 35 |
+| slack | 23 |
+| 1password | 21 |
+| notion | 20 |
+| postgres | 20 |
+| sqlite | 20 |
 | x-twitter | 16 |
-| 1password | 15 |
-| substack | 13 |
-| resend | 11 |
-| telegram | 11 |
-| gemini | 10 |
-| ghost | 8 |
-| stripe | 8 |
+| substack | 14 |
+| resend | 12 |
+| stripe | 10 |
+| telegram | 10 |
+| firecrawl | 9 |
+| gemini | 9 |
+| ghost | 9 |
+| dropbox | 8 |
 | spotify | 7 |
+| supabase | 7 |
+| monarch | 6 |
 | sentry | 6 |
-| supabase | 6 |
-| dropbox | 5 |
-| firecrawl | 5 |
-| monarch | 5 |
+| clerk | 4 |
 | mongodb | 4 |
 | discord | 3 |
 | redis-upstash | 3 |
-| clerk | 2 |
 
 A reference is a discovery signal, not proof that credentials exist, data is fresh, or the integration is healthy. Operational status remains with the owning repository, provider, or control-plane evidence.
 
