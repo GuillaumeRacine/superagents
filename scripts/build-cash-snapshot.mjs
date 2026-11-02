@@ -94,7 +94,7 @@ const updated = facts.updated ?? null;
 const seriesCsv = read("data/cfo-feed/t30d-net-burn.csv", true);
 
 // Last 180 complete daily points of the T30D series, whole CAD, to keep the env value small.
-const SERIES_DAYS = 60; // 180 pushed the shared 64 KB Vercel env budget over the limit on 2026-11-02 (finance snapshot ~48 KB)
+const SERIES_DAYS = 30; // 180 pushed the shared 64 KB Vercel env budget over the limit on 2026-11-02 (finance snapshot ~48 KB)
 function seriesRows() {
   if (!seriesCsv) return [];
   const { rows } = parseCsv(seriesCsv);
@@ -144,7 +144,7 @@ function fundingFromTargets(md) {
       contributedAsOf: null,
       status: /blocked/i.test(status) ? "blocked" : /carries/i.test(deadline) ? "carries" : "open",
       statusNote: status,
-      evidence: mask(evidence ?? ""),
+      evidence: mask(evidence ?? "").slice(0, 40),
       source: source ?? "",
     });
   }
@@ -171,7 +171,7 @@ function debtRows() {
       balanceCad: num(col(row, "latest_balance_cad")),
       balanceAsOf: monthOrDate(col(row, "balance_as_of")),
       ratePct: num(col(row, "rate_pct")),
-      rateNote: col(row, "rate_note") ?? "",
+      rateNote: (col(row, "rate_note") ?? "").slice(0, 60),
       interestMonthCad: year === null ? null : Math.round((year / 12) * 100) / 100,
       interestBasis: s?.run_rate_basis ? `${s.run_rate_basis} / 12` : "",
     };
@@ -278,7 +278,11 @@ function payables() {
         .map((x) => x.id)
         .join(", ")}`,
     );
-  return ordered.slice(0, MAX_PAYABLES).map(({ r, id }) => {
+  // Snapshot carries the 12 most urgent rows (the register file keeps them all): Vercel env budget, 2026-11-02.
+  const SNAPSHOT_PAYABLES = Math.min(12, MAX_PAYABLES);
+  if (ordered.length > SNAPSHOT_PAYABLES)
+    console.error(`build-cash-snapshot: payables trimmed to ${SNAPSHOT_PAYABLES} of ${ordered.length} open rows (env budget)`);
+  return ordered.slice(0, SNAPSHOT_PAYABLES).map(({ r, id }) => {
       const due = (r.due_date ?? "").trim();
       const dueDate = dateOnly(due);
       return {
@@ -286,8 +290,8 @@ function payables() {
         priority: num(r.priority),
         type: /^receiv/i.test(r.type ?? "") ? "receivable" : "payable",
         entity: (r.entity ?? "").trim(),
-        counterparty: clip(clean(r.counterparty), 120),
-        description: clip(clean(r.description), 120),
+        counterparty: clip(clean(r.counterparty), 60),
+        description: clip(clean(r.description), 100),
         amount: num(r.amount),
         currency: /^[A-Z]{3}$/.test((r.currency ?? "").trim()) ? r.currency.trim() : "CAD",
         dueDate,
@@ -505,7 +509,8 @@ const snapshot = {
         }
       : null,
   // Login names, URLs, card digits and search strings are dropped on purpose.
-  tasks: (tasks?.tasks ?? []).map((t) => ({
+  // Done bot tasks carry no action for the page; keep Gui's tasks and open bot tasks (env budget 2026-11-02).
+  tasks: (tasks?.tasks ?? []).filter((t) => t.who !== "bot" || !t.done).map((t) => ({
     id: t.id,
     who: t.who === "bot" ? "bot" : "gui",
     kind: t.kind ?? "",
@@ -516,7 +521,7 @@ const snapshot = {
     effective: t.effective ?? null,
     // Short: the task queue is the largest free-text section and the Vercel env budget (64 KB, shared
     // with the finance snapshot) is the binding constraint since 2026-11-02.
-    why: clip(mask(t.why ?? ""), 110),
+    why: t.who === "bot" ? "" : clip(mask(t.why ?? ""), 80),
   })),
   books: books(),
   payables: payables(),

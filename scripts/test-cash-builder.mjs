@@ -138,7 +138,7 @@ test("builder: a malformed ack_grace_days leaves the grace date unknown without 
   }
 });
 
-test("builder: payables are ordered overdue first then priority before the 30-row cap, and dropped ids are reported", () => {
+test("builder: payables are ordered overdue first then priority before the snapshot cap (12 of the 30 the model allows), and the trim is reported", () => {
   const header = "id,priority,type,entity,counterparty,description,amount,currency,due_date,status,source,last_checked";
   const rows = [header];
   for (let i = 1; i <= 33; i++) rows.push(`P${String(i).padStart(2, "0")},${40 - i},payable,personal,Example ${i},Example,${i},CAD,2099-01-01,open,stmt,2026-10-19`);
@@ -149,10 +149,10 @@ test("builder: payables are ordered overdue first then priority before the 30-ro
   files["data/payables-receivables.csv"] = rows.join("\n");
   const { status, snapshot: s, stderr } = run(files);
   assert.equal(status, 0, stderr);
-  assert.equal(s.payables.length, 30);
+  assert.equal(s.payables.length, 12);
   assert.deepEqual(s.payables.slice(0, 2).map((p) => p.id), ["P35", "P34"]);
-  // The five lowest-priority rows (priority 35..39) are dropped, listed in sorted order.
-  assert.match(stderr, /payables capped at 30; dropped 5 row\(s\): P05, P04, P03, P02, P01/);
+  // 35 open rows, 12 kept: the trim is reported on stderr (the env budget, 2026-11-02).
+  assert.match(stderr, /payables trimmed to 12 of 35 open rows/);
 });
 
 test("builder: clarify as-of is the newest OPEN row and counts come from the Status column", () => {
