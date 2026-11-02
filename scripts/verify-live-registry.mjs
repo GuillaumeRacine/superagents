@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -73,6 +74,46 @@ const versions = {
   grok: run('grok', ['--version']).match(/\d+\.\d+\.\d+/)?.[0],
 }
 
+// Finance (MoneyOS): the record is the private repository's main. MONEYOS_REPO (owner/name) is never
+// written here; when it is unset the finance rows are skipped with a warning instead of failing.
+function csvRows(text) {
+  const rows = []; let row = []; let cell = ''; let quoted = false
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text[i]
+    if (quoted) { if (c === '"' && text[i + 1] === '"') { cell += '"'; i += 1 } else if (c === '"') quoted = false; else cell += c }
+    else if (c === '"') quoted = true
+    else if (c === ',') { row.push(cell); cell = '' }
+    else if (c === '\n') { row.push(cell); rows.push(row); row = []; cell = '' }
+    else if (c !== '\r') cell += c
+  }
+  if (cell !== '' || row.length) { row.push(cell); rows.push(row) }
+  return rows
+}
+const pythonJson = (value) => Array.isArray(value)
+  ? `[${value.map(pythonJson).join(', ')}]`
+  : value && typeof value === 'object'
+    ? `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}: ${pythonJson(value[key])}`).join(', ')}}`
+    : JSON.stringify(value)
+function moneyosCounts(repository) {
+  const raw = (path) => execFileSync('gh', ['api', '-H', 'Accept: application/vnd.github.raw+json', `repos/${repository}/contents/${path}?ref=main`], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] })
+  const sources = JSON.parse(raw('sources.json'))
+  const { next_question_id: _ignored, ...hashed } = sources
+  const hash = createHash('sha256').update(raw('SOURCE_OF_TRUTH.md')).update(pythonJson(hashed)).digest('hex').slice(0, 12)
+  const ackRows = raw('ACK.md').split('\n').filter((line) => line.startsWith('|') && !line.startsWith('| agent') && !line.startsWith('|---'))
+    .map((line) => line.replace(/^\||\|$/g, '').split('|').map((cell) => cell.trim()))
+  const [header, ...clarify] = csvRows(raw('clarify/to-clarify.csv'))
+  const statusIndex = header.indexOf('Status')
+  return {
+    ledgerRows: csvRows(raw('data/ledger.csv')).length - 1,
+    openToClarifyRows: clarify.filter((row) => row[statusIndex] === 'open').length,
+    contractAckRows: sources.required_acks.filter((agent) => ackRows.some((row) => row[0] === agent && row[2] === hash)).length,
+    contractAckRequired: sources.required_acks.length,
+    version: sources.contract_version,
+  }
+}
+const moneyos = process.env.MONEYOS_REPO ? moneyosCounts(process.env.MONEYOS_REPO) : null
+if (!moneyos) console.log('WARN Finance (MoneyOS) counts skipped: set MONEYOS_REPO=owner/name on the owning workstation')
+
 const checks = [
   ['Codex version', versions.codex, byId.codex.version],
   ['Codex usable personal skills', codexSkills.resolved, byId.codex.counts.usableTopLevelPersonalSkills],
@@ -107,6 +148,13 @@ const checks = [
   ['Capability catalog: Hermes profiles', hermesProfiles, capabilityById['hermes-profiles'].count],
   ['Capability catalog: Hermes jobs', hermesJobs.length, capabilityById['hermes-jobs'].count],
   ['Capability catalog: Hermes skills', countFiles(join(hermesRoot, 'skills'), (name) => name === 'SKILL.md'), capabilityById['hermes-skills'].count],
+  ...(moneyos ? [
+    ['Finance (MoneyOS) contract version', moneyos.version, byId['finance-moneyos'].version],
+    ['Finance (MoneyOS) ledger rows', moneyos.ledgerRows, byId['finance-moneyos'].counts.ledgerRows],
+    ['Finance (MoneyOS) open to-clarify rows', moneyos.openToClarifyRows, byId['finance-moneyos'].counts.openToClarifyRows],
+    ['Finance (MoneyOS) ACK rows at current hash', moneyos.contractAckRows, byId['finance-moneyos'].counts.contractAckRows],
+    ['Finance (MoneyOS) ACK rows required', moneyos.contractAckRequired, byId['finance-moneyos'].counts.contractAckRequired],
+  ] : []),
 ]
 
 const failures = checks.filter(([, actual, expected]) => String(actual) !== String(expected))

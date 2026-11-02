@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-11-02T22:56:48.537Z",
+  "asOf": "2026-11-02T23:08:25.165Z",
   "scope": "All repositories accessible to the authenticated GitHub account through ownership, organization membership, or collaboration were scanned by tree and selected documentation/configuration surfaces. Results published here are sanitized; private names, private content, and credentials were not copied.",
   "repositoryEstate": {
     "total": 168,
@@ -2408,25 +2408,25 @@
       "id": "main-mac-mini",
       "title": "Mac mini (main)",
       "role": "Mac mini in the office; runs the agents",
-      "localState": "Mac mini in the office; runs the agents",
+      "localState": null,
       "state": "directly verified",
-      "evidence": "Canonical policy: Mac mini in the office; runs the agents. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host."
+      "evidence": "Canonical policy declares the role (Mac mini in the office; runs the agents); no per-device local-storage state is declared by this policy. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host."
     },
     {
       "id": "studio-mac-mini",
       "title": "Mac mini (studio)",
       "role": "Mac mini in the studio; music recording; runs the Drive backup",
-      "localState": "Mac mini in the studio; music recording; runs the Drive backup",
+      "localState": null,
       "state": "policy-declared · not remotely attested",
-      "evidence": "Canonical policy: Mac mini in the studio; music recording; runs the Drive backup. This audit did not execute on that host."
+      "evidence": "Canonical policy declares the role (Mac mini in the studio; music recording; runs the Drive backup); no per-device local-storage state is declared by this policy. This audit did not execute on that host."
     },
     {
       "id": "macbook",
       "title": "MacBook",
       "role": "Laptop for mobile work",
-      "localState": "Laptop for mobile work",
+      "localState": null,
       "state": "policy-declared · not remotely attested",
-      "evidence": "Canonical policy: Laptop for mobile work. This audit did not execute on that host."
+      "evidence": "Canonical policy declares the role (Laptop for mobile work); no per-device local-storage state is declared by this policy. This audit did not execute on that host."
     }
   ],
   "sourceSurfaces": [

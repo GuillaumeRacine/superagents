@@ -1,12 +1,12 @@
 # Devices & Hosts
 
-> Snapshot: **November 2, 2026 at 5:56 p.m.**. Device declarations were parsed from the canonical storage policy revision `054d441c0ccc4142`; verification state comes from this audit run.
+> Snapshot: **November 2, 2026 at 6:08 p.m.**. Device declarations were parsed from the canonical storage policy revision `054d441c0ccc4142`; verification state comes from this audit run.
 
 | Device | Role | Verification | Evidence |
 |---|---|---|---|
-| Mac mini (main) | Mac mini in the office; runs the agents | directly verified | Canonical policy: Mac mini in the office; runs the agents. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host. |
-| Mac mini (studio) | Mac mini in the studio; music recording; runs the Drive backup | policy-declared · not remotely attested | Canonical policy: Mac mini in the studio; music recording; runs the Drive backup. This audit did not execute on that host. |
-| MacBook | Laptop for mobile work | policy-declared · not remotely attested | Canonical policy: Laptop for mobile work. This audit did not execute on that host. |
+| Mac mini (main) | Mac mini in the office; runs the agents | directly verified | Canonical policy declares the role (Mac mini in the office; runs the agents); no per-device local-storage state is declared by this policy. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host. |
+| Mac mini (studio) | Mac mini in the studio; music recording; runs the Drive backup | policy-declared · not remotely attested | Canonical policy declares the role (Mac mini in the studio; music recording; runs the Drive backup); no per-device local-storage state is declared by this policy. This audit did not execute on that host. |
+| MacBook | Laptop for mobile work | policy-declared · not remotely attested | Canonical policy declares the role (Laptop for mobile work); no per-device local-storage state is declared by this policy. This audit did not execute on that host. |
 
 ## Coverage rule
 

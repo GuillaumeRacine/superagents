@@ -15,7 +15,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-11-02 |
 | [Context control plane](/context-memory) | automation, evidence, and fleet inventory | active · authoritative automation registry | 2026-09-08 |
 | [Knowledge vault](/context-memory/storage) | curated context and durable knowledge | active · private Git-backed knowledge source | 2026-09-08 |
-| [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09 | 2026-11-02 |
+| [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by all 3 required agents | 2026-11-02 |
 | [Shared Firecrawl MCP broker](/capabilities/mcp-tools) | shared web research service | active · shared local service | 2026-09-08 |
 | [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
 | [Grok CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
@@ -134,7 +134,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 ## Finance (MoneyOS)
 
-**Status:** active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09
+**Status:** active · contract v2 acknowledged by all 3 required agents
 
 **Version:** 2.0.0
 
@@ -144,15 +144,15 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 | Contract | Value |
 |---|---|
-| Source of truth | Private moneyos repository, branch main: SOURCE_OF_TRUTH.md with its machine-readable twin sources.json, acknowledged in ACK.md and enforced by scripts/check_sot.py; the Cash Flows sheet is the edit surface, Context/cfo-feed a frozen mirror |
-| Measurement | Row counts of the record files on main (ledger, account register, tie-outs by status, open to-clarify rows, open questions) and ACK.md rows at the current contract hash, read from the repository at the snapshot date. |
+| Source of truth | The private MoneyOS repository, branch main: SOURCE_OF_TRUTH.md with its machine-readable twin sources.json, acknowledged in ACK.md and enforced by scripts/check_sot.py; the Cash Flows sheet is the edit surface, Context/cfo-feed a frozen mirror |
+| Measurement | Row counts of the record files on main (ledger, account register, tie-outs by status, open to-clarify rows, open questions) and ACK.md rows at the current contract hash, read from the private repository through the GitHub API at the snapshot date; docs:verify-live re-reads the ledger rows, the open to-clarify rows and the acknowledgements the same way when MONEYOS_REPO names the repository. |
 | Trigger | Statement or export arrival (refresh runbook), a ruling from Gui in the Cash Flows sheet or in chat, the weekday Cash dashboard refresh, the month-end close, and the weekly contract check |
 | Permissions | Read-only on every bank, card and investment account; one named writer per store; sheet writes only through the Sheets API apply step after a backup copy; no agent moves money; account identifiers keep their last four digits only; the repository stays private |
 | Inputs | Bank and card statements and exports filed on Google Drive, the Monarch daily feed, Gui’s sheet cells and chat rulings, revenue figures from GrowthOS |
 | Outputs | Transactions ledger, books and tie-outs, clarify and ruling files, balances and debts, payables register, scorecard and savings rate, the Cash Flows sheet, the Cash dashboard snapshot, and the month-end report |
 | Proof | check_sot.py exit 0 on main (last step of run_all.sh, first step of the Claude gate, weekly job); a GO review file per material change; every quoted number names its source file, as-of date and commit |
-| Recovery | Clone the private repository at main, install its Python requirements, run run_all.sh and check_sot.py, re-acknowledge the contract in ACK.md; rebuild the Cash Flows sheet from the repository with the build and apply scripts, never with a spreadsheet import |
-| Snapshot counts | Ledger Rows: 5516; Accounts In Register: 42; Tie Outs Passing: 121; Tie Outs Tieable: 150; Open To Clarify Rows: 217; Open Questions: 11; Contract Ack Rows: 2; Contract Ack Required: 3 |
+| Recovery | Clone the private MoneyOS repository at main, install its Python requirements, run run_all.sh and check_sot.py, re-acknowledge the contract in ACK.md; rebuild the Cash Flows sheet from the repository with the build and apply scripts, never with a spreadsheet import |
+| Snapshot counts | Ledger Rows: 5516; Accounts In Register: 42; Tie Outs Passing: 121; Tie Outs Tieable: 150; Open To Clarify Rows: 217; Open Questions: 11; Contract Ack Rows: 3; Contract Ack Required: 3 |
 
 ## Shared Firecrawl MCP broker
 

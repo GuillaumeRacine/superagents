@@ -1,87 +1,85 @@
 # Finance (MoneyOS)
 
-**Status: active. Contract v2.0.0 of 2026-11-02, acknowledged by 2 of 3 required agents.** Registered as `finance-moneyos` in the [System Registry](/reference/system-registry); the volatile counts live there, not in this page.
+**Status: active. Contract v2.0.0 of 2026-11-02, acknowledged by all three required agents.** Registered as `finance-moneyos` in the [System Registry](/reference/system-registry); the volatile counts live there, not in this page.
 
-MoneyOS is the agent-run finance system for Gui's money data across three entities (personal, the holding company, the operating company; never summed). Agents do the reading, matching, booking and proposing; Gui says yes and moves money. This page documents the invariant contract. The private `moneyos` repository remains authoritative for its own state, and this portal does not replace it.
+MoneyOS is the agent-run finance system for Gui's money data across the personal, holding and operating entities (never summed). Agents do the reading, matching, booking and proposing; Gui says yes and moves money. This page documents the invariant contract. The private MoneyOS repository remains authoritative for its own state, and this portal does not replace it.
 
 ## What MoneyOS is
 
-- **A private Git repository.** Branch `main` of `GuillaumeRacine/moneyos` holds the record for every money data type: the transactions ledger, the clarify and ruling files, balances, debts, the payables register, tie-outs and books. Every agent reads from a clone of `main`; a working copy ahead of `main` for more than one business day is a breach.
+- **A private Git repository.** Branch `main` of the private MoneyOS repository holds the record for every money data type: the transactions ledger, the clarify and ruling files, balances, debts, the payables register, tie-outs and books. Every agent reads from a clone of `main`; a working copy ahead of `main` for more than one business day is a breach.
 - **A contract.** `SOURCE_OF_TRUTH.md` names one record, one owner and one writer per data type. `sources.json` is the same table in machine-readable form. The two change together, by pull request, through the Claude gate, with Gui's merge.
-- **A human edit surface.** The Google Sheet "Cash Flows" (eight tabs) is Gui's view and where he answers questions. A cell Gui edits wins and is imported before every rebuild. The sheet is a view of the repository, never the record.
+- **A human edit surface.** One Google Sheet ("Cash Flows") is Gui's view and where he answers questions. A cell Gui edits wins and is imported before every rebuild. The sheet is a view of the repository, never the record.
 - **Views, feeds and caches.** Slack `#cash`, the Monarch daily feed, the Cash dashboard snapshot, the Chief of Cash's working copy and `Context/cfo-feed` are views or caches. When one disagrees with `main`, the record stands and the disagreement becomes one row in `ISSUES.md` with both values and both as-of dates.
 
 Rules that hold even when nothing else is read: null means unknown, never 0; every number carries its source file, its as-of date and the commit it came from (`moneyos@<sha7>`); account identifiers keep at most their last four digits; no agent moves money.
 
 ## The record per data type
 
-Built from `sources.json` (contract 2.0.0). Paths are relative to the `moneyos` repository unless stated. "Sheet view" names the Cash Flows tab that mirrors the record; the sheet is never the record.
+Built from `sources.json` (contract 2.0.0). Paths are relative to the private MoneyOS repository unless stated; some records are mirrored as tabs of the Cash Flows sheet, which is never the record.
 
-| Data type | Record | Owner | Writer | Refresh | Sheet view |
-|---|---|---|---|---|---|
-| Transactions, all entities | `data/ledger.csv` (key `txn_id`) | Chief of Cash | Chief of Cash | each statement or export (refresh runbook) | Ledger (Gui's `Comment`, Claude's `Clarification`, carried by `txn_id`) |
-| Pending card charges | `data/pending.csv` | Chief of Cash | Chief of Cash | each card export | Pending (not in ledger) |
-| Rows awaiting a ruling | `clarify/to-clarify.csv` | Chief of Cash | Chief of Cash | each refresh | To Clarify (Gui answers in `Gui answer`) |
-| Batch rules for clarify rows | `clarify/batch-rules.csv` | Chief of Cash | Chief of Cash | each refresh | Batch Rules |
-| Questions for Gui | `clarify/open-questions.csv` (ids `Qnn`) | Claude | Claude (`add`, `sweep`); Chief of Cash for new rows | `add` when a question appears; `sweep` when answered | Open Questions (Gui answers in the answer and note columns) |
-| Rulings, one line each | `clarify/history-notes.csv` | Claude | Claude (`sweep`); Chief of Cash for chat rulings, same day | each sweep or chat ruling | History & Notes |
-| Resolved detail rows | `clarify/resolved.csv` | Claude | Claude; Chief of Cash | each sweep | Resolved |
-| Burn-engine single-transaction overrides | Context repository, `data/cfo/monthly_close/adjustments.csv` | Claude | Claude | when a ruling changes a classification | none |
-| Personal bank and card balances | `data/cfo-feed/bank_balances.json` (per last four, `as_of` per account) | Chief of Cash | whoever reads the statement first (Chief of Cash by default; Claude via the statement importer) | each statement | none (the Monarch balances feed is a view) |
-| Company cash balances | `data/cfo-feed/facts.json`, key `entities` | Chief of Cash | Chief of Cash | after each company statement set | none |
-| Debt balances and rates | `data/cfo-feed/debts.csv` | Chief of Cash | Chief of Cash | each bank statement | none |
-| Interest and principal per mortgage payment | `data/mortgage-payments-split.csv` | Chief of Cash | Chief of Cash (split scripts) | each refresh | none |
-| Interest roll-up by month and debt account | `data/interest-by-month.csv` | Chief of Cash | Chief of Cash | each refresh | none (`interest_summary.json` is derived) |
-| Payables and receivables register | `data/payables-receivables.csv` | Chief of Cash | Chief of Cash (script plus manual rows with a source) | each refresh; every open row re-checked at month-end | Payables & Receivables |
-| Due from the operating company, running balance | `data/due-from-ensemble.csv` (equals books account 1525) | Chief of Cash | Chief of Cash | each refresh | none |
-| Funding targets and deadlines | `reports/TARGETS.md` | Gui | Claude | on a ruling or a tax letter | none |
-| Tax items and deadlines | `data/cfo-feed/facts.json`, key `tax_items` | Chief of Cash | Chief of Cash | on a ruling or a tax letter | none |
-| Recurring charges and subscriptions | `data/cfo-feed/recurring-charges.csv` | Chief of Cash | Chief of Cash | each statement load | none |
-| Task queue (cuts, moves, fixes) | `data/cfo-feed/tasks.json` | Chief of Cash | Chief of Cash; the feed's `--done` | on evidence or Gui's "done" | none |
-| Net burn, last 30 days | `data/cfo-feed/t30d.json` | Chief of Cash | Chief of Cash | each ledger refresh | none (`#cash` post and the Cash dashboard) |
-| Savings rate and scorecard | `data/savings-rate.csv`, column `savings_rate` (one definition) | Chief of Cash | Chief of Cash (metrics script) | month-end | none |
-| Monthly P&L and cash flow (Claude's engine) | Context repository, `data/cfo/burn/` | Claude | the engine only | month-end | none |
-| Tie-outs | `data/tieout.csv` | Chief of Cash | Chief of Cash | each refresh | none |
-| Books trial balance | `books/trial-balance.csv` | Chief of Cash | Chief of Cash | each refresh | none |
-| Account register | `data/accounts.csv` | Chief of Cash | Chief of Cash | monthly | none |
-| Holdings | `data/holdings.csv` | Chief of Cash | Chief of Cash | monthly | none |
-| Counterparties | `data/counterparties.csv` | Chief of Cash | Chief of Cash | as they appear | none |
-| Issues and disputes | `ISSUES.md` | Chief of Cash | anyone appends; the owner closes with a dated `fixed` | as they arise | none |
-| Decisions on this system | `IDEAL-STATE.md`, `SOURCE_OF_TRUTH.md`, `ACK.md` | Gui | Chief of Cash or Claude, by pull request | on a ruling | none |
-| Cabin owner statements | `data/cabin-statements.csv` | Chief of Cash | Claude; Chief of Cash | each statement month | none (a separate cabin P&L sheet is a view) |
+| Data type | Record | Owner | Writer | Refresh |
+|---|---|---|---|---|
+| Transactions, all entities | `data/ledger.csv` (key `txn_id`) | Chief of Cash | Chief of Cash | each statement or export (refresh runbook) |
+| Pending card charges | `data/pending.csv` | Chief of Cash | Chief of Cash | each card export |
+| Rows awaiting a ruling | `clarify/to-clarify.csv` | Chief of Cash | Chief of Cash | each refresh |
+| Batch rules for clarify rows | `clarify/batch-rules.csv` | Chief of Cash | Chief of Cash | each refresh |
+| Questions for Gui | `clarify/open-questions.csv` (ids `Qnn`) | Claude | Claude (`add`, `sweep`); Chief of Cash for new rows | when a question appears; sweep when answered |
+| Rulings, one line each | `clarify/history-notes.csv` | Claude | Claude (`sweep`); Chief of Cash for chat rulings, same day | each sweep or chat ruling |
+| Resolved detail rows | `clarify/resolved.csv` | Claude | Claude; Chief of Cash | each sweep |
+| Burn-engine single-transaction overrides | Context repository, `data/cfo/monthly_close/adjustments.csv` | Claude | Claude | when a ruling changes a classification |
+| Personal bank and card balances | `data/cfo-feed/bank_balances.json` | Chief of Cash | whoever reads the statement first (Chief of Cash by default; Claude via the statement importer) | each statement |
+| Company cash balances | `data/cfo-feed/facts.json`, key `entities` | Chief of Cash | Chief of Cash | after each company statement set |
+| Debt balances and rates | `data/cfo-feed/debts.csv` | Chief of Cash | Chief of Cash | each bank statement |
+| Debt payment split (interest and principal) | `data/mortgage-payments-split.csv` | Chief of Cash | Chief of Cash (split scripts) | each refresh |
+| Interest roll-up by month and debt account | `data/interest-by-month.csv` | Chief of Cash | Chief of Cash | each refresh |
+| Payables and receivables register | `data/payables-receivables.csv` | Chief of Cash | Chief of Cash (script plus manual rows with a source) | each refresh; every open row re-checked at month-end |
+| Funding targets and deadlines | `reports/TARGETS.md` | Gui | Claude | on a ruling or a tax letter |
+| Tax items and deadlines | `data/cfo-feed/facts.json`, key `tax_items` | Chief of Cash | Chief of Cash | on a ruling or a tax letter |
+| Recurring charges and subscriptions | `data/cfo-feed/recurring-charges.csv` | Chief of Cash | Chief of Cash | each statement load |
+| Task queue (cuts, moves, fixes) | `data/cfo-feed/tasks.json` | Chief of Cash | Chief of Cash; the feed's `--done` | on evidence or Gui's "done" |
+| Net burn, last 30 days | `data/cfo-feed/t30d.json` | Chief of Cash | Chief of Cash | each ledger refresh |
+| Savings rate and scorecard | `data/savings-rate.csv`, column `savings_rate` (one definition) | Chief of Cash | Chief of Cash (metrics script) | month-end |
+| Monthly P&L and cash flow (Claude's engine) | Context repository, `data/cfo/burn/` | Claude | the engine only | month-end |
+| Tie-outs | `data/tieout.csv` | Chief of Cash | Chief of Cash | each refresh |
+| Books trial balance | `books/trial-balance.csv` | Chief of Cash | Chief of Cash | each refresh |
+| Account register | `data/accounts.csv` | Chief of Cash | Chief of Cash | monthly |
+| Holdings | `data/holdings.csv` | Chief of Cash | Chief of Cash | monthly |
+| Counterparties | `data/counterparties.csv` | Chief of Cash | Chief of Cash | as they appear |
+| Issues and disputes | `ISSUES.md` | Chief of Cash | anyone appends; the owner closes with a dated `fixed` | as they arise |
+| Decisions on this system | `IDEAL-STATE.md`, `SOURCE_OF_TRUTH.md`, `ACK.md` | Gui | Chief of Cash or Claude, by pull request | on a ruling |
 
-Two other Google Sheets are named in the contract and are not records: the Stoic Capital sheet (Gui's asset view, two-way, Gui wins; the assets column is written only after Gui's yes) and the Investing System workbook (Gui's strategy workbook, read-only for agents). Source documents (statements and exports) are filed on Google Drive by Gui; local copies are caches.
+Two other Google Sheets are named in the contract and are not records: Gui's asset-view sheet (two-way, Gui wins; one column is written only after Gui's yes) and Gui's investing workbook (read-only for agents). Source documents (statements and exports) are filed on Google Drive by Gui; local copies are caches.
 
 ## Who does what
 
 | Role | Does | Does not |
 |---|---|---|
-| Gui | Owns the system. Logins, exports with no feed, rulings, every money movement, merges to `main`. Edits his cells in the Cash Flows and Stoic Capital sheets; those edits win. | |
+| Gui | Owns the system. Logins, exports with no feed, rulings, every money movement, merges to `main`. Edits his cells in the sheets; those edits win. | |
 | Chief of Cash (GrokBot) | Owner and writer of the data stores: ingests, deduplicates, categorizes, splits interest from principal, builds the books, ties out, keeps the sheet in sync, runs the savings queue. Leads the refresh and the month-end close. | Edit a store owned by another writer; review its own work; move money. |
-| Claude | CFO reviewer and the Claude gate; owner and writer of the ruling files (`open-questions`, `history-notes`, `resolved`) and the Ledger `Clarification` column; runs the burn engine. | Write data stores owned by the Chief of Cash; review its own changes. |
+| Claude | CFO reviewer and the Claude gate; owner and writer of the ruling files (`open-questions`, `history-notes`, `resolved`) and the ledger's clarification column; runs the burn engine. | Write data stores owned by the Chief of Cash; review its own changes. |
 | Hermes / Wink | Runs the scheduled jobs and posts to `#cash` as Wink. | Commit anything but job state. |
-| GrowthOS | Owns the operating company's revenue numbers and sends them to the Chief of Cash. | Edit the ledger. |
+| GrowthOS | Owns the operating entity's revenue numbers and sends them to the Chief of Cash. | Edit the ledger. |
 | Other agents | Read only; report conflicts in `ISSUES.md` or to the Chief of Cash. | Write. |
 
-**Attribution.** Every write is attributable: Gui; Claude under Gui's account with a co-author trailer; the Chief of Cash under Gui's login with its own co-author trailer until it has its own accounts; Hermes under its service account, jobs only. No anonymous link-based sheet edits.
+**Attribution.** Every write is attributable: Gui; Claude under Gui's account with a co-author trailer; the Chief of Cash under Gui's login with its own co-author trailer until it has its own accounts; Hermes under its service account, jobs only. No anonymous sheet edits.
 
 **Acknowledgement rule.** Each required agent (Chief of Cash, Claude, Hermes) adds one row to `ACK.md` with the date and the contract hash (`python3 scripts/check_sot.py --hash`). Acknowledging means: I read the contract and `sources.json`, my own docs, scripts and jobs name no other record, path or procedure, and I will re-acknowledge after every change. After the grace period (7 days from the contract date) a missing or stale row makes `check_sot.py` fail for everyone.
 
 ## How Gui's rulings flow
 
 1. **Questions get ids once.** A question for Gui is a row in `clarify/open-questions.csv` with an id `Qnn`. Ids are allocated once from `next_question_id` in `sources.json` and never reused; `check_sot.py` fails on a duplicate or on an id at or above the counter.
-2. **Gui answers** in the sheet (Open Questions tab, answer and note columns; To Clarify tab, `Gui answer`) or in chat. Questions are yes/no and come with a proposed answer and the evidence.
-3. **Sweep.** Claude's `sweep` (or refresh step 0) moves answered rows to `clarify/resolved.csv`, writes one line per ruling in `clarify/history-notes.csv`, and carries the ruling into the Ledger `Clarification` column. A chat ruling is written to `history-notes.csv` the same day by whoever received it, with the source "Gui, chat, date".
-4. **History.** Rulings accumulate in `history-notes.csv` and the History & Notes tab; a belief with a question mark is logged as a belief, not a fact, and the payables register keeps the row open until proof. Rulings about the system itself (the contract, roles, procedures) are recorded in `IDEAL-STATE.md` and the contract, with the discussion kept on the plan-of-record issue.
+2. **Gui answers** in the sheet (the Open Questions tab's answer and note columns; the To Clarify tab's answer column) or in chat. Questions are yes/no and come with a proposed answer and the evidence.
+3. **Sweep.** Claude's `sweep` (or refresh step 0) moves answered rows to `clarify/resolved.csv`, writes one line per ruling in `clarify/history-notes.csv`, and carries the ruling into the ledger's clarification column. A chat ruling is written to `history-notes.csv` the same day by whoever received it, with the source "Gui, chat, date".
+4. **History.** Rulings accumulate in `history-notes.csv` and the sheet's history tab; a belief with a question mark is logged as a belief, not a fact, and the payables register keeps the row open until proof. Rulings about the system itself (the contract, roles, procedures) are recorded in `IDEAL-STATE.md` and the contract, with the discussion kept on the repository's plan-of-record issue.
 
 ## How the sheet is written
 
 The sheet is written in exactly one way, in two steps:
 
 1. **Build.** `scripts/build_cash_flows.py` takes a fresh export of the live sheet plus the repository and produces the workbook; Gui's live cells win over the repository on every conflict, and each imported change is logged in `CHANGELOG.md` with the row id, old value and new value.
-2. **Apply through the Sheets API.** `scripts/cfo_apply_cash_flows_xlsx.py --apply` makes a Drive copy of the sheet first (backup), then replaces the Ledger, To Clarify, Open Questions, Batch Rules, Pending and Payables tabs, appends to Resolved and History & Notes, and writes one History & Notes line naming the `moneyos@<sha7>` it came from. It runs on the workstation that holds the Sheets token, as a Hermes job when `data/ledger.csv` on `main` changed since the last applied commit, or by Claude by hand.
+2. **Apply through the Sheets API.** `scripts/cfo_apply_cash_flows_xlsx.py --apply` makes a Drive copy of the sheet first (backup), then replaces the data tabs, appends to the resolved and history tabs, and writes one history line naming the `moneyos@<sha7>` it came from. It runs on the workstation that holds the Sheets token, as a Hermes job when `data/ledger.csv` on `main` changed since the last applied commit, or by Claude by hand.
 
-The spreadsheet import route through the browser is retired: it destroyed tab ids, data validation, the `Clarification` column and the Resolved history. The phrase that named it is on the contract's banned list, so a document or script that brings it back fails `check_sot.py`.
+The spreadsheet import route through the browser is retired: it destroyed tab ids, data validation, the clarification column and the resolved history. The phrase that named it is on the contract's banned list, so a document or script that brings it back fails `check_sot.py`.
 
 ## Quality gates
 
@@ -93,26 +91,26 @@ The spreadsheet import route through the browser is retired: it destroyed tab id
 
 ## Scheduled jobs
 
-Hermes runs the jobs on the main workstation (see [Scheduling](/automation/scheduling)). Job identifiers and local paths stay in the private Hermes home repository.
+Hermes runs the jobs on the owning workstation (see [Scheduling](/automation/scheduling)). Job identifiers and local paths stay in the private Hermes home repository.
 
 | Job | Cadence | State on 2026-11-02 | What it does |
 |---|---|---|---|
-| Monarch daily feed | twice daily (early morning and midday) | enabled | Browser fetch of transactions and account balances into the Context control plane's data area; a feed and a view, never a record. Per-account freshness decides what is usable; several bank accounts do not sync there and are read from statements instead. |
-| Cash dashboard refresh | weekdays, after the morning feed slot | enabled | Fast-forward pulls the finance record clone, builds the Cash snapshot with `MONEYOS_DIR` pointing at it, validates, publishes the gzip variant to the managed environment and redeploys; failures are logged locally and keep the last good snapshot. See [Cash dashboard](#dashboards). |
-| `#cash` feed (Chief of Cash) | weekdays 08:00 | paused | Posts the daily headline and 30-day net burn as Wink. It stays paused while the burn file's as-of is older than 7 days and until the feed script is repointed from the frozen Context mirror to the repository (convergence phase 3). |
-| Finance contract check | weekly, Monday morning | enabled; first run pending | Runs `check_sot.py --context --sheet` from the clean clone against the Context pointers and the live sheet headers; posts to `#cash` only on failure. Once it has run green, Claude adds the Hermes row to `ACK.md` on behalf of the job definitions. |
+| Monarch daily feed | twice daily (early morning and midday) | enabled | Browser fetch of transactions and account balances into the Context control plane's data area; a feed and a view, never a record. Per-account freshness decides what is usable; accounts that do not sync there are read from statements instead. |
+| Cash dashboard refresh | weekdays, after the morning feed slot | enabled | Pulls the local fast-forward-only clone of the record, builds the Cash snapshot with `MONEYOS_DIR` pointing at it, validates, publishes the gzip variant to the managed environment and redeploys; failures are logged locally and keep the last good snapshot. |
+| `#cash` feed (Chief of Cash) | weekdays, morning | paused | Posts the daily headline and 30-day net burn as Wink. It stays paused while the burn file's as-of is older than 7 days and until the feed script is repointed from the frozen Context mirror to the repository. |
+| Finance contract check | weekly, Monday morning | enabled | Runs `check_sot.py --context --sheet` from the clean clone against the Context pointers and the live sheet headers; posts to `#cash` only on failure. |
 
 The sheet apply step runs as a job only when `data/ledger.csv` on `main` has changed since the last applied commit; until that job is registered, Claude runs the apply script by hand.
 
 ## Dashboards
 
-- **`/dashboard/cash`** (private, allowlisted, dynamic; not part of the documentation corpus). Owner line: Chief of Cash (GrokBot); feed posts weekdays in `#cash`; record of truth `GuillaumeRacine/moneyos` `main`. It shows the 30-day net burn and its trend, today's task from the task queue, what needs Gui soon (payables, tax items, funding deadlines), per-entity and per-currency balances with their as-of dates, debt facilities, and an always-visible as-of bar with a stale banner computed at render. Null renders as "unknown", never 0; balances are never summed across entities. The snapshot is built by `scripts/build-cash-snapshot.mjs` from a local clone of the record and delivered as a managed-environment value; the Scorecard, Books, Payables and contract bands are being added under the same issue as this page. See the [finance operating contract](https://github.com/GuillaumeRacine/superagents/blob/main/docs/finance/README.md).
+- **`/dashboard/cash`** (private, allowlisted, dynamic; not part of the documentation corpus). Owner line: Chief of Cash (GrokBot); feed posts weekdays in `#cash`; record of truth: the private MoneyOS repository, `main`. It shows the 30-day net burn and its trend, today's task from the task queue, what needs Gui soon (payables, tax items, funding deadlines), per-entity and per-currency balances with their as-of dates, debt facilities, and an always-visible as-of bar with a stale banner computed at render. Null renders as "unknown", never 0; balances are never summed across entities. The snapshot builder reads a local fast-forward-only clone of the record (`MONEYOS_DIR`); the refresh job on the owning workstation pulls it before each build. Since 2026-11-02 the page also shows the savings-rate scorecard, books (suspense and tie-outs), the open payables, open clarify items and the contract acknowledgement state, each band from the record with its own as-of date. See the [finance operating contract](https://github.com/GuillaumeRacine/superagents/blob/main/docs/finance/README.md).
 - **Slack `#cash`** is a notification surface: feed posts, nudges, failure alerts. It is never the record for anything.
-- **Month-end report** (`reports/month-end-YYYY-MM.md`) answers the six month-end exam questions (liquidity by entity less committed obligations, net income and burn with and without mortgage principal, interest trend by debt account, savings to bank next, payables and receivables status, scorecard against the North Star), each figure with its source and date, gaps marked MISSING.
+- **Month-end report** (`reports/month-end-YYYY-MM.md`) answers a fixed set of month-end questions (liquidity by entity less committed obligations, net income and burn with and without debt principal, interest trend by debt account, savings to bank next, payables and receivables status, scorecard against the North Star), each figure with its source and date, gaps marked MISSING.
 
 ## How to verify
 
-In a clone of the `moneyos` repository on `main`:
+In a clone of the private MoneyOS repository on `main`:
 
 ```bash
 git pull --ff-only
@@ -122,7 +120,7 @@ python3 scripts/check_consistency.py    # doc figures against data files
 scripts/run_all.sh                      # full rebuild; ends with both checks
 ```
 
-Counts behind the registry entry come from the record files on `main`: data rows of `data/ledger.csv` and `data/accounts.csv`; rows of `data/tieout.csv` whose status is `ties`, over the rows that can tie (statement rows with balances); rows of `clarify/to-clarify.csv` with `Status` equal to `open`; rows of `clarify/open-questions.csv` with `Status` equal to `open`; rows of `ACK.md` whose hash equals the current contract hash, over the `required_acks` list in `sources.json`.
+Counts behind the registry entry come from the record files on `main`: data rows of `data/ledger.csv` and `data/accounts.csv`; rows of `data/tieout.csv` whose status is `ties`, over the rows that can tie (statement rows with balances); rows of `clarify/to-clarify.csv` with `Status` equal to `open`; rows of `clarify/open-questions.csv` with `Status` equal to `open`; rows of `ACK.md` whose hash equals the current contract hash, over the `required_acks` list in `sources.json`. On the owning workstation, `npm run docs:verify-live` re-reads the ledger rows, the open to-clarify rows and the acknowledgements through the GitHub API when `MONEYOS_REPO` names the private repository.
 
 On this portal: `npm run docs:check` (publication rules reject private URLs, home paths and credential-like tokens) and the [System Registry](/reference/system-registry) entry `finance-moneyos`.
 
@@ -132,19 +130,13 @@ Counts from `main` at the snapshot (the registry entry is the published copy):
 
 | Measure | Value |
 |---|---|
-| Contract | v2.0.0, dated 2026-11-02; acknowledged by Chief of Cash and Claude; Hermes row due by 2026-11-09 |
+| Contract | v2.0.0, dated 2026-11-02; acknowledged by 3 of 3 required agents |
 | Ledger rows | 5,516 |
 | Accounts in the register | 42 |
-| Tie-outs | 121 passing of 150 that can tie (9 more rows have no balances to tie) |
+| Tie-outs | 121 passing of 150 that can tie |
 | Open to-clarify rows | 217 (target under 20) |
 | Open questions for Gui | 11 |
 
-Open items:
-
-- **ACK rows.** The Hermes acknowledgement is due by 2026-11-09 (after the weekly contract check has run green once). Past the grace period, `check_sot.py` fails for everyone until the row exists.
-- **Phase 3 repointing** (convergence plan, plan-of-record issue in the `moneyos` repository). The Cash dashboard refresh already reads the clone; the `#cash` feed script, the Open Questions sweep and the sheet apply job still need to move from the frozen `Context/cfo-feed` mirror to the repository. Until then `Context/cfo-feed` is a frozen mirror and pointer: read by the remaining jobs, never edited.
-- **Q23.** The next question id is allocated; the question itself (cabin sales-tax filing status) is with Gui.
-- **Link sharing.** The Cash Flows sheet still has link-based sharing to remove; sharing is to named accounts only (owner Gui, writer the Hermes service account).
-- **Chief of Cash follow-ups** from its own acknowledgement: a stale hint in the consistency check, an FX pair check, USD legs at the Bank of Canada rate in the books, the cabin payout split.
+Open items: acknowledgements are current; job repointing from the frozen Context mirror to the repository is in progress (convergence phase 3); one open ruling is with Gui.
 
 Related: [Sources of Truth](/architecture/sources-of-truth), [Personal Operations](/workflows/personal-operations), [Fleet Evidence](/automation/fleet-evidence), [Permissions](/governance/permissions).
