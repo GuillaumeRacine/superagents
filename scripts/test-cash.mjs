@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { gzipSync } from "node:zlib";
 import * as model from "../lib/cash-model.mjs";
 import { readCashSnapshot } from "../lib/cash-snapshot.mjs";
+import { ackedAgents, contractHash, pyJson } from "../lib/moneyos-contract.mjs";
 
 const {
   SCHEMA,
@@ -15,6 +16,8 @@ const {
   fundingRows,
   alerts,
   openTasks,
+  payableRows,
+  contractStatus,
 } = model;
 const encode = (text) => gzipSync(text).toString("base64");
 
@@ -277,4 +280,172 @@ test("freshness flags a snapshot older than 36h and any input older than 3 days"
   assert.ok(stale.stale);
   assert.ok(stale.reasons.some((x) => /Burn data: as of 2026-09-21, 28 days old/.test(x)));
   assert.ok(model.freshness(emptyCash()).stale);
+});
+
+// MoneyOS record sections (issue #54). Fictional values only.
+const moneyos = () => ({
+  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, asOf: "2026-10-31" },
+  payables: [
+    { id: "P01", priority: 1, type: "payable", entity: "personal", counterparty: "Example Utility", description: "Example bill", amount: 100, currency: "CAD", dueDate: "2026-10-17", status: "open", source: "statement", lastChecked: "2026-10-19" },
+    { id: "P02", priority: 2, type: "payable", entity: "holdco", counterparty: "Example Vendor", description: "Example invoice", amount: 50, currency: "USD", dueDate: "2026-10-30", status: "open (estimate)", lastChecked: "2026-10-19" },
+    { id: "P03", priority: 3, type: "payable", entity: "personal", counterparty: "Example Card", amount: null, dueDate: null, dueNote: "next statement", status: "MISSING", lastChecked: "2026-10-19" },
+    { id: "R01", priority: 4, type: "receivable", entity: "personal", counterparty: "Example Opco", description: "Reimbursement", amount: 300, currency: "CAD", dueDate: "2026-12-31", status: "accrued", lastChecked: "2026-10-19" },
+  ],
+  clarify: { openToClarifyRows: 12, openQuestions: 3, batches: 2, asOf: "2026-10-18" },
+  contract: { version: "2.0.0", hash: "0123456789ab", date: "2026-10-12", requiredAcks: ["Agent A", "Agent B", "Agent C"], ackedAgents: ["Agent A", "Agent C"], graceUntil: "2026-10-19" },
+  cabin: { lastStatementMonth: "2026-09", nights: 11, grossCad: 2500, salesTaxesCad: 200, depositCad: 1200, netExTaxCad: 950, statementsOnFile: 9 },
+});
+const withMoneyos = () => {
+  const r = { ...fixture(), ...moneyos() };
+  r.scorecard.savingsRate = { month: "2026-09", monthRatePct: -12.5, monthStatus: "provisional", t12Label: "T12 2025-10 to 2026-09", t12RatePct: 4, definition: "(income − opex) / income", asOf: "2026-09-30", source: "example csv" };
+  return r;
+};
+
+test("MoneyOS sections are optional, validate, and round-trip", () => {
+  const old = validateCash(fixture());
+  assert.equal(old.books, null);
+  assert.deepEqual(old.payables, []);
+  assert.equal(old.clarify, null);
+  assert.equal(old.contract, null);
+  assert.equal(old.cabin, null);
+  assert.equal(old.scorecard.savingsRate, null);
+  const v = validateCash(withMoneyos());
+  assert.equal(v.scorecard.savingsRate.monthRatePct, -12.5);
+  assert.equal(v.scorecard.savingsRate.asOf, "2026-09-30");
+  assert.equal(v.books.balanced, true);
+  assert.equal(v.books.tieOutsFailing, 2);
+  assert.equal(v.payables.length, 4);
+  assert.equal(v.payables[2].currency, "CAD"); // blank currency defaults; the amount stays null
+  assert.equal(v.payables[2].amount, null);
+  assert.equal(v.payables[2].dueNote, "next statement");
+  assert.equal(v.clarify.openToClarifyRows, 12);
+  assert.deepEqual(v.contract.requiredAcks, ["Agent A", "Agent B", "Agent C"]);
+  assert.equal(v.cabin.netExTaxCad, 950);
+  assert.equal(readCash(JSON.stringify(v)).state, "ready");
+  assert.deepEqual(validateCash(JSON.parse(JSON.stringify(v))), v);
+});
+
+test("MoneyOS sections: null means unknown and is never coerced", () => {
+  const r = withMoneyos();
+  r.books = { suspenseCad: "", trialBalanceCad: null, balanced: null, tieOutsPassing: undefined, tieOutsFailing: "", asOf: "" };
+  r.clarify = { openToClarifyRows: null, openQuestions: "", batches: null, asOf: null };
+  r.contract = { version: "", hash: null, date: null, requiredAcks: [], ackedAgents: [], graceUntil: null };
+  r.cabin = { lastStatementMonth: null, nights: "", grossCad: null, salesTaxesCad: null, depositCad: null, netExTaxCad: null, statementsOnFile: null };
+  r.scorecard.savingsRate = { month: null, monthRatePct: "", t12RatePct: null, asOf: null };
+  const v = validateCash(r);
+  assert.deepEqual(v.books, { suspenseCad: null, trialBalanceCad: null, balanced: null, tieOutsPassing: null, tieOutsFailing: null, asOf: null });
+  assert.deepEqual(v.clarify, { openToClarifyRows: null, openQuestions: null, batches: null, asOf: null });
+  assert.equal(v.contract.hash, null);
+  assert.equal(v.cabin.nights, null);
+  assert.equal(v.scorecard.savingsRate.monthRatePct, null);
+  assert.equal(v.scorecard.savingsRate.t12RatePct, null);
+  // Zero stays zero.
+  const z = withMoneyos();
+  z.books.suspenseCad = 0;
+  z.clarify.openQuestions = 0;
+  assert.equal(validateCash(z).books.suspenseCad, 0);
+  assert.equal(validateCash(z).clarify.openQuestions, 0);
+  // No contract section means nothing to report, not a failing contract.
+  assert.deepEqual(contractStatus(validateCash(fixture()), TODAY), { missing: [], afterGrace: false, overdue: false });
+});
+
+test("MoneyOS sections: over-cap rows, bad dates and bad shapes are rejected with a field name", () => {
+  const cases = [
+    [(r) => (r.payables = Array.from({ length: 31 }, (_, i) => ({ id: `P${i}` }))), /payables exceeds 30 rows/],
+    [(r) => (r.payables[0].dueDate = "2026-13-40"), /payables\[0\].dueDate must be an ISO date/],
+    [(r) => (r.payables[0].lastChecked = "yesterday"), /payables\[0\].lastChecked/],
+    [(r) => (r.payables[0].currency = "cad"), /payables\[0\].currency/],
+    [(r) => (r.payables[0].type = "loan"), /payables\[0\].type must be one of/],
+    [(r) => (r.payables[0].description = "x".repeat(241)), /description is longer than 240/],
+    [(r) => (r.payables[0].priority = 1.5), /priority must be a whole number/],
+    [(r) => r.payables.push({ ...r.payables[0] }), /Duplicate payable id/],
+    [(r) => (r.payables = {}), /payables must be a list/],
+    [(r) => (r.books.balanced = "yes"), /books.balanced must be true, false or null/],
+    [(r) => (r.books.tieOutsPassing = -1), /books.tieOutsPassing must be a whole number/],
+    [(r) => (r.books.asOf = "2026-10"), /books.asOf must be an ISO date/],
+    [(r) => (r.clarify.openQuestions = 2.5), /clarify.openQuestions/],
+    [(r) => (r.clarify.asOf = "Oct 18"), /clarify.asOf/],
+    [(r) => (r.contract.hash = "XYZ"), /contract.hash must be 12 lowercase hex/],
+    [(r) => (r.contract.graceUntil = "2026-02-30"), /contract.graceUntil/],
+    [(r) => (r.contract.requiredAcks = Array.from({ length: 21 }, (_, i) => `a${i}`)), /contract.requiredAcks exceeds 20/],
+    [(r) => (r.contract.ackedAgents = "Claude"), /contract.ackedAgents must be a list/],
+    [(r) => (r.cabin.lastStatementMonth = "2026-09-01x"), /cabin.lastStatementMonth/],
+    [(r) => (r.cabin.nights = 3.3), /cabin.nights must be a whole number/],
+    [(r) => (r.cabin.grossCad = "2,500"), /cabin.grossCad must be a finite number/],
+    [(r) => (r.scorecard.savingsRate.month = "2026-9"), /scorecard.savingsRate.month/],
+    [(r) => (r.scorecard.savingsRate.asOf = "2026-09"), /scorecard.savingsRate.asOf must be an ISO date/],
+    [(r) => (r.scorecard.savingsRate.definition = "d".repeat(401)), /savingsRate.definition is longer than 400/],
+    [(r) => (r.scorecard.savingsRate.monthRatePct = "−12%"), /monthRatePct must be a finite number/],
+    [(r) => (r.books = []), /books must be an object/],
+  ];
+  for (const [mutate, pattern] of cases) {
+    const raw = withMoneyos();
+    mutate(raw);
+    assert.throws(() => validateCash(raw), pattern);
+  }
+});
+
+test("payable rows tag overdue, due soon and unverified; overdue first", () => {
+  const rows = payableRows(validateCash(withMoneyos()), TODAY);
+  const by = Object.fromEntries(rows.map((r) => [r.id, r]));
+  assert.equal(by.P01.tag, "overdue");
+  assert.equal(by.P01.days, -2);
+  assert.equal(by.P02.tag, "due soon");
+  assert.equal(by.P02.days, 11);
+  assert.equal(by.P03.tag, "unverified");
+  assert.equal(by.P03.days, null);
+  assert.equal(by.R01.tag, "");
+  assert.deepEqual(rows.map((r) => r.id), ["P01", "P02", "R01", "P03"]);
+  // A free-text "overdue" due date counts as overdue even without a date.
+  const r = withMoneyos();
+  r.payables[2].dueNote = "overdue";
+  assert.equal(payableRows(validateCash(r), TODAY).find((p) => p.id === "P03").tag, "overdue");
+});
+
+test("contract status names missing acknowledgements and turns red only after grace", () => {
+  const v = validateCash(withMoneyos());
+  assert.deepEqual(contractStatus(v, "2026-10-19"), { missing: ["Agent B"], afterGrace: false, overdue: false });
+  assert.deepEqual(contractStatus(v, "2026-10-20"), { missing: ["Agent B"], afterGrace: true, overdue: true });
+  const all = withMoneyos();
+  all.contract.ackedAgents = ["Agent A", "Agent B", "Agent C"];
+  assert.equal(contractStatus(validateCash(all), "2026-12-01").overdue, false);
+});
+
+test("freshness flags a savings rate older than 45 days", () => {
+  const now = Date.parse("2026-10-19T13:00:00Z");
+  const r = withMoneyos();
+  r.burn.asOf = "2026-10-18";
+  r.scorecard.savingsRate.asOf = "2026-09-30";
+  assert.equal(model.freshness(validateCash(r), now).reasons.some((x) => /Savings rate/.test(x)), false);
+  r.scorecard.savingsRate.asOf = "2026-08-31";
+  const f = model.freshness(validateCash(r), now);
+  assert.ok(f.stale);
+  assert.ok(f.reasons.some((x) => /Savings rate: as of 2026-08-31, 49 days old \(limit 45\)/.test(x)));
+  r.scorecard.savingsRate.asOf = null;
+  assert.ok(model.freshness(validateCash(r), now).reasons.some((x) => /Savings rate: date unknown/.test(x)));
+});
+
+test("contract hash reproduces Python json.dumps(sort_keys=True, ensure_ascii=False) byte for byte", () => {
+  // Expected strings were produced with python3 json.dumps on the same inputs (JSON-encoded here).
+  const cases = [
+    [{ b: 1, a: [1, "x", null, true, false], c: { z: "é—ü", y: 'q"\\\n\t\u0001\u007f' } }, "{\"a\": [1, \"x\", null, true, false], \"b\": 1, \"c\": {\"y\": \"q\\\"\\\\\\n\\t\\u0001\u007f\", \"z\": \"é—ü\"}}"],
+    [{ next_question_id: 24, k: "v" }, "{\"k\": \"v\", \"next_question_id\": 24}"],
+    [[], "[]"],
+    [{}, "{}"],
+    ["plain", "\"plain\""],
+    [{ sheets: { x: { id: "1abc", tabs: { T: ["a", "b"] } } }, _doc: "ü" }, "{\"_doc\": \"ü\", \"sheets\": {\"x\": {\"id\": \"1abc\", \"tabs\": {\"T\": [\"a\", \"b\"]}}}}"],
+  ];
+  for (const [input, expected] of cases) assert.equal(pyJson(input), JSON.parse(JSON.stringify(expected)));
+  assert.throws(() => pyJson({ x: 1.5 }), /non-integer/);
+  // python3: hashlib.sha256(b"# contract\n" + b'{"contract_version": "2.0.0"}').hexdigest()[:12]
+  const sot = Buffer.from("# contract\n", "utf8");
+  const a = contractHash(sot, JSON.stringify({ contract_version: "2.0.0", next_question_id: 1 }));
+  assert.equal(a, "d4158a88744d");
+  // next_question_id is dropped, so bumping it does not force a re-acknowledgement.
+  assert.equal(a, contractHash(sot, JSON.stringify({ next_question_id: 99, contract_version: "2.0.0" })));
+  assert.notEqual(a, contractHash(sot, JSON.stringify({ contract_version: "2.0.1" })));
+  const ack = "# Acks\n\n| agent | date | contract_hash | note |\n|---|---|---|---|\n| Agent A | 2026-10-12 | 0123456789ab | ok |\n| Agent B | 2026-10-01 | ffffffffffff | old |\n| Agent A | 2026-09-01 | ffffffffffff | older |\n";
+  assert.deepEqual(ackedAgents(ack, "0123456789ab"), ["Agent A"]);
+  assert.deepEqual(ackedAgents(ack, null), []);
+  assert.deepEqual(ackedAgents("", "0123456789ab"), []);
 });

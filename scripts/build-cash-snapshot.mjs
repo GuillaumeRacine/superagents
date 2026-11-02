@@ -1,34 +1,61 @@
-// Build cash_snapshot_v1 from a LOCAL checkout of the private Context repo
-// (cfo-feed/). Output is a private managed-environment value, never committed.
+// Build cash_snapshot_v1 from a LOCAL clone of the private MoneyOS record
+// (GuillaumeRacine/moneyos, main). Output is a private managed-environment
+// value, never committed.
 //   node scripts/build-cash-snapshot.mjs [--out path] [--gzip]
-// Env: CONTEXT_DIR (default ~/Context). Reads cfo-feed/data/*.json, debts.csv,
-// state.json and the funding-targets table in TARGETS.md section 1.
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+// Env: MONEYOS_DIR (default ~/code/moneyos) for data/cfo-feed/*, reports/TARGETS.md,
+// data/savings-rate.csv, books/trial-balance.csv, data/tieout.csv,
+// data/payables-receivables.csv, clarify/*.csv, data/cabin-statements.csv,
+// ACK.md and sources.json (+ SOURCE_OF_TRUTH.md for the contract hash).
+// CONTEXT_DIR (default ~/Context) only for cfo-feed/state.json, the feed's
+// memory, until the feed job moves into the MoneyOS repo (moneyos#1 phase 3).
+import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { parseCsv } from "../lib/finance-model.mjs";
-import { SCHEMA, validateCash, readCash } from "../lib/cash-model.mjs";
+import { SCHEMA, MAX_PAYABLES, validateCash, readCash } from "../lib/cash-model.mjs";
+import { ackedAgents, contractHash } from "../lib/moneyos-contract.mjs";
 
 const args = process.argv.slice(2);
 const flag = (name) => {
   const i = args.indexOf(name);
   return i === -1 ? null : (args[i + 1] ?? true);
 };
-const feedDir = join(process.env.CONTEXT_DIR || join(homedir(), "Context"), "cfo-feed");
+const moneyosDir = process.env.MONEYOS_DIR || join(homedir(), "code", "moneyos");
+const contextFeedDir = join(process.env.CONTEXT_DIR || join(homedir(), "Context"), "cfo-feed");
 const out = flag("--out");
 const wantGzip = args.includes("--gzip");
-const read = (file, optional = false) => {
-  const path = join(feedDir, file);
+function fail(message) {
+  console.error(`build-cash-snapshot: ${message}`);
+  process.exit(2);
+}
+if (!existsSync(moneyosDir) || !statSync(moneyosDir).isDirectory())
+  fail(`MONEYOS_DIR ${moneyosDir} is not a directory. Clone GuillaumeRacine/moneyos there or set MONEYOS_DIR.`);
+if (!existsSync(join(moneyosDir, "data", "cfo-feed", "facts.json")))
+  fail(`${moneyosDir} has no data/cfo-feed/facts.json. Is it the MoneyOS repo, on a branch that carries the feed data?`);
+const readFrom = (dir) => (file, optional = false) => {
+  const path = join(dir, file);
   if (!existsSync(path)) {
     if (optional) return null;
-    throw Error(`Missing ${path}`);
+    fail(`Missing ${path}`);
   }
   return readFileSync(path, "utf8");
 };
+const read = readFrom(moneyosDir);
+const readContext = readFrom(contextFeedDir);
 const json = (file, optional) => {
   const text = read(file, optional);
   return text === null ? null : JSON.parse(text);
+};
+const csvRows = (file) => {
+  const text = read(file, true);
+  if (text === null) return null;
+  try {
+    return parseCsv(text).rows;
+  } catch (error) {
+    console.error(`build-cash-snapshot: ${file} skipped (${error.message})`);
+    return null;
+  }
 };
 const nz = (v) => (v === undefined || v === "" ? null : v);
 const num = (v) => {
@@ -37,23 +64,33 @@ const num = (v) => {
   return Number.isFinite(n) ? n : null;
 };
 const monthOrDate = (v) => (typeof v === "string" && /^\d{4}-\d{2}(-\d{2})?$/.test(v) ? v : null);
+const dateOnly = (v) => (typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v.trim()) ? v.trim() : null);
+const monthEnd = (month) => {
+  const [y, m] = month.split("-").map(Number);
+  return new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10);
+};
 // Keep at most the last four digits of any longer digit run (account masking).
 const mask = (s) => String(s ?? "").replace(/\d{5,}/g, (m) => `...${m.slice(-4)}`);
+// Logins, URLs and search strings never reach the snapshot.
+const dropUrls = (s) => String(s ?? "").replace(/\bhttps?:\/\/\S+/gi, "[url]");
+const clean = (s) => mask(dropUrls(s)).trim();
+const clip = (s, n) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
 const amountInText = (s) => {
   const m = /(?:CA\$|\$|CAD\s*)\s*([\d,]+(?:\.\d+)?)/.exec(s || "");
   return m ? num(m[1]) : null;
 };
 
-const facts = json("data/facts.json");
-const t30d = json("data/t30d.json", true);
-const scorecard = json("data/scorecard.json", true);
-const tasks = json("data/tasks.json", true);
-const interest = json("data/interest_summary.json", true);
-const state = json("state.json", true);
-const debtsCsv = read("data/debts.csv", true);
-const targetsMd = read("TARGETS.md", true);
+const facts = json("data/cfo-feed/facts.json");
+const t30d = json("data/cfo-feed/t30d.json", true);
+const scorecard = json("data/cfo-feed/scorecard.json", true);
+const tasks = json("data/cfo-feed/tasks.json", true);
+const interest = json("data/cfo-feed/interest_summary.json", true);
+const stateText = readContext("state.json", true);
+const state = stateText === null ? null : JSON.parse(stateText);
+const debtsCsv = read("data/cfo-feed/debts.csv", true);
+const targetsMd = read("reports/TARGETS.md", true);
 const updated = facts.updated ?? null;
-const seriesCsv = read("data/t30d-net-burn.csv", true);
+const seriesCsv = read("data/cfo-feed/t30d-net-burn.csv", true);
 
 // Last 180 complete daily points of the T30D series, whole CAD, to keep the env value small.
 const SERIES_DAYS = 180;
@@ -140,6 +177,172 @@ function debtRows() {
   });
 }
 
+// --- savings rate (North Star): data/savings-rate.csv, one headline column ---
+const SAVINGS_RATE_DEFINITION =
+  "(income − opex) / income, personal entity only; income includes crypto sales at full proceeds and excludes Stoic loan repayments; opex = spending + interest + fees; principal is capital. Target 20%+.";
+function savingsRate() {
+  const rows = csvRows("data/savings-rate.csv");
+  if (!rows || !rows.length) return null;
+  const col = "savings_rate" in rows[0] ? "savings_rate" : "savings_rate_incl" in rows[0] ? "savings_rate_incl" : null;
+  if (!col) return null;
+  const pctOf = (r) => {
+    const v = num(r[col]);
+    return v === null ? null : Math.round(v * 1000) / 10;
+  };
+  const months = rows.filter((r) => /^\d{4}-(0[1-9]|1[0-2])$/.test(r.month ?? ""));
+  const t12 = [...rows].reverse().find((r) => /^(TTM|T12)/i.test(r.month ?? ""));
+  const last = months[months.length - 1] ?? null;
+  let t12Label = "";
+  if (t12) {
+    const m = /^T12_(\d{4}-\d{2})_(\d{4}-\d{2})$/.exec(t12.month);
+    t12Label = m ? `T12 ${m[1]} to ${m[2]}` : t12.month.replace(/_/g, " ");
+  }
+  return {
+    month: last?.month ?? null,
+    monthRatePct: last ? pctOf(last) : null,
+    monthStatus: clip(clean(last?.status), 200),
+    t12Label,
+    t12RatePct: t12 ? pctOf(t12) : null,
+    definition: SAVINGS_RATE_DEFINITION,
+    // The rate covers the newest month on file, so its as-of is that month's end.
+    asOf: last ? monthEnd(last.month) : null,
+    source: `moneyos data/savings-rate.csv (${col})`,
+  };
+}
+
+// --- books: suspense and total from the trial balance, tie-out counts ---
+function books() {
+  const tb = csvRows("books/trial-balance.csv");
+  const tie = csvRows("data/tieout.csv");
+  if (!tb && !tie) return null;
+  const lastCol = (r) => {
+    const values = Object.values(r);
+    return num(values[values.length - 1]);
+  };
+  const nameOf = (r) => r.account ?? Object.values(r)[1] ?? "";
+  const suspense = tb?.find((r) => /suspense/i.test(nameOf(r)));
+  const total = tb?.find((r) => /^total$/i.test(nameOf(r).trim()));
+  const trialBalance = total ? lastCol(total) : null;
+  const suspenseCad = suspense ? lastCol(suspense) : null;
+  let passing = null,
+    failing = null,
+    asOf = null;
+  if (tie) {
+    passing = 0;
+    failing = 0;
+    for (const r of tie) {
+      for (const v of Object.values(r)) {
+        if (v === "ties") passing++;
+        else if (v === "does not tie") failing++;
+      }
+      const d = dateOnly(r.stmt_date);
+      if (d && (!asOf || d > asOf)) asOf = d;
+    }
+  }
+  return {
+    suspenseCad: suspenseCad === null ? null : Math.round(suspenseCad * 100) / 100,
+    trialBalanceCad: trialBalance === null ? null : Math.round(trialBalance * 100) / 100,
+    balanced: trialBalance === null ? null : Math.abs(trialBalance) < 0.01,
+    tieOutsPassing: passing,
+    tieOutsFailing: failing,
+    asOf,
+  };
+}
+
+// --- payables and receivables: open rows only, masked, capped ---
+function payables() {
+  const rows = csvRows("data/payables-receivables.csv");
+  if (!rows) return [];
+  return rows
+    .filter((r) => !/^(paid|closed|done|settled)\b/i.test((r.status ?? "").trim()))
+    .slice(0, MAX_PAYABLES)
+    .map((r, i) => {
+      const due = (r.due_date ?? "").trim();
+      const dueDate = dateOnly(due);
+      return {
+        id: (r.id ?? "").trim() || `row-${i + 1}`,
+        priority: num(r.priority),
+        type: /^receiv/i.test(r.type ?? "") ? "receivable" : "payable",
+        entity: (r.entity ?? "").trim(),
+        counterparty: clip(clean(r.counterparty), 120),
+        description: clip(clean(r.description), 240),
+        amount: num(r.amount),
+        currency: /^[A-Z]{3}$/.test((r.currency ?? "").trim()) ? r.currency.trim() : "CAD",
+        dueDate,
+        dueNote: dueDate ? "" : clip(clean(due), 40),
+        status: clip(clean(r.status), 80),
+        source: clip(clean(r.source), 200),
+        lastChecked: dateOnly(r.last_checked),
+      };
+    });
+}
+
+// --- clarify: open rows awaiting a ruling, open questions ---
+function clarify() {
+  const toClarify = csvRows("clarify/to-clarify.csv");
+  const questions = csvRows("clarify/open-questions.csv");
+  if (!toClarify && !questions) return null;
+  const statusOf = (r) => (r.Status ?? r.status ?? "").trim().toLowerCase();
+  const open = toClarify ? toClarify.filter((r) => statusOf(r) === "open") : null;
+  let asOf = null;
+  for (const r of toClarify ?? []) {
+    const d = dateOnly(r.Date ?? r.date);
+    if (d && (!asOf || d > asOf)) asOf = d;
+  }
+  const batchKey = toClarify?.length ? Object.keys(toClarify[0]).find((k) => /batch/i.test(k)) : null;
+  return {
+    openToClarifyRows: open ? open.length : null,
+    openQuestions: questions ? questions.filter((r) => statusOf(r) === "open").length : null,
+    batches: open && batchKey ? new Set(open.map((r) => (r[batchKey] ?? "").trim()).filter(Boolean)).size : null,
+    asOf,
+  };
+}
+
+// --- contract: version, hash (as scripts/check_sot.py computes it) and acknowledgements ---
+function contract() {
+  const sourcesText = read("sources.json", true);
+  if (sourcesText === null) return null;
+  const sources = JSON.parse(sourcesText);
+  const sotPath = join(moneyosDir, "SOURCE_OF_TRUTH.md");
+  let hash = null;
+  try {
+    hash = existsSync(sotPath) ? contractHash(readFileSync(sotPath), sourcesText) : null;
+  } catch (error) {
+    console.error(
+      `build-cash-snapshot: contract hash not computed (${error.message}); compare with python3 scripts/check_sot.py --hash in MONEYOS_DIR`,
+    );
+  }
+  const acked = ackedAgents(read("ACK.md", true), hash);
+  const date = dateOnly(sources.contract_date);
+  const grace = Number(sources.ack_grace_days ?? 7);
+  const graceUntil = date ? new Date(Date.parse(date) + grace * 86400000).toISOString().slice(0, 10) : null;
+  return {
+    version: String(sources.contract_version ?? ""),
+    hash,
+    date,
+    requiredAcks: Array.isArray(sources.required_acks) ? sources.required_acks.map(String) : [],
+    ackedAgents: acked,
+    graceUntil,
+  };
+}
+
+// --- cabin: newest owner statement ---
+function cabin() {
+  const rows = csvRows("data/cabin-statements.csv");
+  if (!rows) return null;
+  const dated = rows.filter((r) => /^\d{4}-\d{2}$/.test(r.statement_month ?? ""));
+  const last = [...dated].sort((a, b) => a.statement_month.localeCompare(b.statement_month)).pop() ?? null;
+  return {
+    lastStatementMonth: last?.statement_month ?? null,
+    nights: last ? num(last.nights) : null,
+    grossCad: last ? num(last.gross_income) : null,
+    salesTaxesCad: last ? num(last.sales_taxes_collected) : null,
+    depositCad: last ? num(last.statement_total) : null,
+    netExTaxCad: last ? num(last.net_ex_tax) : null,
+    statementsOnFile: dated.length,
+  };
+}
+
 const taxItems = (facts.tax_items ?? []).map((t) => {
   const explicit = num(t.amount_cad);
   const parsed = explicit === null ? amountInText(t.text) : null;
@@ -157,6 +360,7 @@ const taxItems = (facts.tax_items ?? []).map((t) => {
   };
 });
 
+const savingsRateRow = savingsRate();
 const snapshot = {
   schemaVersion: SCHEMA,
   generatedAt: new Date().toISOString(),
@@ -215,7 +419,7 @@ const snapshot = {
   fundingPlan: {
     totalCad: funding.total,
     asOf: updated,
-    source: "cfo-feed/TARGETS.md section 1",
+    source: "moneyos reports/TARGETS.md section 1",
   },
   stoicCover: {
     entityId: facts.entities?.stoic ? "stoic" : null,
@@ -250,23 +454,26 @@ const snapshot = {
           : null,
       }
     : null,
-  scorecard: scorecard
-    ? {
-        asOf: scorecard.as_of ?? null,
-        lastFullMonth: {
-          month: scorecard.personal_net_last_full_month?.month ?? null,
-          cad: num(scorecard.personal_net_last_full_month?.cad),
-          source: scorecard.personal_net_last_full_month?.source ?? "",
-        },
-        trend: scorecard.trend ?? "",
-        savingsPlanCadMo: num(scorecard.savings_plan_cad_mo),
-        savingsBankedCadMo: num(scorecard.savings_banked_cad_mo),
-        corpMovedCount: num(scorecard.corp_moved_count),
-        corpTotalCount: num(scorecard.corp_total_count),
-        corpMovedCadMo: num(scorecard.corp_moved_cad_mo),
-        corpTotalCadMo: num(scorecard.corp_total_cad_mo),
-      }
-    : null,
+  // The scorecard carries the savings rate, so it exists when either input does.
+  scorecard:
+    scorecard || savingsRateRow
+      ? {
+          asOf: scorecard?.as_of ?? null,
+          lastFullMonth: {
+            month: scorecard?.personal_net_last_full_month?.month ?? null,
+            cad: num(scorecard?.personal_net_last_full_month?.cad),
+            source: scorecard?.personal_net_last_full_month?.source ?? "",
+          },
+          trend: scorecard?.trend ?? "",
+          savingsPlanCadMo: num(scorecard?.savings_plan_cad_mo),
+          savingsBankedCadMo: num(scorecard?.savings_banked_cad_mo),
+          corpMovedCount: num(scorecard?.corp_moved_count),
+          corpTotalCount: num(scorecard?.corp_total_count),
+          corpMovedCadMo: num(scorecard?.corp_moved_cad_mo),
+          corpTotalCadMo: num(scorecard?.corp_total_cad_mo),
+          savingsRate: savingsRateRow,
+        }
+      : null,
   // Login names, URLs, card digits and search strings are dropped on purpose.
   tasks: (tasks?.tasks ?? []).map((t) => ({
     id: t.id,
@@ -279,6 +486,11 @@ const snapshot = {
     effective: t.effective ?? null,
     why: mask(t.why ?? ""),
   })),
+  books: books(),
+  payables: payables(),
+  clarify: clarify(),
+  contract: contract(),
+  cabin: cabin(),
 };
 
 const validated = validateCash(snapshot);
@@ -297,8 +509,12 @@ const gz = gzipSync(text).toString("base64");
 const payload = wantGzip ? gz : text;
 if (out) writeFileSync(out, payload);
 else process.stdout.write(payload);
+const presence = (v) => (v ? "present" : "null");
 console.error(
   `cash_snapshot_v1: ${bytes} bytes JSON (${bytes <= 48000 ? "fits" : "EXCEEDS"} CASH_SNAPSHOT_JSON), ${gz.length} bytes gzip-base64; ` +
     `${validated.entities.length} entities, ${validated.taxItems.length} tax items, ${validated.fundingTargets.length} funding targets, ` +
-    `${validated.debts.length} debts, ${validated.tasks.length} tasks${out ? ` -> ${out}` : ""}`,
+    `${validated.debts.length} debts, ${validated.tasks.length} tasks, ${validated.payables.length} payables; ` +
+    `savingsRate ${presence(validated.scorecard?.savingsRate)}, books ${presence(validated.books)}, clarify ${presence(validated.clarify)}, ` +
+    `contract ${validated.contract ? `present (hash ${validated.contract.hash ?? "null"}, acked ${validated.contract.ackedAgents.length}/${validated.contract.requiredAcks.length})` : "null"}, ` +
+    `cabin ${presence(validated.cabin)}${out ? ` -> ${out}` : ""}`,
 );
