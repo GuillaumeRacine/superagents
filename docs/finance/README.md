@@ -27,7 +27,7 @@ how many facilities they cover; the blended rate is balance-weighted over
 facilities with both a balance and a rate.
 
 Optional `cash_snapshot_v1` additions (older snapshots stay valid): `burn.series`
-(up to 400 `[date, CAD]` points; the builder sends the last 180 complete days of
+(up to 400 `[date, CAD]` points; the builder sends the last 60 complete days of
 `cfo-feed/data/t30d-net-burn.csv`), `burn.debtService` (30-day interest vs principal
 from `t30d.json`) and `scorecard.corpMoved*`/`corpTotal*` (payments moved to the
 Ensemble Wise card). The page shows an always-visible as-of bar and a red stale banner,
