@@ -32,7 +32,21 @@ const fixture = validateCash({
   stoicCover: { entityId: "holdco", claimsAsOf: "2026-10-19", claimKeys: ["n1"] },
   debts: [{ id: "m1", name: "Example mortgage 0001", scope: "personal", lender: "Bank", kind: "mortgage", balanceCad: 100000, balanceAsOf: "2026-09", ratePct: 4, interestMonthCad: 333.33 }],
   burn: { asOf: "2026-10-18", t30dNetBurnCad: 1234, topCategories: [["Travel", 500]], accountsLastDate: { "Example chequing": "2026-10-18" } },
+  scorecard: {
+    asOf: "2026-10-19",
+    lastFullMonth: { month: "2026-09", cad: -2000, source: "example" },
+    savingsRate: { month: "2026-09", monthRatePct: -12.5, monthStatus: "provisional", t12Label: "T12 2025-10 to 2026-09", t12RatePct: 4, definition: "(income − opex) / income, example definition", asOf: "2026-09-30", source: "example csv" },
+  },
   tasks: [{ id: "t1", who: "gui", kind: "cut", title: "Example first open task", deadline: "2026-10-20", burnCadMo: 10 }],
+  // MoneyOS record sections (issue #54), fictional.
+  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, tieOutsOther: 3, asOf: "2026-10-31" },
+  payables: [
+    { id: "P01", priority: 1, type: "payable", entity: "personal", counterparty: `${marker}_PAYEE`, description: "Example bill", amount: 321, currency: "CAD", dueDate: "2026-10-17", status: "open", lastChecked: "2026-10-19" },
+    { id: "P02", priority: 2, type: "payable", entity: "holdco", counterparty: "Example Card", amount: null, dueDate: null, dueNote: "next statement", status: "MISSING", lastChecked: "2026-10-19" },
+  ],
+  clarify: { openToClarifyRows: 12, openQuestions: 3, batches: 2, asOf: "2026-10-18" },
+  contract: { version: "2.0.0", hash: "0123456789ab", date: "2026-10-12", requiredAcks: ["Agent A", "Agent B"], ackedAgents: ["Agent A"], graceUntil: "2026-10-19" },
+  cabin: { lastStatementMonth: "2026-09", nights: 11, grossCad: 2500, salesTaxesCad: 200, depositCad: 1200, netExTaxCad: 950, statementsOnFile: 9 },
 });
 for (const route of ["dashboard", "dashboard/cash", "dashboard/invest", "finance", "cash", "invest"])
   assert(!existsSync(`.next/server/app/${route}.html`), `${route} must not be prerendered`);
@@ -133,10 +147,39 @@ try {
     "Example first open task",
     "CAD 83,000", // 100,000 − 7,000 − 10,000: cover from one entity only
     "unknown", // Opco's null balance renders as unknown, never 0
+    // MoneyOS record (issue #54): owner line, North Star and the new bands.
+    "record of truth: main of the private MoneyOS repository",
+    "Savings rate",
+    "-12.50%", // non-integer figures keep two decimals (same rule as Money)
+    "T12 2025-10 to 2026-09",
+    "4%",
+    "below target",
+    "Books",
+    "CAD -1,234.50",
+    "40 / 42 tieable",
+    "40 tie / 2 do not / 3 not tied",
+    "balanced",
+    "Payables and receivables",
+    `${marker}_PAYEE`,
+    "CAD 321",
+    "overdue",
+    "next statement",
+    "MISSING",
+    "Open items",
+    "Contract",
+    "0123456789ab",
+    "Agent B: missing",
+    "Cabin",
+    "11 nights",
+    "CAD 950",
   ])
     assert(html.includes(expected), `/dashboard/cash must render ${expected}`);
   assert(!html.includes("CAD 100,500"), "Entities must never be summed");
   assert(!html.includes("CAD 0<"), "Unknown must never render as zero");
+  assert(!html.includes("Context/cfo-feed"), "Owner line must not name the retired record");
+  // Grace ends 2026-10-19 and the page renders later, so the missing ack is red and in the week's list.
+  assert(html.includes("Acknowledgement missing after grace"), "Missing ack after grace must render as an alert");
+  assert(html.includes("Contract acknowledgement missing after grace: Agent B"), "Missing ack must reach Needs you soon");
   const api = await get("/api/cash", owner);
   assert.equal(api.status, 200);
   assert.deepEqual((await api.json()).snapshot, fixture);
@@ -169,7 +212,7 @@ try {
     assert.equal(r.status, 308, `${from} must redirect permanently`);
     assert.equal(r.headers.get("location"), to, `${from} must redirect to ${to}`);
   }
-  console.log("PASS cash owner: /dashboard/cash renders six sections, cover from one entity, unknown never zero; /api/cash JSON; /dashboard hub; /dashboard/invest; old routes 308; no write endpoint");
+  console.log("PASS cash owner: /dashboard/cash renders six sections plus the MoneyOS bands (savings rate, books, payables, open items, contract, cabin), cover from one entity, unknown never zero; /api/cash JSON; /dashboard hub; /dashboard/invest; old routes 308; no write endpoint");
 } finally {
   server.kill();
 }

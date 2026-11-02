@@ -2,10 +2,12 @@ import { redirect } from "next/navigation";
 import { getCashData } from "@/lib/cash-data";
 import {
   alerts,
+  contractStatus,
   debtTotals,
   freshness,
   fundingRows,
   openTasks,
+  payableRows,
   stoicCover,
 } from "@/lib/cash-model.mjs";
 import { useMDXComponents } from "nextra-theme-docs";
@@ -23,7 +25,8 @@ const pageMetadata = {
   searchable: false,
 };
 const OWNER_LINE =
-  "Owner: Chief of Cash (GrokBot) · feed posts weekdays 08:00 in #cash · record of truth Context/cfo-feed";
+  "Owner: Chief of Cash (GrokBot) · feed in #cash · record of truth: main of the private MoneyOS repository (contract SOURCE_OF_TRUTH.md)";
+const SAVINGS_TARGET_PCT = 20;
 
 type Unknown = number | null;
 const fmt0 = new Intl.NumberFormat("en-CA", { maximumFractionDigits: 0 });
@@ -33,6 +36,10 @@ const fmt2 = new Intl.NumberFormat("en-CA", {
 });
 // Whole amounts stay whole; anything with cents shows both digits.
 const fmt = { format: (n: number) => (Number.isInteger(n) ? fmt0 : fmt2).format(n) };
+// "unknown" is styled in one place.
+function Unknown({ what = "unknown" }: { what?: string }) {
+  return <span className={s.unknown}>{what}</span>;
+}
 function Money({
   amount,
   currency = "CAD",
@@ -42,22 +49,17 @@ function Money({
   currency?: string;
   signed?: boolean;
 }) {
-  if (amount === null || amount === undefined)
-    return <span className={s.unknown}>unknown</span>;
+  if (amount === null || amount === undefined) return <Unknown />;
   const sign = signed && amount > 0 ? "+" : "";
   return <>{`${currency} ${sign}${fmt.format(amount)}`}</>;
 }
 function Pct({ value }: { value: Unknown }) {
-  return value === null ? (
-    <span className={s.unknown}>unknown</span>
-  ) : (
-    <>{`${fmt.format(value)}%`}</>
-  );
+  return value === null ? <Unknown /> : <>{`${fmt.format(value)}%`}</>;
 }
 function AsOf({ date, prefix = "as of" }: { date: string | null; prefix?: string }) {
   return (
     <small>
-      {prefix} {date ?? <span className={s.unknown}>unknown date</span>}
+      {prefix} {date ?? <Unknown what="unknown date" />}
     </small>
   );
 }
@@ -65,12 +67,15 @@ function Tag({ tag }: { tag: string }) {
   const cls =
     tag === "overdue"
       ? s.tagBad
-      : tag === "due soon" || tag === "unverified" || tag === "blocked"
+      : tag === "due soon" || tag === "unverified" || tag === "blocked" || tag === "below target" || tag === "missing"
         ? s.tagWarn
-        : tag === "funded" || tag === "done"
+        : tag === "funded" || tag === "done" || tag === "on target"
           ? s.tagOk
           : "";
   return <span className={`${s.tag} ${cls}`}>{tag}</span>;
+}
+function Count({ value }: { value: Unknown }) {
+  return value === null ? <Unknown /> : <>{fmt0.format(value)}</>;
 }
 function Chart({ series }: { series: [string, number][] }) {
   if (series.length < 2) return null;
@@ -114,10 +119,18 @@ export default async function CashPage() {
   const burn = snap.burn;
   const fresh = freshness(snap, Date.now());
   const sc = snap.scorecard;
+  const sr = sc?.savingsRate ?? null;
+  const books = snap.books;
+  const pay = payableRows(snap, asOfToday);
+  const clarify = snap.clarify;
+  const contract = snap.contract;
+  const ack = contractStatus(snap, asOfToday);
+  const cabin = snap.cabin;
   const guiTasks = tasks.filter((t) => t.who === "gui");
   const todayTask = guiTasks[0] ?? null;
   // Only what leads to an action or decision soon: due within 7 days or late, open
-  // notices, blocked funding, and a short Stoic cover.
+  // notices, blocked funding, a short Stoic cover, overdue or imminent payables,
+  // and a contract acknowledgement missing after grace.
   const soon = [
     ...alertRows.filter((a) => a.kind !== "data" && (a.days === null || a.days <= 7)),
     ...funding
@@ -125,6 +138,18 @@ export default async function CashPage() {
       .map((f) => ({ when: f.deadline, days: f.days, who: "gui", text: `${f.label}: ${f.statusNote || f.tag}`, kind: `funding ${f.tag}` })),
     ...(cover.cover !== null && cover.cover < 0
       ? [{ when: null, days: null, who: "gui", text: `${cover.entity ?? "Funding entity"} cover after tax and funding is short: CAD ${fmt.format(cover.cover)}`, kind: "decision" }]
+      : []),
+    ...pay
+      .filter((p) => p.actionable && (p.tag === "overdue" || (p.days !== null && p.days <= 7)))
+      .map((p) => ({
+        when: p.when,
+        days: p.days,
+        who: "gui",
+        text: `${p.counterparty || p.description}${p.amount === null ? "" : `: ${p.currency} ${fmt.format(p.amount)}`}${p.dueNote ? ` (${p.dueNote})` : ""}`,
+        kind: p.type,
+      })),
+    ...(ack.overdue && contract
+      ? [{ when: contract.graceUntil, days: null, who: "bot", text: `Contract acknowledgement missing after grace: ${ack.missing.join(", ")}`, kind: "contract" }]
       : []),
   ];
   return (
@@ -222,6 +247,52 @@ export default async function CashPage() {
               )}
             </section>
 
+            <section className={s.band} aria-label="Savings rate">
+              <div className={s.bandHead}>
+                <h2>Savings rate</h2>
+                <span className={s.right}>North Star · target {SAVINGS_TARGET_PCT}%+ · month and trailing 12 months</span>
+              </div>
+              {sr ? (
+                <>
+                  <div className={s.statGrid}>
+                    <div className={s.stat}>
+                      <span>Month {sr.month ?? "unknown"}</span>
+                      <strong>
+                        <Pct value={sr.monthRatePct} />
+                      </strong>
+                      <small>
+                        {sr.monthRatePct !== null && (
+                          <>
+                            <Tag tag={sr.monthRatePct >= SAVINGS_TARGET_PCT ? "on target" : "below target"} />{" "}
+                          </>
+                        )}
+                        {sr.monthStatus || "final"} · as of {sr.asOf ?? "unknown"}
+                      </small>
+                    </div>
+                    <div className={s.stat}>
+                      <span>{sr.t12Label || "Trailing 12 months"}</span>
+                      <strong>
+                        <Pct value={sr.t12RatePct} />
+                      </strong>
+                      <small>
+                        {sr.t12RatePct !== null && (
+                          <>
+                            <Tag tag={sr.t12RatePct >= SAVINGS_TARGET_PCT ? "on target" : "below target"} />{" "}
+                          </>
+                        )}
+                        trailing twelve months · {sr.source || "no source"}
+                      </small>
+                    </div>
+                  </div>
+                  <p className={s.muted}>Definition: {sr.definition || "unknown"}</p>
+                </>
+              ) : (
+                <p className={s.empty}>
+                  Savings rate: <Unknown /> (no savings-rate series in the snapshot).
+                </p>
+              )}
+            </section>
+
             <section className={s.band} aria-label="Today's one task">
               <div className={s.eyebrow}>TODAY&apos;S ONE TASK</div>
               {todayTask ? (
@@ -276,6 +347,245 @@ export default async function CashPage() {
                     </li>
                   ))}
                 </ul>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Books">
+              <div className={s.bandHead}>
+                <h2>Books</h2>
+                <span className={s.right}>trial balance and statement tie-outs</span>
+              </div>
+              {books ? (
+                <div className={s.statGrid}>
+                  <div className={s.stat}>
+                    <span>Suspense</span>
+                    <strong>
+                      <Money amount={books.suspenseCad} />
+                    </strong>
+                    <small>unmatched transfers · target under CAD 1,000, itemized</small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>Tie-outs</span>
+                    <strong>
+                      {books.tieOutsPassing === null || books.tieOutsFailing === null ? (
+                        <Unknown />
+                      ) : (
+                        `${fmt0.format(books.tieOutsPassing)} / ${fmt0.format(books.tieOutsPassing + books.tieOutsFailing)} tieable`
+                      )}
+                    </strong>
+                    <small>
+                      {[
+                        `${books.tieOutsPassing === null ? "unknown" : fmt0.format(books.tieOutsPassing)} tie`,
+                        `${books.tieOutsFailing === null ? "unknown" : fmt0.format(books.tieOutsFailing)} do not`,
+                        `${books.tieOutsOther === null ? "unknown" : fmt0.format(books.tieOutsOther)} not tied`,
+                      ].join(" / ")}
+                      {` · as of ${books.asOf ?? "unknown"}`}
+                    </small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>Trial balance</span>
+                    <strong>
+                      {books.balanced === null ? <Unknown /> : books.balanced ? "balanced" : "out of balance"}
+                    </strong>
+                    <small>
+                      {/* A residual: cents matter, so it always shows two decimals. */}
+                      {books.trialBalanceCad === null ? "debits − credits unknown" : `debits − credits CAD ${fmt2.format(books.trialBalanceCad)}`}
+                    </small>
+                  </div>
+                </div>
+              ) : (
+                <p className={s.empty}>
+                  Books: <Unknown /> (no trial balance or tie-out file in the snapshot).
+                </p>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Payables and receivables">
+              <div className={s.bandHead}>
+                <h2>Payables and receivables</h2>
+                <span className={s.right}>open rows of the register · overdue first</span>
+              </div>
+              {pay.length === 0 ? (
+                <p className={s.empty}>No open payable or receivable in the snapshot.</p>
+              ) : (
+                <div className={s.tableWrap}>
+                  <table className={s.table}>
+                    <thead>
+                      <tr>
+                        <th>Due</th>
+                        <th>Counterparty</th>
+                        <th>Entity</th>
+                        <th className={s.num}>Amount</th>
+                        <th>Status</th>
+                        <th>Checked</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {pay.map((p) => (
+                        <tr key={p.id}>
+                          <td className={s.nowrap}>
+                            {p.when ?? <Unknown />}
+                            {p.days !== null && (
+                              <>
+                                <br />
+                                <small>{p.days < 0 ? `${-p.days}d overdue` : p.days === 0 ? "today" : `in ${p.days}d`}</small>
+                              </>
+                            )}
+                            {p.tag && (
+                              <>
+                                <br />
+                                <Tag tag={p.tag} />
+                              </>
+                            )}
+                          </td>
+                          <td>
+                            {p.counterparty || <Unknown />} <Tag tag={p.type} />
+                            {p.description && (
+                              <>
+                                <br />
+                                <small>{p.description}</small>
+                              </>
+                            )}
+                          </td>
+                          <td>{p.entity || "unknown"}</td>
+                          <td className={s.num}>
+                            <Money amount={p.amount} currency={p.currency} />
+                          </td>
+                          <td>
+                            {p.status || "unknown"}
+                            {p.source && (
+                              <>
+                                <br />
+                                <small>{p.source}</small>
+                              </>
+                            )}
+                          </td>
+                          <td className={s.nowrap}>{p.lastChecked ?? <Unknown />}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Open items">
+              <div className={s.bandHead}>
+                <h2>Open items</h2>
+                <span className={s.right}>rows awaiting a ruling and questions for you</span>
+              </div>
+              {clarify ? (
+                <div className={s.statGrid}>
+                  <div className={s.stat}>
+                    <span>To clarify</span>
+                    <strong>
+                      <Count value={clarify.openToClarifyRows} />
+                    </strong>
+                    <small>
+                      open rows in {clarify.batches === null ? "an unknown number of" : fmt0.format(clarify.batches)} batches · target under 20
+                    </small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>Open questions</span>
+                    <strong>
+                      <Count value={clarify.openQuestions} />
+                    </strong>
+                    <small>yes/no questions waiting for your answer in the sheet</small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>As of</span>
+                    <strong>{clarify.asOf ?? <Unknown />}</strong>
+                    <small>newest row awaiting a ruling</small>
+                  </div>
+                </div>
+              ) : (
+                <p className={s.empty}>
+                  Open items: <Unknown /> (no clarify files in the snapshot).
+                </p>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Contract">
+              <div className={s.bandHead}>
+                <h2>Contract</h2>
+                <span className={s.right}>SOURCE_OF_TRUTH.md + sources.json, acknowledged in ACK.md</span>
+              </div>
+              {contract ? (
+                <>
+                  {ack.overdue && (
+                    <div className={s.staleBanner} role="alert">
+                      <strong>{`Acknowledgement missing after grace (${contract.graceUntil ?? "unknown date"}): ${ack.missing.join(", ")}.`}</strong>{" "}
+                      check_sot.py fails for every agent until the row is added.
+                    </div>
+                  )}
+                  <div className={s.statGrid}>
+                    <div className={s.stat}>
+                      <span>Version</span>
+                      <strong>{contract.version || <Unknown />}</strong>
+                      <small>dated {contract.date ?? "unknown"}</small>
+                    </div>
+                    <div className={s.stat}>
+                      <span>Hash</span>
+                      <strong>{contract.hash ?? <Unknown />}</strong>
+                      <small>sha256 of the contract files, first 12 hex</small>
+                    </div>
+                    <div className={s.stat}>
+                      <span>Acknowledged</span>
+                      <strong>{`${contract.requiredAcks.length - ack.missing.length} of ${contract.requiredAcks.length}`}</strong>
+                      <small>
+                        {contract.requiredAcks.map((agent) => {
+                          const acked = !ack.missing.includes(agent);
+                          return (
+                            <span key={agent} className={`${s.tag} ${acked ? s.tagOk : ack.afterGrace ? s.tagBad : s.tagWarn}`} style={{ marginRight: 4 }}>
+                              {`${agent}: ${acked ? "acked" : "missing"}`}
+                            </span>
+                          );
+                        })}
+                        {` · grace until ${contract.graceUntil ?? "unknown"}`}
+                      </small>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <p className={s.empty}>
+                  Contract: <Unknown /> (no sources.json in the snapshot).
+                </p>
+              )}
+            </section>
+
+            <section className={s.band} aria-label="Cabin">
+              <div className={s.bandHead}>
+                <h2>Cabin</h2>
+                <span className={s.right}>
+                  {`last owner statement · ${cabin?.statementsOnFile == null ? "unknown" : fmt0.format(cabin.statementsOnFile)} on file`}
+                </span>
+              </div>
+              {cabin ? (
+                <div className={s.statGrid}>
+                  <div className={s.stat}>
+                    <span>Statement {cabin.lastStatementMonth ?? "unknown"}</span>
+                    <strong>{cabin.nights === null ? <Unknown /> : `${fmt0.format(cabin.nights)} nights`}</strong>
+                    <small>gross <Money amount={cabin.grossCad} /></small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>Sales taxes collected</span>
+                    <strong>
+                      <Money amount={cabin.salesTaxesCad} />
+                    </strong>
+                    <small>deposit <Money amount={cabin.depositCad} /></small>
+                  </div>
+                  <div className={s.stat}>
+                    <span>Net ex tax</span>
+                    <strong>
+                      <Money amount={cabin.netExTaxCad} />
+                    </strong>
+                    <small>after platform fees, commission and extras</small>
+                  </div>
+                </div>
+              ) : (
+                <p className={s.empty}>
+                  Cabin: <Unknown /> (no owner statements in the snapshot).
+                </p>
               )}
             </section>
 
