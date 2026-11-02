@@ -14,6 +14,13 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 
 ## 2026-11
 
+### [2026-11-02] LESSON Cash snapshot must fit the shared Vercel env budget, not just its own cap
+- **Context:** PR #55 added six MoneyOS bands; the real snapshot grew from 7.9 KB to 10.6 KB gzip-base64, under the 48,000-byte transport cap.
+- **What we tried:** `vercel env update` failed: "total size of all Environment Variables (65.52KB) exceeds 64KB" (the finance snapshot alone is ~48 KB).
+- **Outcome:** trimmed the burn series to 60 days, dropped payable `source` text, clipped descriptions and task text: 8,932 bytes, update accepted.
+- **Lesson / rule:** the binding limit is 64 KB across all production variables; before publishing run the builder and check `64 KB − (other vars)`, not the 48 KB cap. Keep sections additive and clip free text at the builder, never at the page.
+- **Links:** #54, #55, #58
+
 ### [2026-11-02] DECISION Cash dashboard reads the MoneyOS record (issue #54, track 2)
 - **Context:** The finance record moved to `main` of the private MoneyOS repository (contract `SOURCE_OF_TRUTH.md` + `sources.json`, `ACK.md`, `scripts/check_sot.py`). The Cash builder still read `Context/cfo-feed`.
 - **What we tried:** `MONEYOS_DIR` (a local fast-forward-only clone of its main branch) for every input except the feed memory `state.json` (still `CONTEXT_DIR`, optional); six optional `cash_snapshot_v1` sections (`scorecard.savingsRate`, `books`, `payables`, `clarify`, `contract`, `cabin`) validated with the existing strictness; the contract hash reproduced in Node (`lib/moneyos-contract.mjs`: Python `json.dumps(sort_keys=True, ensure_ascii=False)` emulation, verified byte for byte against `check_sot.py --hash` and a fixed-input hash from `hashlib`); bands on the page in reading order; payables and a missing ack after grace feed Needs you soon.

@@ -94,7 +94,7 @@ const updated = facts.updated ?? null;
 const seriesCsv = read("data/cfo-feed/t30d-net-burn.csv", true);
 
 // Last 180 complete daily points of the T30D series, whole CAD, to keep the env value small.
-const SERIES_DAYS = 180;
+const SERIES_DAYS = 60; // 180 pushed the shared 64 KB Vercel env budget over the limit on 2026-11-02 (finance snapshot ~48 KB)
 function seriesRows() {
   if (!seriesCsv) return [];
   const { rows } = parseCsv(seriesCsv);
@@ -287,13 +287,13 @@ function payables() {
         type: /^receiv/i.test(r.type ?? "") ? "receivable" : "payable",
         entity: (r.entity ?? "").trim(),
         counterparty: clip(clean(r.counterparty), 120),
-        description: clip(clean(r.description), 240),
+        description: clip(clean(r.description), 120),
         amount: num(r.amount),
         currency: /^[A-Z]{3}$/.test((r.currency ?? "").trim()) ? r.currency.trim() : "CAD",
         dueDate,
         dueNote: dueDate ? "" : clip(clean(due), 40),
         status: clip(clean(r.status), 80),
-        source: clip(clean(r.source), 200),
+        source: "", // omitted from the snapshot: the shared 64 KB env budget (2026-11-02); the register file keeps it
         lastChecked: dateOnly(r.last_checked),
       };
     });
@@ -509,12 +509,14 @@ const snapshot = {
     id: t.id,
     who: t.who === "bot" ? "bot" : "gui",
     kind: t.kind ?? "",
-    title: mask(t.title),
+    title: clip(mask(t.title), 90),
     deadline: t.deadline ?? null,
     burnCadMo: num(t.burn_cad_mo),
     done: t.done ?? null,
     effective: t.effective ?? null,
-    why: mask(t.why ?? ""),
+    // Short: the task queue is the largest free-text section and the Vercel env budget (64 KB, shared
+    // with the finance snapshot) is the binding constraint since 2026-11-02.
+    why: clip(mask(t.why ?? ""), 110),
   })),
   books: books(),
   payables: payables(),
