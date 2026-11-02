@@ -4,8 +4,8 @@
 
 - Canonical site: https://superagents-docs.vercel.app
 - Source: https://github.com/GuillaumeRacine/superagents
-- Registry snapshot: 2026-09-09T11:07:29-04:00
-- Pages included: 55
+- Registry snapshot: 2026-11-02T17:53:30-05:00
+- Pages included: 56
 
 This file is generated. Edit the owning page in `app/`, then run `npm run docs:generate`.
 
@@ -65,11 +65,12 @@ This is the complete sanitized website corpus, not a backup of private repositor
 48. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
 49. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
 50. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
-51. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
-52. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
-53. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
-54. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
-55. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
+51. [Finance (MoneyOS)](#page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73) — `/workflows/finance-moneyos`
+52. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
+53. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
+54. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
+55. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
+56. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
 
 ## Source index
 
@@ -125,6 +126,7 @@ This is the complete sanitized website corpus, not a backup of private repositor
 | [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) | [/start-here/choose-a-runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime) | `app/start-here/choose-a-runtime/page.mdx` |
 | [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) | [/start-here/operating-loop](https://superagents-docs.vercel.app/start-here/operating-loop) | `app/start-here/operating-loop/page.mdx` |
 | [Workflows](#page-2f776f726b666c6f7773) | [/workflows](https://superagents-docs.vercel.app/workflows) | `app/workflows/page.mdx` |
+| [Finance (MoneyOS)](#page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73) | [/workflows/finance-moneyos](https://superagents-docs.vercel.app/workflows/finance-moneyos) | `app/workflows/finance-moneyos/page.mdx` |
 | [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) | [/workflows/personal-operations](https://superagents-docs.vercel.app/workflows/personal-operations) | `app/workflows/personal-operations/page.mdx` |
 | [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) | [/workflows/programs](https://superagents-docs.vercel.app/workflows/programs) | `app/workflows/programs/page.mdx` |
 | [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) | [/workflows/project-delivery](https://superagents-docs.vercel.app/workflows/project-delivery) | `app/workflows/project-delivery/page.mdx` |
@@ -278,6 +280,7 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Code, infrastructure, and shipped documentation | GitHub repository |
 | Live customer-facing behavior | Deployed production surface |
 | Automation definitions and fleet evidence | Context repository and owning scheduler |
+| Money data: transactions, balances, debts, payables, rulings, scorecard | `main` of the private moneyos repository, one record per data type named in its `SOURCE_OF_TRUTH.md` and `sources.json`; see [Finance (MoneyOS)](/workflows/finance-moneyos) |
 | Curated decisions, goals, identity, and durable knowledge | Private knowledge vault |
 | Files and structured working data | Google Drive where designated |
 | Apple-native personal data | iCloud |
@@ -286,6 +289,8 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Cold snapshots | External backup storage when mounted |
 
 This portal links those owners together. It must not claim to replace them.
+
+**Finance (since 2026-11-02).** The record for every money data type is `main` of the private moneyos repository; the Cash Flows sheet is Gui's edit surface and view, and `Context/cfo-feed` is now a frozen mirror and pointer, read by the remaining jobs until they are repointed and never edited. Disputes go to the repository's `ISSUES.md`. Details, roles and gates: [Finance (MoneyOS)](/workflows/finance-moneyos).
 
 ## Resolve conflicts
 
@@ -753,7 +758,7 @@ Source page: [Estate Coverage](https://superagents-docs.vercel.app/estate)
 
 # Estate Coverage
 
-> Generated from `config/estate-coverage.json`. The GitHub estate scan ran **September 8, 2026 at 9:26 p.m.**.
+> Generated from `config/estate-coverage.json`. The GitHub estate scan ran **November 2, 2026 at 5:56 p.m.**.
 
 **Scope:** All repositories accessible to the authenticated GitHub account through ownership, organization membership, or collaboration were scanned by tree and selected documentation/configuration surfaces. Results published here are sanitized; private names, private content, and credentials were not copied.
 
@@ -761,15 +766,15 @@ This section answers four separate questions without conflating them: what exist
 
 | Coverage dimension | Count |
 |---|---:|
-| Accessible GitHub repositories | 147 |
+| Accessible GitHub repositories | 168 |
 | Owners and organizations represented | 4 |
-| Active repositories | 119 |
-| Archived repositories | 28 |
-| Non-empty repository trees scanned | 139 |
+| Active repositories | 136 |
+| Archived repositories | 32 |
+| Non-empty repository trees scanned | 160 |
 | Empty repositories | 8 |
 | Repository scan failures | 0 |
-| Declaration files selected | 591 |
-| Declaration files inspected | 591 |
+| Declaration files selected | 738 |
+| Declaration files inspected | 738 |
 | Declaration file read failures | 0 |
 | Agentic component classes | 22 |
 | Declared operating devices | 3 |
@@ -784,7 +789,7 @@ This section answers four separate questions without conflating them: what exist
 
 ## What “complete” means here
 
-- **Repository-complete:** all 147 repositories accessible through ownership, organization membership, or collaboration were enumerated; 139 non-empty trees were scanned and 8 repositories were empty.
+- **Repository-complete:** all 168 repositories accessible through ownership, organization membership, or collaboration were enumerated; 160 non-empty trees were scanned and 8 repositories were empty.
 - **Current-tree sanitized:** private names, private content, credentials, customer records, messages, and financial data were not copied into the current published tree. Legacy Git history predates these controls and is tracked as a hardening gap.
 - **Device-honest:** only the main Mac mini is directly verified. The other declared devices remain visible as coverage gaps until the same audit runs there.
 - **Evidence-aware:** a file or service reference proves discoverability, not correctness, authorization, freshness, or documentation quality.
@@ -801,34 +806,34 @@ Source page: [Agentic Components](https://superagents-docs.vercel.app/estate/com
 
 # Agentic Components
 
-> Snapshot: **September 8, 2026 at 9:26 p.m.**. Generated from high-confidence agentic repositories; candidate path categories intentionally overlap.
+> Snapshot: **November 2, 2026 at 5:56 p.m.**. Generated from high-confidence agentic repositories; candidate path categories intentionally overlap.
 
 This taxonomy lists every class of repository-discoverable agentic component the scanner recognizes. It covers declarative policy, executable capabilities, control-plane wiring, context, orchestration, scheduled work, integrations, and verification evidence.
 
 | Component class | What belongs here | Agentic repos | Candidate files | Active repos | Active candidate files | Public evidence samples |
 |---|---|---:|---:|---:|---:|---|
-| Agent instruction layers | Repository or directory policy files consumed by agent runtimes. | 65 | 109 | 58 | 94 | `GuillaumeRacine/limitless_MVP:CLAUDE.md`<br />`GuillaumeRacine/ensemble_prototypes:CLAUDE.md`<br />`GuillaumeRacine/DN_Model:AGENTS.md` |
-| Agent and subagent definitions | Named agent, subagent, coach, or specialist definition files. | 19 | 291 | 17 | 248 | `GuillaumeRacine/ensemble_prototypes:.claude/agents/idea.md`<br />`GuillaumeRacine/ensemble_prototypes:.claude/agents/launch.md`<br />`GuillaumeRacine/ensemble_prototypes:.claude/agents/research.md` |
-| Skill manifests | SKILL.md packages and repository-owned skill definitions. | 13 | 795 | 13 | 795 | `GuillaumeRacine/KAI_Ensembl3:skills/Agents/SKILL.md`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Browser/SKILL.md`<br />`GuillaumeRacine/KAI_Ensembl3:skills/CORE/SKILL.md` |
-| Commands and slash actions | Reusable command definitions exposed to an agent runtime. | 12 | 222 | 11 | 213 | `GuillaumeRacine/present-agent2:.claude/commands/README.md`<br />`GuillaumeRacine/present-agent2:.claude/commands/build.md`<br />`GuillaumeRacine/present-agent2:.claude/commands/docs.md` |
-| Prompt definitions | Repository-owned prompt templates, system prompts, and prompt packs. | 6 | 15 | 6 | 15 | `GuillaumeRacine/hermes-agent:optional-skills/creative/baoyu-article-illustrator/prompts/system.md` |
-| MCP definitions | MCP server, client, tool, and configuration definitions. | 11 | 86 | 11 | 86 | `GuillaumeRacine/Tao-promotion:mcp-server/README.md`<br />`GuillaumeRacine/Tao-promotion:mcp-server/package-lock.json`<br />`GuillaumeRacine/Tao-promotion:mcp-server/package.json` |
-| Plugin manifests | Agent-runtime plugin descriptors and repository-owned plugin packages. | 8 | 105 | 8 | 105 | `GuillaumeRacine/ralph-claud-code:.claude-plugin/plugin.json`<br />`GuillaumeRacine/hermes-agent:plugins/browser/browser_use/plugin.yaml`<br />`GuillaumeRacine/hermes-agent:plugins/browser/browserbase/plugin.yaml` |
-| Hooks and policy rules | Lifecycle hooks, guards, routing rules, and runtime policy modules. | 4 | 9 | 2 | 7 | `GuillaumeRacine/present-agent2:.claude/hooks/user-prompt-submit.sh` |
-| Automations and schedules | GitHub workflows, cron definitions, automations, and scheduled job declarations. | 22 | 143 | 21 | 141 | `GuillaumeRacine/DN_Model:.github/workflows/ci.yml`<br />`GuillaumeRacine/defi-pool-dashboard:jobs/README.md`<br />`GuillaumeRacine/defi-pool-dashboard:jobs/package-lock.json` |
-| Profiles and personas | Runtime profiles, personas, souls, and role definitions. | 8 | 2,235 | 7 | 2,234 | `GuillaumeRacine/present-agent2:src/test/personas/test-personas.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/profiles/create-profile-dialog.tsx`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/profiles/delete-profile-dialog.tsx` |
-| Context and memory assets | Curated context, memory, knowledge, and retrieval declarations used by agents. | 13 | 85 | 10 | 82 | `GuillaumeRacine/emailLLM2:app/api/ai/context/route.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/web/components/memory/MemoryDrawer.tsx`<br />`GuillaumeRacine/gmail-llm:app/api/ai/context/route.ts` |
-| Orchestration graphs and pipelines | Multi-step agent graphs, pipelines, and workflow orchestration definitions. | 25 | 474 | 23 | 469 | `GuillaumeRacine/DN_Model:.github/workflows/ci.yml`<br />`GuillaumeRacine/Transcripts_Automated:.github/workflows/backfill.yml`<br />`GuillaumeRacine/Transcripts_Automated:.github/workflows/schedule.yml` |
-| Evaluation, observability, and proof | Evals, evidence contracts, proof bundles, audits, and agent observability assets. | 15 | 346 | 15 | 346 | `GuillaumeRacine/hermes-agent:docs/observability/README.md`<br />`GuillaumeRacine/hermes-agent:plugins/observability/langfuse/README.md`<br />`GuillaumeRacine/hermes-agent:plugins/observability/langfuse/__init__.py` |
-| Tools and connectors | Repository-owned tools, connectors, integrations, and callable capability definitions. | 10 | 655 | 10 | 655 | `GuillaumeRacine/defi-analytics-dashboard:src/integration/data_sources.py`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Agents/Tools/AgentFactory.ts`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Agents/Tools/BarRaiser.ts` |
-| Models, providers, and routing | Model catalogs, provider adapters, routing policies, and fallback declarations. | 5 | 91 | 5 | 91 | `GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/detect.test.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/index.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/instagram.ts` |
-| Retrieval and indexes | Retrieval pipelines, vector/index definitions, embeddings, and search assets. | 5 | 31 | 4 | 30 | `GuillaumeRacine/tao-substack-daily-notes:src/retrieval/vector_db.py`<br />`GuillaumeRacine/MILA-Social-Graph:scripts/search/chat_agent.py`<br />`GuillaumeRacine/MILA-Social-Graph:scripts/search/chat_cli.py` |
-| State and persistence | Agent state, checkpoints, session stores, and persistence declarations. | 10 | 489 | 9 | 487 | `GuillaumeRacine/present-agent2:docs/archive/sessions/DOCUMENTATION_CLEANUP_SUMMARY.md`<br />`GuillaumeRacine/present-agent2:docs/archive/sessions/IMPROVEMENTS_SUMMARY.md`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/session/hooks/use-context-suggestions.ts` |
-| Interfaces and delivery channels | Agent-facing applications, channel adapters, transports, and delivery surfaces. | 6 | 57 | 5 | 52 | `GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/catalog.postgres.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/events.redpanda.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/graph.neo4j.ts` |
-| Permissions and security contracts | Authentication, authorization, permission, secret-reference, and safety contracts. | 20 | 104 | 15 | 87 | `GuillaumeRacine/roadie-music-collab:src/app/api/auth/logout/route.ts`<br />`GuillaumeRacine/roadie-music-collab:src/app/api/dropbox/auth/route.ts`<br />`GuillaumeRacine/emailLLM2:app/api/auth/callback/route.ts` |
-| Runtime and deployment definitions | Containers, hosting, service, worker, and runtime deployment declarations. | 30 | 133 | 25 | 79 | `GuillaumeRacine/defi-analytics-dashboard:eth-chart/vercel.json`<br />`GuillaumeRacine/roadie-music-collab:vercel.json`<br />`GuillaumeRacine/defi-pool-dashboard:vercel.json` |
-| Schemas and contracts | Typed schemas, protocols, event contracts, and structured input/output definitions. | 14 | 51 | 14 | 51 | `GuillaumeRacine/defi-pool-dashboard:src/app/protocols/page.tsx`<br />`GuillaumeRacine/Mila_Agent021:schemas/artifact.schema.json`<br />`GuillaumeRacine/Mila_Agent021:schemas/assumption.schema.json` |
-| Templates and artifacts | Reusable agent templates, artifact specifications, and output-format definitions. | 19 | 960 | 19 | 960 | `GuillaumeRacine/KAI_Ensembl3:skills/Prompting/Templates/README.md`<br />`GuillaumeRacine/Mila_Agent021:templates/decision_checkpoint.md`<br />`GuillaumeRacine/Mila_Agent021:templates/experiment_card.md` |
+| Agent instruction layers | Repository or directory policy files consumed by agent runtimes. | 78 | 131 | 69 | 113 | `GuillaumeRacine/limitless_MVP:CLAUDE.md`<br />`GuillaumeRacine/ensemble_prototypes:CLAUDE.md`<br />`GuillaumeRacine/DN_Model:AGENTS.md` |
+| Agent and subagent definitions | Named agent, subagent, coach, or specialist definition files. | 27 | 328 | 25 | 285 | `GuillaumeRacine/ensemble_prototypes:.claude/agents/idea.md`<br />`GuillaumeRacine/ensemble_prototypes:.claude/agents/launch.md`<br />`GuillaumeRacine/ensemble_prototypes:.claude/agents/research.md` |
+| Skill manifests | SKILL.md packages and repository-owned skill definitions. | 20 | 801 | 19 | 800 | `GuillaumeRacine/KAI_Ensembl3:skills/Agents/SKILL.md`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Browser/SKILL.md`<br />`GuillaumeRacine/KAI_Ensembl3:skills/CORE/SKILL.md` |
+| Commands and slash actions | Reusable command definitions exposed to an agent runtime. | 13 | 224 | 12 | 215 | `GuillaumeRacine/present-agent2:.claude/commands/README.md`<br />`GuillaumeRacine/present-agent2:.claude/commands/build.md`<br />`GuillaumeRacine/present-agent2:.claude/commands/docs.md` |
+| Prompt definitions | Repository-owned prompt templates, system prompts, and prompt packs. | 10 | 56 | 10 | 56 | `GuillaumeRacine/hermes-agent:optional-skills/creative/baoyu-article-illustrator/prompts/system.md` |
+| MCP definitions | MCP server, client, tool, and configuration definitions. | 13 | 102 | 13 | 102 | `GuillaumeRacine/Tao-promotion:mcp-server/README.md`<br />`GuillaumeRacine/Tao-promotion:mcp-server/package-lock.json`<br />`GuillaumeRacine/Tao-promotion:mcp-server/package.json` |
+| Plugin manifests | Agent-runtime plugin descriptors and repository-owned plugin packages. | 8 | 107 | 8 | 107 | `GuillaumeRacine/ralph-claud-code:.claude-plugin/plugin.json`<br />`GuillaumeRacine/hermes-agent:plugins/browser/browser_use/plugin.yaml`<br />`GuillaumeRacine/hermes-agent:plugins/browser/browserbase/plugin.yaml` |
+| Hooks and policy rules | Lifecycle hooks, guards, routing rules, and runtime policy modules. | 4 | 11 | 2 | 9 | `GuillaumeRacine/present-agent2:.claude/hooks/user-prompt-submit.sh` |
+| Automations and schedules | GitHub workflows, cron definitions, automations, and scheduled job declarations. | 31 | 178 | 30 | 176 | `GuillaumeRacine/DN_Model:.github/workflows/ci.yml`<br />`GuillaumeRacine/defi-pool-dashboard:jobs/README.md`<br />`GuillaumeRacine/defi-pool-dashboard:jobs/package-lock.json` |
+| Profiles and personas | Runtime profiles, personas, souls, and role definitions. | 8 | 2,236 | 7 | 2,235 | `GuillaumeRacine/present-agent2:src/test/personas/test-personas.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/profiles/create-profile-dialog.tsx`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/profiles/delete-profile-dialog.tsx` |
+| Context and memory assets | Curated context, memory, knowledge, and retrieval declarations used by agents. | 17 | 1,325 | 14 | 1,322 | `GuillaumeRacine/emailLLM2:app/api/ai/context/route.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/web/components/memory/MemoryDrawer.tsx`<br />`GuillaumeRacine/gmail-llm:app/api/ai/context/route.ts` |
+| Orchestration graphs and pipelines | Multi-step agent graphs, pipelines, and workflow orchestration definitions. | 33 | 492 | 31 | 487 | `GuillaumeRacine/DN_Model:.github/workflows/ci.yml`<br />`GuillaumeRacine/Transcripts_Automated:.github/workflows/backfill.yml`<br />`GuillaumeRacine/Transcripts_Automated:.github/workflows/schedule.yml` |
+| Evaluation, observability, and proof | Evals, evidence contracts, proof bundles, audits, and agent observability assets. | 19 | 869 | 19 | 869 | `GuillaumeRacine/hermes-agent:docs/observability/README.md`<br />`GuillaumeRacine/hermes-agent:plugins/observability/langfuse/README.md`<br />`GuillaumeRacine/hermes-agent:plugins/observability/langfuse/__init__.py` |
+| Tools and connectors | Repository-owned tools, connectors, integrations, and callable capability definitions. | 11 | 660 | 11 | 660 | `GuillaumeRacine/defi-analytics-dashboard:src/integration/data_sources.py`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Agents/Tools/AgentFactory.ts`<br />`GuillaumeRacine/KAI_Ensembl3:skills/Agents/Tools/BarRaiser.ts` |
+| Models, providers, and routing | Model catalogs, provider adapters, routing policies, and fallback declarations. | 6 | 89 | 6 | 89 | `GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/detect.test.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/index.ts`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/components/assistant-ui/embeds/providers/instagram.ts` |
+| Retrieval and indexes | Retrieval pipelines, vector/index definitions, embeddings, and search assets. | 6 | 33 | 5 | 32 | `GuillaumeRacine/tao-substack-daily-notes:src/retrieval/vector_db.py`<br />`GuillaumeRacine/MILA-Social-Graph:scripts/search/chat_agent.py`<br />`GuillaumeRacine/MILA-Social-Graph:scripts/search/chat_cli.py` |
+| State and persistence | Agent state, checkpoints, session stores, and persistence declarations. | 11 | 492 | 10 | 490 | `GuillaumeRacine/present-agent2:docs/archive/sessions/DOCUMENTATION_CLEANUP_SUMMARY.md`<br />`GuillaumeRacine/present-agent2:docs/archive/sessions/IMPROVEMENTS_SUMMARY.md`<br />`GuillaumeRacine/hermes-agent:apps/desktop/src/app/session/hooks/use-context-suggestions.ts` |
+| Interfaces and delivery channels | Agent-facing applications, channel adapters, transports, and delivery surfaces. | 7 | 62 | 6 | 57 | `GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/catalog.postgres.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/events.redpanda.ts`<br />`GuillaumeRacine/crypto-web-monitor:Present-Agent/src/server/adapters/fivedb/graph.neo4j.ts` |
+| Permissions and security contracts | Authentication, authorization, permission, secret-reference, and safety contracts. | 21 | 116 | 16 | 99 | `GuillaumeRacine/roadie-music-collab:src/app/api/auth/logout/route.ts`<br />`GuillaumeRacine/roadie-music-collab:src/app/api/dropbox/auth/route.ts`<br />`GuillaumeRacine/emailLLM2:app/api/auth/callback/route.ts` |
+| Runtime and deployment definitions | Containers, hosting, service, worker, and runtime deployment declarations. | 34 | 181 | 28 | 126 | `GuillaumeRacine/defi-analytics-dashboard:eth-chart/vercel.json`<br />`GuillaumeRacine/roadie-music-collab:vercel.json`<br />`GuillaumeRacine/defi-pool-dashboard:vercel.json` |
+| Schemas and contracts | Typed schemas, protocols, event contracts, and structured input/output definitions. | 18 | 142 | 18 | 142 | `GuillaumeRacine/defi-pool-dashboard:src/app/protocols/page.tsx`<br />`GuillaumeRacine/Mila_Agent021:schemas/artifact.schema.json`<br />`GuillaumeRacine/Mila_Agent021:schemas/assumption.schema.json` |
+| Templates and artifacts | Reusable agent templates, artifact specifications, and output-format definitions. | 26 | 961 | 24 | 932 | `GuillaumeRacine/KAI_Ensembl3:skills/Prompting/Templates/README.md`<br />`GuillaumeRacine/Mila_Agent021:templates/decision_checkpoint.md`<br />`GuillaumeRacine/Mila_Agent021:templates/experiment_card.md` |
 
 ## How to read the inventory
 
@@ -853,56 +858,56 @@ Source page: [Data Sources & Integrations](https://superagents-docs.vercel.app/e
 
 # Data Sources & Integrations
 
-> Snapshot: **September 8, 2026 at 9:26 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
+> Snapshot: **November 2, 2026 at 5:56 p.m.**. This page distinguishes canonical data ownership from references found in repository declarations.
 
 ## Canonical source surfaces
 
 | Source | Role | Audit state | Evidence boundary |
 |---|---|---|---|
-| GitHub | Code and shipped documentation | live-scanned | 147 accessible repositories across 4 owners or organizations; 139 trees scanned |
+| GitHub | Code and shipped documentation | live-scanned | 168 accessible repositories across 4 owners or organizations; 160 trees scanned |
 | Context control plane | Automation registry and evidence | live-local | Generated inventory, contracts, and fleet evidence |
 | Knowledge vault | Curated context and durable knowledge | live-local | Private Git-backed vault; content remains private |
-| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 82 jobs; 61 enabled; 21 paused |
+| Hermes state | Profiles, schedules, skills, and delivery state | live-local | 93 jobs; 38 enabled; 55 paused |
 | Google Drive | Default file and data store | policy-declared · not live-listed | Connector/API or web is authoritative; Drive Desktop and rclone are unavailable on this host |
-| iCloud | Apple-native data | host-visible | 18 top-level host-visible directories; content not enumerated |
+| iCloud | Apple-native data | host-visible | 20 top-level host-visible directories; content not enumerated |
 | 1Password | Credentials | policy-declared · intentionally not enumerated | Only references and access contracts may be documented |
-| External SSD | Cold backup and archive | mounted · excluded from active scan | Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception |
+| External SSD | Cold backup and archive | mounted · excluded from active scan | Not an agent-runtime or repository dependency; cold copies only under the File and Folder Standard |
 | Vercel | Documentation deployment | not verified for this snapshot | Production verification is performed after deployment and recorded in GitHub against the commit and deployment |
 
 ## Integration fingerprints across active repositories
 
-The scanner inspected 591 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
+The scanner inspected 738 selected README, package, environment-example, architecture, and integration files. Counts show how many active repositories reference each integration class.
 
 | Integration class | Active repository references |
 |---|---:|
-| anthropic | 75 |
-| github | 75 |
+| anthropic | 86 |
+| github | 85 |
 | vercel | 45 |
-| google-services | 32 |
-| openai | 31 |
-| shopify | 31 |
-| notion | 21 |
-| slack | 20 |
-| postgres | 18 |
-| sqlite | 16 |
+| google-services | 37 |
+| openai | 36 |
+| shopify | 35 |
+| slack | 23 |
+| 1password | 21 |
+| notion | 20 |
+| postgres | 20 |
+| sqlite | 20 |
 | x-twitter | 16 |
-| 1password | 15 |
-| substack | 13 |
-| resend | 11 |
-| telegram | 11 |
-| gemini | 10 |
-| ghost | 8 |
-| stripe | 8 |
+| substack | 14 |
+| resend | 12 |
+| stripe | 10 |
+| telegram | 10 |
+| firecrawl | 9 |
+| gemini | 9 |
+| ghost | 9 |
+| dropbox | 8 |
 | spotify | 7 |
+| supabase | 7 |
+| monarch | 6 |
 | sentry | 6 |
-| supabase | 6 |
-| dropbox | 5 |
-| firecrawl | 5 |
-| monarch | 5 |
+| clerk | 4 |
 | mongodb | 4 |
 | discord | 3 |
 | redis-upstash | 3 |
-| clerk | 2 |
 
 A reference is a discovery signal, not proof that credentials exist, data is fresh, or the integration is healthy. Operational status remains with the owning repository, provider, or control-plane evidence.
 
@@ -927,13 +932,13 @@ Source page: [Devices & Hosts](https://superagents-docs.vercel.app/estate/device
 
 # Devices & Hosts
 
-> Snapshot: **September 8, 2026 at 9:26 p.m.**. Device declarations were parsed from the canonical storage policy revision `f6891ce304b19753`; verification state comes from this audit run.
+> Snapshot: **November 2, 2026 at 5:56 p.m.**. Device declarations were parsed from the canonical storage policy revision `054d441c0ccc4142`; verification state comes from this audit run.
 
 | Device | Role | Verification | Evidence |
 |---|---|---|---|
-| Mac mini (main) | Primary work + agents | directly verified | Canonical policy: Vault, active code/runtimes on internal storage; SSD optional. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host. |
-| Mac mini (studio) | Music recording | policy-declared · not remotely attested | Canonical policy: Audio sessions, no GDrive needed, no SSD. The same policy explicitly excepts active Ableton sessions, which may use the studio SSD as the fast working disk. This audit did not execute on that host. |
-| MacBook | Mobile work | policy-declared · not remotely attested | Canonical policy: Vault, GDrive (Stream or selective Mirror — saves disk), code repos. This audit did not execute on that host. |
+| Mac mini (main) | Mac mini in the office; runs the agents | directly verified | Canonical policy: Mac mini in the office; runs the agents. Local repositories, runtime configuration, Hermes scheduler state, and source availability were inspected on this host. |
+| Mac mini (studio) | Mac mini in the studio; music recording; runs the Drive backup | policy-declared · not remotely attested | Canonical policy: Mac mini in the studio; music recording; runs the Drive backup. This audit did not execute on that host. |
+| MacBook | Laptop for mobile work | policy-declared · not remotely attested | Canonical policy: Laptop for mobile work. This audit did not execute on that host. |
 
 ## Coverage rule
 
@@ -949,7 +954,7 @@ The main Mac mini currently owns the live runtime snapshot. The studio Mac mini 
 - iCloud owns Apple-native data.
 - 1Password owns credentials.
 - Local runtime caches, sessions, and installed versions remain device-specific and require host-level verification.
-- The external SSD is cold storage for normal agent and repository operation. The canonical policy explicitly retains one exception: active Ableton sessions on the studio Mac mini may use its SSD as a fast working disk.
+- The external SSD is cold storage for normal agent and repository operation. The File and Folder Standard keeps only cold copies there; no live folder, link target or job state.
 
 [Back to table of contents](#table-of-contents)
 
@@ -963,47 +968,47 @@ Source page: [Repository Coverage](https://superagents-docs.vercel.app/estate/re
 
 # Repository Coverage
 
-> Snapshot: **September 8, 2026 at 9:26 p.m.**. Generated from the authenticated GitHub account inventory and repository trees.
+> Snapshot: **November 2, 2026 at 5:56 p.m.**. Generated from the authenticated GitHub account inventory and repository trees.
 
 ## GitHub estate
 
 | Measurement | Count |
 |---|---:|
-| Total accessible | 147 |
+| Total accessible | 168 |
 | Owners and organizations | 4 |
-| Active | 119 |
-| Archived | 28 |
-| Private | 81 |
+| Active | 136 |
+| Archived | 32 |
+| Private | 102 |
 | Public | 66 |
 | Forks | 1 |
-| Accounted for | 147 |
-| Non-empty trees scanned | 139 |
+| Accounted for | 168 |
+| Non-empty trees scanned | 160 |
 | Empty repositories | 8 |
 | Scan failures | 0 |
 | Truncated trees | 0 |
-| Declaration files selected | 591 |
-| Declaration files inspected | 591 |
+| Declaration files selected | 738 |
+| Declaration files inspected | 738 |
 | Declaration file read failures | 0 |
 
-All 147 repositories accessible through ownership, organization membership, or collaboration were accounted for. The difference between total repositories and scanned trees is explained by empty repositories, not silent scan failures.
+All 168 repositories accessible through ownership, organization membership, or collaboration were accounted for. The difference between total repositories and scanned trees is explained by empty repositories, not silent scan failures.
 
 ## Documentation signals
 
 | Signal | Count |
 |---|---:|
-| Repositories with documentation | 132 |
-| Repositories with a root README | 123 |
-| Repositories with a docs directory | 50 |
-| Repositories with agent instructions | 65 |
-| Repositories with GitHub workflows | 21 |
-| Documentation files discovered | 9,793 |
-| Agentic repositories | 79 |
-| Agentic repositories with instructions | 65 |
-| Active repositories with documentation | 109 |
-| Active repositories with a root README | 101 |
-| Active repositories with agent instructions | 58 |
-| Active agentic repositories | 69 |
-| Active agentic repositories with instructions | 58 |
+| Repositories with documentation | 153 |
+| Repositories with a root README | 142 |
+| Repositories with a docs directory | 63 |
+| Repositories with agent instructions | 78 |
+| Repositories with GitHub workflows | 30 |
+| Documentation files discovered | 12,670 |
+| Agentic repositories | 95 |
+| Agentic repositories with instructions | 78 |
+| Active repositories with documentation | 126 |
+| Active repositories with a root README | 116 |
+| Active repositories with agent instructions | 69 |
+| Active agentic repositories | 82 |
+| Active agentic repositories with instructions | 69 |
 
 These are structural signals. A README or instructions file can still be stale, incomplete, or incorrect; each active project remains responsible for its own source-of-truth documentation and deployment proof.
 
@@ -1031,7 +1036,7 @@ Public repository names link directly to GitHub.
 | [GuillaumeRacine/defi-portfolio-dashboard](https://github.com/GuillaumeRacine/defi-portfolio-dashboard) | public | active | tree-scanned | yes | no | not-applicable | 1 |
 | [GuillaumeRacine/defi-portfolio-tracker](https://github.com/GuillaumeRacine/defi-portfolio-tracker) | public | active | tree-scanned | no | no | not-applicable | 0 |
 | [GuillaumeRacine/DN_Model](https://github.com/GuillaumeRacine/DN_Model) | public | active | tree-scanned | yes | yes | present | 3 |
-| [GuillaumeRacine/documentation](https://github.com/GuillaumeRacine/documentation) | public | active | tree-scanned | yes | no | not-applicable | 0 |
+| [GuillaumeRacine/documentation](https://github.com/GuillaumeRacine/documentation) | public | archived | tree-scanned | yes | no | not-applicable | 0 |
 | [GuillaumeRacine/emailLLM2](https://github.com/GuillaumeRacine/emailLLM2) | public | archived | tree-scanned | yes | yes | **gap** | 2 |
 | [GuillaumeRacine/ensemble_prototypes](https://github.com/GuillaumeRacine/ensemble_prototypes) | public | active | tree-scanned | yes | yes | present | 2 |
 | [GuillaumeRacine/FounderMTL](https://github.com/GuillaumeRacine/FounderMTL) | public | active | tree-scanned | yes | yes | present | 3 |
@@ -1055,7 +1060,7 @@ Public repository names link directly to GitHub.
 | [GuillaumeRacine/Options](https://github.com/GuillaumeRacine/Options) | public | active | tree-scanned | yes | no | not-applicable | 0 |
 | [GuillaumeRacine/options-trading-dashboard](https://github.com/GuillaumeRacine/options-trading-dashboard) | public | active | tree-scanned | yes | no | not-applicable | 1 |
 | [GuillaumeRacine/Present-Agent-1](https://github.com/GuillaumeRacine/Present-Agent-1) | public | archived | tree-scanned | yes | yes | present | 3 |
-| [GuillaumeRacine/present-agent-mcp](https://github.com/GuillaumeRacine/present-agent-mcp) | public | active | tree-scanned | yes | yes | **gap** | 1 |
+| [GuillaumeRacine/present-agent-mcp](https://github.com/GuillaumeRacine/present-agent-mcp) | public | archived | tree-scanned | yes | yes | **gap** | 1 |
 | [GuillaumeRacine/present-agent2](https://github.com/GuillaumeRacine/present-agent2) | public | archived | tree-scanned | yes | yes | present | 8 |
 | [GuillaumeRacine/present.rocks.final](https://github.com/GuillaumeRacine/present.rocks.final) | public | archived | tree-scanned | yes | no | not-applicable | 0 |
 | [GuillaumeRacine/Products-scrapers](https://github.com/GuillaumeRacine/Products-scrapers) | public | active | tree-scanned | yes | no | not-applicable | 1 |
@@ -1097,94 +1102,115 @@ Private repositories use snapshot-scoped opaque IDs because this source reposito
 | `private-009` | private | active | tree-scanned | yes | yes | present | 2 |
 | `private-010` | private | active | tree-scanned | yes | yes | **gap** | 3 |
 | `private-011` | private | active | tree-scanned | yes | no | not-applicable | 1 |
-| `private-012` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-013` | private | archived | tree-scanned | yes | no | not-applicable | 0 |
-| `private-014` | private | active | tree-scanned | yes | no | not-applicable | 2 |
-| `private-015` | private | active | tree-scanned | no | no | not-applicable | 0 |
-| `private-016` | private | active | tree-scanned | yes | yes | present | 10 |
-| `private-017` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-018` | private | active | tree-scanned | yes | yes | present | 6 |
-| `private-019` | private | active | tree-scanned | no | yes | **gap** | 0 |
-| `private-020` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-021` | private | active | tree-scanned | yes | yes | present | 7 |
-| `private-022` | private | active | tree-scanned | yes | yes | present | 5 |
-| `private-023` | private | active | tree-scanned | yes | yes | present | 6 |
-| `private-024` | private | active | tree-scanned | yes | no | not-applicable | 2 |
-| `private-025` | private | active | tree-scanned | yes | yes | **gap** | 1 |
-| `private-026` | private | active | tree-scanned | yes | yes | present | 3 |
-| `private-027` | private | active | tree-scanned | yes | yes | present | 8 |
-| `private-028` | private | active | tree-scanned | yes | yes | present | 14 |
-| `private-029` | private | active | tree-scanned | yes | yes | present | 1 |
-| `private-030` | private | active | tree-scanned | yes | yes | present | 6 |
-| `private-031` | private | active | tree-scanned | yes | yes | present | 4 |
-| `private-032` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-033` | private | active | tree-scanned | yes | yes | present | 1 |
-| `private-034` | private | active | tree-scanned | yes | yes | present | 14 |
-| `private-035` | private | active | tree-scanned | yes | no | not-applicable | 1 |
-| `private-036` | private | active | tree-scanned | yes | yes | **gap** | 1 |
-| `private-037` | private | active | tree-scanned | yes | yes | present | 3 |
-| `private-038` | private | active | tree-scanned | yes | yes | present | 3 |
-| `private-039` | private | active | tree-scanned | yes | yes | **gap** | 2 |
-| `private-040` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-041` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-042` | private | active | tree-scanned | yes | yes | present | 7 |
-| `private-043` | private | active | empty | no | no | not-applicable | 0 |
-| `private-044` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-045` | private | active | tree-scanned | yes | yes | present | 8 |
-| `private-046` | private | active | tree-scanned | yes | no | not-applicable | 3 |
-| `private-047` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-048` | private | archived | empty | no | no | not-applicable | 0 |
-| `private-049` | private | active | tree-scanned | yes | yes | present | 14 |
-| `private-050` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-012` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-013` | private | active | tree-scanned | yes | yes | present | 2 |
+| `private-014` | private | active | tree-scanned | yes | yes | **gap** | 0 |
+| `private-015` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-016` | private | archived | tree-scanned | yes | no | not-applicable | 0 |
+| `private-017` | private | active | tree-scanned | yes | no | not-applicable | 2 |
+| `private-018` | private | active | tree-scanned | yes | no | not-applicable | 2 |
+| `private-019` | private | active | tree-scanned | yes | yes | **gap** | 7 |
+| `private-020` | private | active | tree-scanned | yes | yes | present | 7 |
+| `private-021` | private | active | tree-scanned | no | no | not-applicable | 0 |
+| `private-022` | private | active | tree-scanned | yes | yes | present | 10 |
+| `private-023` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-024` | private | active | tree-scanned | yes | yes | present | 6 |
+| `private-025` | private | active | tree-scanned | no | yes | **gap** | 0 |
+| `private-026` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-027` | private | active | tree-scanned | yes | yes | present | 7 |
+| `private-028` | private | active | tree-scanned | yes | yes | present | 5 |
+| `private-029` | private | active | tree-scanned | yes | yes | present | 6 |
+| `private-030` | private | active | tree-scanned | yes | no | not-applicable | 2 |
+| `private-031` | private | active | tree-scanned | yes | yes | present | 10 |
+| `private-032` | private | active | tree-scanned | yes | yes | **gap** | 1 |
+| `private-033` | private | archived | tree-scanned | yes | yes | present | 3 |
+| `private-034` | private | active | tree-scanned | yes | yes | present | 8 |
+| `private-035` | private | active | tree-scanned | yes | yes | present | 14 |
+| `private-036` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-037` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-038` | private | active | tree-scanned | yes | yes | present | 6 |
+| `private-039` | private | active | tree-scanned | yes | yes | present | 7 |
+| `private-040` | private | active | tree-scanned | yes | yes | present | 8 |
+| `private-041` | private | active | tree-scanned | yes | yes | present | 2 |
+| `private-042` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-043` | private | active | tree-scanned | yes | yes | present | 14 |
+| `private-044` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-045` | private | active | tree-scanned | yes | yes | **gap** | 1 |
+| `private-046` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-047` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-048` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-049` | private | active | tree-scanned | yes | yes | **gap** | 2 |
+| `private-050` | private | active | tree-scanned | yes | yes | present | 2 |
 | `private-051` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-052` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-053` | private | archived | tree-scanned | yes | yes | present | 9 |
-| `private-054` | private | archived | tree-scanned | yes | yes | present | 2 |
-| `private-055` | private | archived | tree-scanned | yes | yes | present | 1 |
-| `private-056` | private | active | tree-scanned | yes | yes | present | 9 |
-| `private-057` | private | active | tree-scanned | yes | yes | present | 14 |
-| `private-058` | private | active | tree-scanned | yes | yes | present | 18 |
-| `private-059` | private | active | empty | no | no | not-applicable | 0 |
-| `private-060` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-061` | private | active | tree-scanned | yes | yes | present | 1 |
-| `private-062` | private | active | tree-scanned | yes | yes | **gap** | 0 |
-| `private-063` | private | active | tree-scanned | yes | yes | present | 1 |
-| `private-064` | private | archived | tree-scanned | yes | yes | **gap** | 0 |
-| `private-065` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-066` | private | active | tree-scanned | no | no | not-applicable | 0 |
-| `private-067` | private | active | tree-scanned | yes | yes | present | 8 |
-| `private-068` | private | active | tree-scanned | yes | yes | present | 5 |
-| `private-069` | private | active | tree-scanned | yes | yes | present | 1 |
-| `private-070` | private | active | tree-scanned | yes | yes | present | 4 |
-| `private-071` | private | active | tree-scanned | yes | yes | present | 3 |
-| `private-072` | private | active | tree-scanned | yes | yes | **gap** | 3 |
-| `private-073` | private | active | tree-scanned | yes | no | not-applicable | 1 |
-| `private-074` | private | active | tree-scanned | yes | yes | present | 4 |
-| `private-075` | private | active | tree-scanned | yes | yes | present | 2 |
-| `private-076` | private | active | tree-scanned | yes | yes | present | 3 |
-| `private-077` | private | active | tree-scanned | yes | no | not-applicable | 1 |
-| `private-078` | private | active | tree-scanned | yes | no | not-applicable | 0 |
-| `private-079` | private | active | tree-scanned | yes | yes | present | 10 |
-| `private-080` | private | active | tree-scanned | yes | no | not-applicable | 1 |
-| `private-081` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-052` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-053` | private | active | tree-scanned | yes | yes | present | 7 |
+| `private-054` | private | active | empty | no | no | not-applicable | 0 |
+| `private-055` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-056` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-057` | private | active | tree-scanned | yes | yes | present | 8 |
+| `private-058` | private | active | tree-scanned | yes | yes | present | 6 |
+| `private-059` | private | active | tree-scanned | yes | yes | present | 2 |
+| `private-060` | private | archived | empty | no | no | not-applicable | 0 |
+| `private-061` | private | active | tree-scanned | yes | yes | present | 15 |
+| `private-062` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-063` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-064` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-065` | private | archived | tree-scanned | yes | yes | present | 9 |
+| `private-066` | private | archived | tree-scanned | yes | yes | present | 2 |
+| `private-067` | private | archived | tree-scanned | yes | yes | present | 1 |
+| `private-068` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-069` | private | active | tree-scanned | yes | yes | present | 10 |
+| `private-070` | private | active | tree-scanned | yes | yes | present | 17 |
+| `private-071` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-072` | private | active | tree-scanned | yes | yes | present | 8 |
+| `private-073` | private | active | tree-scanned | yes | yes | present | 18 |
+| `private-074` | private | active | empty | no | no | not-applicable | 0 |
+| `private-075` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-076` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-077` | private | active | tree-scanned | yes | yes | **gap** | 2 |
+| `private-078` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-079` | private | active | tree-scanned | yes | yes | **gap** | 0 |
+| `private-080` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-081` | private | archived | tree-scanned | yes | yes | **gap** | 0 |
+| `private-082` | private | archived | tree-scanned | yes | yes | present | 2 |
+| `private-083` | private | active | tree-scanned | no | no | not-applicable | 0 |
+| `private-084` | private | active | tree-scanned | yes | yes | present | 8 |
+| `private-085` | private | active | tree-scanned | yes | yes | present | 5 |
+| `private-086` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-087` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-088` | private | active | tree-scanned | yes | yes | present | 1 |
+| `private-089` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-090` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-091` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-092` | private | active | tree-scanned | yes | yes | **gap** | 3 |
+| `private-093` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-094` | private | active | tree-scanned | yes | yes | present | 4 |
+| `private-095` | private | active | tree-scanned | yes | yes | present | 2 |
+| `private-096` | private | active | tree-scanned | yes | yes | present | 3 |
+| `private-097` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-098` | private | active | tree-scanned | yes | no | not-applicable | 0 |
+| `private-099` | private | active | tree-scanned | yes | yes | present | 10 |
+| `private-100` | private | active | tree-scanned | yes | no | not-applicable | 1 |
+| `private-101` | private | active | tree-scanned | yes | yes | present | 2 |
+| `private-102` | private | active | tree-scanned | yes | yes | present | 3 |
 
 ## Local checkout coverage
 
 | Measurement | Count |
 |---|---:|
-| Checkout directories | 62 |
-| Unique GitHub remotes | 22 |
-| Authenticated-estate GitHub remotes | 16 |
-| Personal-owner GitHub remotes | 16 |
-| External GitHub remotes | 6 |
-| Duplicate/worktree checkout directories | 40 |
+| Checkout directories | 86 |
+| Unique GitHub remotes | 55 |
+| Authenticated-estate GitHub remotes | 47 |
+| Personal-owner GitHub remotes | 47 |
+| External GitHub remotes | 8 |
+| Duplicate/worktree checkout directories | 31 |
 | Personal-owner checkouts outside the internal code root | 2 |
 
 Multiple checkout directories primarily represent worktrees or deliberate parallel work. Remote-only repositories are cloned into internal storage on demand; the external SSD is not an active repository source.
 
 ## Material documentation gap
 
-11 active repositories with high-confidence agentic signals do not expose a recognized AGENTS.md, CLAUDE.md, GEMINI.md, GROK.md, or CODEX.md instruction file. The catalog marks every affected row as **gap** without publishing private names.
+13 active repositories with high-confidence agentic signals do not expose a recognized AGENTS.md, CLAUDE.md, GEMINI.md, GROK.md, or CODEX.md instruction file. The catalog marks every affected row as **gap** without publishing private names.
 
 [Back to table of contents](#table-of-contents)
 
@@ -1660,7 +1686,7 @@ Source page: [Capability Inventory](https://superagents-docs.vercel.app/referenc
 
 > Generated from `config/capability-inventory.json`. Do not edit this page directly.
 
-**Snapshot:** 2026-09-09T11:07:29-04:00
+**Snapshot:** 2026-11-02T17:53:30-05:00
 
 **Scope:** Complete at the sanitized capability-group level. Private agent names, job names, personal schedules, and machine paths remain in their owning private inventories.
 
@@ -1668,16 +1694,16 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 | Inventory | Runtime | Count | Detail | State |
 |---|---|---|---|---|
-| [Codex personal skills](#codex-personal-skills) | Codex | 23 | item | active and resolvable |
-| [Codex managed plugin installs](#codex-managed-plugin-installs) | Codex | 22 | item | installed; capability activation is task-specific |
+| [Codex personal skills](#codex-personal-skills) | Codex | 84 | item | active and resolvable |
+| [Codex managed plugin installs](#codex-managed-plugin-installs) | Codex | 23 | item | installed; capability activation is task-specific |
 | [Codex MCP services](#codex-mcp-services) | Codex | 7 | item | configured |
-| [Claude specialist agents](#claude-specialist-agents) | Claude Code | 111 | grouped-private | active private catalog |
-| [Claude slash commands](#claude-slash-commands) | Claude Code | 148 | grouped-private | active private catalog |
-| [Claude standalone skills](#claude-standalone-skills) | Claude Code | 26 | item | active |
-| [Claude plugins](#claude-plugins) | Claude Code | 13 | item | 13 registered; 12 enabled |
-| [Hermes profiles](#hermes-profiles) | Hermes | 6 | item | active |
-| [Hermes scheduled jobs](#hermes-scheduled-jobs) | Hermes | 82 | grouped-private | 61 enabled; 21 paused |
-| [Hermes active skills](#hermes-active-skills) | Hermes | 105 | grouped-private | active skill root |
+| [Claude specialist agents](#claude-specialist-agents) | Claude Code | 115 | grouped-private | active private catalog |
+| [Claude slash commands](#claude-slash-commands) | Claude Code | 150 | grouped-private | active private catalog |
+| [Claude standalone skills](#claude-standalone-skills) | Claude Code | 89 | item | active |
+| [Claude plugins](#claude-plugins) | Claude Code | 14 | item | 14 registered; 12 enabled |
+| [Hermes profiles](#hermes-profiles) | Hermes | 7 | item | active |
+| [Hermes scheduled jobs](#hermes-scheduled-jobs) | Hermes | 93 | grouped-private | 38 enabled; 55 paused |
+| [Hermes active skills](#hermes-active-skills) | Hermes | 118 | grouped-private | active skill root; the rule counts 118 manifests including the archive folder and skips 55 symlinked gstack skills |
 | [Companion and compatibility capabilities](#companion-and-compatibility-capabilities) | Gemini, Grok, OpenClaw, and OpenCode | 19 | grouped | companions installed; compatibility runtimes absent |
 
 ## Codex personal skills
@@ -1686,7 +1712,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** active and resolvable
 
-**Published count:** 23
+**Published count:** 84
 
 **Detail level:** item
 
@@ -1697,6 +1723,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | Capability or group | Purpose or state |
 |---|---|
 | adversarial-second-opinion-review | Strict second-pass review |
+| agent-coordination | Share active-outcome context, read peer updates, request specific blocker help, acknowledge tested help and retain provisional lessons |
 | browser-fallback-artifacts | Recoverable browser fallback artifacts |
 | canary | Post-deployment monitoring |
 | check-resolvable | Routing and duplicate audit |
@@ -1705,16 +1732,76 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | docs-audit | Documentation reconciliation |
 | ensembl3-workflows | Ensembl3 operations |
 | ensemble-studio | Shopify application studio |
+| funding-credit-agent | Research, screen and prepare Canadian and Quebec founder-salary funding and R&D tax-credit claims with evidence |
+| gstack | Router for the gstack skill suite |
+| gstack-autoplan | Auto-review pipeline that runs the CEO, design, eng and DX review skills sequentially with auto-decisions |
+| gstack-benchmark | Performance regression detection using the browse daemon |
+| gstack-benchmark-models | Cross-model benchmark for gstack skills |
+| gstack-browse | Fast headless browser for QA testing and site dogfooding |
+| gstack-canary | Post-deploy canary monitoring |
+| gstack-careful | Safety guardrails for destructive commands |
+| gstack-claude | Claude Code CLI wrapper for non-Claude hosts - three modes |
+| gstack-context-restore | Restore working context saved earlier by /context-save |
+| gstack-context-save | Save working context |
+| gstack-cso | Chief Security Officer mode |
+| gstack-design-consultation | Design consultation: product understanding, landscape research and a proposed design system with previews |
+| gstack-design-html | Design finalization: generates production-quality Pretext-native HTML/CSS |
+| gstack-design-review | Designer's eye QA: finds visual inconsistency, spacing issues, hierarchy problems, AI slop patterns, and slow interactions — then fixes them |
+| gstack-design-shotgun | Design shotgun: generate multiple AI design variants, open a comparison board, collect structured feedback, and iterate |
+| gstack-devex-review | Live developer experience audit |
+| gstack-diagram | Turn an English description or Mermaid source into a diagram triplet: source, editable Excalidraw file, rendered image |
+| gstack-document-generate | Generate missing documentation from scratch for a feature, module, or entire project |
+| gstack-document-release | Post-ship documentation update |
+| gstack-freeze | Restrict file edits to a specific directory for the session |
+| gstack-guard | Full safety mode: destructive command warnings + directory-scoped edits |
+| gstack-health | Code quality dashboard |
+| gstack-investigate | Systematic debugging with root cause investigation |
+| gstack-ios-clean | Remove the DebugBridge SPM package and all #if DEBUG wiring from an iOS app |
+| gstack-ios-design-review | Visual design audit for iOS apps on real hardware |
+| gstack-ios-fix | Autonomous iOS bug fixer |
+| gstack-ios-qa | Live-device iOS QA for SwiftUI apps |
+| gstack-ios-sync | Regenerate the iOS debug bridge against the latest upstream gstack templates |
+| gstack-land-and-deploy | Land and deploy workflow |
+| gstack-landing-report | Read-only queue dashboard for workspace-aware ship |
+| gstack-learn | Manage project learnings |
+| gstack-make-pdf | Turn any markdown file into a publication-quality PDF |
+| gstack-office-hours | YC Office Hours — two modes |
+| gstack-open-gstack-browser | Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in |
+| gstack-pair-agent | Pair a remote AI agent with your browser |
+| gstack-plan-ceo-review | CEO/founder-mode plan review |
+| gstack-plan-design-review | Designer's eye plan review — interactive, like CEO and Eng review |
+| gstack-plan-devex-review | Interactive developer experience plan review |
+| gstack-plan-eng-review | Eng manager-mode plan review |
+| gstack-plan-tune | Self-tuning question sensitivity + developer psychographic for gstack (v1: observational) |
+| gstack-qa | Systematically QA test a web application and fix bugs found |
+| gstack-qa-only | Report-only QA testing |
+| gstack-retro | Weekly engineering retrospective |
+| gstack-review | Pre-landing PR review |
+| gstack-scrape | Pull data from a web page |
+| gstack-setup-browser-cookies | Import cookies from your real Chromium browser into the headless browse session |
+| gstack-setup-deploy | Configure deployment settings for /land-and-deploy |
+| gstack-setup-gbrain | Set up gbrain for this coding agent: install the CLI, initialize a local PGLite or Supabase brain, register MCP, capture per-remote trust policy |
+| gstack-ship | Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR |
+| gstack-skillify | Codify the most recent successful /scrape flow into a permanent browser-skill on disk |
+| gstack-spec | Turn vague intent into a precise, executable spec in five phases |
+| gstack-sync-gbrain | Keep gbrain current with this repo's code and refresh agent search guidance in CLAUDE.md |
+| gstack-unfreeze | Clear the freeze boundary set by /freeze, allowing edits to all directories again |
+| gstack-upgrade | Upgrade gstack to the latest version |
 | guard | Maximum-safety execution mode |
 | ideal-state | System and project ideal-state analysis |
+| interview-recruiter | Find and screen research interviewees for an active study and track sampling gaps |
 | issue-sliced-implementation | Issue-to-slice implementation routing |
+| marketing-engineering | Design, install, and operate reusable evidence-led marketing systems across software projects |
+| merchant-research | Turn a merchant or brand URL into an independently reviewed, evidence-backed agentic-commerce opportunity report |
 | monarch-monthly-audit | Monthly finance-data audit |
 | no-ai-slop | Human writing edit pass |
 | office-hours | Adversarial product interrogation |
 | pdf | PDF reading, creation, and review |
 | plan-ceo-review | Founder-mode plan review |
+| public-writing | Standard for any public text under Gui’s name or brands: positions, voice, approved stories, delivery checks |
 | quality-gate | Independent complex-work challenge |
 | quebec-corporate-annual-compliance | Quebec annual compliance |
+| research-interviewer | Conduct user research interviews and archive transcripts, consent and evidence-linked findings |
 | shopify-visual-gift-enrichment | Evidence-backed commerce enrichment |
 | skillify | Workflow-to-skill conversion |
 | spec | Intent-to-executable-spec conversion |
@@ -1726,7 +1813,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** installed; capability activation is task-specific
 
-**Published count:** 22
+**Published count:** 23
 
 **Detail level:** item
 
@@ -1736,28 +1823,29 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 | Capability or group | Purpose or state |
 |---|---|
-| Canva | Design creation and review |
 | Browser | Managed browser automation runtime |
+| Canva | Design creation and review |
 | Chrome | Chrome integration |
 | Codex App Tools | Desktop application operations |
 | Computer Use | Computer interaction runtime |
-| Deep Research | Long-form sourced research |
+| Defense Factory | Cloud security scans, findings, and repository monitoring |
 | Figma | Design and design-to-code workflows |
 | GitHub | Repository collaboration |
 | Gmail | Connected email workflows |
 | Google Calendar | Connected calendar workflows |
 | Google Contacts | Connected contact workflows |
 | Google Drive | Drive, Docs, Sheets, and Slides |
-| Hugging Face | Model, dataset, evaluation, and job workflows |
 | Lovable | Connected product-building workflows |
 | OpenAI Templates | Managed artifact templates |
+| Pages | Pages and spaces in ChatGPT Space |
 | Plugin Management | Plugin discovery and inspection |
 | Readwise | Connected reading workflows |
 | Sites | Website building and hosting |
 | Slack | Connected messaging workflows |
 | Unified Computer Use | Cross-surface computer interaction |
-| Visualize | Interactive visualizations |
 | Vercel | Application, AI, deployment, and platform workflows |
+| Visualize | Interactive visualizations |
+| Work Pets | Animated companion pets for ChatGPT Work mode |
 
 ## Codex MCP services
 
@@ -1789,7 +1877,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** active private catalog
 
-**Published count:** 111
+**Published count:** 115
 
 **Detail level:** grouped-private
 
@@ -1813,7 +1901,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** active private catalog
 
-**Published count:** 148
+**Published count:** 150
 
 **Detail level:** grouped-private
 
@@ -1837,7 +1925,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** active
 
-**Published count:** 26
+**Published count:** 89
 
 **Detail level:** item
 
@@ -1849,8 +1937,29 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 |---|---|
 | Figma | Design workflows |
 | Prompting | Prompt design |
+| _gstack-command | Router for the gstack skill suite |
+| agent-coordination | Share active-outcome context, read peer updates, request specific blocker help, acknowledge tested help and retain provisional lessons |
 | annual-review | Annual synthesis |
+| autoplan | Auto-review pipeline that runs the CEO, design, eng and DX review skills sequentially with auto-decisions |
+| benchmark | Performance regression detection using the browse daemon |
+| benchmark-models | Cross-model benchmark for gstack skills |
+| browse | Fast headless browser for QA testing and site dogfooding |
 | call | Bounded calling workflow |
+| canary | Post-deploy canary monitoring |
+| careful | Safety guardrails for destructive commands |
+| codex | OpenAI Codex CLI wrapper — three modes |
+| connect-chrome | Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in |
+| context-restore | Restore working context saved earlier by /context-save |
+| context-save | Save working context |
+| cso | Chief Security Officer mode |
+| design-consultation | Design consultation: product understanding, landscape research and a proposed design system with previews |
+| design-html | Design finalization: generates production-quality Pretext-native HTML/CSS |
+| design-review | Designer's eye QA: finds visual inconsistency, spacing issues, hierarchy problems, AI slop patterns, and slow interactions — then fixes them |
+| design-shotgun | Design shotgun: generate multiple AI design variants, open a comparison board, collect structured feedback, and iterate |
+| devex-review | Live developer experience audit |
+| diagram | Turn an English description or Mermaid source into a diagram triplet: source, editable Excalidraw file, rendered image |
+| document-generate | Generate missing documentation from scratch for a feature, module, or entire project |
+| document-release | Post-ship documentation update |
 | firecrawl | Core web research |
 | firecrawl-agent | Autonomous extraction |
 | firecrawl-build-interact | Dynamic-page integration |
@@ -1866,11 +1975,53 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | firecrawl-research-index | Paper discovery |
 | firecrawl-scrape | Single-page extraction |
 | firecrawl-search | Web search |
+| freeze | Restrict file edits to a specific directory for the session |
 | github-projects | GitHub project operations |
+| gstack | Router for the gstack skill suite |
+| gstack-upgrade | Upgrade gstack to the latest version |
+| guard | Full safety mode: destructive command warnings + directory-scoped edits |
+| health | Code quality dashboard |
+| ideal-state | Decide whether a system, product or workflow needs an Ideal State Analysis, pick the altitude, then draft, challenge or audit it |
+| impeccable | Design, critique, polish or harden a frontend interface against a direction contract |
+| interview-recruiter | Find and screen research interviewees for an active study and track sampling gaps |
+| investigate | Systematic debugging with root cause investigation |
+| ios-clean | Remove the DebugBridge SPM package and all #if DEBUG wiring from an iOS app |
+| ios-design-review | Visual design audit for iOS apps on real hardware |
+| ios-fix | Autonomous iOS bug fixer |
+| ios-qa | Live-device iOS QA for SwiftUI apps |
+| ios-sync | Regenerate the iOS debug bridge against the latest upstream gstack templates |
+| land-and-deploy | Land and deploy workflow |
+| landing-report | Read-only queue dashboard for workspace-aware ship |
+| learn | Manage project learnings |
+| make-pdf | Turn any markdown file into a publication-quality PDF |
+| marketing-engineering | Design, install, and operate reusable evidence-led marketing systems across software projects |
 | monthly-review | Monthly synthesis |
 | morning-brief | Daily briefing |
 | no-ai-slop | Human writing edit pass |
+| office-hours | YC Office Hours — two modes |
+| open-gstack-browser | Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in |
+| pair-agent | Pair a remote AI agent with your browser |
+| plan-ceo-review | CEO/founder-mode plan review |
+| plan-design-review | Designer's eye plan review — interactive, like CEO and Eng review |
+| plan-devex-review | Interactive developer experience plan review |
+| plan-eng-review | Eng manager-mode plan review |
+| plan-tune | Self-tuning question sensitivity + developer psychographic for gstack (v1: observational) |
+| public-writing | Standard for any public text under Gui’s name or brands: positions, voice, approved stories, delivery checks |
+| qa | Systematically QA test a web application and fix bugs found |
+| qa-only | Report-only QA testing |
 | quarterly-review | Quarterly synthesis |
+| research-interviewer | Conduct user research interviews and archive transcripts, consent and evidence-linked findings |
+| retro | Weekly engineering retrospective |
+| review | Pre-landing PR review |
+| scrape | Pull data from a web page |
+| setup-browser-cookies | Import cookies from your real Chromium browser into the headless browse session |
+| setup-deploy | Configure deployment settings for /land-and-deploy |
+| setup-gbrain | Set up gbrain for this coding agent: install the CLI, initialize a local PGLite or Supabase brain, register MCP, capture per-remote trust policy |
+| ship | Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR |
+| skillify | Codify the most recent successful /scrape flow into a permanent browser-skill on disk |
+| spec | Turn vague intent into a precise, executable spec in five phases |
+| sync-gbrain | Keep gbrain current with this repo's code and refresh agent search guidance in CLAUDE.md |
+| unfreeze | Clear the freeze boundary set by /freeze, allowing edits to all directories again |
 | video-use | Conversational video editing |
 | weekly-review | Weekly synthesis |
 
@@ -1878,9 +2029,9 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **Runtime:** Claude Code
 
-**State:** 13 registered; 12 enabled
+**State:** 14 registered; 12 enabled
 
-**Published count:** 13
+**Published count:** 14
 
 **Detail level:** item
 
@@ -1893,6 +2044,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | ableton-live | Music production · enabled |
 | audio-analysis | Audio analysis · enabled |
 | compound-engineering | Engineering workflow · enabled |
+| diffy | Diff review tooling · registered, not enabled |
 | dropbox-sync | Music asset synchronization · enabled |
 | figma | Design integration · enabled |
 | frontend-design | Frontend design · enabled |
@@ -1910,7 +2062,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **State:** active
 
-**Published count:** 6
+**Published count:** 7
 
 **Detail level:** item
 
@@ -1924,6 +2076,7 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 | music | Music workflows |
 | ops | System and business operations |
 | personal | Personal operations |
+| portfolio-ea-20261022 | Portfolio executive-assistant pilot profile (dated) |
 | research | Research workflows |
 | tao | Publishing and lead workflows |
 
@@ -1931,9 +2084,9 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **Runtime:** Hermes
 
-**State:** 61 enabled; 21 paused
+**State:** 38 enabled; 55 paused
 
-**Published count:** 82
+**Published count:** 93
 
 **Detail level:** grouped-private
 
@@ -1954,9 +2107,9 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 **Runtime:** Hermes
 
-**State:** active skill root
+**State:** active skill root; the rule counts 118 manifests including the archive folder and skips 55 symlinked gstack skills
 
-**Published count:** 105
+**Published count:** 118
 
 **Detail level:** grouped-private
 
@@ -1966,23 +2119,21 @@ This is the complete **sanitized** capability map. Exact private agent and job c
 
 | Capability or group | Purpose or state |
 |---|---|
-| Apple | 5 skills |
-| Autonomous agent runtimes | 4 skills |
-| Creative | 16 skills |
-| Data science | 1 skill |
+| Archived under the skill root (.archive) | 53 skills, retired but still counted by the rule |
+| Apple | 4 skills |
+| Autonomous ai agents | 1 skill |
+| Creative | 1 skill |
 | DevOps | 4 skills |
-| Email | 3 skills |
-| GitHub | 6 skills |
+| Email | 2 skills |
+| GitHub | 3 skills |
 | Investing | 1 skill |
-| Media | 4 skills |
-| MLOps | 7 skills |
+| Media | 1 skill |
 | Note taking | 2 skills |
-| Productivity and operations | 29 skills |
-| Research | 7 skills |
-| Smart home | 1 skill |
+| Productivity and operations | 33 skills |
+| Research | 4 skills |
 | Social media | 1 skill |
-| Software development | 10 skills |
-| Uncategorized top-level | 4 skills |
+| Software development | 6 skills |
+| Uncategorized top-level | 2 skills |
 
 ## Companion and compatibility capabilities
 
@@ -2212,7 +2363,7 @@ Source page: [System Registry](https://superagents-docs.vercel.app/reference/sys
 
 > Generated from `config/system-registry.json`. Do not edit this page directly.
 
-**Snapshot:** 2026-09-09T11:07:29-04:00
+**Snapshot:** 2026-11-02T17:53:30-05:00
 
 **Scope:** Sanitized architecture and operating metadata only; no credentials, personal context, private URLs, or customer data.
 
@@ -2220,14 +2371,15 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 | System | Kind | Status | Last verified |
 |---|---|---|---|
-| [Codex](/runtimes/codex) | interactive agent runtime | active · primary project-delivery surface | 2026-09-08 |
-| [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-09-08 |
-| [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-09-08 |
+| [Codex](/runtimes/codex) | interactive agent runtime | active · primary project-delivery surface | 2026-11-02 |
+| [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-11-02 |
+| [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-11-02 |
 | [Context control plane](/context-memory) | automation, evidence, and fleet inventory | active · authoritative automation registry | 2026-09-08 |
 | [Knowledge vault](/context-memory/storage) | curated context and durable knowledge | active · private Git-backed knowledge source | 2026-09-08 |
+| [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09 | 2026-11-02 |
 | [Shared Firecrawl MCP broker](/capabilities/mcp-tools) | shared web research service | active · shared local service | 2026-09-08 |
-| [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-09-08 |
-| [Grok CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-09-08 |
+| [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
+| [Grok CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
 | [Compatibility assets](/runtimes/companions) | inactive interoperability files | compatibility-only · no active OpenClaw or OpenCode binary | 2026-09-08 |
 | [Super Agents documentation portal](/reference/canonical-sources) | derived documentation and navigation | active · sanitized derived index | 2026-09-09 |
 
@@ -2235,11 +2387,11 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Status:** active · primary project-delivery surface
 
-**Version:** 0.147.0
+**Version:** 0.154.0
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -2251,17 +2403,17 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Workspace changes, reviews, artifacts, GitHub commits, deployments, and verification evidence |
 | Proof | Targeted checks, full build when required, commit, deploy reference, live checks, and tracking issue comment |
 | Recovery | Install Codex, restore Git repositories and AGENTS.md, restore Git-backed skills, then reconnect plugins and MCP services |
-| Snapshot counts | Usable Top Level Personal Skills: 23; Unresolved Top Level Skill Entries: 55; Managed Plugin Installs: 22; Configured Mcp Servers: 7; Desktop Automations: 2; Active Desktop Automations: 0 |
+| Snapshot counts | Usable Top Level Personal Skills: 84; Unresolved Top Level Skill Entries: 0; Managed Plugin Installs: 23; Configured Mcp Servers: 7; Desktop Automations: 1; Active Desktop Automations: 0 |
 
 ## Claude Code
 
 **Status:** active · specialist catalog and plugin surface
 
-**Version:** 2.1.266
+**Version:** 2.1.316
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -2273,7 +2425,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Workspace changes, analysis, artifacts, and delegated agent results |
 | Proof | Repository checks plus the same GitHub/deploy closeout contract used by other coding runtimes |
 | Recovery | Restore the private vault and runtime settings, run the guarded setup workflow, then compare runtime and vault inventories before use |
-| Snapshot counts | Agent Definitions: 111; Slash Commands: 148; Standalone Skill Manifests: 26; Registered Plugins: 13; Enabled Plugins: 12; Path Rules: 5; Hook Files: 3 |
+| Snapshot counts | Agent Definitions: 115; Slash Commands: 150; Standalone Skill Manifests: 89; Registered Plugins: 14; Enabled Plugins: 12; Path Rules: 5; Hook Files: 3 |
 
 ## Hermes
 
@@ -2283,7 +2435,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -2295,7 +2447,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Slack, Telegram, or Discord replies; local artifacts; monitored workflow results |
 | Proof | Scheduler output plus independent evidence contracts and the Context fleet scoreboard |
 | Recovery | Restore the private Hermes home repository and secrets from 1Password, install the public runtime fork, restore launch services, then run gateway and delivery checks |
-| Snapshot counts | Profiles: 6; Scheduled Jobs: 82; Enabled Jobs: 61; Paused Jobs: 21; Active User Skill Manifests: 105 |
+| Snapshot counts | Profiles: 7; Scheduled Jobs: 93; Enabled Jobs: 38; Paused Jobs: 55; Active User Skill Manifests: 118 |
 
 ## Context control plane
 
@@ -2341,6 +2493,28 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Recovery | Clone the private repository, unlock approved encrypted content, run its setup checks, and reconnect runtime references |
 | Snapshot counts | No volatile count published |
 
+## Finance (MoneyOS)
+
+**Status:** active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09
+
+**Version:** 2.0.0
+
+**Owner:** Chief of Cash (GrokBot) writes; Claude reviews and owns the ruling files; Hermes runs the jobs; Gui rules and moves money
+
+**Last verified:** 2026-11-02
+
+| Contract | Value |
+|---|---|
+| Source of truth | Private moneyos repository, branch main: SOURCE_OF_TRUTH.md with its machine-readable twin sources.json, acknowledged in ACK.md and enforced by scripts/check_sot.py; the Cash Flows sheet is the edit surface, Context/cfo-feed a frozen mirror |
+| Measurement | Row counts of the record files on main (ledger, account register, tie-outs by status, open to-clarify rows, open questions) and ACK.md rows at the current contract hash, read from the repository at the snapshot date. |
+| Trigger | Statement or export arrival (refresh runbook), a ruling from Gui in the Cash Flows sheet or in chat, the weekday Cash dashboard refresh, the month-end close, and the weekly contract check |
+| Permissions | Read-only on every bank, card and investment account; one named writer per store; sheet writes only through the Sheets API apply step after a backup copy; no agent moves money; account identifiers keep their last four digits only; the repository stays private |
+| Inputs | Bank and card statements and exports filed on Google Drive, the Monarch daily feed, Gui’s sheet cells and chat rulings, revenue figures from GrowthOS |
+| Outputs | Transactions ledger, books and tie-outs, clarify and ruling files, balances and debts, payables register, scorecard and savings rate, the Cash Flows sheet, the Cash dashboard snapshot, and the month-end report |
+| Proof | check_sot.py exit 0 on main (last step of run_all.sh, first step of the Claude gate, weekly job); a GO review file per material change; every quoted number names its source file, as-of date and commit |
+| Recovery | Clone the private repository at main, install its Python requirements, run run_all.sh and check_sot.py, re-acknowledge the contract in ACK.md; rebuild the Cash Flows sheet from the repository with the build and apply scripts, never with a spreadsheet import |
+| Snapshot counts | Ledger Rows: 5516; Accounts In Register: 42; Tie Outs Passing: 121; Tie Outs Tieable: 150; Open To Clarify Rows: 217; Open Questions: 11; Contract Ack Rows: 2; Contract Ack Required: 3 |
+
 ## Shared Firecrawl MCP broker
 
 **Status:** active · shared local service
@@ -2371,7 +2545,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -2389,11 +2563,11 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Status:** installed · bounded companion surface
 
-**Version:** 1.0.5
+**Version:** 1.0.40
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -2719,11 +2893,173 @@ Workflows connect runtimes, capabilities, context, permission classes, and proof
 | Project delivery | Codex or Claude → repository checks → GitHub → deployment → live proof |
 | Research | Search and primary sources → synthesis → citations → curated destination |
 | Personal operations | Hermes schedule or message → Context contract → evidence → alert when actionable |
+| Finance (MoneyOS) | Statement or export → record on `main` of the private moneyos repository → deterministic contract check and Claude gate → sheet written by API → Cash dashboard, `#cash`, month-end report |
 | Publishing | Brief → research → drafting → review → fact check → approval → channel-specific release |
 
 Each workflow page documents the invariant contract rather than duplicating a volatile agent catalog.
 
 See [Programs](/workflows/programs) for the provisional mapping from business/program intent to these methods and its unresolved ownership/evidence checks.
+
+[Back to table of contents](#table-of-contents)
+
+---
+
+<!-- source-page: app/workflows/finance-moneyos/page.mdx | route: https://superagents-docs.vercel.app/workflows/finance-moneyos -->
+
+<a id="page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73"></a>
+
+Source page: [Finance (MoneyOS)](https://superagents-docs.vercel.app/workflows/finance-moneyos)
+
+# Finance (MoneyOS)
+
+**Status: active. Contract v2.0.0 of 2026-11-02, acknowledged by 2 of 3 required agents.** Registered as `finance-moneyos` in the [System Registry](/reference/system-registry); the volatile counts live there, not in this page.
+
+MoneyOS is the agent-run finance system for Gui's money data across three entities (personal, the holding company, the operating company; never summed). Agents do the reading, matching, booking and proposing; Gui says yes and moves money. This page documents the invariant contract. The private `moneyos` repository remains authoritative for its own state, and this portal does not replace it.
+
+## What MoneyOS is
+
+- **A private Git repository.** Branch `main` of `GuillaumeRacine/moneyos` holds the record for every money data type: the transactions ledger, the clarify and ruling files, balances, debts, the payables register, tie-outs and books. Every agent reads from a clone of `main`; a working copy ahead of `main` for more than one business day is a breach.
+- **A contract.** `SOURCE_OF_TRUTH.md` names one record, one owner and one writer per data type. `sources.json` is the same table in machine-readable form. The two change together, by pull request, through the Claude gate, with Gui's merge.
+- **A human edit surface.** The Google Sheet "Cash Flows" (eight tabs) is Gui's view and where he answers questions. A cell Gui edits wins and is imported before every rebuild. The sheet is a view of the repository, never the record.
+- **Views, feeds and caches.** Slack `#cash`, the Monarch daily feed, the Cash dashboard snapshot, the Chief of Cash's working copy and `Context/cfo-feed` are views or caches. When one disagrees with `main`, the record stands and the disagreement becomes one row in `ISSUES.md` with both values and both as-of dates.
+
+Rules that hold even when nothing else is read: null means unknown, never 0; every number carries its source file, its as-of date and the commit it came from (`moneyos@<sha7>`); account identifiers keep at most their last four digits; no agent moves money.
+
+## The record per data type
+
+Built from `sources.json` (contract 2.0.0). Paths are relative to the `moneyos` repository unless stated. "Sheet view" names the Cash Flows tab that mirrors the record; the sheet is never the record.
+
+| Data type | Record | Owner | Writer | Refresh | Sheet view |
+|---|---|---|---|---|---|
+| Transactions, all entities | `data/ledger.csv` (key `txn_id`) | Chief of Cash | Chief of Cash | each statement or export (refresh runbook) | Ledger (Gui's `Comment`, Claude's `Clarification`, carried by `txn_id`) |
+| Pending card charges | `data/pending.csv` | Chief of Cash | Chief of Cash | each card export | Pending (not in ledger) |
+| Rows awaiting a ruling | `clarify/to-clarify.csv` | Chief of Cash | Chief of Cash | each refresh | To Clarify (Gui answers in `Gui answer`) |
+| Batch rules for clarify rows | `clarify/batch-rules.csv` | Chief of Cash | Chief of Cash | each refresh | Batch Rules |
+| Questions for Gui | `clarify/open-questions.csv` (ids `Qnn`) | Claude | Claude (`add`, `sweep`); Chief of Cash for new rows | `add` when a question appears; `sweep` when answered | Open Questions (Gui answers in the answer and note columns) |
+| Rulings, one line each | `clarify/history-notes.csv` | Claude | Claude (`sweep`); Chief of Cash for chat rulings, same day | each sweep or chat ruling | History & Notes |
+| Resolved detail rows | `clarify/resolved.csv` | Claude | Claude; Chief of Cash | each sweep | Resolved |
+| Burn-engine single-transaction overrides | Context repository, `data/cfo/monthly_close/adjustments.csv` | Claude | Claude | when a ruling changes a classification | none |
+| Personal bank and card balances | `data/cfo-feed/bank_balances.json` (per last four, `as_of` per account) | Chief of Cash | whoever reads the statement first (Chief of Cash by default; Claude via the statement importer) | each statement | none (the Monarch balances feed is a view) |
+| Company cash balances | `data/cfo-feed/facts.json`, key `entities` | Chief of Cash | Chief of Cash | after each company statement set | none |
+| Debt balances and rates | `data/cfo-feed/debts.csv` | Chief of Cash | Chief of Cash | each bank statement | none |
+| Interest and principal per mortgage payment | `data/mortgage-payments-split.csv` | Chief of Cash | Chief of Cash (split scripts) | each refresh | none |
+| Interest roll-up by month and debt account | `data/interest-by-month.csv` | Chief of Cash | Chief of Cash | each refresh | none (`interest_summary.json` is derived) |
+| Payables and receivables register | `data/payables-receivables.csv` | Chief of Cash | Chief of Cash (script plus manual rows with a source) | each refresh; every open row re-checked at month-end | Payables & Receivables |
+| Due from the operating company, running balance | `data/due-from-ensemble.csv` (equals books account 1525) | Chief of Cash | Chief of Cash | each refresh | none |
+| Funding targets and deadlines | `reports/TARGETS.md` | Gui | Claude | on a ruling or a tax letter | none |
+| Tax items and deadlines | `data/cfo-feed/facts.json`, key `tax_items` | Chief of Cash | Chief of Cash | on a ruling or a tax letter | none |
+| Recurring charges and subscriptions | `data/cfo-feed/recurring-charges.csv` | Chief of Cash | Chief of Cash | each statement load | none |
+| Task queue (cuts, moves, fixes) | `data/cfo-feed/tasks.json` | Chief of Cash | Chief of Cash; the feed's `--done` | on evidence or Gui's "done" | none |
+| Net burn, last 30 days | `data/cfo-feed/t30d.json` | Chief of Cash | Chief of Cash | each ledger refresh | none (`#cash` post and the Cash dashboard) |
+| Savings rate and scorecard | `data/savings-rate.csv`, column `savings_rate` (one definition) | Chief of Cash | Chief of Cash (metrics script) | month-end | none |
+| Monthly P&L and cash flow (Claude's engine) | Context repository, `data/cfo/burn/` | Claude | the engine only | month-end | none |
+| Tie-outs | `data/tieout.csv` | Chief of Cash | Chief of Cash | each refresh | none |
+| Books trial balance | `books/trial-balance.csv` | Chief of Cash | Chief of Cash | each refresh | none |
+| Account register | `data/accounts.csv` | Chief of Cash | Chief of Cash | monthly | none |
+| Holdings | `data/holdings.csv` | Chief of Cash | Chief of Cash | monthly | none |
+| Counterparties | `data/counterparties.csv` | Chief of Cash | Chief of Cash | as they appear | none |
+| Issues and disputes | `ISSUES.md` | Chief of Cash | anyone appends; the owner closes with a dated `fixed` | as they arise | none |
+| Decisions on this system | `IDEAL-STATE.md`, `SOURCE_OF_TRUTH.md`, `ACK.md` | Gui | Chief of Cash or Claude, by pull request | on a ruling | none |
+| Cabin owner statements | `data/cabin-statements.csv` | Chief of Cash | Claude; Chief of Cash | each statement month | none (a separate cabin P&L sheet is a view) |
+
+Two other Google Sheets are named in the contract and are not records: the Stoic Capital sheet (Gui's asset view, two-way, Gui wins; the assets column is written only after Gui's yes) and the Investing System workbook (Gui's strategy workbook, read-only for agents). Source documents (statements and exports) are filed on Google Drive by Gui; local copies are caches.
+
+## Who does what
+
+| Role | Does | Does not |
+|---|---|---|
+| Gui | Owns the system. Logins, exports with no feed, rulings, every money movement, merges to `main`. Edits his cells in the Cash Flows and Stoic Capital sheets; those edits win. | |
+| Chief of Cash (GrokBot) | Owner and writer of the data stores: ingests, deduplicates, categorizes, splits interest from principal, builds the books, ties out, keeps the sheet in sync, runs the savings queue. Leads the refresh and the month-end close. | Edit a store owned by another writer; review its own work; move money. |
+| Claude | CFO reviewer and the Claude gate; owner and writer of the ruling files (`open-questions`, `history-notes`, `resolved`) and the Ledger `Clarification` column; runs the burn engine. | Write data stores owned by the Chief of Cash; review its own changes. |
+| Hermes / Wink | Runs the scheduled jobs and posts to `#cash` as Wink. | Commit anything but job state. |
+| GrowthOS | Owns the operating company's revenue numbers and sends them to the Chief of Cash. | Edit the ledger. |
+| Other agents | Read only; report conflicts in `ISSUES.md` or to the Chief of Cash. | Write. |
+
+**Attribution.** Every write is attributable: Gui; Claude under Gui's account with a co-author trailer; the Chief of Cash under Gui's login with its own co-author trailer until it has its own accounts; Hermes under its service account, jobs only. No anonymous link-based sheet edits.
+
+**Acknowledgement rule.** Each required agent (Chief of Cash, Claude, Hermes) adds one row to `ACK.md` with the date and the contract hash (`python3 scripts/check_sot.py --hash`). Acknowledging means: I read the contract and `sources.json`, my own docs, scripts and jobs name no other record, path or procedure, and I will re-acknowledge after every change. After the grace period (7 days from the contract date) a missing or stale row makes `check_sot.py` fail for everyone.
+
+## How Gui's rulings flow
+
+1. **Questions get ids once.** A question for Gui is a row in `clarify/open-questions.csv` with an id `Qnn`. Ids are allocated once from `next_question_id` in `sources.json` and never reused; `check_sot.py` fails on a duplicate or on an id at or above the counter.
+2. **Gui answers** in the sheet (Open Questions tab, answer and note columns; To Clarify tab, `Gui answer`) or in chat. Questions are yes/no and come with a proposed answer and the evidence.
+3. **Sweep.** Claude's `sweep` (or refresh step 0) moves answered rows to `clarify/resolved.csv`, writes one line per ruling in `clarify/history-notes.csv`, and carries the ruling into the Ledger `Clarification` column. A chat ruling is written to `history-notes.csv` the same day by whoever received it, with the source "Gui, chat, date".
+4. **History.** Rulings accumulate in `history-notes.csv` and the History & Notes tab; a belief with a question mark is logged as a belief, not a fact, and the payables register keeps the row open until proof. Rulings about the system itself (the contract, roles, procedures) are recorded in `IDEAL-STATE.md` and the contract, with the discussion kept on the plan-of-record issue.
+
+## How the sheet is written
+
+The sheet is written in exactly one way, in two steps:
+
+1. **Build.** `scripts/build_cash_flows.py` takes a fresh export of the live sheet plus the repository and produces the workbook; Gui's live cells win over the repository on every conflict, and each imported change is logged in `CHANGELOG.md` with the row id, old value and new value.
+2. **Apply through the Sheets API.** `scripts/cfo_apply_cash_flows_xlsx.py --apply` makes a Drive copy of the sheet first (backup), then replaces the Ledger, To Clarify, Open Questions, Batch Rules, Pending and Payables tabs, appends to Resolved and History & Notes, and writes one History & Notes line naming the `moneyos@<sha7>` it came from. It runs on the workstation that holds the Sheets token, as a Hermes job when `data/ledger.csv` on `main` changed since the last applied commit, or by Claude by hand.
+
+The spreadsheet import route through the browser is retired: it destroyed tab ids, data validation, the `Clarification` column and the Resolved history. The phrase that named it is on the contract's banned list, so a document or script that brings it back fails `check_sot.py`.
+
+## Quality gates
+
+- **`scripts/check_sot.py`** (standard library only) exits non-zero when: `sources.json` or a record file does not parse; a record path is missing; a document or script contains a banned phrase; a Google Sheet id appears that `sources.json` does not list; a hard-coded machine path appears outside the allowed list; a question id is duplicated or at or above the counter; an `ACK.md` row for a required agent is missing or names an older contract hash after the grace period. It is the last step of `scripts/run_all.sh` (every refresh) and the first step of `scripts/claude_gate.sh`; a failure there is a NO-GO with the check output as the review, before any model is called. Optional flags check the Context pointers (`--context`) and the live sheet tab headers (`--sheet`).
+- **`scripts/check_consistency.py`** fails on a list of key document figures and stale patterns that disagree with the data files.
+- **The Claude gate** (`GATE.md`). Every material change (ledger or books logic, net worth or the assets column, entity or loan classifications, sheet import files, rules and docs) passes before it reaches Gui or any Google Sheet. The gate reviews a clean detached worktree at the exact head commit, headless, with read-only tools; line 1 of the review is exactly `GO` or `NO-GO`; anything else counts as NO-GO. Reviews are written to `reviews/` with the reviewed range, never overwritten, with numbers of seven or more digits masked to their last four. On NO-GO: fix and rerun up to twice, then escalate to Gui with the findings.
+- **Review independence.** No model reviews its own work. A change authored by the Chief of Cash gets the Claude gate; a change authored by Claude (the contract itself, for example) gets the gate under the base prompt plus the Chief of Cash as challenger (a disagreement table: item, our value, their value, which is right, fix) and Gui's explicit yes. If a change touches the gate's own files, it is reviewed under the base version of the prompt and still needs Gui's sign-off.
+- **Handoffs** between agents use one format: `HANDOFF moneyos@<sha7> <date time>` followed by Goal, Done, Numbers (figure, source file, as-of), Open and Next (owner, action, by when).
+
+## Scheduled jobs
+
+Hermes runs the jobs on the main workstation (see [Scheduling](/automation/scheduling)). Job identifiers and local paths stay in the private Hermes home repository.
+
+| Job | Cadence | State on 2026-11-02 | What it does |
+|---|---|---|---|
+| Monarch daily feed | twice daily (early morning and midday) | enabled | Browser fetch of transactions and account balances into the Context control plane's data area; a feed and a view, never a record. Per-account freshness decides what is usable; several bank accounts do not sync there and are read from statements instead. |
+| Cash dashboard refresh | weekdays, after the morning feed slot | enabled | Fast-forward pulls the finance record clone, builds the Cash snapshot with `MONEYOS_DIR` pointing at it, validates, publishes the gzip variant to the managed environment and redeploys; failures are logged locally and keep the last good snapshot. See [Cash dashboard](#dashboards). |
+| `#cash` feed (Chief of Cash) | weekdays 08:00 | paused | Posts the daily headline and 30-day net burn as Wink. It stays paused while the burn file's as-of is older than 7 days and until the feed script is repointed from the frozen Context mirror to the repository (convergence phase 3). |
+| Finance contract check | weekly, Monday morning | enabled; first run pending | Runs `check_sot.py --context --sheet` from the clean clone against the Context pointers and the live sheet headers; posts to `#cash` only on failure. Once it has run green, Claude adds the Hermes row to `ACK.md` on behalf of the job definitions. |
+
+The sheet apply step runs as a job only when `data/ledger.csv` on `main` has changed since the last applied commit; until that job is registered, Claude runs the apply script by hand.
+
+## Dashboards
+
+- **`/dashboard/cash`** (private, allowlisted, dynamic; not part of the documentation corpus). Owner line: Chief of Cash (GrokBot); feed posts weekdays in `#cash`; record of truth `GuillaumeRacine/moneyos` `main`. It shows the 30-day net burn and its trend, today's task from the task queue, what needs Gui soon (payables, tax items, funding deadlines), per-entity and per-currency balances with their as-of dates, debt facilities, and an always-visible as-of bar with a stale banner computed at render. Null renders as "unknown", never 0; balances are never summed across entities. The snapshot is built by `scripts/build-cash-snapshot.mjs` from a local clone of the record and delivered as a managed-environment value; the Scorecard, Books, Payables and contract bands are being added under the same issue as this page. See the [finance operating contract](https://github.com/GuillaumeRacine/superagents/blob/main/docs/finance/README.md).
+- **Slack `#cash`** is a notification surface: feed posts, nudges, failure alerts. It is never the record for anything.
+- **Month-end report** (`reports/month-end-YYYY-MM.md`) answers the six month-end exam questions (liquidity by entity less committed obligations, net income and burn with and without mortgage principal, interest trend by debt account, savings to bank next, payables and receivables status, scorecard against the North Star), each figure with its source and date, gaps marked MISSING.
+
+## How to verify
+
+In a clone of the `moneyos` repository on `main`:
+
+```bash
+git pull --ff-only
+python3 scripts/check_sot.py            # exit 0; prints contract version, hash, problems, warnings
+python3 scripts/check_sot.py --hash     # the hash every ACK.md row must name
+python3 scripts/check_consistency.py    # doc figures against data files
+scripts/run_all.sh                      # full rebuild; ends with both checks
+```
+
+Counts behind the registry entry come from the record files on `main`: data rows of `data/ledger.csv` and `data/accounts.csv`; rows of `data/tieout.csv` whose status is `ties`, over the rows that can tie (statement rows with balances); rows of `clarify/to-clarify.csv` with `Status` equal to `open`; rows of `clarify/open-questions.csv` with `Status` equal to `open`; rows of `ACK.md` whose hash equals the current contract hash, over the `required_acks` list in `sources.json`.
+
+On this portal: `npm run docs:check` (publication rules reject private URLs, home paths and credential-like tokens) and the [System Registry](/reference/system-registry) entry `finance-moneyos`.
+
+## Status as of 2026-11-02
+
+Counts from `main` at the snapshot (the registry entry is the published copy):
+
+| Measure | Value |
+|---|---|
+| Contract | v2.0.0, dated 2026-11-02; acknowledged by Chief of Cash and Claude; Hermes row due by 2026-11-09 |
+| Ledger rows | 5,516 |
+| Accounts in the register | 42 |
+| Tie-outs | 121 passing of 150 that can tie (9 more rows have no balances to tie) |
+| Open to-clarify rows | 217 (target under 20) |
+| Open questions for Gui | 11 |
+
+Open items:
+
+- **ACK rows.** The Hermes acknowledgement is due by 2026-11-09 (after the weekly contract check has run green once). Past the grace period, `check_sot.py` fails for everyone until the row exists.
+- **Phase 3 repointing** (convergence plan, plan-of-record issue in the `moneyos` repository). The Cash dashboard refresh already reads the clone; the `#cash` feed script, the Open Questions sweep and the sheet apply job still need to move from the frozen `Context/cfo-feed` mirror to the repository. Until then `Context/cfo-feed` is a frozen mirror and pointer: read by the remaining jobs, never edited.
+- **Q23.** The next question id is allocated; the question itself (cabin sales-tax filing status) is with Gui.
+- **Link sharing.** The Cash Flows sheet still has link-based sharing to remove; sharing is to named accounts only (owner Gui, writer the Hermes service account).
+- **Chief of Cash follow-ups** from its own acknowledgement: a stale hint in the consistency check, an FX pair check, USD legs at the Bank of Canada rate in the books, the cabin payout split.
+
+Related: [Sources of Truth](/architecture/sources-of-truth), [Personal Operations](/workflows/personal-operations), [Fleet Evidence](/automation/fleet-evidence), [Permissions](/governance/permissions).
 
 [Back to table of contents](#table-of-contents)
 

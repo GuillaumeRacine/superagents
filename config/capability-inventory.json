@@ -1,75 +1,458 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-09T11:07:29-04:00",
+  "asOf": "2026-11-02T17:53:30-05:00",
   "scope": "Complete at the sanitized capability-group level. Private agent names, job names, personal schedules, and machine paths remain in their owning private inventories.",
   "inventories": [
     {
       "id": "codex-personal-skills",
       "title": "Codex personal skills",
       "runtime": "Codex",
-      "count": 23,
+      "count": 84,
       "detailLevel": "item",
       "state": "active and resolvable",
       "source": "Active personal Codex skill root",
       "countingRule": "Direct child entries whose SKILL.md resolves to a readable file; managed system and plugin skills are excluded.",
       "items": [
-        ["adversarial-second-opinion-review", "Strict second-pass review"],
-        ["browser-fallback-artifacts", "Recoverable browser fallback artifacts"],
-        ["canary", "Post-deployment monitoring"],
-        ["check-resolvable", "Routing and duplicate audit"],
-        ["corporations-canada-annual-return", "Federal annual-return operations"],
-        ["design-shotgun", "Parallel design exploration"],
-        ["docs-audit", "Documentation reconciliation"],
-        ["ensembl3-workflows", "Ensembl3 operations"],
-        ["ensemble-studio", "Shopify application studio"],
-        ["guard", "Maximum-safety execution mode"],
-        ["ideal-state", "System and project ideal-state analysis"],
-        ["issue-sliced-implementation", "Issue-to-slice implementation routing"],
-        ["monarch-monthly-audit", "Monthly finance-data audit"],
-        ["no-ai-slop", "Human writing edit pass"],
-        ["office-hours", "Adversarial product interrogation"],
-        ["pdf", "PDF reading, creation, and review"],
-        ["plan-ceo-review", "Founder-mode plan review"],
-        ["quality-gate", "Independent complex-work challenge"],
-        ["quebec-corporate-annual-compliance", "Quebec annual compliance"],
-        ["shopify-visual-gift-enrichment", "Evidence-backed commerce enrichment"],
-        ["skillify", "Workflow-to-skill conversion"],
-        ["spec", "Intent-to-executable-spec conversion"],
-        ["video-use", "Conversational video editing"]
+        [
+          "adversarial-second-opinion-review",
+          "Strict second-pass review"
+        ],
+        [
+          "agent-coordination",
+          "Share active-outcome context, read peer updates, request specific blocker help, acknowledge tested help and retain provisional lessons"
+        ],
+        [
+          "browser-fallback-artifacts",
+          "Recoverable browser fallback artifacts"
+        ],
+        [
+          "canary",
+          "Post-deployment monitoring"
+        ],
+        [
+          "check-resolvable",
+          "Routing and duplicate audit"
+        ],
+        [
+          "corporations-canada-annual-return",
+          "Federal annual-return operations"
+        ],
+        [
+          "design-shotgun",
+          "Parallel design exploration"
+        ],
+        [
+          "docs-audit",
+          "Documentation reconciliation"
+        ],
+        [
+          "ensembl3-workflows",
+          "Ensembl3 operations"
+        ],
+        [
+          "ensemble-studio",
+          "Shopify application studio"
+        ],
+        [
+          "funding-credit-agent",
+          "Research, screen and prepare Canadian and Quebec founder-salary funding and R&D tax-credit claims with evidence"
+        ],
+        [
+          "gstack",
+          "Router for the gstack skill suite"
+        ],
+        [
+          "gstack-autoplan",
+          "Auto-review pipeline that runs the CEO, design, eng and DX review skills sequentially with auto-decisions"
+        ],
+        [
+          "gstack-benchmark",
+          "Performance regression detection using the browse daemon"
+        ],
+        [
+          "gstack-benchmark-models",
+          "Cross-model benchmark for gstack skills"
+        ],
+        [
+          "gstack-browse",
+          "Fast headless browser for QA testing and site dogfooding"
+        ],
+        [
+          "gstack-canary",
+          "Post-deploy canary monitoring"
+        ],
+        [
+          "gstack-careful",
+          "Safety guardrails for destructive commands"
+        ],
+        [
+          "gstack-claude",
+          "Claude Code CLI wrapper for non-Claude hosts - three modes"
+        ],
+        [
+          "gstack-context-restore",
+          "Restore working context saved earlier by /context-save"
+        ],
+        [
+          "gstack-context-save",
+          "Save working context"
+        ],
+        [
+          "gstack-cso",
+          "Chief Security Officer mode"
+        ],
+        [
+          "gstack-design-consultation",
+          "Design consultation: product understanding, landscape research and a proposed design system with previews"
+        ],
+        [
+          "gstack-design-html",
+          "Design finalization: generates production-quality Pretext-native HTML/CSS"
+        ],
+        [
+          "gstack-design-review",
+          "Designer's eye QA: finds visual inconsistency, spacing issues, hierarchy problems, AI slop patterns, and slow interactions — then fixes them"
+        ],
+        [
+          "gstack-design-shotgun",
+          "Design shotgun: generate multiple AI design variants, open a comparison board, collect structured feedback, and iterate"
+        ],
+        [
+          "gstack-devex-review",
+          "Live developer experience audit"
+        ],
+        [
+          "gstack-diagram",
+          "Turn an English description or Mermaid source into a diagram triplet: source, editable Excalidraw file, rendered image"
+        ],
+        [
+          "gstack-document-generate",
+          "Generate missing documentation from scratch for a feature, module, or entire project"
+        ],
+        [
+          "gstack-document-release",
+          "Post-ship documentation update"
+        ],
+        [
+          "gstack-freeze",
+          "Restrict file edits to a specific directory for the session"
+        ],
+        [
+          "gstack-guard",
+          "Full safety mode: destructive command warnings + directory-scoped edits"
+        ],
+        [
+          "gstack-health",
+          "Code quality dashboard"
+        ],
+        [
+          "gstack-investigate",
+          "Systematic debugging with root cause investigation"
+        ],
+        [
+          "gstack-ios-clean",
+          "Remove the DebugBridge SPM package and all #if DEBUG wiring from an iOS app"
+        ],
+        [
+          "gstack-ios-design-review",
+          "Visual design audit for iOS apps on real hardware"
+        ],
+        [
+          "gstack-ios-fix",
+          "Autonomous iOS bug fixer"
+        ],
+        [
+          "gstack-ios-qa",
+          "Live-device iOS QA for SwiftUI apps"
+        ],
+        [
+          "gstack-ios-sync",
+          "Regenerate the iOS debug bridge against the latest upstream gstack templates"
+        ],
+        [
+          "gstack-land-and-deploy",
+          "Land and deploy workflow"
+        ],
+        [
+          "gstack-landing-report",
+          "Read-only queue dashboard for workspace-aware ship"
+        ],
+        [
+          "gstack-learn",
+          "Manage project learnings"
+        ],
+        [
+          "gstack-make-pdf",
+          "Turn any markdown file into a publication-quality PDF"
+        ],
+        [
+          "gstack-office-hours",
+          "YC Office Hours — two modes"
+        ],
+        [
+          "gstack-open-gstack-browser",
+          "Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in"
+        ],
+        [
+          "gstack-pair-agent",
+          "Pair a remote AI agent with your browser"
+        ],
+        [
+          "gstack-plan-ceo-review",
+          "CEO/founder-mode plan review"
+        ],
+        [
+          "gstack-plan-design-review",
+          "Designer's eye plan review — interactive, like CEO and Eng review"
+        ],
+        [
+          "gstack-plan-devex-review",
+          "Interactive developer experience plan review"
+        ],
+        [
+          "gstack-plan-eng-review",
+          "Eng manager-mode plan review"
+        ],
+        [
+          "gstack-plan-tune",
+          "Self-tuning question sensitivity + developer psychographic for gstack (v1: observational)"
+        ],
+        [
+          "gstack-qa",
+          "Systematically QA test a web application and fix bugs found"
+        ],
+        [
+          "gstack-qa-only",
+          "Report-only QA testing"
+        ],
+        [
+          "gstack-retro",
+          "Weekly engineering retrospective"
+        ],
+        [
+          "gstack-review",
+          "Pre-landing PR review"
+        ],
+        [
+          "gstack-scrape",
+          "Pull data from a web page"
+        ],
+        [
+          "gstack-setup-browser-cookies",
+          "Import cookies from your real Chromium browser into the headless browse session"
+        ],
+        [
+          "gstack-setup-deploy",
+          "Configure deployment settings for /land-and-deploy"
+        ],
+        [
+          "gstack-setup-gbrain",
+          "Set up gbrain for this coding agent: install the CLI, initialize a local PGLite or Supabase brain, register MCP, capture per-remote trust policy"
+        ],
+        [
+          "gstack-ship",
+          "Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR"
+        ],
+        [
+          "gstack-skillify",
+          "Codify the most recent successful /scrape flow into a permanent browser-skill on disk"
+        ],
+        [
+          "gstack-spec",
+          "Turn vague intent into a precise, executable spec in five phases"
+        ],
+        [
+          "gstack-sync-gbrain",
+          "Keep gbrain current with this repo's code and refresh agent search guidance in CLAUDE.md"
+        ],
+        [
+          "gstack-unfreeze",
+          "Clear the freeze boundary set by /freeze, allowing edits to all directories again"
+        ],
+        [
+          "gstack-upgrade",
+          "Upgrade gstack to the latest version"
+        ],
+        [
+          "guard",
+          "Maximum-safety execution mode"
+        ],
+        [
+          "ideal-state",
+          "System and project ideal-state analysis"
+        ],
+        [
+          "interview-recruiter",
+          "Find and screen research interviewees for an active study and track sampling gaps"
+        ],
+        [
+          "issue-sliced-implementation",
+          "Issue-to-slice implementation routing"
+        ],
+        [
+          "marketing-engineering",
+          "Design, install, and operate reusable evidence-led marketing systems across software projects"
+        ],
+        [
+          "merchant-research",
+          "Turn a merchant or brand URL into an independently reviewed, evidence-backed agentic-commerce opportunity report"
+        ],
+        [
+          "monarch-monthly-audit",
+          "Monthly finance-data audit"
+        ],
+        [
+          "no-ai-slop",
+          "Human writing edit pass"
+        ],
+        [
+          "office-hours",
+          "Adversarial product interrogation"
+        ],
+        [
+          "pdf",
+          "PDF reading, creation, and review"
+        ],
+        [
+          "plan-ceo-review",
+          "Founder-mode plan review"
+        ],
+        [
+          "public-writing",
+          "Standard for any public text under Gui’s name or brands: positions, voice, approved stories, delivery checks"
+        ],
+        [
+          "quality-gate",
+          "Independent complex-work challenge"
+        ],
+        [
+          "quebec-corporate-annual-compliance",
+          "Quebec annual compliance"
+        ],
+        [
+          "research-interviewer",
+          "Conduct user research interviews and archive transcripts, consent and evidence-linked findings"
+        ],
+        [
+          "shopify-visual-gift-enrichment",
+          "Evidence-backed commerce enrichment"
+        ],
+        [
+          "skillify",
+          "Workflow-to-skill conversion"
+        ],
+        [
+          "spec",
+          "Intent-to-executable-spec conversion"
+        ],
+        [
+          "video-use",
+          "Conversational video editing"
+        ]
       ]
     },
     {
       "id": "codex-managed-plugins",
       "title": "Codex managed plugin installs",
       "runtime": "Codex",
-      "count": 22,
+      "count": 23,
       "detailLevel": "item",
       "state": "installed; capability activation is task-specific",
       "source": "Managed Codex plugin cache",
       "countingRule": "One current version directory per managed plugin across curated remote and bundled plugin roots.",
       "items": [
-        ["Canva", "Design creation and review"],
-        ["Browser", "Managed browser automation runtime"],
-        ["Chrome", "Chrome integration"],
-        ["Codex App Tools", "Desktop application operations"],
-        ["Computer Use", "Computer interaction runtime"],
-        ["Deep Research", "Long-form sourced research"],
-        ["Figma", "Design and design-to-code workflows"],
-        ["GitHub", "Repository collaboration"],
-        ["Gmail", "Connected email workflows"],
-        ["Google Calendar", "Connected calendar workflows"],
-        ["Google Contacts", "Connected contact workflows"],
-        ["Google Drive", "Drive, Docs, Sheets, and Slides"],
-        ["Hugging Face", "Model, dataset, evaluation, and job workflows"],
-        ["Lovable", "Connected product-building workflows"],
-        ["OpenAI Templates", "Managed artifact templates"],
-        ["Plugin Management", "Plugin discovery and inspection"],
-        ["Readwise", "Connected reading workflows"],
-        ["Sites", "Website building and hosting"],
-        ["Slack", "Connected messaging workflows"],
-        ["Unified Computer Use", "Cross-surface computer interaction"],
-        ["Visualize", "Interactive visualizations"],
-        ["Vercel", "Application, AI, deployment, and platform workflows"]
+        [
+          "Browser",
+          "Managed browser automation runtime"
+        ],
+        [
+          "Canva",
+          "Design creation and review"
+        ],
+        [
+          "Chrome",
+          "Chrome integration"
+        ],
+        [
+          "Codex App Tools",
+          "Desktop application operations"
+        ],
+        [
+          "Computer Use",
+          "Computer interaction runtime"
+        ],
+        [
+          "Defense Factory",
+          "Cloud security scans, findings, and repository monitoring"
+        ],
+        [
+          "Figma",
+          "Design and design-to-code workflows"
+        ],
+        [
+          "GitHub",
+          "Repository collaboration"
+        ],
+        [
+          "Gmail",
+          "Connected email workflows"
+        ],
+        [
+          "Google Calendar",
+          "Connected calendar workflows"
+        ],
+        [
+          "Google Contacts",
+          "Connected contact workflows"
+        ],
+        [
+          "Google Drive",
+          "Drive, Docs, Sheets, and Slides"
+        ],
+        [
+          "Lovable",
+          "Connected product-building workflows"
+        ],
+        [
+          "OpenAI Templates",
+          "Managed artifact templates"
+        ],
+        [
+          "Pages",
+          "Pages and spaces in ChatGPT Space"
+        ],
+        [
+          "Plugin Management",
+          "Plugin discovery and inspection"
+        ],
+        [
+          "Readwise",
+          "Connected reading workflows"
+        ],
+        [
+          "Sites",
+          "Website building and hosting"
+        ],
+        [
+          "Slack",
+          "Connected messaging workflows"
+        ],
+        [
+          "Unified Computer Use",
+          "Cross-surface computer interaction"
+        ],
+        [
+          "Vercel",
+          "Application, AI, deployment, and platform workflows"
+        ],
+        [
+          "Visualize",
+          "Interactive visualizations"
+        ],
+        [
+          "Work Pets",
+          "Animated companion pets for ChatGPT Work mode"
+        ]
       ]
     },
     {
@@ -82,179 +465,698 @@
       "source": "Active Codex configuration",
       "countingRule": "Distinct top-level MCP server sections in the active configuration.",
       "items": [
-        ["paper", "Structured document and research artifacts"],
-        ["terminal-commerce", "Bounded commerce operations"],
-        ["claude_design", "Design collaboration"],
-        ["node_repl", "Persistent JavaScript execution"],
-        ["computer-use", "Authenticated browser and desktop interaction"],
-        ["present-agent", "Presentation and product operations"],
-        ["firecrawl", "Shared web search and extraction"]
+        [
+          "paper",
+          "Structured document and research artifacts"
+        ],
+        [
+          "terminal-commerce",
+          "Bounded commerce operations"
+        ],
+        [
+          "claude_design",
+          "Design collaboration"
+        ],
+        [
+          "node_repl",
+          "Persistent JavaScript execution"
+        ],
+        [
+          "computer-use",
+          "Authenticated browser and desktop interaction"
+        ],
+        [
+          "present-agent",
+          "Presentation and product operations"
+        ],
+        [
+          "firecrawl",
+          "Shared web search and extraction"
+        ]
       ]
     },
     {
       "id": "claude-agents",
       "title": "Claude specialist agents",
       "runtime": "Claude Code",
-      "count": 111,
+      "count": 115,
       "detailLevel": "grouped-private",
       "state": "active private catalog",
       "source": "Active Claude agent catalog",
       "countingRule": "Top-level Markdown agent definitions; the generated AGENTS_INDEX.md navigation file is excluded.",
       "items": [
-        ["Research and academic", "Scouting, extraction, synthesis, challenge, and orchestration"],
-        ["Engineering and systems", "Architecture, coding, QA, data validation, and runtime health"],
-        ["Finance and risk", "Treasury, tax, investment, audit, reconciliation, and risk roles"],
-        ["Product and growth", "Product management, experiments, marketing, community, and lead workflows"],
-        ["Context and knowledge", "Curation, linking, learning, indexing, and vault governance"],
-        ["Media and publishing", "Audio, visual, podcast, voice, recommendations, and release roles"],
-        ["Personal operations", "Calendar, contacts, tasks, travel, home, and communication roles"]
+        [
+          "Research and academic",
+          "Scouting, extraction, synthesis, challenge, and orchestration"
+        ],
+        [
+          "Engineering and systems",
+          "Architecture, coding, QA, data validation, and runtime health"
+        ],
+        [
+          "Finance and risk",
+          "Treasury, tax, investment, audit, reconciliation, and risk roles"
+        ],
+        [
+          "Product and growth",
+          "Product management, experiments, marketing, community, and lead workflows"
+        ],
+        [
+          "Context and knowledge",
+          "Curation, linking, learning, indexing, and vault governance"
+        ],
+        [
+          "Media and publishing",
+          "Audio, visual, podcast, voice, recommendations, and release roles"
+        ],
+        [
+          "Personal operations",
+          "Calendar, contacts, tasks, travel, home, and communication roles"
+        ]
       ]
     },
     {
       "id": "claude-commands",
       "title": "Claude slash commands",
       "runtime": "Claude Code",
-      "count": 148,
+      "count": 150,
       "detailLevel": "grouped-private",
       "state": "active private catalog",
       "source": "Active Claude command tree",
       "countingRule": "All Markdown command definitions recursively under the active command root.",
       "items": [
-        ["Delivery", "Plan, build, test, review, deploy, and verify"],
-        ["Research", "Search, papers, monitoring, synthesis, and debate"],
-        ["Operations", "Status, audit, cleanup, sync, and recovery"],
-        ["Knowledge", "Context, memory, notes, vault, and learning"],
-        ["Business", "Finance, commerce, suppliers, growth, and portfolio work"],
-        ["Publishing", "Writing, visual review, media, slides, and distribution"],
-        ["Personal", "Tasks, reminders, travel, home, and weekly review"]
+        [
+          "Delivery",
+          "Plan, build, test, review, deploy, and verify"
+        ],
+        [
+          "Research",
+          "Search, papers, monitoring, synthesis, and debate"
+        ],
+        [
+          "Operations",
+          "Status, audit, cleanup, sync, and recovery"
+        ],
+        [
+          "Knowledge",
+          "Context, memory, notes, vault, and learning"
+        ],
+        [
+          "Business",
+          "Finance, commerce, suppliers, growth, and portfolio work"
+        ],
+        [
+          "Publishing",
+          "Writing, visual review, media, slides, and distribution"
+        ],
+        [
+          "Personal",
+          "Tasks, reminders, travel, home, and weekly review"
+        ]
       ]
     },
     {
       "id": "claude-skills",
       "title": "Claude standalone skills",
       "runtime": "Claude Code",
-      "count": 26,
+      "count": 89,
       "detailLevel": "item",
       "state": "active",
       "source": "Active Claude standalone skill root",
       "countingRule": "Direct child skill packages with a SKILL.md; manifests vendored inside dependencies are excluded.",
       "items": [
-        ["Figma", "Design workflows"],
-        ["Prompting", "Prompt design"],
-        ["annual-review", "Annual synthesis"],
-        ["call", "Bounded calling workflow"],
-        ["firecrawl", "Core web research"],
-        ["firecrawl-agent", "Autonomous extraction"],
-        ["firecrawl-build-interact", "Dynamic-page integration"],
-        ["firecrawl-build-onboarding", "Credential and SDK setup"],
-        ["firecrawl-build-scrape", "Scrape integration"],
-        ["firecrawl-build-search", "Search integration"],
-        ["firecrawl-crawl", "Site crawling"],
-        ["firecrawl-download", "Website download"],
-        ["firecrawl-interact", "Live-page interaction"],
-        ["firecrawl-map", "URL discovery"],
-        ["firecrawl-monitor", "Change monitoring"],
-        ["firecrawl-parse", "Local file parsing"],
-        ["firecrawl-research-index", "Paper discovery"],
-        ["firecrawl-scrape", "Single-page extraction"],
-        ["firecrawl-search", "Web search"],
-        ["github-projects", "GitHub project operations"],
-        ["monthly-review", "Monthly synthesis"],
-        ["morning-brief", "Daily briefing"],
-        ["no-ai-slop", "Human writing edit pass"],
-        ["quarterly-review", "Quarterly synthesis"],
-        ["video-use", "Conversational video editing"],
-        ["weekly-review", "Weekly synthesis"]
+        [
+          "Figma",
+          "Design workflows"
+        ],
+        [
+          "Prompting",
+          "Prompt design"
+        ],
+        [
+          "_gstack-command",
+          "Router for the gstack skill suite"
+        ],
+        [
+          "agent-coordination",
+          "Share active-outcome context, read peer updates, request specific blocker help, acknowledge tested help and retain provisional lessons"
+        ],
+        [
+          "annual-review",
+          "Annual synthesis"
+        ],
+        [
+          "autoplan",
+          "Auto-review pipeline that runs the CEO, design, eng and DX review skills sequentially with auto-decisions"
+        ],
+        [
+          "benchmark",
+          "Performance regression detection using the browse daemon"
+        ],
+        [
+          "benchmark-models",
+          "Cross-model benchmark for gstack skills"
+        ],
+        [
+          "browse",
+          "Fast headless browser for QA testing and site dogfooding"
+        ],
+        [
+          "call",
+          "Bounded calling workflow"
+        ],
+        [
+          "canary",
+          "Post-deploy canary monitoring"
+        ],
+        [
+          "careful",
+          "Safety guardrails for destructive commands"
+        ],
+        [
+          "codex",
+          "OpenAI Codex CLI wrapper — three modes"
+        ],
+        [
+          "connect-chrome",
+          "Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in"
+        ],
+        [
+          "context-restore",
+          "Restore working context saved earlier by /context-save"
+        ],
+        [
+          "context-save",
+          "Save working context"
+        ],
+        [
+          "cso",
+          "Chief Security Officer mode"
+        ],
+        [
+          "design-consultation",
+          "Design consultation: product understanding, landscape research and a proposed design system with previews"
+        ],
+        [
+          "design-html",
+          "Design finalization: generates production-quality Pretext-native HTML/CSS"
+        ],
+        [
+          "design-review",
+          "Designer's eye QA: finds visual inconsistency, spacing issues, hierarchy problems, AI slop patterns, and slow interactions — then fixes them"
+        ],
+        [
+          "design-shotgun",
+          "Design shotgun: generate multiple AI design variants, open a comparison board, collect structured feedback, and iterate"
+        ],
+        [
+          "devex-review",
+          "Live developer experience audit"
+        ],
+        [
+          "diagram",
+          "Turn an English description or Mermaid source into a diagram triplet: source, editable Excalidraw file, rendered image"
+        ],
+        [
+          "document-generate",
+          "Generate missing documentation from scratch for a feature, module, or entire project"
+        ],
+        [
+          "document-release",
+          "Post-ship documentation update"
+        ],
+        [
+          "firecrawl",
+          "Core web research"
+        ],
+        [
+          "firecrawl-agent",
+          "Autonomous extraction"
+        ],
+        [
+          "firecrawl-build-interact",
+          "Dynamic-page integration"
+        ],
+        [
+          "firecrawl-build-onboarding",
+          "Credential and SDK setup"
+        ],
+        [
+          "firecrawl-build-scrape",
+          "Scrape integration"
+        ],
+        [
+          "firecrawl-build-search",
+          "Search integration"
+        ],
+        [
+          "firecrawl-crawl",
+          "Site crawling"
+        ],
+        [
+          "firecrawl-download",
+          "Website download"
+        ],
+        [
+          "firecrawl-interact",
+          "Live-page interaction"
+        ],
+        [
+          "firecrawl-map",
+          "URL discovery"
+        ],
+        [
+          "firecrawl-monitor",
+          "Change monitoring"
+        ],
+        [
+          "firecrawl-parse",
+          "Local file parsing"
+        ],
+        [
+          "firecrawl-research-index",
+          "Paper discovery"
+        ],
+        [
+          "firecrawl-scrape",
+          "Single-page extraction"
+        ],
+        [
+          "firecrawl-search",
+          "Web search"
+        ],
+        [
+          "freeze",
+          "Restrict file edits to a specific directory for the session"
+        ],
+        [
+          "github-projects",
+          "GitHub project operations"
+        ],
+        [
+          "gstack",
+          "Router for the gstack skill suite"
+        ],
+        [
+          "gstack-upgrade",
+          "Upgrade gstack to the latest version"
+        ],
+        [
+          "guard",
+          "Full safety mode: destructive command warnings + directory-scoped edits"
+        ],
+        [
+          "health",
+          "Code quality dashboard"
+        ],
+        [
+          "ideal-state",
+          "Decide whether a system, product or workflow needs an Ideal State Analysis, pick the altitude, then draft, challenge or audit it"
+        ],
+        [
+          "impeccable",
+          "Design, critique, polish or harden a frontend interface against a direction contract"
+        ],
+        [
+          "interview-recruiter",
+          "Find and screen research interviewees for an active study and track sampling gaps"
+        ],
+        [
+          "investigate",
+          "Systematic debugging with root cause investigation"
+        ],
+        [
+          "ios-clean",
+          "Remove the DebugBridge SPM package and all #if DEBUG wiring from an iOS app"
+        ],
+        [
+          "ios-design-review",
+          "Visual design audit for iOS apps on real hardware"
+        ],
+        [
+          "ios-fix",
+          "Autonomous iOS bug fixer"
+        ],
+        [
+          "ios-qa",
+          "Live-device iOS QA for SwiftUI apps"
+        ],
+        [
+          "ios-sync",
+          "Regenerate the iOS debug bridge against the latest upstream gstack templates"
+        ],
+        [
+          "land-and-deploy",
+          "Land and deploy workflow"
+        ],
+        [
+          "landing-report",
+          "Read-only queue dashboard for workspace-aware ship"
+        ],
+        [
+          "learn",
+          "Manage project learnings"
+        ],
+        [
+          "make-pdf",
+          "Turn any markdown file into a publication-quality PDF"
+        ],
+        [
+          "marketing-engineering",
+          "Design, install, and operate reusable evidence-led marketing systems across software projects"
+        ],
+        [
+          "monthly-review",
+          "Monthly synthesis"
+        ],
+        [
+          "morning-brief",
+          "Daily briefing"
+        ],
+        [
+          "no-ai-slop",
+          "Human writing edit pass"
+        ],
+        [
+          "office-hours",
+          "YC Office Hours — two modes"
+        ],
+        [
+          "open-gstack-browser",
+          "Launch GStack Browser — AI-controlled Chromium with the sidebar extension baked in"
+        ],
+        [
+          "pair-agent",
+          "Pair a remote AI agent with your browser"
+        ],
+        [
+          "plan-ceo-review",
+          "CEO/founder-mode plan review"
+        ],
+        [
+          "plan-design-review",
+          "Designer's eye plan review — interactive, like CEO and Eng review"
+        ],
+        [
+          "plan-devex-review",
+          "Interactive developer experience plan review"
+        ],
+        [
+          "plan-eng-review",
+          "Eng manager-mode plan review"
+        ],
+        [
+          "plan-tune",
+          "Self-tuning question sensitivity + developer psychographic for gstack (v1: observational)"
+        ],
+        [
+          "public-writing",
+          "Standard for any public text under Gui’s name or brands: positions, voice, approved stories, delivery checks"
+        ],
+        [
+          "qa",
+          "Systematically QA test a web application and fix bugs found"
+        ],
+        [
+          "qa-only",
+          "Report-only QA testing"
+        ],
+        [
+          "quarterly-review",
+          "Quarterly synthesis"
+        ],
+        [
+          "research-interviewer",
+          "Conduct user research interviews and archive transcripts, consent and evidence-linked findings"
+        ],
+        [
+          "retro",
+          "Weekly engineering retrospective"
+        ],
+        [
+          "review",
+          "Pre-landing PR review"
+        ],
+        [
+          "scrape",
+          "Pull data from a web page"
+        ],
+        [
+          "setup-browser-cookies",
+          "Import cookies from your real Chromium browser into the headless browse session"
+        ],
+        [
+          "setup-deploy",
+          "Configure deployment settings for /land-and-deploy"
+        ],
+        [
+          "setup-gbrain",
+          "Set up gbrain for this coding agent: install the CLI, initialize a local PGLite or Supabase brain, register MCP, capture per-remote trust policy"
+        ],
+        [
+          "ship",
+          "Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR"
+        ],
+        [
+          "skillify",
+          "Codify the most recent successful /scrape flow into a permanent browser-skill on disk"
+        ],
+        [
+          "spec",
+          "Turn vague intent into a precise, executable spec in five phases"
+        ],
+        [
+          "sync-gbrain",
+          "Keep gbrain current with this repo's code and refresh agent search guidance in CLAUDE.md"
+        ],
+        [
+          "unfreeze",
+          "Clear the freeze boundary set by /freeze, allowing edits to all directories again"
+        ],
+        [
+          "video-use",
+          "Conversational video editing"
+        ],
+        [
+          "weekly-review",
+          "Weekly synthesis"
+        ]
       ]
     },
     {
       "id": "claude-plugins",
       "title": "Claude plugins",
       "runtime": "Claude Code",
-      "count": 13,
+      "count": 14,
       "detailLevel": "item",
-      "state": "13 registered; 12 enabled",
+      "state": "14 registered; 12 enabled",
       "source": "Installed plugin registry and active Claude settings",
       "countingRule": "Distinct registered plugin keys; enabled state is read separately from active settings.",
       "items": [
-        ["ableton-live", "Music production · enabled"],
-        ["audio-analysis", "Audio analysis · enabled"],
-        ["compound-engineering", "Engineering workflow · enabled"],
-        ["dropbox-sync", "Music asset synchronization · enabled"],
-        ["figma", "Design integration · enabled"],
-        ["frontend-design", "Frontend design · enabled"],
-        ["lyrics", "Lyric workflow · enabled"],
-        ["ralph-loop", "Iterative implementation · enabled"],
-        ["rc600-import", "Audio-device import · enabled"],
-        ["release", "Music release workflow · enabled"],
-        ["shopify-ai-toolkit", "Shopify application work · enabled"],
-        ["swift-lsp", "Swift language tooling · registered, not enabled"],
-        ["tascam-import", "Audio-device import · enabled"]
+        [
+          "ableton-live",
+          "Music production · enabled"
+        ],
+        [
+          "audio-analysis",
+          "Audio analysis · enabled"
+        ],
+        [
+          "compound-engineering",
+          "Engineering workflow · enabled"
+        ],
+        [
+          "diffy",
+          "Diff review tooling · registered, not enabled"
+        ],
+        [
+          "dropbox-sync",
+          "Music asset synchronization · enabled"
+        ],
+        [
+          "figma",
+          "Design integration · enabled"
+        ],
+        [
+          "frontend-design",
+          "Frontend design · enabled"
+        ],
+        [
+          "lyrics",
+          "Lyric workflow · enabled"
+        ],
+        [
+          "ralph-loop",
+          "Iterative implementation · enabled"
+        ],
+        [
+          "rc600-import",
+          "Audio-device import · enabled"
+        ],
+        [
+          "release",
+          "Music release workflow · enabled"
+        ],
+        [
+          "shopify-ai-toolkit",
+          "Shopify application work · enabled"
+        ],
+        [
+          "swift-lsp",
+          "Swift language tooling · registered, not enabled"
+        ],
+        [
+          "tascam-import",
+          "Audio-device import · enabled"
+        ]
       ]
     },
     {
       "id": "hermes-profiles",
       "title": "Hermes profiles",
       "runtime": "Hermes",
-      "count": 6,
+      "count": 7,
       "detailLevel": "item",
       "state": "active",
       "source": "Private Hermes profile root",
       "countingRule": "Direct profile directories in the active Hermes home.",
       "items": [
-        ["clinicfoundersassistant", "Healthcare-business operations"],
-        ["music", "Music workflows"],
-        ["ops", "System and business operations"],
-        ["personal", "Personal operations"],
-        ["research", "Research workflows"],
-        ["tao", "Publishing and lead workflows"]
+        [
+          "clinicfoundersassistant",
+          "Healthcare-business operations"
+        ],
+        [
+          "music",
+          "Music workflows"
+        ],
+        [
+          "ops",
+          "System and business operations"
+        ],
+        [
+          "personal",
+          "Personal operations"
+        ],
+        [
+          "portfolio-ea-20261022",
+          "Portfolio executive-assistant pilot profile (dated)"
+        ],
+        [
+          "research",
+          "Research workflows"
+        ],
+        [
+          "tao",
+          "Publishing and lead workflows"
+        ]
       ]
     },
     {
       "id": "hermes-jobs",
       "title": "Hermes scheduled jobs",
       "runtime": "Hermes",
-      "count": 82,
+      "count": 93,
       "detailLevel": "grouped-private",
-      "state": "61 enabled; 21 paused",
+      "state": "38 enabled; 55 paused",
       "source": "Private Hermes cron registry",
       "countingRule": "Every job object in the active jobs registry; enabled and paused are partitioned by the enabled Boolean.",
       "items": [
-        ["System health and telemetry", "Runtime health, quota, metrics, cleanup, and watchdog work"],
-        ["Research and intelligence", "Primary-source monitoring, briefs, market scans, and synthesis"],
-        ["Business and portfolio", "Company reviews, growth loops, operations, and reporting"],
-        ["Finance and records", "Treasury, close, freshness, P&L, and compliance-oriented work"],
-        ["Inbox and messaging", "Triage, drafts, delivery, curation, and notification work"],
-        ["Personal and media", "Personal reviews, notes, voice, and media workflows"]
+        [
+          "System health and telemetry",
+          "Runtime health, quota, metrics, cleanup, and watchdog work"
+        ],
+        [
+          "Research and intelligence",
+          "Primary-source monitoring, briefs, market scans, and synthesis"
+        ],
+        [
+          "Business and portfolio",
+          "Company reviews, growth loops, operations, and reporting"
+        ],
+        [
+          "Finance and records",
+          "Treasury, close, freshness, P&L, and compliance-oriented work"
+        ],
+        [
+          "Inbox and messaging",
+          "Triage, drafts, delivery, curation, and notification work"
+        ],
+        [
+          "Personal and media",
+          "Personal reviews, notes, voice, and media workflows"
+        ]
       ]
     },
     {
       "id": "hermes-skills",
       "title": "Hermes active skills",
       "runtime": "Hermes",
-      "count": 105,
+      "count": 118,
       "detailLevel": "grouped-private",
-      "state": "active skill root",
+      "state": "active skill root; the rule counts 118 manifests including the archive folder and skips 55 symlinked gstack skills",
       "source": "Active Hermes skill root",
       "countingRule": "SKILL.md files recursively under the active user skill root; runtime source, optional packs, and vendored dependencies are excluded.",
       "items": [
-        ["Apple", "5 skills"],
-        ["Autonomous agent runtimes", "4 skills"],
-        ["Creative", "16 skills"],
-        ["Data science", "1 skill"],
-        ["DevOps", "4 skills"],
-        ["Email", "3 skills"],
-        ["GitHub", "6 skills"],
-        ["Investing", "1 skill"],
-        ["Media", "4 skills"],
-        ["MLOps", "7 skills"],
-        ["Note taking", "2 skills"],
-        ["Productivity and operations", "29 skills"],
-        ["Research", "7 skills"],
-        ["Smart home", "1 skill"],
-        ["Social media", "1 skill"],
-        ["Software development", "10 skills"],
-        ["Uncategorized top-level", "4 skills"]
+        [
+          "Archived under the skill root (.archive)",
+          "53 skills, retired but still counted by the rule"
+        ],
+        [
+          "Apple",
+          "4 skills"
+        ],
+        [
+          "Autonomous ai agents",
+          "1 skill"
+        ],
+        [
+          "Creative",
+          "1 skill"
+        ],
+        [
+          "DevOps",
+          "4 skills"
+        ],
+        [
+          "Email",
+          "2 skills"
+        ],
+        [
+          "GitHub",
+          "3 skills"
+        ],
+        [
+          "Investing",
+          "1 skill"
+        ],
+        [
+          "Media",
+          "1 skill"
+        ],
+        [
+          "Note taking",
+          "2 skills"
+        ],
+        [
+          "Productivity and operations",
+          "33 skills"
+        ],
+        [
+          "Research",
+          "4 skills"
+        ],
+        [
+          "Social media",
+          "1 skill"
+        ],
+        [
+          "Software development",
+          "6 skills"
+        ],
+        [
+          "Uncategorized top-level",
+          "2 skills"
+        ]
       ]
     },
     {
@@ -267,10 +1169,22 @@
       "source": "Active companion configuration and compatibility roots",
       "countingRule": "Configured MCP and command entries for installed companions, plus skill manifests in the inactive OpenClaw compatibility root.",
       "items": [
-        ["Gemini CLI", "One shared Firecrawl MCP; no local skill manifests"],
-        ["Grok CLI", "Two custom commands and one shared Firecrawl MCP"],
-        ["OpenClaw compatibility", "15 skill manifests; runtime absent"],
-        ["OpenCode compatibility", "Configuration assets; runtime absent"]
+        [
+          "Gemini CLI",
+          "One shared Firecrawl MCP; no local skill manifests"
+        ],
+        [
+          "Grok CLI",
+          "Two custom commands and one shared Firecrawl MCP"
+        ],
+        [
+          "OpenClaw compatibility",
+          "15 skill manifests; runtime absent"
+        ],
+        [
+          "OpenCode compatibility",
+          "Configuration assets; runtime absent"
+        ]
       ]
     }
   ]

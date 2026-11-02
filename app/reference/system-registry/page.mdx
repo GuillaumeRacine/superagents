@@ -2,7 +2,7 @@
 
 > Generated from `config/system-registry.json`. Do not edit this page directly.
 
-**Snapshot:** 2026-09-09T11:07:29-04:00
+**Snapshot:** 2026-11-02T17:53:30-05:00
 
 **Scope:** Sanitized architecture and operating metadata only; no credentials, personal context, private URLs, or customer data.
 
@@ -10,14 +10,15 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 | System | Kind | Status | Last verified |
 |---|---|---|---|
-| [Codex](/runtimes/codex) | interactive agent runtime | active · primary project-delivery surface | 2026-09-08 |
-| [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-09-08 |
-| [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-09-08 |
+| [Codex](/runtimes/codex) | interactive agent runtime | active · primary project-delivery surface | 2026-11-02 |
+| [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-11-02 |
+| [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-11-02 |
 | [Context control plane](/context-memory) | automation, evidence, and fleet inventory | active · authoritative automation registry | 2026-09-08 |
 | [Knowledge vault](/context-memory/storage) | curated context and durable knowledge | active · private Git-backed knowledge source | 2026-09-08 |
+| [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09 | 2026-11-02 |
 | [Shared Firecrawl MCP broker](/capabilities/mcp-tools) | shared web research service | active · shared local service | 2026-09-08 |
-| [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-09-08 |
-| [Grok CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-09-08 |
+| [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
+| [Grok CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
 | [Compatibility assets](/runtimes/companions) | inactive interoperability files | compatibility-only · no active OpenClaw or OpenCode binary | 2026-09-08 |
 | [Super Agents documentation portal](/reference/canonical-sources) | derived documentation and navigation | active · sanitized derived index | 2026-09-09 |
 
@@ -25,11 +26,11 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Status:** active · primary project-delivery surface
 
-**Version:** 0.147.0
+**Version:** 0.154.0
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -41,17 +42,17 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Workspace changes, reviews, artifacts, GitHub commits, deployments, and verification evidence |
 | Proof | Targeted checks, full build when required, commit, deploy reference, live checks, and tracking issue comment |
 | Recovery | Install Codex, restore Git repositories and AGENTS.md, restore Git-backed skills, then reconnect plugins and MCP services |
-| Snapshot counts | Usable Top Level Personal Skills: 23; Unresolved Top Level Skill Entries: 55; Managed Plugin Installs: 22; Configured Mcp Servers: 7; Desktop Automations: 2; Active Desktop Automations: 0 |
+| Snapshot counts | Usable Top Level Personal Skills: 84; Unresolved Top Level Skill Entries: 0; Managed Plugin Installs: 23; Configured Mcp Servers: 7; Desktop Automations: 1; Active Desktop Automations: 0 |
 
 ## Claude Code
 
 **Status:** active · specialist catalog and plugin surface
 
-**Version:** 2.1.266
+**Version:** 2.1.316
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -63,7 +64,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Workspace changes, analysis, artifacts, and delegated agent results |
 | Proof | Repository checks plus the same GitHub/deploy closeout contract used by other coding runtimes |
 | Recovery | Restore the private vault and runtime settings, run the guarded setup workflow, then compare runtime and vault inventories before use |
-| Snapshot counts | Agent Definitions: 111; Slash Commands: 148; Standalone Skill Manifests: 26; Registered Plugins: 13; Enabled Plugins: 12; Path Rules: 5; Hook Files: 3 |
+| Snapshot counts | Agent Definitions: 115; Slash Commands: 150; Standalone Skill Manifests: 89; Registered Plugins: 14; Enabled Plugins: 12; Path Rules: 5; Hook Files: 3 |
 
 ## Hermes
 
@@ -73,7 +74,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -85,7 +86,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Outputs | Slack, Telegram, or Discord replies; local artifacts; monitored workflow results |
 | Proof | Scheduler output plus independent evidence contracts and the Context fleet scoreboard |
 | Recovery | Restore the private Hermes home repository and secrets from 1Password, install the public runtime fork, restore launch services, then run gateway and delivery checks |
-| Snapshot counts | Profiles: 6; Scheduled Jobs: 82; Enabled Jobs: 61; Paused Jobs: 21; Active User Skill Manifests: 105 |
+| Snapshot counts | Profiles: 7; Scheduled Jobs: 93; Enabled Jobs: 38; Paused Jobs: 55; Active User Skill Manifests: 118 |
 
 ## Context control plane
 
@@ -131,6 +132,28 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Recovery | Clone the private repository, unlock approved encrypted content, run its setup checks, and reconnect runtime references |
 | Snapshot counts | No volatile count published |
 
+## Finance (MoneyOS)
+
+**Status:** active · contract v2 acknowledged by 2 of 3 required agents; Hermes row due 2026-11-09
+
+**Version:** 2.0.0
+
+**Owner:** Chief of Cash (GrokBot) writes; Claude reviews and owns the ruling files; Hermes runs the jobs; Gui rules and moves money
+
+**Last verified:** 2026-11-02
+
+| Contract | Value |
+|---|---|
+| Source of truth | Private moneyos repository, branch main: SOURCE_OF_TRUTH.md with its machine-readable twin sources.json, acknowledged in ACK.md and enforced by scripts/check_sot.py; the Cash Flows sheet is the edit surface, Context/cfo-feed a frozen mirror |
+| Measurement | Row counts of the record files on main (ledger, account register, tie-outs by status, open to-clarify rows, open questions) and ACK.md rows at the current contract hash, read from the repository at the snapshot date. |
+| Trigger | Statement or export arrival (refresh runbook), a ruling from Gui in the Cash Flows sheet or in chat, the weekday Cash dashboard refresh, the month-end close, and the weekly contract check |
+| Permissions | Read-only on every bank, card and investment account; one named writer per store; sheet writes only through the Sheets API apply step after a backup copy; no agent moves money; account identifiers keep their last four digits only; the repository stays private |
+| Inputs | Bank and card statements and exports filed on Google Drive, the Monarch daily feed, Gui’s sheet cells and chat rulings, revenue figures from GrowthOS |
+| Outputs | Transactions ledger, books and tie-outs, clarify and ruling files, balances and debts, payables register, scorecard and savings rate, the Cash Flows sheet, the Cash dashboard snapshot, and the month-end report |
+| Proof | check_sot.py exit 0 on main (last step of run_all.sh, first step of the Claude gate, weekly job); a GO review file per material change; every quoted number names its source file, as-of date and commit |
+| Recovery | Clone the private repository at main, install its Python requirements, run run_all.sh and check_sot.py, re-acknowledge the contract in ACK.md; rebuild the Cash Flows sheet from the repository with the build and apply scripts, never with a spreadsheet import |
+| Snapshot counts | Ledger Rows: 5516; Accounts In Register: 42; Tie Outs Passing: 121; Tie Outs Tieable: 150; Open To Clarify Rows: 217; Open Questions: 11; Contract Ack Rows: 2; Contract Ack Required: 3 |
+
 ## Shared Firecrawl MCP broker
 
 **Status:** active · shared local service
@@ -161,7 +184,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|
@@ -179,11 +202,11 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 
 **Status:** installed · bounded companion surface
 
-**Version:** 1.0.5
+**Version:** 1.0.40
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-02
 
 | Contract | Value |
 |---|---|

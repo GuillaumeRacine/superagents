@@ -4,7 +4,7 @@
 
 ## Complete export
 
-- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 55 canonical pages.
+- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 56 canonical pages.
 - [XML sitemap](https://superagents-docs.vercel.app/sitemap.xml): Machine-readable list of canonical website routes.
 - [GitHub source](https://github.com/GuillaumeRacine/superagents): Versioned source and generation scripts.
 
@@ -60,6 +60,7 @@
 - [Choose a Runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime)
 - [Operating Loop](https://superagents-docs.vercel.app/start-here/operating-loop)
 - [Workflows](https://superagents-docs.vercel.app/workflows)
+- [Finance (MoneyOS)](https://superagents-docs.vercel.app/workflows/finance-moneyos)
 - [Personal Operations](https://superagents-docs.vercel.app/workflows/personal-operations)
 - [Programs](https://superagents-docs.vercel.app/workflows/programs)
 - [Project Delivery](https://superagents-docs.vercel.app/workflows/project-delivery)

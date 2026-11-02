@@ -224,7 +224,7 @@ The main Mac mini currently owns the live runtime snapshot. The studio Mac mini 
 - iCloud owns Apple-native data.
 - 1Password owns credentials.
 - Local runtime caches, sessions, and installed versions remain device-specific and require host-level verification.
-- The external SSD is cold storage for normal agent and repository operation. The canonical policy explicitly retains one exception: active Ableton sessions on the studio Mac mini may use its SSD as a fast working disk.
+- The external SSD is cold storage for normal agent and repository operation.${report.devicePolicy.abletonException ? ' The canonical policy explicitly retains one exception: active Ableton sessions on the studio Mac mini may use its SSD as a fast working disk.' : ' The File and Folder Standard keeps only cold copies there; no live folder, link target or job state.'}
 `
 
 const sourceRows = report.sourceSurfaces

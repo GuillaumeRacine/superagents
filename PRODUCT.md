@@ -21,7 +21,7 @@ Mechanism that is meaningfully different: every figure on a dashboard carries it
 
 ## Surfaces
 
-- `/dashboard` (private): hub plus three agent-owned dashboards. **Cash** (owner: Chief of Cash, weekday feed, record of truth `Context/cfo-feed`), **Invest** (owner to assign; interim monthly run), **Business** (founder overview). Served at `iamgui.com/dashboard` and at the Vercel hostname.
+- `/dashboard` (private): hub plus three agent-owned dashboards. **Cash** (owner: Chief of Cash, weekday feed, record of truth `main` of the private `moneyos` repository; `Context/cfo-feed` is a frozen mirror until the jobs are repointed), **Invest** (owner to assign; interim monthly run), **Business** (founder overview). Served at `iamgui.com/dashboard` and at the Vercel hostname.
 - Documentation (gated, public-source): Nextra site at `superagents-docs.vercel.app`; the Markdown corpus and `llms.txt` are public agent exports.
 - `iamgui.com/` itself stays the public one-page personal site (separate project, proxied unchanged); this product owns only the host's private section.
 

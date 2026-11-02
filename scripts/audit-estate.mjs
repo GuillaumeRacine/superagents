@@ -429,13 +429,32 @@ const repositoryCatalog = scans
   }))
   .sort((a, b) => a.visibility.localeCompare(b.visibility) || a.id.localeCompare(b.id))
 
-if (!existsSync(storagePolicyPath)) throw new Error('Canonical storage policy is unavailable')
-const storagePolicy = readFileSync(storagePolicyPath, 'utf8')
+// The canonical storage policy moved twice (vault out of iCloud 2026-09-10; File and Folder
+// Standard 2026-09-29). Resolve the first candidate that exists; the legacy path is kept last.
+const storagePolicyCandidates = [
+  join(userHome, 'Workspace', 'STANDARD.md'),
+  join(userHome, 'FILE_STANDARD.md'),
+  join(userHome, 'Obs_Vault', '0_InnerContext', 'STORAGE_SYSTEM.md'),
+  storagePolicyPath,
+]
+const resolvedStoragePolicyPath = storagePolicyCandidates.find((path) => existsSync(path))
+if (!resolvedStoragePolicyPath) throw new Error('Canonical storage policy is unavailable')
+const storagePolicy = readFileSync(resolvedStoragePolicyPath, 'utf8')
 const storagePolicyRevision = createHash('sha256').update(storagePolicy).digest('hex').slice(0, 16)
+const storagePolicySource = basename(resolvedStoragePolicyPath)
+// The legacy policy excepted active Ableton sessions from the "SSD is cold storage" rule; only claim it when the resolved policy says so.
+const policyExceptsAbleton = /ableton/i.test(storagePolicy)
 const detectedHost = command('hostname', ['-s']).toLowerCase()
 const detectedDeviceId = process.env.SUPERAGENTS_DEVICE_ID
   || (/office[- ]?mini/.test(detectedHost) ? 'main-mac-mini' : /studio/.test(detectedHost) ? 'studio-mac-mini' : /macbook/.test(detectedHost) ? 'macbook' : null)
-const policyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
+// Legacy STORAGE_SYSTEM.md table: title | role | local state. The File and Folder Standard
+// declares the same three devices as `| **office-mini** | <role> | ... |` rows with no local-state column.
+const legacyDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(Mac mini \(main, here\)|Mac mini \(studio\)|MacBook \(laptop, on-the-go\))\*\* \| ([^|]+) \| ([^|]+) \|$/gm)]
+const seenStandardDevices = new Set()
+const standardDeviceRows = [...storagePolicy.matchAll(/^\| \*\*(office-mini|studio-mini|MacBook)\*\* \| ([^|]+) \|/gm)]
+  .filter(([, deviceName]) => !seenStandardDevices.has(deviceName) && seenStandardDevices.add(deviceName))
+  .map(([, deviceName, role]) => [, deviceName === 'office-mini' ? 'Mac mini (main, here)' : deviceName === 'studio-mini' ? 'Mac mini (studio)' : 'MacBook (laptop, on-the-go)', role, role])
+const policyDeviceRows = legacyDeviceRows.length ? legacyDeviceRows : standardDeviceRows
 const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {
   const id = policyTitle.startsWith('Mac mini (main')
     ? 'main-mac-mini'
@@ -444,7 +463,7 @@ const devices = policyDeviceRows.map(([, policyTitle, role, localState]) => {
       : 'macbook'
   const title = id === 'main-mac-mini' ? 'Mac mini (main)' : id === 'studio-mac-mini' ? 'Mac mini (studio)' : 'MacBook'
   const directlyVerified = id === detectedDeviceId
-  const studioException = id === 'studio-mac-mini'
+  const studioException = id === 'studio-mac-mini' && policyExceptsAbleton
     ? ' The same policy explicitly excepts active Ableton sessions, which may use the studio SSD as the fast working disk.'
     : ''
   return {
@@ -523,8 +542,9 @@ const report = {
   },
   repositoryCatalog,
   devicePolicy: {
-    source: 'STORAGE_SYSTEM.md',
+    source: storagePolicySource,
     revision: storagePolicyRevision,
+    abletonException: policyExceptsAbleton,
     deviceRowsParsed: devices.length,
   },
   devices,
@@ -536,7 +556,7 @@ const report = {
     ['Google Drive', 'Default file and data store', 'policy-declared · not live-listed', 'Connector/API or web is authoritative; Drive Desktop and rclone are unavailable on this host'],
     ['iCloud', 'Apple-native data', existsSync(icloudPath) ? 'host-visible' : 'unavailable', `${icloudTopLevelDirectories} top-level host-visible directories; content not enumerated`],
     ['1Password', 'Credentials', 'policy-declared · intentionally not enumerated', 'Only references and access contracts may be documented'],
-    ['External SSD', 'Cold backup and archive', existsSync(externalSsdPath) ? 'mounted · excluded from active scan' : 'unmounted · correctly non-required on this host', 'Not an agent-runtime or repository dependency; canonical policy retains a studio-mini active-Ableton exception'],
+    ['External SSD', 'Cold backup and archive', existsSync(externalSsdPath) ? 'mounted · excluded from active scan' : 'unmounted · correctly non-required on this host', `Not an agent-runtime or repository dependency${policyExceptsAbleton ? '; canonical policy retains a studio-mini active-Ableton exception' : '; cold copies only under the File and Folder Standard'}`],
     ['Vercel', 'Documentation deployment', 'not verified for this snapshot', 'Production verification is performed after deployment and recorded in GitHub against the commit and deployment'],
   ],
   integrationFingerprints: [...providerCounts.entries()]

@@ -216,7 +216,10 @@ if (!Array.isArray(estateCoverage.devices) || estateCoverage.devices.length < 3)
 if (!estateCoverage.devices?.some((device) => device.state === 'directly verified')) failures.push('Estate coverage has no directly verified device')
 const deviceIds = new Set(estateCoverage.devices?.map((device) => device.id))
 if (deviceIds.size !== estateCoverage.devices?.length) failures.push('Estate coverage contains duplicate device ids')
-if (estateCoverage.devicePolicy?.source !== 'STORAGE_SYSTEM.md' || !/^[a-f0-9]{16}$/.test(estateCoverage.devicePolicy?.revision ?? '')) {
+// The canonical storage policy is the File and Folder Standard (STANDARD.md, alias FILE_STANDARD.md) since 2026-09-29;
+// STORAGE_SYSTEM.md is its legacy name. scripts/audit-estate.mjs records whichever file it resolved.
+const canonicalStoragePolicies = new Set(['STANDARD.md', 'FILE_STANDARD.md', 'STORAGE_SYSTEM.md'])
+if (!canonicalStoragePolicies.has(estateCoverage.devicePolicy?.source) || !/^[a-f0-9]{16}$/.test(estateCoverage.devicePolicy?.revision ?? '')) {
   failures.push('Estate devices are not bound to a canonical storage-policy revision')
 }
 if (!Array.isArray(estateCoverage.sourceSurfaces) || estateCoverage.sourceSurfaces.length < 8) failures.push('Estate coverage is missing canonical source surfaces')
