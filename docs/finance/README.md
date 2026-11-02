@@ -37,8 +37,8 @@ and `/dashboard/invest`. The added series costs about 1.8 KB of gzip-base64; che
 Vercel env budget before publishing.
 
 MoneyOS record (issue #54, 2026-11-02). The builder reads the private MoneyOS
-repo (`GuillaumeRacine/moneyos`, `main`; contract `SOURCE_OF_TRUTH.md` +
-`sources.json`) from a local clone at `MONEYOS_DIR` (default `~/code/moneyos`):
+repository (`main`; contract `SOURCE_OF_TRUTH.md` + `sources.json`) from a
+local fast-forward-only clone of its main branch (set `MONEYOS_DIR`):
 `data/cfo-feed/*` and `reports/TARGETS.md` replace the former Context copies,
 and it fails with a clear message when the directory or `data/cfo-feed/facts.json`
 is missing. Only the feed's memory, `cfo-feed/state.json`, is still read from

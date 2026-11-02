@@ -284,7 +284,7 @@ test("freshness flags a snapshot older than 36h and any input older than 3 days"
 
 // MoneyOS record sections (issue #54). Fictional values only.
 const moneyos = () => ({
-  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, asOf: "2026-10-31" },
+  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, tieOutsOther: 3, asOf: "2026-10-31" },
   payables: [
     { id: "P01", priority: 1, type: "payable", entity: "personal", counterparty: "Example Utility", description: "Example bill", amount: 100, currency: "CAD", dueDate: "2026-10-17", status: "open", source: "statement", lastChecked: "2026-10-19" },
     { id: "P02", priority: 2, type: "payable", entity: "holdco", counterparty: "Example Vendor", description: "Example invoice", amount: 50, currency: "USD", dueDate: "2026-10-30", status: "open (estimate)", lastChecked: "2026-10-19" },
@@ -333,7 +333,7 @@ test("MoneyOS sections: null means unknown and is never coerced", () => {
   r.cabin = { lastStatementMonth: null, nights: "", grossCad: null, salesTaxesCad: null, depositCad: null, netExTaxCad: null, statementsOnFile: null };
   r.scorecard.savingsRate = { month: null, monthRatePct: "", t12RatePct: null, asOf: null };
   const v = validateCash(r);
-  assert.deepEqual(v.books, { suspenseCad: null, trialBalanceCad: null, balanced: null, tieOutsPassing: null, tieOutsFailing: null, asOf: null });
+  assert.deepEqual(v.books, { suspenseCad: null, trialBalanceCad: null, balanced: null, tieOutsPassing: null, tieOutsFailing: null, tieOutsOther: null, asOf: null });
   assert.deepEqual(v.clarify, { openToClarifyRows: null, openQuestions: null, batches: null, asOf: null });
   assert.equal(v.contract.hash, null);
   assert.equal(v.cabin.nights, null);
@@ -362,6 +362,7 @@ test("MoneyOS sections: over-cap rows, bad dates and bad shapes are rejected wit
     [(r) => (r.payables = {}), /payables must be a list/],
     [(r) => (r.books.balanced = "yes"), /books.balanced must be true, false or null/],
     [(r) => (r.books.tieOutsPassing = -1), /books.tieOutsPassing must be a whole number/],
+    [(r) => (r.books.tieOutsOther = "9"), /books.tieOutsOther must be a finite number/],
     [(r) => (r.books.asOf = "2026-10"), /books.asOf must be an ISO date/],
     [(r) => (r.clarify.openQuestions = 2.5), /clarify.openQuestions/],
     [(r) => (r.clarify.asOf = "Oct 18"), /clarify.asOf/],
@@ -385,21 +386,37 @@ test("MoneyOS sections: over-cap rows, bad dates and bad shapes are rejected wit
   }
 });
 
-test("payable rows tag overdue, due soon and unverified; overdue first", () => {
+test("payable rows: tags by date unless the status holds the row; overdue first even without a date", () => {
   const rows = payableRows(validateCash(withMoneyos()), TODAY);
   const by = Object.fromEntries(rows.map((r) => [r.id, r]));
   assert.equal(by.P01.tag, "overdue");
   assert.equal(by.P01.days, -2);
-  assert.equal(by.P02.tag, "due soon");
-  assert.equal(by.P02.days, 11);
-  assert.equal(by.P03.tag, "unverified");
-  assert.equal(by.P03.days, null);
+  assert.equal(by.P01.actionable, true);
+  // "open (estimate)" is held: the status is the tag, the date alone never makes it due soon.
+  assert.equal(by.P02.tag, "estimate");
+  assert.equal(by.P02.actionable, false);
+  assert.equal(by.P03.tag, "missing");
+  assert.equal(by.P03.actionable, false);
+  assert.equal(by.P03.when, "next statement"); // dueNote stands in for the date
   assert.equal(by.R01.tag, "");
+  assert.equal(by.R01.actionable, true);
   assert.deepEqual(rows.map((r) => r.id), ["P01", "P02", "R01", "P03"]);
-  // A free-text "overdue" due date counts as overdue even without a date.
+  // A row overdue only through its free-text due date sorts first, not last.
   const r = withMoneyos();
-  r.payables[2].dueNote = "overdue";
-  assert.equal(payableRows(validateCash(r), TODAY).find((p) => p.id === "P03").tag, "overdue");
+  r.payables.push({ id: "P09", priority: 1, type: "payable", entity: "personal", counterparty: "Example Tax", amount: 10, dueDate: null, dueNote: "overdue", status: "open" });
+  const sorted = payableRows(validateCash(r), TODAY);
+  assert.equal(sorted[0].id, "P01"); // dated overdue (days -2) before undated overdue
+  assert.equal(sorted[1].id, "P09");
+  assert.equal(sorted[1].tag, "overdue");
+  assert.equal(sorted[1].when, "overdue");
+  // Due soon by date, unless the status says parked / cancel planned / recurring / paid per Gui.
+  for (const [status, tag] of [["open", "due soon"], ["parked", "parked"], ["cancel planned", "cancel planned"], ["recurring", "recurring"], ["paid per Gui, statement pending", "paid per gui"], ["MISSING: filing status", "missing"]]) {
+    const q = withMoneyos();
+    q.payables = [{ id: "X1", type: "payable", counterparty: "Example", amount: 1, dueDate: "2026-10-25", status }];
+    const [row] = payableRows(validateCash(q), TODAY);
+    assert.equal(row.tag, tag, status);
+    assert.equal(row.actionable, status === "open", status);
+  }
 });
 
 test("contract status names missing acknowledgements and turns red only after grace", () => {

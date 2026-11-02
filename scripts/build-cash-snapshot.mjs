@@ -1,6 +1,5 @@
-// Build cash_snapshot_v1 from a LOCAL clone of the private MoneyOS record
-// (GuillaumeRacine/moneyos, main). Output is a private managed-environment
-// value, never committed.
+// Build cash_snapshot_v1 from a LOCAL clone of the private MoneyOS repository
+// (main). Output is a private managed-environment value, never committed.
 //   node scripts/build-cash-snapshot.mjs [--out path] [--gzip]
 // Env: MONEYOS_DIR (default ~/code/moneyos) for data/cfo-feed/*, reports/TARGETS.md,
 // data/savings-rate.csv, books/trial-balance.csv, data/tieout.csv,
@@ -30,7 +29,7 @@ function fail(message) {
   process.exit(2);
 }
 if (!existsSync(moneyosDir) || !statSync(moneyosDir).isDirectory())
-  fail(`MONEYOS_DIR ${moneyosDir} is not a directory. Clone GuillaumeRacine/moneyos there or set MONEYOS_DIR.`);
+  fail(`MONEYOS_DIR ${moneyosDir} is not a directory. Clone the private MoneyOS repository (main) there or set MONEYOS_DIR.`);
 if (!existsSync(join(moneyosDir, "data", "cfo-feed", "facts.json")))
   fail(`${moneyosDir} has no data/cfo-feed/facts.json. Is it the MoneyOS repo, on a branch that carries the feed data?`);
 const readFrom = (dir) => (file, optional = false) => {
@@ -47,16 +46,18 @@ const json = (file, optional) => {
   const text = read(file, optional);
   return text === null ? null : JSON.parse(text);
 };
+// A record file that exists but does not parse fails the build (exit 2) so the
+// refresh job keeps its last good snapshot instead of publishing "section absent".
 const csvRows = (file) => {
   const text = read(file, true);
   if (text === null) return null;
   try {
     return parseCsv(text).rows;
   } catch (error) {
-    console.error(`build-cash-snapshot: ${file} skipped (${error.message})`);
-    return null;
+    return fail(`${file} does not parse (${error.message}); refusing to build a partial snapshot`);
   }
 };
+const todayUtc = new Date().toISOString().slice(0, 10);
 const nz = (v) => (v === undefined || v === "" ? null : v);
 const num = (v) => {
   if (v === undefined || v === null || v === "") return null;
@@ -189,7 +190,10 @@ function savingsRate() {
     const v = num(r[col]);
     return v === null ? null : Math.round(v * 1000) / 10;
   };
-  const months = rows.filter((r) => /^\d{4}-(0[1-9]|1[0-2])$/.test(r.month ?? ""));
+  // Newest month by month string, not by file order.
+  const months = rows
+    .filter((r) => /^\d{4}-(0[1-9]|1[0-2])$/.test(r.month ?? ""))
+    .sort((a, b) => a.month.localeCompare(b.month));
   const t12 = [...rows].reverse().find((r) => /^(TTM|T12)/i.test(r.month ?? ""));
   const last = months[months.length - 1] ?? null;
   let t12Label = "";
@@ -224,17 +228,20 @@ function books() {
   const total = tb?.find((r) => /^total$/i.test(nameOf(r).trim()));
   const trialBalance = total ? lastCol(total) : null;
   const suspenseCad = suspense ? lastCol(suspense) : null;
+  // The status column only: "ties", "does not tie", anything else is not tieable yet.
   let passing = null,
     failing = null,
+    other = null,
     asOf = null;
   if (tie) {
     passing = 0;
     failing = 0;
+    other = 0;
     for (const r of tie) {
-      for (const v of Object.values(r)) {
-        if (v === "ties") passing++;
-        else if (v === "does not tie") failing++;
-      }
+      const status = (r.status ?? "").trim();
+      if (status === "ties") passing++;
+      else if (status === "does not tie") failing++;
+      else other++;
       const d = dateOnly(r.stmt_date);
       if (d && (!asOf || d > asOf)) asOf = d;
     }
@@ -245,6 +252,7 @@ function books() {
     balanced: trialBalance === null ? null : Math.abs(trialBalance) < 0.01,
     tieOutsPassing: passing,
     tieOutsFailing: failing,
+    tieOutsOther: other,
     asOf,
   };
 }
@@ -253,14 +261,28 @@ function books() {
 function payables() {
   const rows = csvRows("data/payables-receivables.csv");
   if (!rows) return [];
-  return rows
-    .filter((r) => !/^(paid|closed|done|settled)\b/i.test((r.status ?? "").trim()))
-    .slice(0, MAX_PAYABLES)
-    .map((r, i) => {
+  const open = rows.filter((r) => !/^(paid|closed|done|settled)\b/i.test((r.status ?? "").trim()));
+  // Overdue rows first, then by priority, so the cap never drops the urgent ones.
+  const overdue = (r) => {
+    const due = (r.due_date ?? "").trim();
+    const d = dateOnly(due);
+    return (d !== null && d < todayUtc) || /overdue/i.test(due) ? 0 : 1;
+  };
+  const ordered = open
+    .map((r, i) => ({ r, i, id: (r.id ?? "").trim() || `row-${i + 1}` }))
+    .sort((a, b) => overdue(a.r) - overdue(b.r) || (num(a.r.priority) ?? 999) - (num(b.r.priority) ?? 999) || a.i - b.i);
+  if (ordered.length > MAX_PAYABLES)
+    console.error(
+      `build-cash-snapshot: payables capped at ${MAX_PAYABLES}; dropped ${ordered.length - MAX_PAYABLES} row(s): ${ordered
+        .slice(MAX_PAYABLES)
+        .map((x) => x.id)
+        .join(", ")}`,
+    );
+  return ordered.slice(0, MAX_PAYABLES).map(({ r, id }) => {
       const due = (r.due_date ?? "").trim();
       const dueDate = dateOnly(due);
       return {
-        id: (r.id ?? "").trim() || `row-${i + 1}`,
+        id,
         priority: num(r.priority),
         type: /^receiv/i.test(r.type ?? "") ? "receivable" : "payable",
         entity: (r.entity ?? "").trim(),
@@ -284,8 +306,9 @@ function clarify() {
   if (!toClarify && !questions) return null;
   const statusOf = (r) => (r.Status ?? r.status ?? "").trim().toLowerCase();
   const open = toClarify ? toClarify.filter((r) => statusOf(r) === "open") : null;
+  // The page labels this "newest row awaiting a ruling": open rows only.
   let asOf = null;
-  for (const r of toClarify ?? []) {
+  for (const r of open ?? []) {
     const d = dateOnly(r.Date ?? r.date);
     if (d && (!asOf || d > asOf)) asOf = d;
   }
@@ -314,8 +337,13 @@ function contract() {
   }
   const acked = ackedAgents(read("ACK.md", true), hash);
   const date = dateOnly(sources.contract_date);
-  const grace = Number(sources.ack_grace_days ?? 7);
-  const graceUntil = date ? new Date(Date.parse(date) + grace * 86400000).toISOString().slice(0, 10) : null;
+  // check_sot.py defaults the grace to 7 days; anything that is not a whole
+  // non-negative number of days leaves the grace date unknown rather than throwing.
+  const graceDays = sources.ack_grace_days ?? 7;
+  const grace = Number.isInteger(graceDays) && graceDays >= 0 && graceDays <= 3650 ? graceDays : null;
+  const graceUntil =
+    date && grace !== null ? new Date(Date.parse(date) + grace * 86400000).toISOString().slice(0, 10) : null;
+  if (grace === null) console.error(`build-cash-snapshot: sources.json ack_grace_days is not a whole number of days; grace date left unknown`);
   return {
     version: String(sources.contract_version ?? ""),
     hash,
@@ -455,10 +483,12 @@ const snapshot = {
       }
     : null,
   // The scorecard carries the savings rate, so it exists when either input does.
+  // Its as-of falls back to the savings-rate month end, so a missing scorecard.json
+  // alone does not raise a permanent "date unknown" stale reason.
   scorecard:
     scorecard || savingsRateRow
       ? {
-          asOf: scorecard?.as_of ?? null,
+          asOf: scorecard?.as_of ?? savingsRateRow?.asOf ?? null,
           lastFullMonth: {
             month: scorecard?.personal_net_last_full_month?.month ?? null,
             cad: num(scorecard?.personal_net_last_full_month?.cad),

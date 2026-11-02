@@ -39,7 +39,7 @@ const fixture = validateCash({
   },
   tasks: [{ id: "t1", who: "gui", kind: "cut", title: "Example first open task", deadline: "2026-10-20", burnCadMo: 10 }],
   // MoneyOS record sections (issue #54), fictional.
-  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, asOf: "2026-10-31" },
+  books: { suspenseCad: -1234.5, trialBalanceCad: 0, balanced: true, tieOutsPassing: 40, tieOutsFailing: 2, tieOutsOther: 3, asOf: "2026-10-31" },
   payables: [
     { id: "P01", priority: 1, type: "payable", entity: "personal", counterparty: `${marker}_PAYEE`, description: "Example bill", amount: 321, currency: "CAD", dueDate: "2026-10-17", status: "open", lastChecked: "2026-10-19" },
     { id: "P02", priority: 2, type: "payable", entity: "holdco", counterparty: "Example Card", amount: null, dueDate: null, dueNote: "next statement", status: "MISSING", lastChecked: "2026-10-19" },
@@ -148,7 +148,7 @@ try {
     "CAD 83,000", // 100,000 − 7,000 − 10,000: cover from one entity only
     "unknown", // Opco's null balance renders as unknown, never 0
     // MoneyOS record (issue #54): owner line, North Star and the new bands.
-    "record of truth: main of the private moneyos repo",
+    "record of truth: main of the private MoneyOS repository",
     "Savings rate",
     "-12.50%", // non-integer figures keep two decimals (same rule as Money)
     "T12 2025-10 to 2026-09",
@@ -156,7 +156,8 @@ try {
     "below target",
     "Books",
     "CAD -1,234.50",
-    "40 / 42",
+    "40 / 42 tieable",
+    "40 tie / 2 do not / 3 not tied",
     "balanced",
     "Payables and receivables",
     `${marker}_PAYEE`,

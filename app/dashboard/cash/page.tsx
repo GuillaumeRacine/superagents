@@ -25,7 +25,7 @@ const pageMetadata = {
   searchable: false,
 };
 const OWNER_LINE =
-  "Owner: Chief of Cash (GrokBot) · feed in #cash · record of truth: main of the private moneyos repo (contract SOURCE_OF_TRUTH.md)";
+  "Owner: Chief of Cash (GrokBot) · feed in #cash · record of truth: main of the private MoneyOS repository (contract SOURCE_OF_TRUTH.md)";
 const SAVINGS_TARGET_PCT = 20;
 
 type Unknown = number | null;
@@ -36,6 +36,10 @@ const fmt2 = new Intl.NumberFormat("en-CA", {
 });
 // Whole amounts stay whole; anything with cents shows both digits.
 const fmt = { format: (n: number) => (Number.isInteger(n) ? fmt0 : fmt2).format(n) };
+// "unknown" is styled in one place.
+function Unknown({ what = "unknown" }: { what?: string }) {
+  return <span className={s.unknown}>{what}</span>;
+}
 function Money({
   amount,
   currency = "CAD",
@@ -45,22 +49,17 @@ function Money({
   currency?: string;
   signed?: boolean;
 }) {
-  if (amount === null || amount === undefined)
-    return <span className={s.unknown}>unknown</span>;
+  if (amount === null || amount === undefined) return <Unknown />;
   const sign = signed && amount > 0 ? "+" : "";
   return <>{`${currency} ${sign}${fmt.format(amount)}`}</>;
 }
 function Pct({ value }: { value: Unknown }) {
-  return value === null ? (
-    <span className={s.unknown}>unknown</span>
-  ) : (
-    <>{`${fmt.format(value)}%`}</>
-  );
+  return value === null ? <Unknown /> : <>{`${fmt.format(value)}%`}</>;
 }
 function AsOf({ date, prefix = "as of" }: { date: string | null; prefix?: string }) {
   return (
     <small>
-      {prefix} {date ?? <span className={s.unknown}>unknown date</span>}
+      {prefix} {date ?? <Unknown what="unknown date" />}
     </small>
   );
 }
@@ -68,15 +67,12 @@ function Tag({ tag }: { tag: string }) {
   const cls =
     tag === "overdue"
       ? s.tagBad
-      : tag === "due soon" || tag === "unverified" || tag === "blocked" || tag === "below target"
+      : tag === "due soon" || tag === "unverified" || tag === "blocked" || tag === "below target" || tag === "missing"
         ? s.tagWarn
         : tag === "funded" || tag === "done" || tag === "on target"
           ? s.tagOk
           : "";
   return <span className={`${s.tag} ${cls}`}>{tag}</span>;
-}
-function Unknown() {
-  return <span className={s.unknown}>unknown</span>;
 }
 function Count({ value }: { value: Unknown }) {
   return value === null ? <Unknown /> : <>{fmt0.format(value)}</>;
@@ -144,9 +140,9 @@ export default async function CashPage() {
       ? [{ when: null, days: null, who: "gui", text: `${cover.entity ?? "Funding entity"} cover after tax and funding is short: CAD ${fmt.format(cover.cover)}`, kind: "decision" }]
       : []),
     ...pay
-      .filter((p) => p.tag === "overdue" || (p.days !== null && p.days <= 7))
+      .filter((p) => p.actionable && (p.tag === "overdue" || (p.days !== null && p.days <= 7)))
       .map((p) => ({
-        when: p.dueDate,
+        when: p.when,
         days: p.days,
         who: "gui",
         text: `${p.counterparty || p.description}${p.amount === null ? "" : `: ${p.currency} ${fmt.format(p.amount)}`}${p.dueNote ? ` (${p.dueNote})` : ""}`,
@@ -374,12 +370,16 @@ export default async function CashPage() {
                       {books.tieOutsPassing === null || books.tieOutsFailing === null ? (
                         <Unknown />
                       ) : (
-                        `${fmt0.format(books.tieOutsPassing)} / ${fmt0.format(books.tieOutsPassing + books.tieOutsFailing)}`
+                        `${fmt0.format(books.tieOutsPassing)} / ${fmt0.format(books.tieOutsPassing + books.tieOutsFailing)} tieable`
                       )}
                     </strong>
                     <small>
-                      {books.tieOutsFailing === null ? "an unknown number" : fmt0.format(books.tieOutsFailing)} do not tie · as of{" "}
-                      {books.asOf ?? "unknown"}
+                      {[
+                        `${books.tieOutsPassing === null ? "unknown" : fmt0.format(books.tieOutsPassing)} tie`,
+                        `${books.tieOutsFailing === null ? "unknown" : fmt0.format(books.tieOutsFailing)} do not`,
+                        `${books.tieOutsOther === null ? "unknown" : fmt0.format(books.tieOutsOther)} not tied`,
+                      ].join(" / ")}
+                      {` · as of ${books.asOf ?? "unknown"}`}
                     </small>
                   </div>
                   <div className={s.stat}>
@@ -424,7 +424,7 @@ export default async function CashPage() {
                       {pay.map((p) => (
                         <tr key={p.id}>
                           <td className={s.nowrap}>
-                            {p.dueDate ?? (p.dueNote || "unknown")}
+                            {p.when ?? <Unknown />}
                             {p.days !== null && (
                               <>
                                 <br />
