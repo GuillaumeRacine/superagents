@@ -36,6 +36,37 @@ post more than 3 days old. `/finance/cash` and `/finance/invest` redirect to `/d
 and `/dashboard/invest`. The added series costs about 1.8 KB of gzip-base64; check the 64 KB
 Vercel env budget before publishing.
 
+MoneyOS record (issue #54, 2026-11-02). The builder reads the private MoneyOS
+repository (`main`; contract `SOURCE_OF_TRUTH.md` + `sources.json`) from a
+local fast-forward-only clone of its main branch (set `MONEYOS_DIR`):
+`data/cfo-feed/*` and `reports/TARGETS.md` replace the former Context copies,
+and it fails with a clear message when the directory or `data/cfo-feed/facts.json`
+is missing. Only the feed's memory, `cfo-feed/state.json`, is still read from
+`CONTEXT_DIR` (default `~/Context`), optionally, until the feed job moves
+(moneyos#1 phase 3). Six more optional `cash_snapshot_v1` sections come from the
+record, each nullable and validated with the same strictness (null means unknown,
+ISO dates, bounded text, row caps): `scorecard.savingsRate` (the North Star,
+target 20%+: newest month and the T12 row of `data/savings-rate.csv`, headline
+column `savings_rate`, else `savings_rate_incl`; rate as a percent; as-of = end of
+the newest month; one-line definition), `books` (Suspense row and TOTAL row of
+`books/trial-balance.csv`, `balanced` when the total is within a cent of zero,
+`ties` / `does not tie` counts of `data/tieout.csv`, as-of = newest statement
+date), `payables` (open rows of `data/payables-receivables.csv`, at most 30,
+counterparty and description masked, free-text due dates kept as `dueNote` next
+to a null `dueDate`), `clarify` (open rows and distinct batches of
+`clarify/to-clarify.csv`, open rows of `clarify/open-questions.csv`), `contract`
+(version and date from `sources.json`, hash computed exactly as
+`scripts/check_sot.py --hash` does: sha256 of `SOURCE_OF_TRUTH.md` bytes plus
+Python-style canonical JSON of `sources.json` without `next_question_id`, first
+12 hex, see `lib/moneyos-contract.mjs`; required and acknowledged agents from
+`ACK.md`; grace date = contract date + `ack_grace_days`) and `cabin` (newest row
+of `data/cabin-statements.csv`: nights, gross, sales taxes, deposit, net ex tax,
+statements on file). The page shows them as bands (Savings rate after the burn
+headline; Books, Payables and receivables, Open items, Contract and Cabin after
+Needs you soon); overdue or imminent payables and a contract acknowledgement
+missing after grace also enter Needs you soon, and a savings-rate as-of older
+than 45 days is a stale reason. A full snapshot is about 10.6 KB of gzip-base64.
+
 Tests: `npm run test:cash` (model), `node scripts/verify-cash.mjs` (gate and
 render against a local build with a throwaway secret and fictional records).
 `scripts/verify-finance.mjs` and `scripts/verify-finance-ui.mjs` now exercise
