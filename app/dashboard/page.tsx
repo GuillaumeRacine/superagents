@@ -26,18 +26,18 @@ export default async function DashboardHub() {
         <header className={s.hero}>
           <div className={s.eyebrow}>SUPER AGENTS / DASHBOARD</div>
           <h1>Dashboard</h1>
-          <p>Three private dashboards: cash today, capital over time, the businesses and their evidence.</p>
+          <p>Three private dashboards: cash and core metrics today, capital over time, the businesses and their evidence.</p>
           <div className={s.owner}>
             The old single Finance dashboard moved to /dashboard/invest on 2026-10-19 (issue #44); all dashboards moved under /dashboard (issue #49).
           </div>
         </header>
         <div className={s.cards}>
           <a className={s.card} href="/dashboard/cash">
-            <div className={s.sectionLabel}>CASH</div>
-            <h2>Cash</h2>
-            <p>Balances per entity, alerts and the next seven days, 2026 funding progress, Stoic cover, debt and interest, trailing-30-day burn and the task list.</p>
-            <p><small>Owner: Chief of Cash (GrokBot) · refreshed weekdays from the private MoneyOS repository (main), the finance record · savings rate, books, payables, contract, cabin</small></p>
-            <span className={s.go}>Open Cash →</span>
+            <div className={s.sectionLabel}>CASH &amp; CORE METRICS</div>
+            <h2>Cash &amp; Core Metrics</h2>
+            <p>Savings rate against the 20% North Star, 30-day burn, monthly P&amp;L, income by source, spend by line, interest, debts, liquidity and runway per entity, net worth preview, funding, payables, cabin, books, open items, contract and per-account freshness.</p>
+            <p><small>Owner: Chief of Cash (GrokBot) · live from data/metrics.json on main of the private MoneyOS repository, re-read every five minutes; the published snapshot stands in when the live read fails, and the page says so</small></p>
+            <span className={s.go}>Open Cash &amp; Core Metrics →</span>
           </a>
           <a className={s.card} href="/dashboard/invest">
             <div className={s.sectionLabel}>INVEST</div>
