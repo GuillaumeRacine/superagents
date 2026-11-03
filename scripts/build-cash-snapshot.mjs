@@ -24,6 +24,7 @@ const moneyosDir = process.env.MONEYOS_DIR || join(homedir(), "code", "moneyos")
 const contextFeedDir = join(process.env.CONTEXT_DIR || join(homedir(), "Context"), "cfo-feed");
 const out = flag("--out");
 const wantGzip = args.includes("--gzip");
+const SNAPSHOT_TASKS = 12; // open tasks kept in the fallback snapshot (env budget)
 function fail(message) {
   console.error(`build-cash-snapshot: ${message}`);
   process.exit(2);
@@ -93,8 +94,11 @@ const targetsMd = read("reports/TARGETS.md", true);
 const updated = facts.updated ?? null;
 const seriesCsv = read("data/cfo-feed/t30d-net-burn.csv", true);
 
-// Last 180 complete daily points of the T30D series, whole CAD, to keep the env value small.
-const SERIES_DAYS = 30; // 180 pushed the shared 64 KB Vercel env budget over the limit on 2026-11-02 (finance snapshot ~48 KB)
+// Last complete daily points of the T30D series, whole CAD, to keep the env value small.
+// 180 pushed the shared 64 KB Vercel env budget over the limit on 2026-11-02 (finance snapshot ~48 KB);
+// 30 -> 14 on 2026-11-03 when MONEYOS_REPO + MONEYOS_READ_TOKEN joined the budget (the snapshot is the
+// fallback now; the live page reads data/metrics.json from the MoneyOS repository).
+const SERIES_DAYS = 14;
 function seriesRows() {
   if (!seriesCsv) return [];
   const { rows } = parseCsv(seriesCsv);
@@ -509,8 +513,9 @@ const snapshot = {
         }
       : null,
   // Login names, URLs, card digits and search strings are dropped on purpose.
-  // Done bot tasks carry no action for the page; keep Gui's tasks and open bot tasks (env budget 2026-11-02).
-  tasks: (tasks?.tasks ?? []).filter((t) => t.who !== "bot" || !t.done).map((t) => ({
+  // Done tasks carry no action for the page; keep open tasks only, in feed order, capped at
+  // SNAPSHOT_TASKS (env budget 2026-11-02, tightened 2026-11-03 for the live-metrics env vars).
+  tasks: (tasks?.tasks ?? []).filter((t) => !t.done).slice(0, SNAPSHOT_TASKS).map((t) => ({
     id: t.id,
     who: t.who === "bot" ? "bot" : "gui",
     kind: t.kind ?? "",
