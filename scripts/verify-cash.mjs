@@ -276,6 +276,11 @@ try {
       "unknown (balance missing for …1111, …4444)",
       "Example overdraft 0003",
       "3 facilities",
+      "personal · interest this month",
+      "opco · interest this month",
+      "1 of 2 facilities known",
+      "the record&#x27;s own figure, not re-added here",
+      "verification only) · read at render · rendered", // the file transport reads at render; the repository path says "age at most 5 min", never a read timestamp
       "As of 2026-10-18 (ledger) · generated 2026-10-19T11:30:00Z · moneyos@abc1234",
       "Live source: a local metrics file (MONEYOS_METRICS_FILE, verification only)",
       // Bands in order.
@@ -337,14 +342,15 @@ try {
     ])
       assert(html.includes(expected), `/dashboard/cash (live) must render ${expected}`);
     // Unknown never zero: personal cash, 2026-07 income, runway, T12 owner costs are null in the fixture,
-    // and the only "CAD 0" cells are the fixture's five real zeros (owner flows, one crypto month, holdco debts,
-    // the overdraft's balance and its monthly interest).
-    assert.equal((html.match(/CAD 0</g) ?? []).length, 5, "Only real zeros render as zero");
+    // and every "CAD 0" is one of the fixture's real zeros: P&L owner flows (2026-09), P&L crypto (2026-08),
+    // holdco debts, the overdraft's balance and its monthly interest, and opco's per-entity tile (interest, balance).
+    assert.equal((html.match(/CAD 0</g) ?? []).length, 7, "Only real zeros render as zero");
     assert((html.match(/>unknown</g) ?? []).length >= 6, "Each null renders as unknown");
     // No cross-entity sum: holdco 100,000 + opco 1,000 never appears; the sheet total is the record's own figure.
     assert(!html.includes("CAD 101,000"), "Entities must never be summed");
     assert(/\d of 4 accounts stale/.test(html), "Status bar counts stale accounts");
     assert(!html.includes("CAD 1,350,000"), "Net worth is not re-added across entities");
+    assert(!html.includes("Interest this month</span>"), "No cross-entity interest headline");
     // Masking re-applied on read: the fixture's 7-digit bill number shows as its last four.
     assert(html.includes("Example bill ...4567") && !html.includes("1234567<"), "Digit runs are masked on read");
     // Never both sources at once.

@@ -21,6 +21,7 @@ const {
   metricsFundingRows,
   metricsContractStatus,
   needsYou,
+  debtsByEntity,
 } = model;
 const TODAY = "2026-10-19";
 const fixture = () => metricsFixture("Example");
@@ -92,6 +93,18 @@ test("null handling: blanks become null and are never coerced to zero; zero stay
   assert.equal(vz.burn.t30d_net_burn_cad, 0);
   assert.equal(vz.open_items.open_questions, 0);
   assert.equal(vz.books.suspense_cad, 0);
+  // A null status or type stays null (rendered unknown) and never enters the week's list.
+  const nulls = fixture();
+  nulls.funding.targets[1].status = null; // was blocked
+  nulls.payables[0].type = ""; // was the overdue payable
+  const vn = validateMetrics(nulls);
+  assert.equal(vn.funding.targets[1].status, null);
+  assert.equal(vn.payables[0].type, null);
+  const fr = Object.fromEntries(metricsFundingRows(vn, TODAY).map((f) => [f.id, f]));
+  assert.equal(fr.blocked.tag, null);
+  assert.equal(fr.rrsp.tag, "unverified"); // the cash-model rules still apply to the open row
+  const kinds = needsYou(vn, "2026-10-20").map((a) => a.kind);
+  assert.ok(!kinds.includes("funding blocked") && !kinds.includes("payable"), kinds.join());
   // Zero open questions is not an item for the week; three is one line, not three.
   assert.ok(!needsYou(vz, TODAY).some((a) => a.kind === "ruling"));
   assert.equal(needsYou(validateMetrics(fixture()), TODAY).filter((a) => a.kind === "ruling").length, 1);
@@ -114,6 +127,10 @@ test("masking is re-applied on read: any run of five or more digits keeps its la
   assert.deepEqual(v.interest_by_month[0].by_account, [["...6789", 10]]);
   assert.equal(v.liquidity.by_entity[0].source, "Bank ...3456 stmt");
   assert.equal(v.freshness[0].label, "Chequing ...1234");
+  // A bad value under a digit-heavy source key: the error names the masked, clipped key, never the raw one.
+  const key = fixture();
+  key.sources = { ["statement-123456789-" + "k".repeat(60)]: 12 };
+  assert.throws(() => validateMetrics(key), (e) => /^sources\.statement-\.\.\.6789-k{22} must be text\.$/.test(e.message) && !/123456789/.test(e.message));
   // Every text field is masked; hex identifiers (contract hash, commit sha) are the only exemption.
   const strings = [];
   JSON.stringify(v, (key, value) => (typeof value === "string" && !["hash", "moneyos_sha"].includes(key) ? strings.push(value) : null, value));
@@ -208,6 +225,9 @@ test("bad dates, bad shapes and bad enums are rejected with a field name", () =>
     [(r) => (r.spend_by_line.rows[0].month_cad = Infinity), /spend_by_line.rows\[0\].month_cad/],
     [(r) => (r.spend_by_line.rows[0].month_cad = 1e13), /outside the range/],
     [(r) => (r.income_by_source_t12[0].source = 12), /income_by_source_t12\[0\].source must be text/],
+    // Normalized pair forms: a malformed pair is a shape error, never rewritten.
+    [(r) => (r.interest_by_month[0].by_account = [["0836", 1], ["0002"]]), /interest_by_month\[0\].by_account\[1\] must be a \[key, value\] pair/],
+    [(r) => (r.sources = [["ledger.csv", "2026-10-18"], "debts.csv"]), /sources\[1\] must be a \[key, value\] pair/],
   ];
   for (const [mutate, pattern] of cases) {
     const r = fixture();
@@ -240,6 +260,13 @@ test("freshness verdict: file age, ledger, burn and savings-rate inputs; stale a
   const g = metricsFreshness(validateMetrics(srOld), now("2026-12-01T09:00:00Z"));
   assert.ok(g.reasons.some((x) => /Savings rate: through 2026-09-30, 62 days old \(limit 45\)/.test(x)));
   assert.ok(metricsFreshness(emptyMetrics(), now("2026-10-19T20:00:00Z")).reasons.includes("Generated time is unknown."));
+  // The caller's calendar date drives the day arithmetic: 01:00Z on the 20th is still the 19th in Toronto.
+  const utc = metricsFreshness(v, now("2026-10-20T01:00:00Z"));
+  const toronto = metricsFreshness(v, now("2026-10-20T01:00:00Z"), "2026-10-19");
+  assert.ok(utc.reasons.some((x) => /^Ledger: through 2026-10-18, 2 days old/.test(x)) === false && utc.staleAccounts === 2);
+  assert.equal(toronto.staleAccounts, 2);
+  assert.equal(metricsFreshness(v, now("2026-10-22T01:00:00Z"), "2026-10-21").staleAccounts, 2);
+  assert.equal(metricsFreshness(v, now("2026-10-22T01:00:00Z"), "2026-10-22").staleAccounts, 3); // 1111: 4 days > cadence 3
   // Account staleness is recomputed against today; the record's flag counts only when a date or cadence is missing.
   assert.equal(accountStale({ stale: true, newest_row: "2026-10-19", cadence_days: 1 }, TODAY), false);
   assert.equal(accountStale({ stale: false, newest_row: "2026-01-01", cadence_days: 1 }, TODAY), true);
@@ -276,6 +303,17 @@ test("helper verdicts: savings rate vs 20%, crypto share, runway text", () => {
   assert.equal(entityCashText(v.liquidity.by_entity[0], (n) => n.toLocaleString("en-CA")), "CAD 100,000");
   assert.equal(entityCashText(v.liquidity.by_entity[2]), "unknown (balance missing for …1111, …4444)");
   assert.equal(entityCashText({ cash: null, currency: "CAD", missing_accounts: [] }), "unknown");
+  // Debt figures are per entity; no helper adds personal and opco together.
+  const groups = Object.fromEntries(debtsByEntity(v).map((g) => [g.entity, g]));
+  assert.deepEqual(groups.personal, { entity: "personal", facilities: 2, balance_cad: 450000, balanceRows: 2, interest_month_cad: 1000, interestRows: 1, as_of: "2026-08" });
+  assert.deepEqual(groups.opco, { entity: "opco", facilities: 1, balance_cad: 0, balanceRows: 1, interest_month_cad: 0, interestRows: 1, as_of: "2026-09-30" });
+  assert.deepEqual(debtsByEntity(emptyMetrics()), []);
+  // Funding derivation is the cash-model's: same tags, same days, same remaining.
+  const funded = Object.fromEntries(metricsFundingRows(v, TODAY).map((f) => [f.id, f]));
+  assert.equal(funded.rrsp.days, 133);
+  assert.equal(funded.rrsp.tag, "unverified");
+  assert.equal(funded.rrsp.remaining, null);
+  assert.equal(funded.blocked.tag, "blocked");
 });
 
 test("needs you soon: overdue or imminent payables, blocked funding, open questions, ack after grace; sorted", () => {

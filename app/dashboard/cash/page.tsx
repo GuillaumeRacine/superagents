@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
-import { getCashData } from "@/lib/cash-data";
-import { getMetricsData, REVALIDATE_SECONDS } from "@/lib/metrics-data";
-import type { MetricsResult } from "@/lib/metrics-data";
+import { getCashDataWithLiveMetrics, REVALIDATE_SECONDS } from "@/lib/metrics-data";
+import type { CashDashboardData, MetricsResult } from "@/lib/metrics-data";
 import {
   SAVINGS_TARGET_PCT,
   accountStale,
+  debtsByEntity,
   entityCashText,
   metricsContractStatus,
   metricsFreshness,
@@ -23,6 +23,7 @@ import {
   fundingRows,
   openTasks,
   payableRows,
+  round2,
   stoicCover,
 } from "@/lib/cash-model.mjs";
 import { useMDXComponents } from "nextra-theme-docs";
@@ -78,7 +79,8 @@ function AsOf({ date, prefix = "as of" }: { date: string | null; prefix?: string
     </small>
   );
 }
-function Tag({ tag }: { tag: string }) {
+function Tag({ tag }: { tag: string | null }) {
+  if (tag === null) return <Unknown />;
   const cls =
     tag === "overdue"
       ? s.tagBad
@@ -198,14 +200,15 @@ function today() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Toronto" });
 }
 
-type CashData = NonNullable<Awaited<ReturnType<typeof getCashData>>>;
+type CashData = NonNullable<Extract<CashDashboardData, { snapshot: object }>["snapshot"]>;
 
 export default async function CashPage() {
-  const [data, live] = await Promise.all([getCashData(), getMetricsData()]);
-  if (!data || !live) redirect("/api/auth/signin?callbackUrl=%2Fdashboard%2Fcash");
+  // One allowlist check; the env snapshot is only read when the live read fell back.
+  const data = await getCashDataWithLiveMetrics();
+  if (!data) redirect("/api/auth/signin?callbackUrl=%2Fdashboard%2Fcash");
   // Never mix the two sources in one render: live metrics, or the env snapshot with a notice.
-  if (live.state === "ready") return <MetricsView live={live} />;
-  return <SnapshotView data={data} fallbackReason={live.reason} />;
+  if (data.snapshot === null) return <MetricsView live={data.live} />;
+  return <SnapshotView data={data.snapshot} fallbackReason={data.live.reason} />;
 }
 
 // ---- Fallback: the published CASH_SNAPSHOT_* env snapshot (cash_snapshot_v1), unchanged ----
@@ -1175,7 +1178,7 @@ type Metrics = MetricsResult["metrics"];
 function MetricsView({ live }: { live: MetricsResult }) {
   const m: Metrics = live.metrics;
   const asOfToday = today();
-  const fresh = metricsFreshness(m, Date.now());
+  const fresh = metricsFreshness(m, Date.now(), asOfToday);
   const soon = needsYou(m, asOfToday);
   const sr = m.north_star.savings_rate;
   const month = savingsVerdict(sr?.rate_pct ?? null, sr?.target_pct ?? null);
@@ -1193,9 +1196,9 @@ function MetricsView({ live }: { live: MetricsResult }) {
   const spendRows = spend ? [...spend.rows].sort((a, b) => (b.month_cad ?? -Infinity) - (a.month_cad ?? -Infinity)) : [];
   const interest = [...m.interest_by_month].sort((a, b) => (b.month ?? "").localeCompare(a.month ?? "")).slice(0, 13);
   const freshRows = [...m.freshness].sort((a, b) => Number(accountStale(b, asOfToday)) - Number(accountStale(a, asOfToday)));
-  const knownInterest = m.debts ? m.debts.rows.filter((d) => d.interest_month_cad !== null) : [];
-  const interestMonth = knownInterest.length ? Math.round(knownInterest.reduce((a, d) => a + (d.interest_month_cad as number), 0) * 100) / 100 : null;
+  const debtGroups = debtsByEntity(m);
   const sourceLine = live.via === "file" ? "Live source: a local metrics file (MONEYOS_METRICS_FILE, verification only)" : LIVE_SOURCE_LINE;
+  const readLine = live.via === "file" ? "read at render" : `body served from cache, age at most ${live.cacheMaxAgeSeconds / 60} min`;
   const cryptoShare = sr ? sharePct(sr.crypto_cad, sr.income_cad) : null;
   return (
     <Wrapper toc={[]} metadata={pageMetadata} sourceCode="">
@@ -1225,9 +1228,9 @@ function MetricsView({ live }: { live: MetricsResult }) {
             <div className={s.meta}>
               <span>{OWNER_LINE}</span>
               <span>
-                {`Provenance: inputs hash ${m.inputs_hash ?? "unknown"} · built from head ${m.built_from_head ? m.built_from_head.slice(0, 7) : "unknown"} · file commit ${live.commitSha ? live.commitSha.slice(0, 7) : "not read (file transport)"} · stale flags recomputed at render from each account's newest row and cadence (the record's own verdicts were as of ${m.verdicts_as_of ?? "unknown"})`}
+                {`Provenance: inputs hash ${m.inputs_hash ?? "unknown"} · built from head ${m.built_from_head ? m.built_from_head.slice(0, 7) : "unknown"} · file commit ${live.commitSha ? `${live.commitSha.slice(0, 7)} (content read at that ref)` : "not read (file transport)"} · stale flags recomputed at render from each account's newest row and cadence (the record's own verdicts were as of ${m.verdicts_as_of ?? "unknown"})`}
               </span>
-              <span>{`${sourceLine} · read ${live.fetchedAt} · rendered ${asOfToday}`}</span>
+              <span>{`${sourceLine} · ${readLine} · rendered ${asOfToday}`}</span>
               <span>
                 Every band carries its own as-of and source. Entities are never added together; a cross-entity figure is
                 labelled as the sheet total. Unknown renders as unknown, never as zero.
@@ -1453,7 +1456,7 @@ function MetricsView({ live }: { live: MetricsResult }) {
                 </thead>
                 <tbody>
                   {spendRows.map((r, i) => {
-                    const delta = r.month_cad === null || r.t12_avg_cad === null ? null : Math.round((r.month_cad - r.t12_avg_cad) * 100) / 100;
+                    const delta = r.month_cad === null || r.t12_avg_cad === null ? null : round2(r.month_cad - r.t12_avg_cad);
                     return (
                       <tr key={i}>
                         <td>{r.line || <Unknown />}</td>
@@ -1469,7 +1472,7 @@ function MetricsView({ live }: { live: MetricsResult }) {
                   <tr>
                     <td>{`Total (${spend.rows.length} lines)`}</td>
                     <td className={s.num}><Money amount={spend.month_total_cad} /></td>
-                    <td className={s.num}><Money amount={spend.t12_total_cad === null ? null : Math.round((spend.t12_total_cad / 12) * 100) / 100} /></td>
+                    <td className={s.num}><Money amount={spend.t12_total_cad === null ? null : round2(spend.t12_total_cad / 12)} /></td>
                     <td className={s.num}><small>totals from the record</small></td>
                     <td className={s.num}><Money amount={spend.t12_total_cad} /></td>
                   </tr>
@@ -1517,15 +1520,21 @@ function MetricsView({ live }: { live: MetricsResult }) {
             <>
               <div className={s.statGrid}>
                 <div className={s.stat}>
-                  <span>Total balance</span>
+                  <span>Total balance, per the record</span>
                   <strong><Money amount={m.debts.total_cad} /></strong>
-                  <small>{`${m.debts.facilities ?? "unknown"} facilities · ${asOf(m.debts.as_of)} · total from the record`}</small>
+                  <small>{`${m.debts.facilities ?? "unknown"} facilities · ${asOf(m.debts.as_of)} · the record's own figure, not re-added here`}</small>
                 </div>
-                <div className={s.stat}>
-                  <span>Interest this month</span>
-                  <strong><Money amount={interestMonth} /></strong>
-                  <small>{`${knownInterest.length} of ${m.debts.rows.length} rows have a known monthly interest`}</small>
-                </div>
+                {debtGroups.map((g) => (
+                  <div className={s.stat} key={g.entity}>
+                    <span>{`${g.entity} · interest this month`}</span>
+                    <strong><Money amount={g.interest_month_cad} /></strong>
+                    <small>
+                      {`${g.interestRows} of ${g.facilities} facilities known · balance `}
+                      <Money amount={g.balance_cad} />
+                      {` (${g.balanceRows} of ${g.facilities}, ${asOf(g.as_of)})`}
+                    </small>
+                  </div>
+                ))}
               </div>
               <div className={s.tableWrap}>
                 <table className={s.table}>

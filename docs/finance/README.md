@@ -19,13 +19,19 @@ defined in the private MoneyOS repository's issue #5 and rebuilt by its
 `run_all.sh` on every refresh), read **at request time** from the repository's
 default branch; the env snapshot below is the fallback.
 
-Transport (`lib/metrics-data.ts`, server-only, after the same exact-email
-allowlist gate as `getCashData`): the GitHub contents API
-`GET /repos/<MONEYOS_REPO>/contents/data/metrics.json?ref=main` with
-`Accept: application/vnd.github.raw+json` and `Authorization: Bearer
-<MONEYOS_READ_TOKEN>`, through Next's `fetch` with `next: { revalidate: 300 }`
-(one upstream read per five minutes per server, whatever the request rate) and
-an 8 s timeout. The response body is bounded (200 KB), parsed, then validated by
+Transport (`lib/metrics-data.ts`, server-only; `getCashDataWithLiveMetrics`
+checks the exact-email allowlist once per request, reads the live file, and
+reads and validates the env snapshot only when the live read fell back, so a
+render never holds both sources): first the file's latest commit,
+`GET /repos/<MONEYOS_REPO>/commits?path=data/metrics.json&sha=main&per_page=1`,
+then the content at exactly that sha,
+`GET /repos/<MONEYOS_REPO>/contents/data/metrics.json?ref=<sha>` with
+`Accept: application/vnd.github.raw+json`, both with `Authorization: Bearer
+<MONEYOS_READ_TOKEN>`, Next's `fetch` with `next: { revalidate: 300 }` (one
+upstream read per five minutes per server, whatever the request rate) and an 8 s
+timeout; because the content is keyed by the sha the commit lookup returned, the
+two can never disagree. The body is read as a stream and abandoned past 200 KB
+whatever `content-length` says, parsed, then validated by
 `lib/metrics-model.mjs` with the cash-model strictness: null means unknown and is
 never 0; ISO dates and months; bounded text with account masking re-applied on
 read (any run of five or more digits keeps its last four; the contract hash and
@@ -37,10 +43,13 @@ burn series 400). Provenance (schema review of 2026-11-02): the file carries
 `verdicts_as_of` (when the record computed its own stale flags); `moneyos_sha` is
 accepted when present and never required. The status bar reads
 `metrics <inputs_hash> · generated <generated_at> · ledger through <ledger_through>`
-plus `moneyos@<sha7>`, where the sha is the file's latest commit on `main` from one
-light `GET /repos/<MONEYOS_REPO>/commits?path=data/metrics.json&sha=main&per_page=1`
-(same token, same 300 s revalidate; a failure there leaves the sha unknown and
-never triggers the fallback), else the sha the file claims. Per-account
+plus `moneyos@<sha7>`, the commit whose content was read (a failed commit lookup
+is a fallback like any other read failure), else the sha the file claims. The
+as-of bar says "body served from cache, age at most 5 min" rather than a read
+timestamp, because a cached body can be up to one revalidation window old.
+Debt figures are shown per entity (facilities, known balance, known monthly
+interest, each with the rows it covers) next to the record's own total, which is
+labelled as the record's and never re-added here. Per-account
 staleness is recomputed at render from `freshness[].newest_row` and
 `cadence_days` against today's date (the record's flag counts only when a date or
 cadence is missing); a `generated_at` older than 14 days adds a red notice
@@ -58,8 +67,9 @@ Environment:
 | `MONEYOS_READ_TOKEN` | Vercel production only, sensitive | Fine-grained personal access token: **Resource owner** the repository's owner, **Repository access** "Only select repositories" with the MoneyOS repository alone, **Permissions**: Repository, Contents: Read-only (Metadata read is added automatically), expiry **1 year**, no other permission. Create it under GitHub Settings, Developer settings, Fine-grained tokens; store it only in the Vercel production environment (and the password manager for rotation), never in `.env` files of this repo or in a GitHub Actions secret. Rotate before expiry; the page falls back, it does not break. |
 | `MONEYOS_METRICS_FILE` | local verification only | Absolute path to a metrics file; when set it replaces the repository read. `scripts/verify-cash.mjs` uses it with a fictional fixture. Never set in Vercel. |
 
-Fallback rule: a missing variable, a fetch error or timeout, a non-200 status,
-an oversized body, invalid JSON or any validation error yields
+Fallback rule: a missing variable, a fetch error or timeout, a non-200 status
+on either call, no commit for the file, an oversized body, invalid JSON or any
+validation error yields
 `{ state: "fallback", reason }`; the page then renders the existing
 `CASH_SNAPSHOT_*` env snapshot through the unchanged cash-model path and says
 "Live metrics unavailable: <reason>; showing the published snapshot from
