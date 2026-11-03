@@ -4,6 +4,7 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 
 ## Recent Lessons
 
+- A validator written against a fixture fails closed on the first real record: run the live file through the reader before shipping, and clip display-only prose (method notes, definitions, provenance sentences) instead of rejecting the page. Strictness belongs on identifiers, dates and numbers.
 - A text mask applied to every string field also eats hex identifiers (contract hash, commit sha): validate identifiers raw, exempt them explicitly in the "no digit run survives" test, and walk string values only (numbers carry long digit runs legitimately).
 - A page with two data sources dispatches once on the loader's state and never renders both; the gate asserts each source's markers are absent from the other render. Gate once per request and read the fallback source only on the fallback branch.
 - Two cached reads of "the latest X" can disagree; resolve the version first and read the content at that version. Trust no `content-length`: stream and abort at the bound.
@@ -19,6 +20,14 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 - Loop over shell commands from a `#!/bin/bash` script file, not from the agent's zsh (unquoted `$step` is not word-split there).
 
 ## 2026-11
+
+### [2026-11-03] INCIDENT First live read of the MoneyOS metrics file fell back three times before it rendered (issue #61)
+- **Context:** The read-only token for the private MoneyOS repository was issued and stored in the production environment; the redeploy was refused at 64.06 KB (two new variables tipped the shared env budget), and once it built, `/dashboard/cash` showed the fallback snapshot with `validation: burn.method is longer than 400`, then `debts.as_of must be an ISO date`, then `net_worth.by_entity[0].source is longer than 160`.
+- **What we tried:** Fallback snapshot trimmed to 7,184 bytes (burn series 14 days, open tasks only capped at 12) so the budget closes with ~800 bytes to spare; `lib/metrics-model.mjs` gained `prose()` (clip at 400 with an ellipsis, never fatal) for method, definition, runway note, net-worth note and provenance sources; `debts.as_of` and net-worth entity `as_of` accept a statement month like the debt rows already did; a test pins the clipping and the strict path. The live record was then read through the reader locally (`readMetricsText` on the clone of main) until it returned `ready`.
+- **Outcome:** test:metrics 10/10, test:cash 26/26, tsc clean; production `superagents-14pxgzvyv` Ready; live page shows `metrics 2386b6821b1a`, `moneyos@4f2d898`, the honest `Data stale` band (burn 4 days old, 7 of 20 accounts stale) and every section populated; screenshot reviewed at 1714 x 10522.
+- **Root cause:** The validator was written against a fictional fixture whose prose was short and whose dates were all full dates; the record's author writes 400-character method sentences and dates debts by statement month. Nothing ran the real file through the reader before the token existed.
+- **Lesson / rule:** Run the live record through the reader before shipping a reader. Clip display-only prose; reject only identifiers, dates, numbers and enums. Budget every new env variable against the 64 KB cap before the deploy, not after.
+- **Links:** #61, commits a61cb8d and 0592433, moneyos#8 (metrics.json rebuilt so `contract.acked` reflects PR #7).
 
 ### [2026-11-02] DECISION Cash & Core Metrics reads the MoneyOS metrics file live at request time; the env snapshot is the fallback (issue #61)
 - **Context:** After #54 the Cash page was correct but only as fresh as a Vercel env variable (64 KB shared cap, a redeploy per update), and the record's derived files were weeks stale. Gui ruled that all core financial metrics live in MoneyOS and the dashboard must be live, fresh and accurate from them. MoneyOS issue #5 defines `data/metrics.json` (`moneyos_metrics_v1`), rebuilt on every refresh.
