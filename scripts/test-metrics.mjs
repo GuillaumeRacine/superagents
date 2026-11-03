@@ -61,6 +61,26 @@ test("the fictional fixture validates and round-trips through its own validator"
   assert.equal(readMetricsText(JSON.stringify(fixture())).state, "ready");
 });
 
+test("prose fields (method, definition, runway note) are clipped at 400, never fatal; structured text stays strict", () => {
+  const r = fixture();
+  const long = "The method sentence keeps growing as the record explains itself. ".repeat(12); // 792 chars
+  r.burn.method = long;
+  r.north_star.savings_rate.definition = long;
+  r.liquidity.runway_method = long;
+  r.net_worth.note = long;
+  const v = validateMetrics(r);
+  for (const got of [v.burn.method, v.north_star.savings_rate.definition, v.liquidity.runway_method, v.net_worth.note]) {
+    assert.equal(got.length, 400);
+    assert.ok(got.endsWith("\u2026"));
+    assert.ok(long.startsWith(got.slice(0, -1).trimEnd()));
+  }
+  assert.equal(readMetricsText(JSON.stringify(r)).state, "ready");
+  assert.throws(() => validateMetrics({ ...fixture(), burn: { ...fixture().burn, method: 7 } }), /burn.method must be text/);
+  const strict = fixture();
+  strict.burn.scope = "x".repeat(121);
+  assert.throws(() => validateMetrics(strict), /burn.scope is longer than 120/);
+});
+
 test("null handling: blanks become null and are never coerced to zero; zero stays zero", () => {
   const r = fixture();
   r.north_star.savings_rate.rate_pct = "";
