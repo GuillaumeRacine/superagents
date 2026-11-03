@@ -36,7 +36,7 @@ export default async function DashboardHub() {
             <div className={s.sectionLabel}>CASH</div>
             <h2>Cash</h2>
             <p>Balances per entity, alerts and the next seven days, 2026 funding progress, Stoic cover, debt and interest, trailing-30-day burn and the task list.</p>
-            <p><small>Owner: Chief of Cash (GrokBot) · weekdays after the 08:00 #cash feed · record of truth Context/cfo-feed</small></p>
+            <p><small>Owner: Chief of Cash (GrokBot) · refreshed weekdays from the private MoneyOS repository (main), the finance record · savings rate, books, payables, contract, cabin</small></p>
             <span className={s.go}>Open Cash →</span>
           </a>
           <a className={s.card} href="/dashboard/invest">
