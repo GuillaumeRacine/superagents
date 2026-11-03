@@ -21,14 +21,14 @@ Mechanism that is meaningfully different: every figure on a dashboard carries it
 
 ## Surfaces
 
-- `/dashboard` (private): hub plus three agent-owned dashboards. **Cash** (owner: Chief of Cash, weekday feed, record of truth `main` of the private MoneyOS repository; `Context/cfo-feed` is a frozen mirror until the jobs are repointed), **Invest** (owner to assign; interim monthly run), **Business** (founder overview). Served at `iamgui.com/dashboard` and at the Vercel hostname.
+- `/dashboard` (private): hub plus three agent-owned dashboards. **Cash & Core Metrics** (owner: Chief of Cash; record of truth `main` of the private MoneyOS repository, whose `data/metrics.json` is read live at request time with a read-only token and revalidated every five minutes; the published env snapshot is the fallback and the page says when it is showing it; `Context/cfo-feed` is a frozen mirror until the jobs are repointed), **Invest** (owner to assign; interim monthly run), **Business** (founder overview). Served at `iamgui.com/dashboard` and at the Vercel hostname.
 - Documentation (gated, public-source): Nextra site at `superagents-docs.vercel.app`; the Markdown corpus and `llms.txt` are public agent exports.
 - `iamgui.com/` itself stays the public one-page personal site (separate project, proxied unchanged); this product owns only the host's private section.
 
 ## Constraints
 
 - Public repository: no credentials, personal context, private URLs, absolute home paths, customer data or recovery shortcuts in the source (`AGENTS.md`, `scripts/check-docs.mjs`).
-- Private data reaches the site only as managed-environment snapshots (gzip variants), capped by Vercel's 64 KB env budget; pages are dynamic, no-store, noindex, behind an exact-email allowlist rechecked on every request.
+- Private data reaches the site as managed-environment snapshots (gzip variants, capped by Vercel's 64 KB env budget) or, for Cash & Core Metrics, as one server-side read of the private record through a read-only token (never cached in the client, never written to the tree); pages are dynamic, no-store, noindex, behind an exact-email allowlist rechecked on every request.
 - Naming contract: the product is **Super Agents**, slug `superagents`; the former name never reappears (`/governance/naming`).
 - Stack: Next.js 16 app router, Nextra 4 docs theme, Auth.js v5 Google provider, CSS modules for custom pages; Node 20.9+.
 - Accessibility floor: WCAG AA contrast, visible focus, keyboard-complete, `prefers-reduced-motion` honoured, 44 px touch targets on phone.

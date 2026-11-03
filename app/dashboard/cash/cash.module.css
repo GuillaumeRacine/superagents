@@ -87,9 +87,10 @@
 .foldTitle { font-weight:600; font-size:.95rem; }
 
 /* reference content */
-.statGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:3px; overflow:hidden; margin:.75rem 0; }
-.stat { background:var(--surface); padding:.85rem 1rem; }
-.stat span { display:block; font-size:.7rem; color:var(--ink3); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+/* Lines come from each tile's outline, so an incomplete last row stays plain surface, never a hole. */
+.statGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:1px; background:var(--surface); border:1px solid var(--rule); border-radius:3px; overflow:hidden; margin:.75rem 0; }
+.stat { background:var(--surface); padding:.85rem 1rem; outline:1px solid var(--rule); }
+.stat > span { display:block; font-size:.7rem; color:var(--ink3); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
 .stat strong { display:block; font-size:1.35rem; font-weight:600; margin:.3rem 0 .1rem; font-family:var(--mono); overflow-wrap:anywhere; }
 .stat small { display:block; font-size:.72rem; }
 .entityGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; margin-top:.75rem; }
@@ -101,6 +102,7 @@
 .tableWrap { overflow-x:auto; margin-top:.75rem; -webkit-overflow-scrolling:touch; }
 .tableWrap .table + .table { margin-top:1rem; }
 .table { width:100%; min-width:640px; border-collapse:collapse; font-size:.82rem; }
+.wide { min-width:880px; }
 .table th,.table td { text-align:left; padding:.45rem .6rem; border-top:1px solid var(--rule); vertical-align:top; }
 .table th { font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink3); border-top:0; }
 .num { text-align:right !important; white-space:nowrap; font-family:var(--mono); font-variant-numeric:tabular-nums; }
@@ -138,3 +140,9 @@
   .alert span:nth-child(2) { display:none; }
   .heroFig { gap:.5rem; }
 }
+
+/* live core metrics (issue #61) */
+.sha { font-family:var(--mono); font-size:.8rem; font-weight:600; color:var(--ink2); }
+.fallbackNote { margin:.8rem 0 0; padding:.55rem .8rem; border:1px solid var(--warn); border-left-width:4px; border-radius:3px;
+  background:color-mix(in srgb,var(--warn) 10%,transparent); color:var(--ink2); font-size:.82rem; }
+.staleRow td { background:color-mix(in srgb,var(--crit) 8%,transparent); }

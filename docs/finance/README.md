@@ -11,6 +11,102 @@ the refresh job on the owning workstation pulls it before each build (issue #54,
 tracks 2 and 3). The public page is `/workflows/finance-moneyos`; the registry entry
 is `finance-moneyos`.
 
+## Live core metrics (issue #61, 2026-11-02)
+
+`/dashboard/cash` is now **Cash & Core Metrics**. Its first source is the
+record's own derived file `data/metrics.json` (schema `moneyos_metrics_v1`,
+defined in the private MoneyOS repository's issue #5 and rebuilt by its
+`run_all.sh` on every refresh), read **at request time** from the repository's
+default branch; the env snapshot below is the fallback.
+
+Transport (`lib/metrics-data.ts`, server-only; `getCashDataWithLiveMetrics`
+checks the exact-email allowlist once per request, reads the live file, and
+reads and validates the env snapshot only when the live read fell back, so a
+render never holds both sources): first the file's latest commit,
+`GET /repos/<MONEYOS_REPO>/commits?path=data/metrics.json&sha=main&per_page=1`,
+then the content at exactly that sha,
+`GET /repos/<MONEYOS_REPO>/contents/data/metrics.json?ref=<sha>` with
+`Accept: application/vnd.github.raw+json`, both with `Authorization: Bearer
+<MONEYOS_READ_TOKEN>`, Next's `fetch` with `next: { revalidate: 300 }` (one
+upstream read per five minutes per server, whatever the request rate) and an 8 s
+timeout; because the content is keyed by the sha the commit lookup returned, the
+two can never disagree. The body is read as a stream and abandoned past 200 KB
+whatever `content-length` says, parsed, then validated by
+`lib/metrics-model.mjs` with the cash-model strictness: null means unknown and is
+never 0; ISO dates and months; bounded text with account masking re-applied on
+read (any run of five or more digits keeps its last four; the contract hash and
+commit sha are the only hex exemptions); row caps (freshness 60, monthly P&L 14,
+income sources 20, spend lines 40, interest months 14, debts 30, payables 40,
+burn series 400). Provenance (schema review of 2026-11-02): the file carries
+`inputs_hash` (12 hex, content hash of the inputs; shown as the id),
+`built_from_head` (sha7, informational), `generated_at`, `ledger_through` and
+`verdicts_as_of` (when the record computed its own stale flags); `moneyos_sha` is
+accepted when present and never required. The status bar reads
+`metrics <inputs_hash> · generated <generated_at> · ledger through <ledger_through>`
+plus `moneyos@<sha7>`, the commit whose content was read (a failed commit lookup
+is a fallback like any other read failure), else the sha the file claims. The
+as-of bar says "body served from cache, age at most 5 min" rather than a read
+timestamp, because a cached body can be up to one revalidation window old.
+Debt figures are shown per entity (facilities, known balance, known monthly
+interest, each with the rows it covers) next to the record's own total, which is
+labelled as the record's and never re-added here. Per-account
+staleness is recomputed at render from `freshness[].newest_row` and
+`cadence_days` against today's date (the record's flag counts only when a date or
+cadence is missing); a `generated_at` older than 14 days adds a red notice
+naming the owner on top of the 36 h stale banner. `liquidity.by_entity[].cash`
+may be null with a `missing_accounts` list (last four digits each), rendered as
+"unknown (balance missing for …1234)"; `debts.rows[].kind` is free text
+(mortgage, line, card, overdraft); `liquidity.runway_method` is shown under the
+runway figure.
+
+Environment:
+
+| Variable | Where | Meaning |
+|---|---|---|
+| `MONEYOS_REPO` | Vercel production (and preview if wanted) | `owner/name` of the private MoneyOS repository. Never written in this tree. |
+| `MONEYOS_READ_TOKEN` | Vercel production only, sensitive | Fine-grained personal access token: **Resource owner** the repository's owner, **Repository access** "Only select repositories" with the MoneyOS repository alone, **Permissions**: Repository, Contents: Read-only (Metadata read is added automatically), expiry **1 year**, no other permission. Create it under GitHub Settings, Developer settings, Fine-grained tokens; store it only in the Vercel production environment (and the password manager for rotation), never in `.env` files of this repo or in a GitHub Actions secret. Rotate before expiry; the page falls back, it does not break. |
+| `MONEYOS_METRICS_FILE` | local verification only | Absolute path to a metrics file; when set it replaces the repository read. `scripts/verify-cash.mjs` uses it with a fictional fixture. Never set in Vercel. |
+
+Fallback rule: a missing variable, a fetch error or timeout, a non-200 status
+on either call, no commit for the file, an oversized body, invalid JSON or any
+validation error yields
+`{ state: "fallback", reason }`; the page then renders the existing
+`CASH_SNAPSHOT_*` env snapshot through the unchanged cash-model path and says
+"Live metrics unavailable: <reason>; showing the published snapshot from
+<generatedAt>" in the as-of bar. The two sources are never mixed in one render,
+and the reason names a class of failure (HTTP status, timeout, field name),
+never the URL, the token or the response body. The token and the repository
+name are read on the server only and appear in no log line, header or HTML.
+
+Live render, in order, each band with its as-of and source: status bar
+(`moneyos@<sha7>`, `generated_at`, freshness verdict, items needing Gui within
+seven days, stale-account count); North Star savings rate (month and T12 against
+the 20% target, income, opex, interest, principal, crypto share, earned income
+ex crypto, provisional or final); 30-day net burn with the daily series chart;
+what needs Gui within seven days; monthly P&L (13 months); income by source
+(T12); spend by line (month against the T12 average, totals from the record);
+interest by month per account; debts; liquidity and runway per entity (never
+summed); net worth per entity, labelled "preview until approved", with the
+sheet's own total shown as it is; funding targets; payables and receivables with
+the same overdue / due soon / held tags as before; cabin (statement and T12);
+books; open items; contract; per-account freshness (stale rows highlighted: the
+record's flag, or a newest row older than the account's cadence); the record
+files behind the page. The freshness verdict turns red when the file is older
+than 36 h, the ledger older than 7 days, burn older than 3 days or the savings
+rate older than 45 days; stale accounts are counted in the status bar, not
+alarmed, so one dead feed does not paint every figure red.
+
+Tests: `npm run test:metrics` (validator, null handling, masking, caps, bad
+dates, helper verdicts); `node scripts/verify-cash.mjs` runs the owner render
+three times against the local build: with `MONEYOS_METRICS_FILE` on the fictional
+fixture (`scripts/fixtures/metrics-fixture.mjs`: every band, the sha and
+generated_at line, unknown never zero, no cross-entity sum, masking re-applied),
+without it (fallback notice plus the snapshot's bands), and with a file that
+fails validation (fallback names the field, no partial live data).
+
+Refresh job: no deploy is needed for a metrics update; `cash_dashboard_refresh`
+keeps maintaining the fallback env snapshot and may log drift between the two.
+
 ## Cash and Invest split (2026-10-19)
 
 The single `/finance` dashboard is replaced by two agent-owned dashboards
@@ -23,7 +119,7 @@ exact-email allowlist on the server.
 
 | Route | Owner | Data contract | Env | Cadence |
 |---|---|---|---|---|
-| `/dashboard/cash` | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `main` of the private MoneyOS repository (`SOURCE_OF_TRUTH.md`, `sources.json`; see `/workflows/finance-moneyos`), with `Context/cfo-feed` as a frozen mirror until the jobs are repointed | `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local checkout of `cfo-feed/` (`CONTEXT_DIR`, default `~/Context`) | `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | weekdays after the feed; refresh job not yet scheduled |
+| `/dashboard/cash` (Cash & Core Metrics) | Chief of Cash (GrokBot); feed posts weekdays 08:00 in #cash; record of truth `main` of the private MoneyOS repository (`SOURCE_OF_TRUTH.md`, `sources.json`; see `/workflows/finance-moneyos`), with `Context/cfo-feed` as a frozen mirror until the jobs are repointed | Live: `moneyos_metrics_v1` (`data/metrics.json` on `main`, validated by `lib/metrics-model.mjs`, read by `lib/metrics-data.ts`; section above). Fallback: `cash_snapshot_v1`, schema and validation in `lib/cash-model.mjs`, built by `scripts/build-cash-snapshot.mjs` from a local clone of the record (`MONEYOS_DIR`) | Live: `MONEYOS_REPO`, `MONEYOS_READ_TOKEN` (revalidate 300 s). Fallback: `CASH_SNAPSHOT_JSON` (≤ 48,000 bytes) or `CASH_SNAPSHOT_GZIP_BASE64` (same bounds and fail-closed rules as the finance transport; `lib/snapshot-transport.mjs`) | live on every request window; fallback weekdays after the feed |
 | `/dashboard/invest` | to assign (interim: Claude monthly `/cfo invest` run, Context#151) | the former finance workspace, unchanged; `lib/finance-model.mjs` | `FINANCE_SNAPSHOT_JSON` / `FINANCE_SNAPSHOT_GZIP_BASE64` | monthly, month-end |
 
 Cash rules: null means unknown and renders as "unknown", never 0; a missing
