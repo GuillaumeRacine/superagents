@@ -4,6 +4,7 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 
 ## Recent Lessons
 
+- Before describing a scheduled job, read its job record (last status, last error, delivery error). An enabled job with retired alert delivery can fail nightly with no visible signal.
 - A validator written against a fixture fails closed on the first real record: run the live file through the reader before shipping, and clip display-only prose (method notes, definitions, provenance sentences) instead of rejecting the page. Strictness belongs on identifiers, dates and numbers.
 - A text mask applied to every string field also eats hex identifiers (contract hash, commit sha): validate identifiers raw, exempt them explicitly in the "no digit run survives" test, and walk string values only (numbers carry long digit runs legitimately).
 - A page with two data sources dispatches once on the loader's state and never renders both; the gate asserts each source's markers are absent from the other render. Gate once per request and read the fallback source only on the fallback branch.
@@ -20,6 +21,13 @@ Canonical log of decisions, wins, fails and incidents for this repo. Newest on t
 - Loop over shell commands from a `#!/bin/bash` script file, not from the agent's zsh (unquoted `$step` is not word-split there).
 
 ## 2026-11
+
+### [2026-11-16] LESSON Docs refresh: storage model, NightCrew state, two new pages (issue #63)
+- **Context:** No docs change since 2026-11-03. The storage pages still described the knowledge vault as the curated home and storage-policy owner, although the File and Folder Standard (ten jobs, Workspace repository) replaced that on 2026-09-29. Storage care and delegated coding had no page.
+- **What we tried:** Read the sources through local read-only checkouts and `gh` (Hermes home docs, job records and merged PRs; the storage tool README; the Workspace README and standard; the Context NightCrew doc and last run record). Posted the inventory on the issue before editing. Rewrote `/context-memory/storage`; corrected sources-of-truth, canonical sources, home, start-here, recovery, research, personal operations and the `knowledge-vault` registry text; added `/automation/storage-care` and `/workflows/delegated-coding`; added a model-routing section to Hermes, an issue-first step and the merge queue to project delivery, and the writing standards to publishing.
+- **Outcome:** `docs:check` green (58 routes), all tests green, build green, Pagefind indexed 58 pages, smoke green. `npm audit` still fails the `check` script exactly as on main (#43, lockfile untouched). Rendered pages were fetched with a locally minted Auth.js session cookie (`@auth/core/jwt` `encode`, salt `authjs.session-token`, a throwaway `AUTH_SECRET`) and screenshotted at 1280 and 390 px; search returned the new section anchors.
+- **Lesson / rule:** (1) A scheduled job that is "enabled" can still be failing every night once its alert delivery is retired: NightCrew's last run errored on a voice-memo section that outlived the retired voice-memo intake, and the only signal was the Hermes job record. Read the job record's last status and error, not only the docs, before describing a job. (2) Every source for this refresh is a private repository; the public page names the kind of repository and the pull-request number, never the owner/slug, and omits spending amounts, device hostnames, channel IDs and the product URLs in the merge-queue configuration. (3) Nextra warns "Failed to get the last modified timestamp from Git" for new, uncommitted pages; the warning is harmless and disappears after the commit. (4) To review gated pages locally, mint a session cookie with the same secret as `next start` instead of disabling the proxy.
+- **Links:** #63, #43.
 
 ### [2026-11-03] INCIDENT First live read of the MoneyOS metrics file fell back three times before it rendered (issue #61)
 - **Context:** The read-only token for the private MoneyOS repository was issued and stored in the production environment; the redeploy was refused at 64.06 KB (two new variables tipped the shared env budget), and once it built, `/dashboard/cash` showed the fallback snapshot with `validation: burn.method is longer than 400`, then `debts.as_of must be an ISO date`, then `net_worth.by_entity[0].source is longer than 160`.

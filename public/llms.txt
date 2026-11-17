@@ -4,7 +4,7 @@
 
 ## Complete export
 
-- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 56 canonical pages.
+- [Complete Markdown documentation](https://superagents-docs.vercel.app/superagents.md): One generated file containing all 58 canonical pages.
 - [XML sitemap](https://superagents-docs.vercel.app/sitemap.xml): Machine-readable list of canonical website routes.
 - [GitHub source](https://github.com/GuillaumeRacine/superagents): Versioned source and generation scripts.
 
@@ -20,6 +20,7 @@
 - [Operator Interface](https://superagents-docs.vercel.app/automation/operator-interface)
 - [Outcomes & Utilization](https://superagents-docs.vercel.app/automation/outcomes)
 - [Scheduling](https://superagents-docs.vercel.app/automation/scheduling)
+- [Storage Care](https://superagents-docs.vercel.app/automation/storage-care)
 - [Capabilities](https://superagents-docs.vercel.app/capabilities)
 - [Agents & Subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents)
 - [Browser & Computer Use](https://superagents-docs.vercel.app/capabilities/browser-computer-use)
@@ -60,6 +61,7 @@
 - [Choose a Runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime)
 - [Operating Loop](https://superagents-docs.vercel.app/start-here/operating-loop)
 - [Workflows](https://superagents-docs.vercel.app/workflows)
+- [Delegated Coding](https://superagents-docs.vercel.app/workflows/delegated-coding)
 - [Finance (MoneyOS)](https://superagents-docs.vercel.app/workflows/finance-moneyos)
 - [Personal Operations](https://superagents-docs.vercel.app/workflows/personal-operations)
 - [Programs](https://superagents-docs.vercel.app/workflows/programs)

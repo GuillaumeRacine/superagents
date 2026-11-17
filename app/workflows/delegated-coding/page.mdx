@@ -1,0 +1,41 @@
+# Delegated Coding
+
+> Sources: the private Hermes home repository (bounded coding-worker contract, coding-system guidelines, ledger contract and provider-spending notes) and its pull requests merged from November 9 to 16, 2026. Read November 16, 2026.
+
+**Status: pilot.** This is a working baseline for sending small coding tasks to cheaper or different models. It does not prove that any model or routing choice is better, and it promotes no maturity level.
+
+## Roles
+
+| Role | Owns |
+|---|---|
+| Coordinator (the active Codex or Claude Code session) | The brief, task decomposition, independent checks, review decisions, integration, shipping, live verification and the evidence record |
+| Worker (one bounded model call) | A proposed set of complete files, nothing else |
+| Reviewer (a fresh Claude or Codex call on an existing subscription) | A structured, independent review of the candidate |
+| Gui | Spending limits, access grants and confirmation that an outcome was useful |
+
+A worker receives a small, pinned set of Git-tracked source files and returns complete proposed files. It cannot run commands, read the repository, run tests, call other workers, apply patches, merge or deploy. Supplied source is treated as untrusted data. A worker can never accept its own output.
+
+## Task flow
+
+1. The coordinator writes a structured brief: one observable outcome and the allowed files; the exact input and output contract; one ordinary example and one edge case; acceptance checks fixed before dispatch; output limits in plain language.
+2. A task manifest names the exact files to send and to receive. Globs, hidden paths, symlinks, deletions and binary files are refused. File hashes and the Git commit are pinned; a source change invalidates the task.
+3. The worker runs on one named route. There is no automatic provider fallback.
+4. The coordinator checks the candidate against the frozen acceptance checks, then requests an independent review.
+5. One repair attempt may use the exact observed failure. After the attempt limit, the task is rejected or explicitly rescued. A rescued delivery is recorded as a rescue, not as the model's acceptance.
+6. The coordinator ships under the repository's rules and records delivery and later defects.
+
+## Routes and spending
+
+Two routes are subscription routes (Codex and Grok). Two are metered routes through OpenRouter, under a fixed cumulative trial cap that Gui authorized, a reservation per attempt and no automatic recharge. Only one 1Password authorization is attempted per supervised work session; the key stays in process memory. Exceeding the cap, expanding access or making a purchase needs Gui's approval.
+
+Hermes's own automatic inference stays on subscription routes; see [Hermes](/runtimes/hermes#model-routing).
+
+## Measurement
+
+- **Coding ledger:** an append-only local database of task, usage, verification, feedback, defect and decision events. It holds metadata, not source bundles or transcripts. Accepted decisions are exported to the native GitHub issue or pull request; the local database is an index, not the durable record.
+- **Daily report:** joins outcomes with usage coverage. It recommends changes; it never dispatches models, changes routing or raises a budget.
+- **Pulse:** a terminal monitor that shows provider spending over 24 hours, 7 days and 30 days, subscription quota, and Mac health. Consumption, subscription invoices and prepaid credit are kept separate so money is not counted twice. Currencies are never converted with an invented rate. Unknown is shown as `?`, never as zero.
+
+## What is not proven
+
+Successful runs, matching replays and reviewer approval are not the same as Gui's acceptance. The pilot records rescues, failed checks and missing usage coverage so that a later decision can rest on evidence. See [Outcomes & Utilization](/automation/outcomes) for the wider measurement contract.

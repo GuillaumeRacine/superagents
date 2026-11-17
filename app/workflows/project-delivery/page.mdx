@@ -4,13 +4,24 @@ Use Codex by default for a coherent repository change; use Claude Code when its 
 
 ## Delivery path
 
-1. Find the active internal-storage repository and its GitHub remote.
-2. Read global and repository instructions.
-3. Inspect working state; preserve unrelated edits.
-4. Implement the smallest coherent slice.
-5. Run targeted checks continuously and a full build when runtime or deploy behavior changed.
-6. Commit and push to GitHub.
-7. Verify deployment and live behavior.
-8. Record commit, deploy, checks, outcome, and residual risk in the tracking issue or pull request.
+1. Find or open the GitHub issue for the block of work, with scope and acceptance criteria. Post the plan on the issue before building. Agents on different models coordinate through the issue so that they do not duplicate or collide.
+2. Find the active internal-storage repository and its GitHub remote. Work on one branch per issue, in a worktree under the shared worktree root.
+3. Read global and repository instructions.
+4. Inspect working state; preserve unrelated edits.
+5. Implement the smallest coherent slice.
+6. Run targeted checks continuously and a full build when runtime or deploy behavior changed.
+7. Commit and push to GitHub.
+8. Verify deployment and live behavior.
+9. Record commit, deploy, checks, outcome, and residual risk in the tracking issue or pull request.
 
 For risky behavior, use staging and feature flags where the project provides them.
+
+## Production merge queue
+
+A repository whose main branch deploys to production can run a merge queue (private Hermes home pull requests #385 and #386). The queue is a list in a GitHub issue. Only the first unticked pull request may land, and only when every gate passes: required status checks are green, and a structured independent review comment approves the exact head commit. After the merge, the queue waits for the deployment, then runs the live health and smoke checks. A failure after merge halts the queue. A pull request that edits CI workflows is never landed by the queue; it is landed by hand after human review.
+
+Before merging to any repository that deploys to production, search for its merge-queue issue and read its `AGENTS.md`. If a queue exists, add the pull request to it and never merge directly. Parallel agent lanes have merged around a queue before; without branch protection, the queue is a protocol, not an enforced control.
+
+## Worktree hygiene
+
+After pushing, delete `node_modules` and `.next` in the worktree. Remove a worktree only when it is clean, fully pushed and no process works inside it. Parallel lanes that each install dependencies have filled the boot disk before.

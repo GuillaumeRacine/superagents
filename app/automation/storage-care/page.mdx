@@ -1,0 +1,47 @@
+# Storage Care
+
+> Sources: the private storage tool (README, charter and design) and sections l and m of the File and Folder Standard, version 2.7. Hermes job states read November 16, 2026.
+
+Storage Care keeps files and folders on each Mac in line with the [Storage Model](/context-memory/storage). It measures every day, gives one score per device, and applies only changes that pass its gates. It moved into its own private repository on September 29, 2026.
+
+## Daily cycle
+
+All jobs are Hermes `--no-agent` scripts. No model is called. On a quiet day the output is empty; when something was held, blocked or failed, a two-line alert goes to the systems Slack channel with the detail in a thread. Nothing in this cycle waits for Gui (owner ruling, November 3, 2026).
+
+| Time | Job | What it does | Changes files? |
+|---|---|---|---|
+| 05:00 daily | Sweep | Empties the local inboxes and the home folder top level of items older than 24 hours. Junk goes to quarantine. Other files go to the Drive inbox after the Drive copy's checksum is read back. Stray folders go to quarantine with an external-disk copy. | Yes |
+| 06:00 daily | Guard | Clears a regenerable cache file that grew past its limit | Yes |
+| 08:15 daily | Check and plan | Measures, scores, compares with yesterday, keeps the report on the device and on Drive, and lists every proposed change with its rule, risk and check | No |
+| 08:25 daily | Fix apply | Applies the automatic tier. Its pull requests merge themselves, and the live checkout fast-forwards only when it is clean | Yes |
+| Sunday 09:00 | Offload | Copies repositories and worktrees idle for 14 days to the external backup disk, verifies the copy, then removes the local copy | Yes |
+| Weekly | Drive inbox | Files, renames or flags items in the Drive inbox from a document-type registry, under a standing permission | Yes, on Drive |
+
+## The score
+
+One number from 0 to 100 per device. Each measure has a weight:
+
+| Measure | Weight | What is counted | Goal |
+|---|---:|---|---|
+| Misplaced | 25 | Heavy files in a text repository, checkouts in forbidden places, live folders linked onto the external disk, iCloud Desktop & Documents sync on | 0 |
+| Drift | 20 | Checkouts that are behind, uncommitted, unpushed or detached from their repository | 0 |
+| Headroom | 15 | Code folder size and free space on the boot disk | pass |
+| Backup | 15 | Age of each backup | 7 days or less |
+| Exposure | 15 | Sensitive files tracked in Git | 0 |
+| Document integrity | 5 | Live documents that still name an old path | 0 |
+| Inbox | 5 | Inbox items past their lifetime | 0 |
+
+A measure that cannot be taken is `n/a`, and the other weights are renormalised. The formula changes only by pull request and is never tuned to look better.
+
+## Safety contract
+
+- Every condition is checked again at the moment of each change: real path, disk, size, Git state, content hash and open files.
+- At most 50 changes per fix run. Every change is logged before and after, and the log is copied to Drive in the same run. Running twice does nothing the second time.
+- Nothing leaves the device until a verified second copy exists. Quarantined items wait 14 days (30 days for folders) and can be restored with an undo command.
+- Never applied automatically: anything on Drive outside the inbox flow, anything over 10 MB, Git repositories, live runtime folders, iCloud folders, and anything that looks like a credential.
+- Symlinks are never followed. iCloud folders are read at the top level only. Every subprocess has a timeout.
+- A per-device kill-switch file stops every applying command.
+
+## Evidence
+
+The daily report and the change logs are the evidence. A green job status alone is not proof that a change was correct; see [Fleet Evidence](/automation/fleet-evidence). This page's job states were read on the main Mac mini only; other devices are not attested here (see [Devices & Hosts](/estate/devices)).

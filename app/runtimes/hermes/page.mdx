@@ -14,6 +14,16 @@ Hermes is the persistent agent gateway and primary scheduler. It connects profil
 
 A job needs both a schedule and a permission contract. Read-only collection can run unattended. Notifications, external mutations, financial actions, and irreversible changes require an explicit preapproved playbook or operator approval.
 
+## Model routing
+
+**Status (November 2026): automatic inference stays on subscription routes.** Paid automatic fallback is closed (private Hermes home pull requests #391 and #400). The older model-tier ladder and the routing experiments built on it are historical; do not use them to activate a paid route. The configured fallback chain and provider quota checks handle provider failures.
+
+Metered models are used only through the bounded coding workers, under a fixed cumulative trial cap and per-attempt reservations. See [Delegated Coding](/workflows/delegated-coding).
+
+## Scheduled jobs added since September
+
+Hermes runs the storage jobs (sweep, daily check, fix apply, guard and weekly offload), the research repository daily sync, the weekly Drive inbox pass, a daily outcome reconciliation and a weekly outcomes review. See [Storage Care](/automation/storage-care). Counts of enabled and paused jobs belong to the [capability inventory](/reference/capability-inventory).
+
 ## Proof model
 
 Scheduler state proves that a job was invoked. Outcome evidence belongs in the Context fleet scoreboard or the system's own durable destination. See [Fleet Evidence](/automation/fleet-evidence).

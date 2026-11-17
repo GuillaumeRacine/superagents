@@ -1,17 +1,36 @@
 # Storage Model
 
-Every durable information type has one preferred home.
+> Source: the File and Folder Standard (version 2.7, updated November 3, 2026) in the private Workspace repository. The standard wins over any other document, including this page. Checked November 16, 2026.
 
-| Store | Purpose |
-|---|---|
-| Private knowledge vault | Curated knowledge, decisions, goals, identity, and system guidance |
-| GitHub | Code, infrastructure, documentation, review, and delivery history |
-| Google Drive | Designated files and structured working data |
-| iCloud | Apple-native personal data |
-| Internal local storage | Active repositories, runtime state, caches, and transient work |
-| External storage | Cold backup snapshots only, while mounted |
-| 1Password | Credentials and secret references |
+Every durable information type has one home. Since September 29, 2026, files are organised by **job**, not by the older numbered PARA layout.
 
-Active systems must not depend on an external disk or a compatibility symlink to one. Clone missing repositories from GitHub onto internal storage.
+## Ten jobs
 
-Secrets never belong in the vault, source repository, local documentation, or ad hoc plaintext environment files. Configuration should retain only managed references.
+Code, Research, Invest, Write, Music, Home, Admin, Goals, Growth and System. The same names are used in the Workspace repository, on Google Drive and in agent instructions. Inside each job, the folders are fixed: `Active/`, `Past/`, `Resources/`, `Notes/`, `Inbox/`, `Agents/` (charters, runbooks and scheduled feeds) and `System/` (design, learnings, decisions, mistakes and logs).
+
+## Where each kind of information lives
+
+| Store | Holds | Never holds |
+|---|---|---|
+| Workspace repository (private, Git) | Light text: notes, decisions, plans, lessons, agent charters, the standard itself | Binaries, media, exports, credentials, code |
+| Research repository (private, Git) | Research notes, findings and syntheses; planned to fold into the Workspace Research job | Transcripts and recordings |
+| Legacy knowledge vault (private, Git) | Notes written before September 29, 2026, in the numbered legacy layout; under review | New heavy files, exports, logs, credentials |
+| Google Drive | Heavy files: PDFs, media, spreadsheets, recordings, exports. Cloud only, with no local copy | Code, runtime state, credentials |
+| GitHub, one repository per product | Code and the documents of each repository, checked out on internal storage | Personal files, job notes |
+| Runtime folders | Logs, saved state, caches: a repository's ignored `data/` folder or a runtime's home | Anything a person curates |
+| 1Password | Credentials and secret references, in the agents vault only | Anything else |
+| iCloud | Apple apps only: Photos, Voice Memos, Music | Desktop and Documents folders, Git repositories |
+| External SSD | Cold backup copies only | Anything in use: no live folder, link target or job state |
+
+## Rules that agents apply
+
+- Local inboxes (downloads, screenshots and the home folder top level) hold an item for 24 hours at most. A daily sweep moves it to Drive or to quarantine; see [Storage Care](/automation/storage-care).
+- Nothing is deleted until it exists in two places. Deletion takes two steps with 30 days between them.
+- Drive folders are never shared by link.
+- iCloud "Desktop & Documents Folders" sync must be off on every device. It removed files and Git data from disks in August and September 2026. The proof is the extended attribute on the two folders, not the Finder setting.
+- Regenerable artefacts (`node_modules`, `.next`, caches) are deleted, never moved to external storage.
+- The standard changes only by pull request; Gui's merge is the approval.
+
+Active systems must not depend on an external disk or a symlink to one. Clone a missing repository from GitHub onto internal storage.
+
+Secrets never belong in the Workspace, the vault, a source repository, local documentation or a plaintext environment file. Configuration keeps only managed references.

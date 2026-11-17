@@ -2,7 +2,17 @@
 
 NightCrew is the overnight automation suite owned by Context and invoked by Hermes.
 
-At the September 8 snapshot, the default scheduled run contains **19 sections** and starts daily at **3:00 a.m. local time** through its Hermes job. Additional methods exist for explicit manual use; they must not be described as nightly merely because they are implemented.
+The default scheduled run contains **19 sections** and starts daily at **3:00 a.m. local time** through its Hermes job (Context NightCrew documentation, read November 16, 2026). Additional methods exist for explicit manual use; they must not be described as nightly merely because they are implemented.
+
+## Observed state (November 16, 2026)
+
+**Status: running, not healthy.** The Hermes job is enabled and ran on November 16, 2026. The run exited with an error:
+
+- The voice-memo section failed its proof gate (transcription error). Voice-memo batch intake was retired on September 21, 2026, but this section is still in the default list. The owner must either remove the section or repair it.
+- The credential health check reported several OAuth and bot credentials that need a human to renew.
+- The Telegram summary delivery is retired, so a failure produces no message. The Hermes job record is the only signal.
+
+Other sections (calendar, email, staleness check, encrypted vault backup, contact harvest) passed their proof gates. This is one observed run, not a trend.
 
 ## Contract
 
