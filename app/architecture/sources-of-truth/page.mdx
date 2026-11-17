@@ -8,9 +8,11 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Live customer-facing behavior | Deployed production surface |
 | Automation definitions and fleet evidence | Context repository and owning scheduler |
 | Money data: transactions, balances, debts, payables, rulings, scorecard | `main` of the private MoneyOS repository, one record per data type named in its `SOURCE_OF_TRUTH.md` and `sources.json`; see [Finance (MoneyOS)](/workflows/finance-moneyos) |
-| Curated decisions, goals, identity, and durable knowledge | Private knowledge vault |
-| Files and structured working data | Google Drive where designated |
-| Apple-native personal data | iCloud |
+| Curated notes, decisions, goals, identity, and agent charters (light text) | Private Workspace repository, one folder per job (since 2026-09-29) |
+| Notes written before 2026-09-29 | Legacy private knowledge vault, under review |
+| Where any file belongs, names, and lifetimes | The File and Folder Standard in the Workspace repository; see [Storage Model](/context-memory/storage) |
+| Heavy files: PDFs, media, spreadsheets, recordings, exports | Google Drive, cloud only |
+| Apple-native personal data | iCloud (Apple apps only) |
 | Credentials | 1Password |
 | Runtime-local state, caches, and sessions | Local internal storage; recoverable or transient |
 | Cold snapshots | External backup storage when mounted |
@@ -24,4 +26,5 @@ This portal links those owners together. It must not claim to replace them.
 1. Prefer the source assigned to that information type.
 2. Prefer live evidence over an old narrative page.
 3. Reconcile divergent runtime and vault inventories; do not assume they are mirrored.
-4. Correct the owning source first, then refresh derived documentation and its verification date.
+4. When a storage question conflicts with another document, the File and Folder Standard wins and the other document is corrected.
+5. Correct the owning source first, then refresh derived documentation and its verification date.

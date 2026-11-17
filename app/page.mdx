@@ -15,7 +15,8 @@ Super Agents is the umbrella for the full agentic system—not one app or one ru
 | Which programs does it serve? | [Programs](/workflows/programs) |
 | Which agent should handle this task? | [Choose a runtime](/start-here/choose-a-runtime) |
 | How does work move from intent to production? | [Operating loop](/start-here/operating-loop) |
-| Where does each kind of information belong? | [Sources of truth](/architecture/sources-of-truth) |
+| Where does each kind of information belong? | [Sources of truth](/architecture/sources-of-truth) and [Storage Model](/context-memory/storage) |
+| How do agents share coding work and track its cost? | [Delegated Coding](/workflows/delegated-coding) |
 | What is installed and what is actually active? | [System registry](/reference/system-registry) |
 | Which skills, plugins, agents, commands, profiles, jobs, and MCPs exist? | [Capability inventory](/reference/capability-inventory) |
 | Which repositories, devices, and data sources were actually scanned? | [Estate coverage](/estate) |
@@ -33,7 +34,7 @@ Codex ─ Claude Code ─ Hermes ─ Companion CLIs
   │           │          │
   └──── skills, tools, MCP services ────┘
                        │
-          Context control plane + vault
+          Context control plane + Workspace
                        │
           GitHub → deployment → live proof
 ```
@@ -46,7 +47,8 @@ Codex ─ Claude Code ─ Hermes ─ Companion CLIs
 | Claude Code | Specialist agents, commands, and plugins | CLAUDE.md, runtime settings, repository |
 | Hermes | Messaging, schedules, and unattended operations | Profiles, job definitions, approval class |
 | Context | Fleet inventory, evidence, and automation contracts | Private Context repository |
-| Knowledge vault | Curated decisions, identity, goals, and durable context | Private Git-backed vault |
+| Workspace | Curated notes, decisions, goals, and agent charters, one folder per job | Private Git repository and the File and Folder Standard |
+| Knowledge vault (legacy) | Notes written before 2026-09-29 | Private Git-backed vault, under review |
 
 ## Four rules that keep it coherent
 

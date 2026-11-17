@@ -4,7 +4,8 @@ Workflows connect runtimes, capabilities, context, permission classes, and proof
 
 | Workflow | Typical path |
 |---|---|
-| Project delivery | Codex or Claude → repository checks → GitHub → deployment → live proof |
+| Project delivery | GitHub issue → Codex or Claude → repository checks → GitHub → merge queue where one exists → deployment → live proof |
+| Delegated coding | Coordinator brief → bounded worker on one named route → frozen checks → independent review → coordinator ships and records |
 | Research | Search and primary sources → synthesis → citations → curated destination |
 | Personal operations | Hermes schedule or message → Context contract → evidence → alert when actionable |
 | Finance (MoneyOS) | Statement or export → record on `main` of the private moneyos repository → deterministic contract check and Claude gate → sheet written by API → Cash dashboard, `#cash`, month-end report |

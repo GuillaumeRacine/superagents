@@ -11,7 +11,11 @@ Schedule or message → profile → bounded tools → durable destination
 
 Collectors should default to read-only. A workflow that messages someone, changes a service, spends money, or performs an irreversible action needs a declared approval class.
 
-Curated outcomes can update the private knowledge vault through a reviewable workflow. Raw credentials and noisy transient state never belong there.
+Curated outcomes can update the private Workspace repository, in the owning job's folder, through a pull request. Raw credentials and noisy transient state never belong there. A brief that an agent writes on a schedule goes to the job's `Agents/Feeds/` folder for 90 days, or to Slack only.
+
+## Voice memos
+
+The nightly voice-memo batch intake was retired on September 21, 2026, and the memo intake jobs are paused. To get same-day action on a memo, Gui shares it to Slack. Music memos are not transcribed. The NightCrew voice-memo section still runs and is failing; see [NightCrew](/automation/nightcrew).
 
 Use [Scheduling](/automation/scheduling) to choose the execution surface and [Fleet Evidence](/automation/fleet-evidence) to interpret the result.
 

@@ -14,7 +14,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-11-02 |
 | [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-11-02 |
 | [Context control plane](/context-memory) | automation, evidence, and fleet inventory | active · authoritative automation registry | 2026-09-08 |
-| [Knowledge vault](/context-memory/storage) | curated context and durable knowledge | active · private Git-backed knowledge source | 2026-09-08 |
+| [Knowledge vault (legacy) and Workspace](/context-memory/storage) | curated context and durable knowledge | active · Workspace is the curated text home; vault is legacy and under review | 2026-11-16 |
 | [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by all 3 required agents | 2026-11-02 |
 | [Shared Firecrawl MCP broker](/capabilities/mcp-tools) | shared web research service | active · shared local service | 2026-09-08 |
 | [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
@@ -110,26 +110,26 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Recovery | Clone the private Context repository, restore referenced credentials, validate scheduled surfaces, then regenerate the inventory and scoreboard |
 | Snapshot counts | Declared Core Systems: 13; Active Core Systems: 12; Paused Core Systems: 1 |
 
-## Knowledge vault
+## Knowledge vault (legacy) and Workspace
 
-**Status:** active · private Git-backed knowledge source
+**Status:** active · Workspace is the curated text home; vault is legacy and under review
 
-**Version:** Git-backed current vault
+**Version:** Workspace repository plus legacy vault; File and Folder Standard 2.7
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-16
 
 | Contract | Value |
 |---|---|
-| Source of truth | Private vault repository; canonical storage policy lives in its InnerContext area |
-| Measurement | Repository status and current canonical storage policy reviewed at the snapshot date; no volatile count published. |
+| Source of truth | Private Workspace repository, which holds the File and Folder Standard; the private legacy vault for older notes |
+| Measurement | File and Folder Standard version 2.7 (updated 2026-11-03) reviewed on 2026-11-16; no volatile count published. |
 | Trigger | Human curation, approved automation update, or explicit agent workflow |
 | Permissions | Private repository access; sensitive areas remain encrypted; secrets are prohibited |
-| Inputs | Curated decisions, goals, identity context, workflows, research syntheses, and system guidance |
+| Inputs | Light text by job in the private Workspace repository (since 2026-09-29); notes written before 2026-09-29 in the legacy vault |
 | Outputs | Versioned knowledge and context consumed selectively by agent runtimes |
-| Proof | Git history, link checks, storage-policy compliance, and reviewable automation diffs |
-| Recovery | Clone the private repository, unlock approved encrypted content, run its setup checks, and reconnect runtime references |
+| Proof | Git history, pull-request review, and the daily storage score (misplaced, drift, document integrity and inbox measures) |
+| Recovery | Clone the private Workspace and research repositories, and the legacy vault only where a workflow still reads it; unlock approved encrypted content; run setup checks; reconnect runtime references |
 | Snapshot counts | No volatile count published |
 
 ## Finance (MoneyOS)

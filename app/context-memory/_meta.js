@@ -1,5 +1,5 @@
 export default {
   index: 'Overview',
   layering: 'Context Layering',
-  storage: 'Storage Model'
+  storage: 'Storage Model (Ten Jobs)'
 }

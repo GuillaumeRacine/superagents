@@ -8,10 +8,10 @@ Context is information supplied to the current run. Memory is information a runt
 - Global and project instruction chains
 - Repository files and live working state
 - Selected agent, skill, plugin, or profile instructions
-- Curated vault material
+- Curated Workspace material (and legacy vault notes)
 - Runtime memory and conversation history
 - Tool results and current external evidence
 
-The Context control plane owns fleet inventory, automation contracts, and evidence state. The knowledge vault owns curated durable context. Runtime-local memory is useful but must yield to an owning source when facts conflict.
+The Context control plane owns fleet inventory, automation contracts, and evidence state. The Workspace repository owns curated durable context, organised by job under the File and Folder Standard; the legacy vault keeps notes written before September 29, 2026. Runtime-local memory is useful but must yield to an owning source when facts conflict.
 
 See [Context Layering](/context-memory/layering) and [Storage Model](/context-memory/storage).

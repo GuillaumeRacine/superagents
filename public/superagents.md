@@ -5,7 +5,7 @@
 - Canonical site: https://superagents-docs.vercel.app
 - Source: https://github.com/GuillaumeRacine/superagents
 - Registry snapshot: 2026-11-02T17:53:30-05:00
-- Pages included: 56
+- Pages included: 58
 
 This file is generated. Edit the owning page in `app/`, then run `npm run docs:generate`.
 
@@ -25,52 +25,54 @@ This is the complete sanitized website corpus, not a backup of private repositor
 8. [Operator Interface](#page-2f6175746f6d6174696f6e2f6f70657261746f722d696e74657266616365) — `/automation/operator-interface`
 9. [Outcomes & Utilization](#page-2f6175746f6d6174696f6e2f6f7574636f6d6573) — `/automation/outcomes`
 10. [Scheduling](#page-2f6175746f6d6174696f6e2f7363686564756c696e67) — `/automation/scheduling`
-11. [Capabilities](#page-2f6361706162696c6974696573) — `/capabilities`
-12. [Agents & Subagents](#page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473) — `/capabilities/agents-subagents`
-13. [Browser & Computer Use](#page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365) — `/capabilities/browser-computer-use`
-14. [MCP & Tools](#page-2f6361706162696c69746965732f6d63702d746f6f6c73) — `/capabilities/mcp-tools`
-15. [Skills & Plugins](#page-2f6361706162696c69746965732f736b696c6c732d706c7567696e73) — `/capabilities/skills-plugins`
-16. [Context & Memory](#page-2f636f6e746578742d6d656d6f7279) — `/context-memory`
-17. [Context Layering](#page-2f636f6e746578742d6d656d6f72792f6c61796572696e67) — `/context-memory/layering`
-18. [Storage Model](#page-2f636f6e746578742d6d656d6f72792f73746f72616765) — `/context-memory/storage`
-19. [Estate Coverage](#page-2f657374617465) — `/estate`
-20. [Agentic Components](#page-2f6573746174652f636f6d706f6e656e7473) — `/estate/components`
-21. [Data Sources & Integrations](#page-2f6573746174652f646174612d736f7572636573) — `/estate/data-sources`
-22. [Devices & Hosts](#page-2f6573746174652f64657669636573) — `/estate/devices`
-23. [Repository Coverage](#page-2f6573746174652f7265706f7369746f72696573) — `/estate/repositories`
-24. [Governance & Safety](#page-2f676f7665726e616e6365) — `/governance`
-25. [Documentation Governance](#page-2f676f7665726e616e63652f646f63756d656e746174696f6e) — `/governance/documentation`
-26. [Canonical Naming](#page-2f676f7665726e616e63652f6e616d696e67) — `/governance/naming`
-27. [Permissions](#page-2f676f7665726e616e63652f7065726d697373696f6e73) — `/governance/permissions`
-28. [Secrets](#page-2f676f7665726e616e63652f73656372657473) — `/governance/secrets`
-29. [Recovery & Rebuild](#page-2f7265636f76657279) — `/recovery`
-30. [Disaster Rebuild Readiness](#page-2f7265636f766572792f64697361737465722d72656275696c64) — `/recovery/disaster-rebuild`
-31. [Maintenance](#page-2f7265636f766572792f6d61696e74656e616e6365) — `/recovery/maintenance`
-32. [New Device](#page-2f7265636f766572792f6e65772d646576696365) — `/recovery/new-device`
-33. [Reference](#page-2f7265666572656e6365) — `/reference`
-34. [Agent & Offline Export](#page-2f7265666572656e63652f6167656e742d6578706f7274) — `/reference/agent-export`
-35. [Canonical Sources](#page-2f7265666572656e63652f63616e6f6e6963616c2d736f7572636573) — `/reference/canonical-sources`
-36. [Capability Inventory](#page-2f7265666572656e63652f6361706162696c6974792d696e76656e746f7279) — `/reference/capability-inventory`
-37. [Glossary](#page-2f7265666572656e63652f676c6f7373617279) — `/reference/glossary`
-38. [History & Scope](#page-2f7265666572656e63652f686973746f7279) — `/reference/history`
-39. [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) — `/reference/improvement-roadmap`
-40. [Ideal State Analysis Library](#page-2f7265666572656e63652f6973612d6c696272617279) — `/reference/isa-library`
-41. [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) — `/reference/system-registry`
-42. [Systems & Surfaces](#page-2f72756e74696d6573) — `/runtimes`
-43. [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) — `/runtimes/claude-code`
-44. [Codex](#page-2f72756e74696d65732f636f646578) — `/runtimes/codex`
-45. [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) — `/runtimes/companions`
-46. [Hermes](#page-2f72756e74696d65732f6865726d6573) — `/runtimes/hermes`
-47. [Start Here](#page-2f73746172742d68657265) — `/start-here`
-48. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
-49. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
-50. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
-51. [Finance (MoneyOS)](#page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73) — `/workflows/finance-moneyos`
-52. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
-53. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
-54. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
-55. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
-56. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
+11. [Storage Care](#page-2f6175746f6d6174696f6e2f73746f726167652d63617265) — `/automation/storage-care`
+12. [Capabilities](#page-2f6361706162696c6974696573) — `/capabilities`
+13. [Agents & Subagents](#page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473) — `/capabilities/agents-subagents`
+14. [Browser & Computer Use](#page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365) — `/capabilities/browser-computer-use`
+15. [MCP & Tools](#page-2f6361706162696c69746965732f6d63702d746f6f6c73) — `/capabilities/mcp-tools`
+16. [Skills & Plugins](#page-2f6361706162696c69746965732f736b696c6c732d706c7567696e73) — `/capabilities/skills-plugins`
+17. [Context & Memory](#page-2f636f6e746578742d6d656d6f7279) — `/context-memory`
+18. [Context Layering](#page-2f636f6e746578742d6d656d6f72792f6c61796572696e67) — `/context-memory/layering`
+19. [Storage Model](#page-2f636f6e746578742d6d656d6f72792f73746f72616765) — `/context-memory/storage`
+20. [Estate Coverage](#page-2f657374617465) — `/estate`
+21. [Agentic Components](#page-2f6573746174652f636f6d706f6e656e7473) — `/estate/components`
+22. [Data Sources & Integrations](#page-2f6573746174652f646174612d736f7572636573) — `/estate/data-sources`
+23. [Devices & Hosts](#page-2f6573746174652f64657669636573) — `/estate/devices`
+24. [Repository Coverage](#page-2f6573746174652f7265706f7369746f72696573) — `/estate/repositories`
+25. [Governance & Safety](#page-2f676f7665726e616e6365) — `/governance`
+26. [Documentation Governance](#page-2f676f7665726e616e63652f646f63756d656e746174696f6e) — `/governance/documentation`
+27. [Canonical Naming](#page-2f676f7665726e616e63652f6e616d696e67) — `/governance/naming`
+28. [Permissions](#page-2f676f7665726e616e63652f7065726d697373696f6e73) — `/governance/permissions`
+29. [Secrets](#page-2f676f7665726e616e63652f73656372657473) — `/governance/secrets`
+30. [Recovery & Rebuild](#page-2f7265636f76657279) — `/recovery`
+31. [Disaster Rebuild Readiness](#page-2f7265636f766572792f64697361737465722d72656275696c64) — `/recovery/disaster-rebuild`
+32. [Maintenance](#page-2f7265636f766572792f6d61696e74656e616e6365) — `/recovery/maintenance`
+33. [New Device](#page-2f7265636f766572792f6e65772d646576696365) — `/recovery/new-device`
+34. [Reference](#page-2f7265666572656e6365) — `/reference`
+35. [Agent & Offline Export](#page-2f7265666572656e63652f6167656e742d6578706f7274) — `/reference/agent-export`
+36. [Canonical Sources](#page-2f7265666572656e63652f63616e6f6e6963616c2d736f7572636573) — `/reference/canonical-sources`
+37. [Capability Inventory](#page-2f7265666572656e63652f6361706162696c6974792d696e76656e746f7279) — `/reference/capability-inventory`
+38. [Glossary](#page-2f7265666572656e63652f676c6f7373617279) — `/reference/glossary`
+39. [History & Scope](#page-2f7265666572656e63652f686973746f7279) — `/reference/history`
+40. [Improvement Roadmap](#page-2f7265666572656e63652f696d70726f76656d656e742d726f61646d6170) — `/reference/improvement-roadmap`
+41. [Ideal State Analysis Library](#page-2f7265666572656e63652f6973612d6c696272617279) — `/reference/isa-library`
+42. [System Registry](#page-2f7265666572656e63652f73797374656d2d7265676973747279) — `/reference/system-registry`
+43. [Systems & Surfaces](#page-2f72756e74696d6573) — `/runtimes`
+44. [Claude Code](#page-2f72756e74696d65732f636c617564652d636f6465) — `/runtimes/claude-code`
+45. [Codex](#page-2f72756e74696d65732f636f646578) — `/runtimes/codex`
+46. [Companions & Compatibility](#page-2f72756e74696d65732f636f6d70616e696f6e73) — `/runtimes/companions`
+47. [Hermes](#page-2f72756e74696d65732f6865726d6573) — `/runtimes/hermes`
+48. [Start Here](#page-2f73746172742d68657265) — `/start-here`
+49. [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) — `/start-here/choose-a-runtime`
+50. [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) — `/start-here/operating-loop`
+51. [Workflows](#page-2f776f726b666c6f7773) — `/workflows`
+52. [Delegated Coding](#page-2f776f726b666c6f77732f64656c6567617465642d636f64696e67) — `/workflows/delegated-coding`
+53. [Finance (MoneyOS)](#page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73) — `/workflows/finance-moneyos`
+54. [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) — `/workflows/personal-operations`
+55. [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) — `/workflows/programs`
+56. [Project Delivery](#page-2f776f726b666c6f77732f70726f6a6563742d64656c6976657279) — `/workflows/project-delivery`
+57. [Publishing](#page-2f776f726b666c6f77732f7075626c697368696e67) — `/workflows/publishing`
+58. [Research](#page-2f776f726b666c6f77732f7265736561726368) — `/workflows/research`
 
 ## Source index
 
@@ -86,6 +88,7 @@ This is the complete sanitized website corpus, not a backup of private repositor
 | [Operator Interface](#page-2f6175746f6d6174696f6e2f6f70657261746f722d696e74657266616365) | [/automation/operator-interface](https://superagents-docs.vercel.app/automation/operator-interface) | `app/automation/operator-interface/page.mdx` |
 | [Outcomes & Utilization](#page-2f6175746f6d6174696f6e2f6f7574636f6d6573) | [/automation/outcomes](https://superagents-docs.vercel.app/automation/outcomes) | `app/automation/outcomes/page.mdx` |
 | [Scheduling](#page-2f6175746f6d6174696f6e2f7363686564756c696e67) | [/automation/scheduling](https://superagents-docs.vercel.app/automation/scheduling) | `app/automation/scheduling/page.mdx` |
+| [Storage Care](#page-2f6175746f6d6174696f6e2f73746f726167652d63617265) | [/automation/storage-care](https://superagents-docs.vercel.app/automation/storage-care) | `app/automation/storage-care/page.mdx` |
 | [Capabilities](#page-2f6361706162696c6974696573) | [/capabilities](https://superagents-docs.vercel.app/capabilities) | `app/capabilities/page.mdx` |
 | [Agents & Subagents](#page-2f6361706162696c69746965732f6167656e74732d7375626167656e7473) | [/capabilities/agents-subagents](https://superagents-docs.vercel.app/capabilities/agents-subagents) | `app/capabilities/agents-subagents/page.mdx` |
 | [Browser & Computer Use](#page-2f6361706162696c69746965732f62726f777365722d636f6d70757465722d757365) | [/capabilities/browser-computer-use](https://superagents-docs.vercel.app/capabilities/browser-computer-use) | `app/capabilities/browser-computer-use/page.mdx` |
@@ -126,6 +129,7 @@ This is the complete sanitized website corpus, not a backup of private repositor
 | [Choose a Runtime](#page-2f73746172742d686572652f63686f6f73652d612d72756e74696d65) | [/start-here/choose-a-runtime](https://superagents-docs.vercel.app/start-here/choose-a-runtime) | `app/start-here/choose-a-runtime/page.mdx` |
 | [Operating Loop](#page-2f73746172742d686572652f6f7065726174696e672d6c6f6f70) | [/start-here/operating-loop](https://superagents-docs.vercel.app/start-here/operating-loop) | `app/start-here/operating-loop/page.mdx` |
 | [Workflows](#page-2f776f726b666c6f7773) | [/workflows](https://superagents-docs.vercel.app/workflows) | `app/workflows/page.mdx` |
+| [Delegated Coding](#page-2f776f726b666c6f77732f64656c6567617465642d636f64696e67) | [/workflows/delegated-coding](https://superagents-docs.vercel.app/workflows/delegated-coding) | `app/workflows/delegated-coding/page.mdx` |
 | [Finance (MoneyOS)](#page-2f776f726b666c6f77732f66696e616e63652d6d6f6e65796f73) | [/workflows/finance-moneyos](https://superagents-docs.vercel.app/workflows/finance-moneyos) | `app/workflows/finance-moneyos/page.mdx` |
 | [Personal Operations](#page-2f776f726b666c6f77732f706572736f6e616c2d6f7065726174696f6e73) | [/workflows/personal-operations](https://superagents-docs.vercel.app/workflows/personal-operations) | `app/workflows/personal-operations/page.mdx` |
 | [Programs](#page-2f776f726b666c6f77732f70726f6772616d73) | [/workflows/programs](https://superagents-docs.vercel.app/workflows/programs) | `app/workflows/programs/page.mdx` |
@@ -160,7 +164,8 @@ Super Agents is the umbrella for the full agentic system—not one app or one ru
 | Which programs does it serve? | [Programs](/workflows/programs) |
 | Which agent should handle this task? | [Choose a runtime](/start-here/choose-a-runtime) |
 | How does work move from intent to production? | [Operating loop](/start-here/operating-loop) |
-| Where does each kind of information belong? | [Sources of truth](/architecture/sources-of-truth) |
+| Where does each kind of information belong? | [Sources of truth](/architecture/sources-of-truth) and [Storage Model](/context-memory/storage) |
+| How do agents share coding work and track its cost? | [Delegated Coding](/workflows/delegated-coding) |
 | What is installed and what is actually active? | [System registry](/reference/system-registry) |
 | Which skills, plugins, agents, commands, profiles, jobs, and MCPs exist? | [Capability inventory](/reference/capability-inventory) |
 | Which repositories, devices, and data sources were actually scanned? | [Estate coverage](/estate) |
@@ -178,7 +183,7 @@ Codex ─ Claude Code ─ Hermes ─ Companion CLIs
   │           │          │
   └──── skills, tools, MCP services ────┘
                        │
-          Context control plane + vault
+          Context control plane + Workspace
                        │
           GitHub → deployment → live proof
 ```
@@ -191,7 +196,8 @@ Codex ─ Claude Code ─ Hermes ─ Companion CLIs
 | Claude Code | Specialist agents, commands, and plugins | CLAUDE.md, runtime settings, repository |
 | Hermes | Messaging, schedules, and unattended operations | Profiles, job definitions, approval class |
 | Context | Fleet inventory, evidence, and automation contracts | Private Context repository |
-| Knowledge vault | Curated decisions, identity, goals, and durable context | Private Git-backed vault |
+| Workspace | Curated notes, decisions, goals, and agent charters, one folder per job | Private Git repository and the File and Folder Standard |
+| Knowledge vault (legacy) | Notes written before 2026-09-29 | Private Git-backed vault, under review |
 
 ## Four rules that keep it coherent
 
@@ -224,7 +230,7 @@ Super Agents separates orchestration, execution, context, services, and evidence
 | Orchestration | Runtime selection, task decomposition, policy, approvals |
 | Execution | Codex, Claude Code, Hermes, and companion CLIs |
 | Capability | Agents, skills, commands, plugins, MCP services, browser and computer use |
-| Context | Repository instructions, curated vault knowledge, memories, and live evidence |
+| Context | Repository instructions, curated Workspace knowledge, memories, and live evidence |
 | Proof | Tests, builds, Git commits, deployments, live checks, and issue records |
 
 The [system registry](/reference/system-registry) gives every major surface an owner, trigger, permission boundary, inputs, outputs, proof, and recovery path.
@@ -281,9 +287,11 @@ Authority follows the type of information, not whichever runtime saw it most rec
 | Live customer-facing behavior | Deployed production surface |
 | Automation definitions and fleet evidence | Context repository and owning scheduler |
 | Money data: transactions, balances, debts, payables, rulings, scorecard | `main` of the private MoneyOS repository, one record per data type named in its `SOURCE_OF_TRUTH.md` and `sources.json`; see [Finance (MoneyOS)](/workflows/finance-moneyos) |
-| Curated decisions, goals, identity, and durable knowledge | Private knowledge vault |
-| Files and structured working data | Google Drive where designated |
-| Apple-native personal data | iCloud |
+| Curated notes, decisions, goals, identity, and agent charters (light text) | Private Workspace repository, one folder per job (since 2026-09-29) |
+| Notes written before 2026-09-29 | Legacy private knowledge vault, under review |
+| Where any file belongs, names, and lifetimes | The File and Folder Standard in the Workspace repository; see [Storage Model](/context-memory/storage) |
+| Heavy files: PDFs, media, spreadsheets, recordings, exports | Google Drive, cloud only |
+| Apple-native personal data | iCloud (Apple apps only) |
 | Credentials | 1Password |
 | Runtime-local state, caches, and sessions | Local internal storage; recoverable or transient |
 | Cold snapshots | External backup storage when mounted |
@@ -297,7 +305,8 @@ This portal links those owners together. It must not claim to replace them.
 1. Prefer the source assigned to that information type.
 2. Prefer live evidence over an old narrative page.
 3. Reconcile divergent runtime and vault inventories; do not assume they are mirrored.
-4. Correct the owning source first, then refresh derived documentation and its verification date.
+4. When a storage question conflicts with another document, the File and Folder Standard wins and the other document is corrected.
+5. Correct the owning source first, then refresh derived documentation and its verification date.
 
 [Back to table of contents](#table-of-contents)
 
@@ -322,6 +331,8 @@ Super Agents uses several scheduling surfaces, each with a distinct job.
 | Launch services | Local process availability where a host service must stay running |
 
 Do not count a scheduler entry as a verified outcome. Every material automation needs a destination and an independent evidence signal.
+
+[Storage Care](/automation/storage-care) is the largest group of deterministic daily jobs. [NightCrew](/automation/nightcrew) records its last observed run state.
 
 Start with [Scheduling](/automation/scheduling), then use [Fleet Evidence](/automation/fleet-evidence) to interpret results.
 
@@ -377,7 +388,17 @@ Source page: [NightCrew](https://superagents-docs.vercel.app/automation/nightcre
 
 NightCrew is the overnight automation suite owned by Context and invoked by Hermes.
 
-At the September 8 snapshot, the default scheduled run contains **19 sections** and starts daily at **3:00 a.m. local time** through its Hermes job. Additional methods exist for explicit manual use; they must not be described as nightly merely because they are implemented.
+The default scheduled run contains **19 sections** and starts daily at **3:00 a.m. local time** through its Hermes job (Context NightCrew documentation, read November 16, 2026). Additional methods exist for explicit manual use; they must not be described as nightly merely because they are implemented.
+
+## Observed state (November 16, 2026)
+
+**Status: running, not healthy.** The Hermes job is enabled and ran on November 16, 2026. The run exited with an error:
+
+- The voice-memo section failed its proof gate (transcription error). Voice-memo batch intake was retired on September 21, 2026, but this section is still in the default list. The owner must either remove the section or repair it.
+- The credential health check reported several OAuth and bot credentials that need a human to renew.
+- The Telegram summary delivery is retired, so a failure produces no message. The Hermes job record is the only signal.
+
+Other sections (calendar, email, staleness check, encrypted vault backup, contact harvest) passed their proof gates. This is one observed run, not a trend.
 
 ## Contract
 
@@ -494,6 +515,64 @@ Stay quiet when unchanged state is expected. Notify on meaningful change, comple
 Hermes is the authoritative owner for scheduled agent work, including follow-ups originating in another runtime. Codex scheduling requires an explicit exception, or Hermes unavailability plus Gui's fallback authorization. Existing Codex jobs should be reviewed for migration, not silently extended.
 
 For learning loops, prefer hourly iterations where practical and daily at most unless the external process genuinely requires longer observation. This does not require hourly notifications: delivery follows the [operator attention contract](/automation/operator-interface). Numeric limits and quiet hours remain planned until configured and tested.
+
+[Back to table of contents](#table-of-contents)
+
+---
+
+<!-- source-page: app/automation/storage-care/page.mdx | route: https://superagents-docs.vercel.app/automation/storage-care -->
+
+<a id="page-2f6175746f6d6174696f6e2f73746f726167652d63617265"></a>
+
+Source page: [Storage Care](https://superagents-docs.vercel.app/automation/storage-care)
+
+# Storage Care
+
+> Sources: the private storage tool (README, charter and design) and sections l and m of the File and Folder Standard, version 2.7. Hermes job states read November 16, 2026.
+
+Storage Care keeps files and folders on each Mac in line with the [Storage Model](/context-memory/storage). It measures every day, gives one score per device, and applies only changes that pass its gates. It moved into its own private repository on September 29, 2026.
+
+## Daily cycle
+
+All jobs are Hermes `--no-agent` scripts. No model is called. On a quiet day the output is empty; when something was held, blocked or failed, a two-line alert goes to the systems Slack channel with the detail in a thread. Nothing in this cycle waits for Gui (owner ruling, November 3, 2026).
+
+| Time | Job | What it does | Changes files? |
+|---|---|---|---|
+| 05:00 daily | Sweep | Empties the local inboxes and the home folder top level of items older than 24 hours. Junk goes to quarantine. Other files go to the Drive inbox after the Drive copy's checksum is read back. Stray folders go to quarantine with an external-disk copy. | Yes |
+| 06:00 daily | Guard | Clears a regenerable cache file that grew past its limit | Yes |
+| 08:15 daily | Check and plan | Measures, scores, compares with yesterday, keeps the report on the device and on Drive, and lists every proposed change with its rule, risk and check | No |
+| 08:25 daily | Fix apply | Applies the automatic tier. Its pull requests merge themselves, and the live checkout fast-forwards only when it is clean | Yes |
+| Sunday 09:00 | Offload | Copies repositories and worktrees idle for 14 days to the external backup disk, verifies the copy, then removes the local copy | Yes |
+| Weekly | Drive inbox | Files, renames or flags items in the Drive inbox from a document-type registry, under a standing permission | Yes, on Drive |
+
+## The score
+
+One number from 0 to 100 per device. Each measure has a weight:
+
+| Measure | Weight | What is counted | Goal |
+|---|---:|---|---|
+| Misplaced | 25 | Heavy files in a text repository, checkouts in forbidden places, live folders linked onto the external disk, iCloud Desktop & Documents sync on | 0 |
+| Drift | 20 | Checkouts that are behind, uncommitted, unpushed or detached from their repository | 0 |
+| Headroom | 15 | Code folder size and free space on the boot disk | pass |
+| Backup | 15 | Age of each backup | 7 days or less |
+| Exposure | 15 | Sensitive files tracked in Git | 0 |
+| Document integrity | 5 | Live documents that still name an old path | 0 |
+| Inbox | 5 | Inbox items past their lifetime | 0 |
+
+A measure that cannot be taken is `n/a`, and the other weights are renormalised. The formula changes only by pull request and is never tuned to look better.
+
+## Safety contract
+
+- Every condition is checked again at the moment of each change: real path, disk, size, Git state, content hash and open files.
+- At most 50 changes per fix run. Every change is logged before and after, and the log is copied to Drive in the same run. Running twice does nothing the second time.
+- Nothing leaves the device until a verified second copy exists. Quarantined items wait 14 days (30 days for folders) and can be restored with an undo command.
+- Never applied automatically: anything on Drive outside the inbox flow, anything over 10 MB, Git repositories, live runtime folders, iCloud folders, and anything that looks like a credential.
+- Symlinks are never followed. iCloud folders are read at the top level only. Every subprocess has a timeout.
+- A per-device kill-switch file stops every applying command.
+
+## Evidence
+
+The daily report and the change logs are the evidence. A green job status alone is not proof that a change was correct; see [Fleet Evidence](/automation/fleet-evidence). This page's job states were read on the main Mac mini only; other devices are not attested here (see [Devices & Hosts](/estate/devices)).
 
 [Back to table of contents](#table-of-contents)
 
@@ -674,11 +753,11 @@ Context is information supplied to the current run. Memory is information a runt
 - Global and project instruction chains
 - Repository files and live working state
 - Selected agent, skill, plugin, or profile instructions
-- Curated vault material
+- Curated Workspace material (and legacy vault notes)
 - Runtime memory and conversation history
 - Tool results and current external evidence
 
-The Context control plane owns fleet inventory, automation contracts, and evidence state. The knowledge vault owns curated durable context. Runtime-local memory is useful but must yield to an owning source when facts conflict.
+The Context control plane owns fleet inventory, automation contracts, and evidence state. The Workspace repository owns curated durable context, organised by job under the File and Folder Standard; the legacy vault keeps notes written before September 29, 2026. Runtime-local memory is useful but must yield to an owning source when facts conflict.
 
 See [Context Layering](/context-memory/layering) and [Storage Model](/context-memory/storage).
 
@@ -730,21 +809,40 @@ Source page: [Storage Model](https://superagents-docs.vercel.app/context-memory/
 
 # Storage Model
 
-Every durable information type has one preferred home.
+> Source: the File and Folder Standard (version 2.7, updated November 3, 2026) in the private Workspace repository. The standard wins over any other document, including this page. Checked November 16, 2026.
 
-| Store | Purpose |
-|---|---|
-| Private knowledge vault | Curated knowledge, decisions, goals, identity, and system guidance |
-| GitHub | Code, infrastructure, documentation, review, and delivery history |
-| Google Drive | Designated files and structured working data |
-| iCloud | Apple-native personal data |
-| Internal local storage | Active repositories, runtime state, caches, and transient work |
-| External storage | Cold backup snapshots only, while mounted |
-| 1Password | Credentials and secret references |
+Every durable information type has one home. Since September 29, 2026, files are organised by **job**, not by the older numbered PARA layout.
 
-Active systems must not depend on an external disk or a compatibility symlink to one. Clone missing repositories from GitHub onto internal storage.
+## Ten jobs
 
-Secrets never belong in the vault, source repository, local documentation, or ad hoc plaintext environment files. Configuration should retain only managed references.
+Code, Research, Invest, Write, Music, Home, Admin, Goals, Growth and System. The same names are used in the Workspace repository, on Google Drive and in agent instructions. Inside each job, the folders are fixed: `Active/`, `Past/`, `Resources/`, `Notes/`, `Inbox/`, `Agents/` (charters, runbooks and scheduled feeds) and `System/` (design, learnings, decisions, mistakes and logs).
+
+## Where each kind of information lives
+
+| Store | Holds | Never holds |
+|---|---|---|
+| Workspace repository (private, Git) | Light text: notes, decisions, plans, lessons, agent charters, the standard itself | Binaries, media, exports, credentials, code |
+| Research repository (private, Git) | Research notes, findings and syntheses; planned to fold into the Workspace Research job | Transcripts and recordings |
+| Legacy knowledge vault (private, Git) | Notes written before September 29, 2026, in the numbered legacy layout; under review | New heavy files, exports, logs, credentials |
+| Google Drive | Heavy files: PDFs, media, spreadsheets, recordings, exports. Cloud only, with no local copy | Code, runtime state, credentials |
+| GitHub, one repository per product | Code and the documents of each repository, checked out on internal storage | Personal files, job notes |
+| Runtime folders | Logs, saved state, caches: a repository's ignored `data/` folder or a runtime's home | Anything a person curates |
+| 1Password | Credentials and secret references, in the agents vault only | Anything else |
+| iCloud | Apple apps only: Photos, Voice Memos, Music | Desktop and Documents folders, Git repositories |
+| External SSD | Cold backup copies only | Anything in use: no live folder, link target or job state |
+
+## Rules that agents apply
+
+- Local inboxes (downloads, screenshots and the home folder top level) hold an item for 24 hours at most. A daily sweep moves it to Drive or to quarantine; see [Storage Care](/automation/storage-care).
+- Nothing is deleted until it exists in two places. Deletion takes two steps with 30 days between them.
+- Drive folders are never shared by link.
+- iCloud "Desktop & Documents Folders" sync must be off on every device. It removed files and Git data from disks in August and September 2026. The proof is the extended attribute on the two folders, not the Finder setting.
+- Regenerable artefacts (`node_modules`, `.next`, caches) are deleted, never moved to external storage.
+- The standard changes only by pull request; Gui's merge is the approval.
+
+Active systems must not depend on an external disk or a symlink to one. Clone a missing repository from GitHub onto internal storage.
+
+Secrets never belong in the Workspace, the vault, a source repository, local documentation or a plaintext environment file. Configuration keeps only managed references.
 
 [Back to table of contents](#table-of-contents)
 
@@ -1383,7 +1481,7 @@ Source page: [Recovery & Rebuild](https://superagents-docs.vercel.app/recovery)
 
 # Recovery & Rebuild
 
-Super Agents is recoverable when durable state stays in GitHub, managed cloud stores, the private knowledge vault, and 1Password references.
+Super Agents is recoverable when durable state stays in GitHub (including the private Workspace repository and the legacy vault), managed cloud stores, and 1Password references.
 
 This portal is the recovery map, not the backup. Start with [Disaster Rebuild Readiness](/recovery/disaster-rebuild) before wiping, replacing, or restoring a device.
 
@@ -1535,6 +1633,7 @@ Source page: [Maintenance](https://superagents-docs.vercel.app/recovery/maintena
 
 - Review failed or unverified fleet evidence.
 - Resolve runtime-to-vault inventory drift that affects active work.
+- Read the daily [storage score](/automation/storage-care) and act on held or failed items.
 - Confirm critical repositories are pushed and deployments are healthy.
 
 This is the operating policy, not a claim that a new review job has been enabled. Hermes owns scheduling. Learning loops should iterate hourly where practical and daily at most; delivery can be batched under the [operator contract](/automation/operator-interface).
@@ -1573,12 +1672,13 @@ Source page: [New Device](https://superagents-docs.vercel.app/recovery/new-devic
 
 1. Install system prerequisites and the supported Node and Python versions.
 2. Configure GitHub access and the 1Password CLI without exporting plaintext credentials.
-3. Clone the private vault, Context, Hermes home, personal skills, and active project repositories to internal storage.
+3. Clone the private Workspace, research, Context, Hermes home, storage tool, personal skills, and active project repositories to internal storage. Clone the legacy vault only when a workflow still reads it.
 4. Install Codex, Claude Code, Hermes, and deliberately adopted companion CLIs.
 5. Restore runtime configuration from Git-backed sources and reconnect managed plugins.
 6. Start shared local services only after checking their status.
 7. Run runtime version, gateway, MCP, repository, and messaging delivery checks.
 8. Restore schedules paused; enable them one class at a time after proof passes.
+9. Before the first sweep or cleaning job runs, confirm iCloud "Desktop & Documents Folders" sync is off and the external backup disk resolves to a distinct device. See [Storage Care](/automation/storage-care).
 
 The [system registry](/reference/system-registry) supplies per-system recovery expectations. Owning private runbooks contain machine-specific commands.
 
@@ -1667,7 +1767,10 @@ Source page: [Canonical Sources](https://superagents-docs.vercel.app/reference/c
 | Claude configuration | Active runtime and private curated configuration tree | Describe reconciliation rules |
 | Hermes profiles and schedules | Private Hermes home and Context repositories | Publish sanitized contracts |
 | Automation health | Private Context inventory and fleet scoreboard | Explain evidence states |
-| Curated knowledge and storage policy | Private knowledge vault | Publish the model, not private content |
+| Storage policy: places, jobs, names, lifetimes | File and Folder Standard in the private Workspace repository | Publish the model, not private content |
+| Curated knowledge | Private Workspace repository; legacy vault for notes before 2026-09-29 | Publish the model, not private content |
+| Storage health and cleaning | Private storage tool and its Hermes jobs | Explain the contract in [Storage Care](/automation/storage-care) |
+| Delegated coding workers, ledger and spend accounting | Private Hermes home repository | Explain the contract in [Delegated Coding](/workflows/delegated-coding) |
 | Deployed behavior | Production site or service | Link delivery proof from GitHub |
 
 Official product documentation establishes platform behavior. Local repositories establish Gui's configuration and policy. Live verification establishes what users can actually observe.
@@ -2178,21 +2281,33 @@ Source page: [Glossary](https://superagents-docs.vercel.app/reference/glossary)
 
 **Context** — information supplied to the current run.
 
+**Coordinator** — the interactive session that owns a coding task: it writes the brief, reviews the worker's candidate, runs the tests, ships and records the evidence. See [Delegated Coding](/workflows/delegated-coding).
+
 **Derived index** — a navigation or reporting view whose facts come from owning sources.
 
 **Evidence contract** — the independent signal required to verify a claimed outcome.
 
 **Installed** — code or configuration exists; use is not implied.
 
-**Memory** — information retained or retrieved across runs.
+**Job** — one of the ten top-level areas (Code, Research, Invest, Write, Music, Home, Admin, Goals, Growth, System) that organise files everywhere. See [Storage Model](/context-memory/storage).
+
+**Legacy vault** — the private knowledge vault that holds notes written before September 29, 2026, in the older numbered layout.
 
 **MCP service** — a structured capability exposed to a model runtime through Model Context Protocol.
+
+**Memory** — information retained or retrieved across runs.
+
+**Merge queue** — a one-at-a-time, gated landing order for pull requests to a branch that deploys to production. See [Project Delivery](/workflows/project-delivery).
 
 **Paused** — deliberately disabled while its definition remains.
 
 **Skill** — a reusable workflow package with instructions and optional references, scripts, or assets.
 
 **Verified** — independent evidence supports the claimed result.
+
+**Worker** — a bounded model call that receives a pinned set of source files and returns proposed complete files. It cannot run commands, read the repository or accept its own output.
+
+**Workspace** — the private Git repository that holds light text (notes, decisions, plans, charters) in one folder per job.
 
 [Back to table of contents](#table-of-contents)
 
@@ -2375,7 +2490,7 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | [Claude Code](/runtimes/claude-code) | interactive agent runtime | active · specialist catalog and plugin surface | 2026-11-02 |
 | [Hermes](/runtimes/hermes) | persistent agent gateway and scheduler | active · messaging and unattended operations | 2026-11-02 |
 | [Context control plane](/context-memory) | automation, evidence, and fleet inventory | active · authoritative automation registry | 2026-09-08 |
-| [Knowledge vault](/context-memory/storage) | curated context and durable knowledge | active · private Git-backed knowledge source | 2026-09-08 |
+| [Knowledge vault (legacy) and Workspace](/context-memory/storage) | curated context and durable knowledge | active · Workspace is the curated text home; vault is legacy and under review | 2026-11-16 |
 | [Finance (MoneyOS)](/workflows/finance-moneyos) | finance record and CFO operating system | active · contract v2 acknowledged by all 3 required agents | 2026-11-02 |
 | [Shared Firecrawl MCP broker](/capabilities/mcp-tools) | shared web research service | active · shared local service | 2026-09-08 |
 | [Gemini CLI](/runtimes/companions) | companion interactive runtime | installed · bounded companion surface | 2026-11-02 |
@@ -2471,26 +2586,26 @@ This registry is a **derived index**, not a replacement for each runtime's sourc
 | Recovery | Clone the private Context repository, restore referenced credentials, validate scheduled surfaces, then regenerate the inventory and scoreboard |
 | Snapshot counts | Declared Core Systems: 13; Active Core Systems: 12; Paused Core Systems: 1 |
 
-## Knowledge vault
+## Knowledge vault (legacy) and Workspace
 
-**Status:** active · private Git-backed knowledge source
+**Status:** active · Workspace is the curated text home; vault is legacy and under review
 
-**Version:** Git-backed current vault
+**Version:** Workspace repository plus legacy vault; File and Folder Standard 2.7
 
 **Owner:** Gui
 
-**Last verified:** 2026-09-08
+**Last verified:** 2026-11-16
 
 | Contract | Value |
 |---|---|
-| Source of truth | Private vault repository; canonical storage policy lives in its InnerContext area |
-| Measurement | Repository status and current canonical storage policy reviewed at the snapshot date; no volatile count published. |
+| Source of truth | Private Workspace repository, which holds the File and Folder Standard; the private legacy vault for older notes |
+| Measurement | File and Folder Standard version 2.7 (updated 2026-11-03) reviewed on 2026-11-16; no volatile count published. |
 | Trigger | Human curation, approved automation update, or explicit agent workflow |
 | Permissions | Private repository access; sensitive areas remain encrypted; secrets are prohibited |
-| Inputs | Curated decisions, goals, identity context, workflows, research syntheses, and system guidance |
+| Inputs | Light text by job in the private Workspace repository (since 2026-09-29); notes written before 2026-09-29 in the legacy vault |
 | Outputs | Versioned knowledge and context consumed selectively by agent runtimes |
-| Proof | Git history, link checks, storage-policy compliance, and reviewable automation diffs |
-| Recovery | Clone the private repository, unlock approved encrypted content, run its setup checks, and reconnect runtime references |
+| Proof | Git history, pull-request review, and the daily storage score (misplaced, drift, document integrity and inbox measures) |
+| Recovery | Clone the private Workspace and research repositories, and the legacy vault only where a workflow still reads it; unlock approved encrypted content; run setup checks; reconnect runtime references |
 | Snapshot counts | No volatile count published |
 
 ## Finance (MoneyOS)
@@ -2760,6 +2875,16 @@ Hermes is the persistent agent gateway and primary scheduler. It connects profil
 
 A job needs both a schedule and a permission contract. Read-only collection can run unattended. Notifications, external mutations, financial actions, and irreversible changes require an explicit preapproved playbook or operator approval.
 
+## Model routing
+
+**Status (November 2026): automatic inference stays on subscription routes.** Paid automatic fallback is closed (private Hermes home pull requests #391 and #400). The older model-tier ladder and the routing experiments built on it are historical; do not use them to activate a paid route. The configured fallback chain and provider quota checks handle provider failures.
+
+Metered models are used only through the bounded coding workers, under a fixed cumulative trial cap and per-attempt reservations. See [Delegated Coding](/workflows/delegated-coding).
+
+## Scheduled jobs added since September
+
+Hermes runs the storage jobs (sweep, daily check, fix apply, guard and weekly offload), the research repository daily sync, the weekly Drive inbox pass, a daily outcome reconciliation and a weekly outcomes review. See [Storage Care](/automation/storage-care). Counts of enabled and paused jobs belong to the [capability inventory](/reference/capability-inventory).
+
 ## Proof model
 
 Scheduler state proves that a job was invoked. Outcome evidence belongs in the Context fleet scoreboard or the system's own durable destination. See [Fleet Evidence](/automation/fleet-evidence).
@@ -2784,7 +2909,7 @@ Use this section to orient yourself before changing the system.
 
 ## What Super Agents is
 
-Super Agents is the complete multi-runtime operating model for project delivery, research, personal operations, publishing, and unattended work. Interactive agents do focused work. Hermes handles persistent messaging and schedules. Context records automation and fleet evidence. The vault holds curated knowledge. GitHub and deployed surfaces provide the durable delivery record.
+Super Agents is the complete multi-runtime operating model for project delivery, research, personal operations, publishing, and unattended work. Interactive agents do focused work. Hermes handles persistent messaging and schedules. Context records automation and fleet evidence. The Workspace repository holds curated knowledge by job; the older vault holds notes written before September 29, 2026. GitHub and deployed surfaces provide the durable delivery record.
 
 ## What this site is
 
@@ -2890,7 +3015,8 @@ Workflows connect runtimes, capabilities, context, permission classes, and proof
 
 | Workflow | Typical path |
 |---|---|
-| Project delivery | Codex or Claude → repository checks → GitHub → deployment → live proof |
+| Project delivery | GitHub issue → Codex or Claude → repository checks → GitHub → merge queue where one exists → deployment → live proof |
+| Delegated coding | Coordinator brief → bounded worker on one named route → frozen checks → independent review → coordinator ships and records |
 | Research | Search and primary sources → synthesis → citations → curated destination |
 | Personal operations | Hermes schedule or message → Context contract → evidence → alert when actionable |
 | Finance (MoneyOS) | Statement or export → record on `main` of the private moneyos repository → deterministic contract check and Claude gate → sheet written by API → Cash dashboard, `#cash`, month-end report |
@@ -2899,6 +3025,58 @@ Workflows connect runtimes, capabilities, context, permission classes, and proof
 Each workflow page documents the invariant contract rather than duplicating a volatile agent catalog.
 
 See [Programs](/workflows/programs) for the provisional mapping from business/program intent to these methods and its unresolved ownership/evidence checks.
+
+[Back to table of contents](#table-of-contents)
+
+---
+
+<!-- source-page: app/workflows/delegated-coding/page.mdx | route: https://superagents-docs.vercel.app/workflows/delegated-coding -->
+
+<a id="page-2f776f726b666c6f77732f64656c6567617465642d636f64696e67"></a>
+
+Source page: [Delegated Coding](https://superagents-docs.vercel.app/workflows/delegated-coding)
+
+# Delegated Coding
+
+> Sources: the private Hermes home repository (bounded coding-worker contract, coding-system guidelines, ledger contract and provider-spending notes) and its pull requests merged from November 9 to 16, 2026. Read November 16, 2026.
+
+**Status: pilot.** This is a working baseline for sending small coding tasks to cheaper or different models. It does not prove that any model or routing choice is better, and it promotes no maturity level.
+
+## Roles
+
+| Role | Owns |
+|---|---|
+| Coordinator (the active Codex or Claude Code session) | The brief, task decomposition, independent checks, review decisions, integration, shipping, live verification and the evidence record |
+| Worker (one bounded model call) | A proposed set of complete files, nothing else |
+| Reviewer (a fresh Claude or Codex call on an existing subscription) | A structured, independent review of the candidate |
+| Gui | Spending limits, access grants and confirmation that an outcome was useful |
+
+A worker receives a small, pinned set of Git-tracked source files and returns complete proposed files. It cannot run commands, read the repository, run tests, call other workers, apply patches, merge or deploy. Supplied source is treated as untrusted data. A worker can never accept its own output.
+
+## Task flow
+
+1. The coordinator writes a structured brief: one observable outcome and the allowed files; the exact input and output contract; one ordinary example and one edge case; acceptance checks fixed before dispatch; output limits in plain language.
+2. A task manifest names the exact files to send and to receive. Globs, hidden paths, symlinks, deletions and binary files are refused. File hashes and the Git commit are pinned; a source change invalidates the task.
+3. The worker runs on one named route. There is no automatic provider fallback.
+4. The coordinator checks the candidate against the frozen acceptance checks, then requests an independent review.
+5. One repair attempt may use the exact observed failure. After the attempt limit, the task is rejected or explicitly rescued. A rescued delivery is recorded as a rescue, not as the model's acceptance.
+6. The coordinator ships under the repository's rules and records delivery and later defects.
+
+## Routes and spending
+
+Two routes are subscription routes (Codex and Grok). Two are metered routes through OpenRouter, under a fixed cumulative trial cap that Gui authorized, a reservation per attempt and no automatic recharge. Only one 1Password authorization is attempted per supervised work session; the key stays in process memory. Exceeding the cap, expanding access or making a purchase needs Gui's approval.
+
+Hermes's own automatic inference stays on subscription routes; see [Hermes](/runtimes/hermes#model-routing).
+
+## Measurement
+
+- **Coding ledger:** an append-only local database of task, usage, verification, feedback, defect and decision events. It holds metadata, not source bundles or transcripts. Accepted decisions are exported to the native GitHub issue or pull request; the local database is an index, not the durable record.
+- **Daily report:** joins outcomes with usage coverage. It recommends changes; it never dispatches models, changes routing or raises a budget.
+- **Pulse:** a terminal monitor that shows provider spending over 24 hours, 7 days and 30 days, subscription quota, and Mac health. Consumption, subscription invoices and prepaid credit are kept separate so money is not counted twice. Currencies are never converted with an invented rate. Unknown is shown as `?`, never as zero.
+
+## What is not proven
+
+Successful runs, matching replays and reviewer approval are not the same as Gui's acceptance. The pilot records rescues, failed checks and missing usage coverage so that a later decision can rest on evidence. See [Outcomes & Utilization](/automation/outcomes) for the wider measurement contract.
 
 [Back to table of contents](#table-of-contents)
 
@@ -3077,7 +3255,11 @@ Schedule or message → profile → bounded tools → durable destination
 
 Collectors should default to read-only. A workflow that messages someone, changes a service, spends money, or performs an irreversible action needs a declared approval class.
 
-Curated outcomes can update the private knowledge vault through a reviewable workflow. Raw credentials and noisy transient state never belong there.
+Curated outcomes can update the private Workspace repository, in the owning job's folder, through a pull request. Raw credentials and noisy transient state never belong there. A brief that an agent writes on a schedule goes to the job's `Agents/Feeds/` folder for 90 days, or to Slack only.
+
+## Voice memos
+
+The nightly voice-memo batch intake was retired on September 21, 2026, and the memo intake jobs are paused. To get same-day action on a memo, Gui shares it to Slack. Music memos are not transcribed. The NightCrew voice-memo section still runs and is failing; see [NightCrew](/automation/nightcrew).
 
 Use [Scheduling](/automation/scheduling) to choose the execution surface and [Fleet Evidence](/automation/fleet-evidence) to interpret the result.
 
@@ -3168,16 +3350,27 @@ Use Codex by default for a coherent repository change; use Claude Code when its 
 
 ## Delivery path
 
-1. Find the active internal-storage repository and its GitHub remote.
-2. Read global and repository instructions.
-3. Inspect working state; preserve unrelated edits.
-4. Implement the smallest coherent slice.
-5. Run targeted checks continuously and a full build when runtime or deploy behavior changed.
-6. Commit and push to GitHub.
-7. Verify deployment and live behavior.
-8. Record commit, deploy, checks, outcome, and residual risk in the tracking issue or pull request.
+1. Find or open the GitHub issue for the block of work, with scope and acceptance criteria. Post the plan on the issue before building. Agents on different models coordinate through the issue so that they do not duplicate or collide.
+2. Find the active internal-storage repository and its GitHub remote. Work on one branch per issue, in a worktree under the shared worktree root.
+3. Read global and repository instructions.
+4. Inspect working state; preserve unrelated edits.
+5. Implement the smallest coherent slice.
+6. Run targeted checks continuously and a full build when runtime or deploy behavior changed.
+7. Commit and push to GitHub.
+8. Verify deployment and live behavior.
+9. Record commit, deploy, checks, outcome, and residual risk in the tracking issue or pull request.
 
 For risky behavior, use staging and feature flags where the project provides them.
+
+## Production merge queue
+
+A repository whose main branch deploys to production can run a merge queue (private Hermes home pull requests #385 and #386). The queue is a list in a GitHub issue. Only the first unticked pull request may land, and only when every gate passes: required status checks are green, and a structured independent review comment approves the exact head commit. After the merge, the queue waits for the deployment, then runs the live health and smoke checks. A failure after merge halts the queue. A pull request that edits CI workflows is never landed by the queue; it is landed by hand after human review.
+
+Before merging to any repository that deploys to production, search for its merge-queue issue and read its `AGENTS.md`. If a queue exists, add the pull request to it and never merge directly. Parallel agent lanes have merged around a queue before; without branch protection, the queue is a protocol, not an enforced control.
+
+## Worktree hygiene
+
+After pushing, delete `node_modules` and `.next` in the worktree. Remove a worktree only when it is clean, fully pushed and no process works inside it. Parallel lanes that each install dependencies have filled the boot disk before.
 
 [Back to table of contents](#table-of-contents)
 
@@ -3205,6 +3398,12 @@ Publishing is a staged workflow, not one universal agent pipeline.
 8. Obtain required approval, publish, and verify the live result.
 9. Store the canonical asset and update the content index.
 
+## Writing standards
+
+Since November 10, 2026, every runtime applies one shared clear-writing default to human-readable output: replies, reports, documents, slides, emails and interface copy. It is an adaptation inspired by ASD-STE100 Simplified Technical English, not a claim of formal compliance. Main point first, familiar words, one term per concept, active voice, one idea per sentence. Exact quotes, code, numbers and uncertainty stay unchanged. Source: the private Workspace repository (Write job) and private Hermes home pull request #405.
+
+Text the public will read under Gui's name or a brand also follows the public-writing standard. Positions come only from a file of recorded stances; personal details only from a story bank that marks what is cleared for public use. An agent never invents an experience, customer, result or number. Interface, store, landing and email copy passes a copy linter before it ships; a blocking finding never ships.
+
 Specialist agents may implement individual stages. Their exact names and counts are runtime inventory, not the workflow itself.
 
 [Back to table of contents](#table-of-contents)
@@ -3226,9 +3425,9 @@ Source page: [Research](https://superagents-docs.vercel.app/workflows/research)
 3. Use the shared research service for broad discovery and structured extraction.
 4. Distinguish sourced facts, live observations, and inference.
 5. Cite the supporting page close to each material claim.
-6. Save the synthesis in the owning repository or curated knowledge destination.
+6. Save the synthesis in the owning repository or the research repository (`Findings/` and `Syntheses/`). Transcripts and recordings go to Drive, never to Git.
 
-Do not copy entire web sources into the vault or portal. Preserve durable conclusions, provenance, checked dates, and decision impact.
+Do not copy entire web sources into the Workspace, the research repository, or the portal. Preserve durable conclusions, provenance, checked dates, and decision impact.
 
 For platform decisions, refresh current official documentation before implementation.
 

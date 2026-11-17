@@ -10,18 +10,30 @@
 
 **Context** — information supplied to the current run.
 
+**Coordinator** — the interactive session that owns a coding task: it writes the brief, reviews the worker's candidate, runs the tests, ships and records the evidence. See [Delegated Coding](/workflows/delegated-coding).
+
 **Derived index** — a navigation or reporting view whose facts come from owning sources.
 
 **Evidence contract** — the independent signal required to verify a claimed outcome.
 
 **Installed** — code or configuration exists; use is not implied.
 
-**Memory** — information retained or retrieved across runs.
+**Job** — one of the ten top-level areas (Code, Research, Invest, Write, Music, Home, Admin, Goals, Growth, System) that organise files everywhere. See [Storage Model](/context-memory/storage).
+
+**Legacy vault** — the private knowledge vault that holds notes written before September 29, 2026, in the older numbered layout.
 
 **MCP service** — a structured capability exposed to a model runtime through Model Context Protocol.
+
+**Memory** — information retained or retrieved across runs.
+
+**Merge queue** — a one-at-a-time, gated landing order for pull requests to a branch that deploys to production. See [Project Delivery](/workflows/project-delivery).
 
 **Paused** — deliberately disabled while its definition remains.
 
 **Skill** — a reusable workflow package with instructions and optional references, scripts, or assets.
 
 **Verified** — independent evidence supports the claimed result.
+
+**Worker** — a bounded model call that receives a pinned set of source files and returns proposed complete files. It cannot run commands, read the repository or accept its own output.
+
+**Workspace** — the private Git repository that holds light text (notes, decisions, plans, charters) in one folder per job.
