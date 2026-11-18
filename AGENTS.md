@@ -24,3 +24,28 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+<!-- clear-writing:begin -->
+## Writing standard: ASD-STE100 house style (default for every agent)
+
+Skill `clear-writing`: `~/Workspace/Write/Resources/clear-writing/SKILL.md` on
+Gui's Macs, or https://github.com/GuillaumeRacine/workspace/blob/main/Write/Resources/clear-writing/SKILL.md
+Every agent writes in Gui's house standard based on ASD-STE100 (Simplified
+Technical English). It is the default for all agentic work: replies, reports,
+documents, slides, emails, issue and PR text, Slack posts, prompts, skills,
+workflow templates, interface, store and email copy. Load the skill for
+substantial text and apply these rules always:
+- Lead with the point. Use familiar, concrete words and one term per concept.
+- Use active voice and direct verbs. One idea per sentence (about 15-25 words).
+- Procedures: condition first, one action per step, warning before the action.
+- Keep numbers, dates, scope and uncertainty exact. Never invent a fact.
+- Use approved product terms exactly (for Present: LANGUAGE.md section 1). No
+  banned words, and no evaluative words (perfect, seamless, thoughtful) for a
+  product, a result or your own work.
+Exception (Gui, 2026-11-18): marketing copy and blog writing (Substack, social
+posts, ads, newsletters, the narrative of a landing page) may be subjective and
+less precise and ignore the word lists. Names, labels, claims, privacy and
+positions stay fixed there too. Lint those with `copy_lint.py --register
+expressive`. Public text also follows `public-writing`. Pass this standard to
+every delegated writer. It is a house standard, not formal STE compliance.
+<!-- clear-writing:end -->
